@@ -1,24 +1,24 @@
 {
-  "name": "docs",
+  "name": "@hotspot/web",
   "version": "0.1.0",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3001",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
-    "@repo/ui": "workspace:*",
+    "@hotspot/shared": "workspace:*",
     "next": "16.1.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+    "@hotspot/typescript-config": "workspace:*",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
