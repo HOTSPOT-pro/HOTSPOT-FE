@@ -1,5 +1,5 @@
 name: "🧩 Fix"
-description: "테스트 코드 작성 / 개선"
+description: "버그 수정"
 labels: ["fix"]
 body:
   - type: input
@@ -14,7 +14,7 @@ body:
   - type: textarea
     attributes:
       label: 📄 설명
-      description: 오타, 잘못된 설정, 누락된 주석 등 사소한 수정을 설명해주세요
+      description: 버그 내용을 작성해주세요.
     validations:
       required: true
 
