@@ -1,0 +1,6 @@
+echo "🔍 빌드 확인"
+pnpm turbo run build
+
+echo "✅ 빌드 성공"
+
+echo "🚀 push 진행"

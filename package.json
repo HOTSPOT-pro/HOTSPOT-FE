@@ -1,28 +1,40 @@
 {
-  "name": "hotspot-fe",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "check-types": "turbo run check-types",
-    "lint": "biome check .",
-    "reporter": "biome check --reporter=summary",
-    "check": "biome check --write .",
-    "format": "biome format --write .",
-    "build:admin": "turbo run build --filter=@hotspot/admin",
-    "build:web": "turbo run build --filter=@hotspot/web",
-    "build:shared": "turbo run build --filter=@hotspot/shared"
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.3.14",
+    "@commitlint/cli": "^20.4.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^16.2.7",
     "turbo": "^2.8.3",
     "typescript": "5.9.2"
   },
-  "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {
-    "pnpm": "^10.29.2"
+  "lint-staged": {
+    "*.{css,html,md}": [
+      "biome format --write --no-errors-on-unmatched"
+    ],
+    "*.{js,ts,jsx,tsx}": [
+      "biome check --write --no-errors-on-unmatched"
+    ],
+    "*.{json,jsonc}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "name": "hotspot-fe",
+  "packageManager": "pnpm@10.29.3",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "build:admin": "turbo run build --filter=@hotspot/admin",
+    "build:shared": "turbo run build --filter=@hotspot/shared",
+    "build:web": "turbo run build --filter=@hotspot/web",
+    "check": "biome check --write .",
+    "check-types": "turbo run check-types",
+    "dev": "turbo run dev",
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "prepare": "husky install",
+    "reporter": "biome check --reporter=summary"
   }
 }
