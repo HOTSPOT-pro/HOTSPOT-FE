@@ -6,5 +6,5 @@
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@hotspot/typescript-config/react-library.json",
-  "include": ["src", ".storybook"]
+  "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }
