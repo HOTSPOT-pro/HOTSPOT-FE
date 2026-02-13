@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction, type Reducer } from '@reduxjs/toolkit';
 
 export interface UserState {
   userId: number | null;
@@ -6,25 +6,25 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  userId: null,
   accessToken: null,
+  userId: null,
 };
 
 const userSlice = createSlice({
-  name: 'user',
   initialState,
+  name: 'user',
   reducers: {
-    setAuth: (state, action: PayloadAction<UserState>) => {
-      state.userId = action.payload.userId;
-      state.accessToken = action.payload.accessToken;
-    },
     clearAuth: (state) => {
       state.userId = null;
       state.accessToken = null;
+    },
+    setAuth: (state, action: PayloadAction<UserState>) => {
+      state.userId = action.payload.userId;
+      state.accessToken = action.payload.accessToken;
     },
   },
 });
 
 // actions와 reducer 선언
 export const { setAuth, clearAuth } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const userReducer: Reducer<UserState> = userSlice.reducer;

@@ -1,10 +1,10 @@
-import { Button } from '@hotspot/shared/ui';
-import React from 'react';
+import { Button } from '@hotspot/ui';
 
 const page = () => {
   return (
     <div>
       <Button appName={''}>test</Button>
+      <span className="text-blue-500">하이</span>
     </div>
   );
 };

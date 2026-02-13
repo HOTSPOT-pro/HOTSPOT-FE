@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "outDir": "dist"
+  },
+  "exclude": ["node_modules", "dist"],
+  "extends": "@hotspot/typescript-config/react-library.json",
+  "include": ["src", ".storybook"]
+}

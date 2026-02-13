@@ -12,7 +12,7 @@ export const useUserStore = (): UserAuth & {
 
   return {
     ...auth,
-    setAuth: (auth) => dispatch(setAuth(auth)),
     clearAuth: () => dispatch(clearAuth()),
+    setAuth: (auth) => dispatch(setAuth(auth)),
   };
 };

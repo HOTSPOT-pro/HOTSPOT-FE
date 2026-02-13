@@ -1,9 +1,14 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedKeys": "on"
+      }
+    },
+    "enabled": true
   },
   "files": {
     "ignoreUnknown": true,
@@ -18,28 +23,69 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
-      "jsxQuoteStyle": "double",
-      "trailingCommas": "all"
+      "semicolons": "always"
     }
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "a11y": {
+        "noAccessKey": "error",
+        "noAutofocus": "error",
+        "noHeaderScope": "error",
+        "noRedundantAlt": "error",
+        "useAltText": "error",
+        "useButtonType": "error",
+        "useGenericFontNames": "error",
+        "useHtmlLang": "error"
+      },
+      "complexity": {
+        "noImportantStyles": "warn",
+        "useOptionalChain": "warn"
+      },
       "correctness": {
-        "noUnusedVariables": "warn"
+        "noChildrenProp": "error",
+        "noInvalidDirectionInLinearGradient": "error",
+        "noMissingVarFunction": "error",
+        "noPrecisionLoss": "error",
+        "noUnknownProperty": "error",
+        "noUnknownUnit": "error",
+        "noUnusedImports": "warn",
+        "noUnusedVariables": "warn",
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error",
+        "useJsxKeyInIterable": "error"
+      },
+      "recommended": true,
+      "style": {
+        "noDescendingSpecificity": "warn",
+        "noNonNullAssertion": "warn",
+        "useExportType": "warn",
+        "useImportType": "warn",
+        "useShorthandFunctionType": "info",
+        "useTemplate": "info"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "error",
+        "noBiomeFirstException": "error",
+        "noDoubleEquals": "error",
+        "noDuplicateJsxProps": "error",
+        "noDuplicateObjectKeys": "error",
+        "noDuplicateProperties": "error",
+        "noDuplicateSelectorsKeyframeBlock": "error",
+        "noEmptyBlock": "warn",
+        "noExplicitAny": "warn",
+        "noQuickfixBiome": "info",
+        "noShorthandPropertyOverrides": "error",
+        "noUnknownAtRules": "error",
+        "useBiomeIgnoreFolder": "warn",
+        "useDefaultSwitchClauseLast": "warn"
       }
-    },
-    "domains": {
-      "next": "recommended",
-      "react": "recommended"
     }
   },
-  "assist": {
-    "actions": {
-      "source": {
-        "organizeImports": "on"
-      }
-    }
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
   }
 }
