@@ -12,6 +12,7 @@ MSG_FILE="${1:-$REPO_ROOT/.git/COMMIT_EDITMSG}"
 # 정규식 검사 시 줄 끝에 \r 이 남아 규칙이 깨질 수 있음
 # → \r 제거해서 LF만 남긴 임시 파일 생성
 TMP_FILE="$(mktemp)"                 # 임시 파일 생성
+trap 'rm -f "$TMP_FILE"' EXIT          # 스크립트 종료 시 임시 파일 자동 삭제
 tr -d '\r' < "$MSG_FILE" > "$TMP_FILE"  # \r 제거 후 TMP_FILE 에 저장
 
 # 프로젝트 로컬에 설치된 commitlint 실행 (pnpm exec 로 보장)
@@ -21,9 +22,7 @@ if ! pnpm exec commitlint --edit "$TMP_FILE"; then
   echo "❌ 커밋 메시지 규칙 위반"
   echo "👉 규칙 예시: feat: 새로운 기능 추가 (#123)"
   echo "📖 허용된 타입: feat, fix, docs, style, refactor, test, chore, ci, revert, del, add"
-  rm -f "$TMP_FILE"   # 임시 파일 정리
   exit 1              # 검사 실패 → 커밋 중단
 fi
 
-rm -f "$TMP_FILE"     # 검사 성공 → 임시 파일 정리
 echo "✅ 커밋 메시지 규칙 통과"
