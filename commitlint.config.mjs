@@ -1,4 +1,11 @@
 export default {
+  parserPreset: {
+    parserOpts: {
+      headerCorrespondence: ['ticket', 'type', 'scope', 'subject'],
+      headerPattern:
+        /^\[(?<ticket>[A-Z]+-\d+)\]\s(?<type>\w+)(?:\((?<scope>[^)]+)\))?:\s(?<subject>.+)$/,
+    },
+  },
   rules: {
     'header-max-length': [2, 'always', 100],
     'subject-empty': [2, 'never'],
