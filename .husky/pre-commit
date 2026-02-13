@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "🔍 lint-staged 실행"
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"

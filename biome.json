@@ -10,9 +10,23 @@
     },
     "enabled": true
   },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "double"
+    }
+  },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/.next",
+      "!**/dist",
+      "!**/build",
+      "!packages/ui/.storybook",
+      "!packages/ui/src/styles/globals.css"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -55,10 +69,52 @@
         "noScriptUrl": "warn",
         "noSyncScripts": "warn"
       },
-      "performance": { "noNamespaceImport": "error", "noReExportAll": "warn" },
-      "recommended": true
+      "performance": {
+        "noNamespaceImport": "error",
+        "noReExportAll": "warn"
+      },
+      "recommended": true,
+      "style": {
+        "noCommonJs": "error",
+        "noDefaultExport": "error",
+        "noMagicNumbers": "warn",
+        "noNestedTernary": "error",
+        "useObjectSpread": "error",
+        "useThrowNewError": "error",
+        "useThrowOnlyError": "error"
+      },
+      "suspicious": {
+        "noAlert": "error",
+        "noConstantBinaryExpressions": "error",
+        "noEvolvingTypes": "error",
+        "noUnassignedVariables": "error",
+        "noUnknownAtRules": "info",
+        "useGuardForIn": "error"
+      }
     }
   },
+  "overrides": [
+    {
+      "includes": [
+        "apps/*/src/app/**/page.tsx",
+        "apps/*/src/app/**/layout.tsx",
+        "apps/*/src/app/**/template.tsx",
+        "apps/*/src/app/**/error.tsx",
+        "apps/*/src/app/**/loading.tsx",
+        "apps/*/src/app/**/not-found.tsx",
+        "apps/*/src/app/**/route.ts",
+        "apps/*/src/app/**/default.tsx",
+        "**/*.mjs"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    }
+  ],
   "vcs": {
     "clientKind": "git",
     "enabled": true,
