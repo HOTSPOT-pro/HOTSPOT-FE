@@ -46,4 +46,7 @@ if ! pnpm exec commitlint --edit "$TMP_FILE"; then
   exit 1              # 검사 실패 → 커밋 중단
 fi
 
+# 수정된 TMP_FILE의 내용을 실제 Git 커밋 메시지 파일에 덮어씌우기
+cp "$TMP_FILE" "$MSG_FILE"
+
 echo "✅ 커밋 메시지 규칙 통과"
