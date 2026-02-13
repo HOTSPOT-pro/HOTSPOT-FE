@@ -27,60 +27,36 @@
     }
   },
   "linter": {
+    "domains": {
+      "next": "recommended"
+    },
     "enabled": true,
     "rules": {
-      "a11y": {
-        "noAccessKey": "error",
-        "noAutofocus": "error",
-        "noHeaderScope": "error",
-        "noRedundantAlt": "error",
-        "useAltText": "error",
-        "useButtonType": "error",
-        "useGenericFontNames": "error",
-        "useHtmlLang": "error"
-      },
       "complexity": {
-        "noImportantStyles": "warn",
-        "useOptionalChain": "warn"
+        "noForEach": "warn",
+        "noImplicitCoercions": "error",
+        "noUselessStringConcat": "error",
+        "noVoid": "warn",
+        "useSimplifiedLogicExpression": "warn",
+        "useWhile": "warn"
       },
       "correctness": {
-        "noChildrenProp": "error",
-        "noInvalidDirectionInLinearGradient": "error",
-        "noMissingVarFunction": "error",
-        "noPrecisionLoss": "error",
-        "noUnknownProperty": "error",
-        "noUnknownUnit": "error",
-        "noUnusedImports": "warn",
-        "noUnusedVariables": "warn",
-        "useExhaustiveDependencies": "error",
-        "useHookAtTopLevel": "error",
-        "useJsxKeyInIterable": "error"
+        "noGlobalDirnameFilename": "warn",
+        "noNestedComponentDefinitions": "warn",
+        "noNodejsModules": "error",
+        "noProcessGlobal": "warn",
+        "useSingleJsDocAsterisk": "warn",
+        "useUniqueElementIds": "error"
       },
-      "recommended": true,
-      "style": {
-        "noDescendingSpecificity": "warn",
-        "noNonNullAssertion": "warn",
-        "useExportType": "warn",
-        "useImportType": "warn",
-        "useShorthandFunctionType": "info",
-        "useTemplate": "info"
+      "nursery": {
+        "noEqualsToNull": "warn",
+        "noLeakedRender": "warn",
+        "noNextAsyncClientComponent": "warn",
+        "noScriptUrl": "warn",
+        "noSyncScripts": "warn"
       },
-      "suspicious": {
-        "noArrayIndexKey": "error",
-        "noBiomeFirstException": "error",
-        "noDoubleEquals": "error",
-        "noDuplicateJsxProps": "error",
-        "noDuplicateObjectKeys": "error",
-        "noDuplicateProperties": "error",
-        "noDuplicateSelectorsKeyframeBlock": "error",
-        "noEmptyBlock": "warn",
-        "noExplicitAny": "warn",
-        "noQuickfixBiome": "info",
-        "noShorthandPropertyOverrides": "error",
-        "noUnknownAtRules": "error",
-        "useBiomeIgnoreFolder": "warn",
-        "useDefaultSwitchClauseLast": "warn"
-      }
+      "performance": { "noNamespaceImport": "error", "noReExportAll": "warn" },
+      "recommended": true
     }
   },
   "vcs": {
