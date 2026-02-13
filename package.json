@@ -27,7 +27,7 @@
   "scripts": {
     "build": "turbo run build",
     "build:admin": "turbo run build --filter=@hotspot/admin",
-    "build:shared": "turbo run build --filter=@hotspot/shared",
+    "build:ui": "turbo run build --filter=@hotspot/ui",
     "build:web": "turbo run build --filter=@hotspot/web",
     "check": "biome check --write .",
     "check-types": "turbo run check-types",
