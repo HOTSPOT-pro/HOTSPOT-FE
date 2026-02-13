@@ -1,3 +1,5 @@
+#!/bin/sh
+
 set -e   # 명령어 중 하나라도 실패하면 스크립트 즉시 종료 (-u는 뺌: $1 미전달 시 에러 방지)
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
@@ -14,6 +16,22 @@ MSG_FILE="${1:-$REPO_ROOT/.git/COMMIT_EDITMSG}"
 TMP_FILE="$(mktemp)"                 # 임시 파일 생성
 trap 'rm -f "$TMP_FILE"' EXIT          # 스크립트 종료 시 임시 파일 자동 삭제
 tr -d '\r' < "$MSG_FILE" > "$TMP_FILE"  # \r 제거 후 TMP_FILE 에 저장
+
+# 현재 브랜치명 가져오기
+BRANCH_NAME="$(git symbolic-ref --short HEAD 2>/dev/null || true)"
+
+# 이슈 키 추출 (예: URECA-17)
+ISSUE_KEY="$(echo "$BRANCH_NAME" | grep -oE '^[A-Z]+-[0-9]+' || true)"
+
+# 커밋 메시지 읽기
+
+COMMIT_MSG="$(cat "$TMP_FILE")"
+
+# 이슈 키가 있고, 아직 메시지에 없으면 prepend
+if [ -n "$ISSUE_KEY" ] && ! echo "$COMMIT_MSG" | grep -q "^\[$ISSUE_KEY\]"; then
+  COMMIT_MSG="[$ISSUE_KEY] $COMMIT_MSG"
+  printf "%s\n" "$COMMIT_MSG" > "$TMP_FILE"
+fi
 
 # 프로젝트 로컬에 설치된 commitlint 실행 (pnpm exec 로 보장)
 # --edit 옵션: 파일 내용을 커밋 메시지로 해석해서 규칙 검사
