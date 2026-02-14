@@ -1,68 +1,82 @@
 'use client';
 
-import { useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
-import { COLORS, interpolateColor } from '../../lib/interpolateColor';
+import { COLORS } from '../../lib/interpolateColor';
 
 export interface DonutChartDataProps {
   name: string;
   value: number;
+  fill?: string;
 }
 
 export interface DonutChartProps {
   data: DonutChartDataProps[];
   total: number;
+  totalUsed: number;
+  remaining: number;
 }
-
 interface SectorProps {
-  cx: number;
-  cy: number;
-  innerRadius: number;
-  outerRadius: number;
   startAngle: number;
   endAngle: number;
   fill?: string;
+  index?: number;
 }
 
-export const DonutChart = ({ data, total }: DonutChartProps) => {
-  const totalUsed = data.reduce((acc, cur) => acc + cur.value, 0);
-  const remaining = Math.max(0, total - totalUsed);
-  const viewTotalUsed = Math.ceil(totalUsed * 10) / 10;
-  const PERCENTAGE_DECIMAL = 100;
-  const percentage = Math.ceil((totalUsed / total) * PERCENTAGE_DECIMAL);
+export const DonutChart = memo(({ data, total, totalUsed }: DonutChartProps) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const chartData = useMemo(() => {
-    const coloredData = data.map((item, index) => {
-      const factor = data.length > 1 ? index / (data.length - 1) : 0;
+  const onMouseEnter = useCallback((_: any, index: number) => {
+    setActiveIndex(index);
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    setActiveIndex(null);
+  }, []);
+
+  const displayContent = useMemo(() => {
+    if (activeIndex !== null && data[activeIndex]) {
+      const activeData = data[activeIndex];
+      const ratio = total > 0 ? ((activeData.value / total) * 100).toFixed(1) : '0';
       return {
-        ...item,
-        fill: interpolateColor(factor),
+        isHovered: true,
+        label: activeData.name,
+        percent: `${ratio}%`,
+        value: activeData.value.toFixed(1),
       };
-    });
-    return [{ fill: COLORS.REMAINING, name: '잔여', value: remaining }, ...coloredData];
-  }, [data, remaining]);
+    }
+    const totalPercentage = total > 0 ? Math.ceil((totalUsed / total) * 100) : 0;
+    return {
+      isHovered: false,
+      label: '총 사용',
+      percent: `${totalPercentage}%`,
+      value: totalUsed.toFixed(1),
+    };
+  }, [activeIndex, data, total, totalUsed]);
 
-  const renderCustomSector = (props: SectorProps) => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
-    const overlap = 4;
+  const renderCustomSector = useCallback(
+    (props: SectorProps) => {
+      const { startAngle, endAngle, fill, index } = props;
+      const overlap = 4;
 
-    return (
-      <g>
-        <Sector
-          cornerRadius={20}
-          cx={cx}
-          cy={cy}
-          endAngle={endAngle + overlap}
-          fill={fill}
-          innerRadius={innerRadius}
-          outerRadius={outerRadius}
-          startAngle={startAngle - overlap}
-          stroke={COLORS.STROKE}
-          strokeWidth={2}
-        />
-      </g>
-    );
-  };
+      const isHovered = index === activeIndex;
+
+      return (
+        <g className="cursor-pointer outline-none">
+          <Sector
+            {...props}
+            cornerRadius={20}
+            endAngle={endAngle + overlap}
+            fill={isHovered ? 'bg-black' : fill}
+            startAngle={startAngle - overlap}
+            stroke={COLORS.STROKE}
+            strokeWidth={2}
+          />
+        </g>
+      );
+    },
+    [activeIndex],
+  );
 
   return (
     <div className="w-full h-full min-w-37.5 min-h-37.5 aspect-square relative @container">
@@ -71,11 +85,13 @@ export const DonutChart = ({ data, total }: DonutChartProps) => {
           <Pie
             cx="50%"
             cy="50%"
-            data={chartData}
+            data={data}
             dataKey="value"
             endAngle={90}
             innerRadius="70%"
             isAnimationActive={true}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             outerRadius="80%"
             shape={renderCustomSector}
             startAngle={-270}
@@ -84,14 +100,18 @@ export const DonutChart = ({ data, total }: DonutChartProps) => {
         </PieChart>
       </ResponsiveContainer>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <span className="text-gray-400 font-medium leading-none text-[6cqi]">총 사용</span>
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+        <span className="text-gray-400 font-medium leading-none text-[6cqi]">
+          {displayContent.label}
+        </span>
         <div className="flex items-baseline my-[1%]">
-          <span className="font-bold text-black text-[13cqi]">{viewTotalUsed}</span>
-          <span className="font-semibold text-black ml-[0.5cqi] text-[8cqi]">GB</span>
+          <span className="font-bold text-black text-[13cqi]">{displayContent.value}</span>
+          <span className="font-semibold text-black text-[8cqi]">GB</span>
         </div>
-        <span className="text-gray-400 font-medium leading-none text-[6cqi] ">{percentage}%</span>
+        <span className={`font-medium leading-none text-[6cqi] transition-colors text-gray-400`}>
+          {displayContent.percent}
+        </span>
       </div>
     </div>
   );
-};
+});
