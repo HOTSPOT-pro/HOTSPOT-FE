@@ -1,5 +1,6 @@
 export const COLORS = {
   END: '#d9c9ff',
+  HOVER: '#141414',
   REMAINING: '#E5E7EB',
   START: '#4F46E5',
   STROKE: '#FFFFFF',

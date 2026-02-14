@@ -31,7 +31,9 @@ export const Default: Story = {
       { name: '나', value: 12.9 },
       { name: '동생', value: 8.5 },
     ],
+    remaining: 34.3,
     total: 100,
+    totalUsed: 65.7,
   },
 };
 
