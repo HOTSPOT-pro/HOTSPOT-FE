@@ -41,13 +41,21 @@ export const DonutChartContainer = ({ data, total, type = 'MOBILE' }: DonutChart
   }, [data, total]);
 
   return (
-    <div className={cn('flex items-center gap-10 p-4', isWeb ? 'flex-col' : 'flex-row')}>
+    <div
+      className={cn(
+        'flex items-center p-4',
+        isWeb ? 'flex-col w-full h-full gap-5' : 'flex-row w-full h-full gap-11',
+      )}
+    >
       <DonutChart data={chartData} remaining={remaining} total={total} totalUsed={totalUsed} />
 
       <div
-        className={cn('flex flex-wrap justify-center', isWeb ? 'flex-row gap-3' : 'flex-col gap-1')}
+        className={cn('flex flex-wrap justify-center', isWeb ? 'flex-row gap-3' : 'flex-col gap-2')}
       >
-        {chartData.map((item) => (
+        {[
+          ...chartData.filter((item) => item.name !== '잔여'),
+          ...chartData.filter((item) => item.name === '잔여'),
+        ].map((item) => (
           <LegendItem color={item.fill} key={item.name} name={item.name} value={item.value} />
         ))}
       </div>

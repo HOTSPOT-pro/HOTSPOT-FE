@@ -2,7 +2,6 @@
 
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
-import { COLORS } from '../../lib/interpolateColor';
 
 export interface DonutChartDataProps {
   name: string;
@@ -69,7 +68,6 @@ export const DonutChart = memo(({ data, total, totalUsed }: DonutChartProps) => 
             endAngle={endAngle + overlap}
             fill={isHovered ? 'bg-black' : fill}
             startAngle={startAngle - overlap}
-            stroke={COLORS.STROKE}
             strokeWidth={2}
           />
         </g>
@@ -80,7 +78,7 @@ export const DonutChart = memo(({ data, total, totalUsed }: DonutChartProps) => 
 
   return (
     <div className="w-full h-full min-w-37.5 min-h-37.5 aspect-square relative @container">
-      <ResponsiveContainer height="100%" width="100%">
+      <ResponsiveContainer className="w-full h-full">
         <PieChart>
           <Pie
             cx="50%"
