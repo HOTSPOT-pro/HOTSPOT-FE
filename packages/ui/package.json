@@ -21,6 +21,7 @@
   },
   "exports": {
     ".": "./src/components/index.ts",
+    "./assets/*": "./src/assets/*",
     "./globals.css": "./src/styles/globals.css"
   },
   "name": "@hotspot/ui",
