@@ -20,7 +20,8 @@ export const Slider = ({ min, max, initialValue = min, onChange, className }: Sl
     onChange?.(newValue);
   };
 
-  const percentage = ((value - min) / (max - min)) * 100;
+  const PERCENT_MAX = 100;
+  const percentage = ((value - min) / (max - min)) * PERCENT_MAX;
 
   return (
     <div className={cn('w-full py-4', className)}>
