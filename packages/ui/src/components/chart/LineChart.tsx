@@ -4,6 +4,7 @@ import { memo } from 'react';
 import {
   CartesianGrid,
   ComposedChart,
+  Legend,
   Line,
   ResponsiveContainer,
   Tooltip,
@@ -11,6 +12,7 @@ import {
   YAxis,
 } from 'recharts';
 import { COLORS } from '../../lib/interpolateColor';
+import { LineChartLegend } from './LineChartLegend';
 import { LineChartTooltip } from './LineChartTooltip';
 
 export interface LineChartDataProps {
@@ -33,11 +35,12 @@ export const LineChart = memo(({ max, totalData, unit = 'GB', type }: UsageLineC
   const SECOND_COLOR = COLORS.START || '#141414';
 
   const dateUnit = type === 'MONTH' ? '월' : '일';
+  const hasPersonalData = totalData.some((d) => d.personal !== undefined && d.personal !== null);
 
   return (
     <div className="w-full h-full @container">
       <ResponsiveContainer height="100%" width="100%">
-        <ComposedChart data={totalData} margin={{ bottom: 0, left: 0, right: 10, top: 10 }}>
+        <ComposedChart data={totalData} margin={{ bottom: 10, left: 0, right: 10, top: 10 }}>
           <CartesianGrid stroke="#f0f0f0" strokeDasharray="3 3" vertical={false} />
 
           <XAxis
@@ -53,35 +56,44 @@ export const LineChart = memo(({ max, totalData, unit = 'GB', type }: UsageLineC
             axisLine={false}
             domain={[0, max]}
             tick={{ fill: '#9ca3af', fontSize: '12px' }}
-            tickFormatter={(value) => `${value}GB`}
+            tickFormatter={(value) => `${value}${unit}`}
             tickLine={false}
             width={50}
           />
 
           <Tooltip
             content={<LineChartTooltip dateUnit={dateUnit} unit={unit} />}
-            cursor={{ stroke: '#e5e7eb', strokeWidth: 2 }}
+            cursor={{ stroke: '#ffffff', strokeWidth: 2 }}
           />
+
+          <Legend content={<LineChartLegend />} verticalAlign="bottom" />
 
           <Line
             animationDuration={1500}
             dataKey="total"
             dot={false}
+            name="전체 사용량"
             stroke={MAIN_COLOR}
             strokeDasharray={'5 5'}
             strokeWidth={3}
             type="monotone"
           />
-          <Line
-            animationDuration={1500}
-            dataKey="personal"
-            dot={false}
-            stroke={SECOND_COLOR}
-            strokeWidth={3}
-            type="monotone"
-          />
+
+          {hasPersonalData && (
+            <Line
+              animationDuration={1500}
+              dataKey="personal"
+              dot={false}
+              name="개별 사용량"
+              stroke={SECOND_COLOR}
+              strokeWidth={3}
+              type="monotone"
+            />
+          )}
         </ComposedChart>
       </ResponsiveContainer>
     </div>
   );
 });
+
+LineChart.displayName = 'LineChart';
