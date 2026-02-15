@@ -25,22 +25,22 @@ export interface LineChartDataProps {
 
 export interface UsageLineChartProps {
   max: number;
-  totalData: LineChartDataProps[];
+  data: LineChartDataProps[];
   unit?: string;
   type: 'MONTH' | 'DAY';
 }
 
-export const LineChart = memo(({ max, totalData, unit = 'GB', type }: UsageLineChartProps) => {
+export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartProps) => {
   const MAIN_COLOR = COLORS.SECONDARY || '#3b82f6';
   const SECOND_COLOR = COLORS.START || '#141414';
 
   const dateUnit = type === 'MONTH' ? '월' : '일';
-  const hasPersonalData = totalData.some((d) => d.personal !== undefined && d.personal !== null);
+  const hasPersonalData = data.some((d) => d.personal !== undefined && d.personal !== null);
 
   return (
     <div className="w-full h-full @container">
       <ResponsiveContainer height="100%" width="100%">
-        <ComposedChart data={totalData} margin={{ bottom: 10, left: 0, right: 10, top: 10 }}>
+        <ComposedChart data={data} margin={{ bottom: 10, left: 0, right: 10, top: 10 }}>
           <CartesianGrid stroke="#f0f0f0" strokeDasharray="3 3" vertical={false} />
 
           <XAxis
