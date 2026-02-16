@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+/** biome-ignore-all lint/suspicious/noExplicitAny: <LegendProps에서 payload 못 불러옴> */
 export const LineChartLegend = (props: any) => {
   const { payload } = props;
   if (!payload) return null;
@@ -11,7 +11,6 @@ export const LineChartLegend = (props: any) => {
             className="w-4 h-1 rounded-full"
             style={{
               backgroundColor: entry.color,
-              height: '4px',
             }}
           />
           <span className="text-sm font-medium text-gray-600">{entry.value}</span>

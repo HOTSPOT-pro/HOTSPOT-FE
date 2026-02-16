@@ -1,4 +1,4 @@
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <TooltipProps에서 payload 못 불러옴>
 export const LineChartTooltip = ({ active, payload, unit, dateUnit }: any) => {
   if (active && payload && payload.length) {
     const { date, total, totalRatio, personal, personalRatio } = payload[0].payload;

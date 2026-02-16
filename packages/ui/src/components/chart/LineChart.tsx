@@ -35,19 +35,19 @@ export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartP
   const SECOND_COLOR = COLORS.START || '#141414';
 
   const dateUnit = type === 'MONTH' ? '월' : '일';
-  const hasPersonalData = data.some((d) => d.personal !== undefined && d.personal !== null);
+  const hasPersonalData = data.some((d) => d.personal !== null);
 
   return (
     <div className="w-full h-full @container">
       <ResponsiveContainer height="100%" width="100%">
         <ComposedChart data={data} margin={{ bottom: 10, left: 0, right: 10, top: 10 }}>
-          <CartesianGrid stroke="#f0f0f0" strokeDasharray="3 3" vertical={false} />
+          <CartesianGrid stroke={COLORS.CARTESIAN} strokeDasharray="3 3" vertical={false} />
 
           <XAxis
             axisLine={false}
             dataKey="date"
             dy={10}
-            tick={{ fill: '#9ca3af', fontSize: '12px' }}
+            tick={{ fill: COLORS.TEXT_SECONDARY, fontSize: '12px' }}
             tickFormatter={(value) => `${value}${dateUnit}`}
             tickLine={false}
           />
@@ -55,7 +55,7 @@ export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartP
           <YAxis
             axisLine={false}
             domain={[0, max]}
-            tick={{ fill: '#9ca3af', fontSize: '12px' }}
+            tick={{ fill: COLORS.TEXT_SECONDARY, fontSize: '12px' }}
             tickFormatter={(value) => `${value}${unit}`}
             tickLine={false}
             width={50}
@@ -63,7 +63,7 @@ export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartP
 
           <Tooltip
             content={<LineChartTooltip dateUnit={dateUnit} unit={unit} />}
-            cursor={{ stroke: '#ffffff', strokeWidth: 2 }}
+            cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
           />
 
           <Legend content={<LineChartLegend />} verticalAlign="bottom" />
