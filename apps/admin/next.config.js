@@ -11,5 +11,5 @@ const nextConfig = {
   },
 };
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: <기본 세팅>
 export default nextConfig;

@@ -1,7 +1,7 @@
 import ViewRight from '@hotspot/ui/assets/images/character/ViewRight.svg';
 import React from 'react';
 
-const loading = () => {
+const Loading = () => {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center gap-4">
       <ViewRight className="animate-bounce w-21 h-21" />
@@ -10,4 +10,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default Loading;
