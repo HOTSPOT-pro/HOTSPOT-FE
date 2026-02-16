@@ -1,23 +1,29 @@
+import { DESIGN_TOKENS } from '../styles/tokens';
+
+const { graph } = DESIGN_TOKENS.colors;
+
 export const COLORS = {
-  END: '#d9c9ff',
-  HOVER: '#141414',
-  REMAINING: '#E5E7EB',
-  START: '#4F46E5',
-  STROKE: '#FFFFFF',
+  END: graph.end,
+  HOVER: graph.hover,
+  REMAINING: graph.remaining,
+  START: graph.start,
+  STROKE: graph.stroke,
 } as const;
 
 export const interpolateColor = (factor: number): string => {
-  const r1 = parseInt(COLORS.START.slice(1, 3), 16);
-  const g1 = parseInt(COLORS.START.slice(3, 5), 16);
-  const b1 = parseInt(COLORS.START.slice(5, 7), 16);
+  // hex 파싱 로직 (이전과 동일)
+  const hexToRgb = (hex: string) => ({
+    b: parseInt(hex.slice(5, 7), 16),
+    g: parseInt(hex.slice(3, 5), 16),
+    r: parseInt(hex.slice(1, 3), 16),
+  });
 
-  const r2 = parseInt(COLORS.END.slice(1, 3), 16);
-  const g2 = parseInt(COLORS.END.slice(3, 5), 16);
-  const b2 = parseInt(COLORS.END.slice(5, 7), 16);
+  const start = hexToRgb(COLORS.START);
+  const end = hexToRgb(COLORS.END);
 
-  const r = Math.round(r1 + factor * (r2 - r1));
-  const g = Math.round(g1 + factor * (g2 - g1));
-  const b = Math.round(b1 + factor * (b2 - b1));
+  const r = Math.round(start.r + factor * (end.r - start.r));
+  const g = Math.round(start.g + factor * (end.g - start.g));
+  const b = Math.round(start.b + factor * (end.b - start.b));
 
   const toHex = (c: number) => c.toString(16).padStart(2, '0');
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
