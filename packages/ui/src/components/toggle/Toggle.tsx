@@ -26,7 +26,7 @@ export const Toggle = ({ id, checked, onChange, disabled, className }: TogglePro
           className="sr-only peer"
           disabled={disabled}
           id={id}
-          onChange={(e) => onChange?.(e.target.checked)}
+          onChange={(e) => onChange(e.target.checked)}
           type="checkbox"
         />
 
