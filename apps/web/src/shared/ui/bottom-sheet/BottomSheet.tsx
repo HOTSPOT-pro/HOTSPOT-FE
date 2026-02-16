@@ -88,7 +88,7 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
       onTouchMove={handleMove}
       role="presentation"
     >
-      <Overlay isVisible={isAnimate && dragY < 100} onClick={onClose} />
+      <Overlay isVisible={isAnimate && dragY < closeRange} onClick={onClose} />
 
       <div
         className={cn(
@@ -112,7 +112,7 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
 
         <div className="max-h-[70vh] overflow-y-auto px-6 pb-10">{children}</div>
 
-        <div className="absolute top-full h-[100vh] w-full bg-white" />
+        <div className="absolute top-full h-screen w-full bg-white" />
       </div>
     </div>
   );
