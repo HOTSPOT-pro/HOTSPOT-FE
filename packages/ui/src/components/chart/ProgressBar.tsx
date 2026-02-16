@@ -8,6 +8,11 @@ interface ProgressBarProps {
   total: number;
 }
 
+const PROGRESS_BAR_STYLE = {
+  RADIUS: 10,
+  SIZE: 10,
+} as const;
+
 export const ProgressBar = ({ label, value, total }: ProgressBarProps) => {
   const chartData = [{ displayValue: value, name: label }];
 
@@ -22,12 +27,12 @@ export const ProgressBar = ({ label, value, total }: ProgressBarProps) => {
           <XAxis domain={[0, total]} hide type="number" />
           <YAxis dataKey="name" hide type="category" />
           <Bar
-            background={{ fill: COLORS.REMAINING, radius: 10 }}
-            barSize={10}
+            background={{ fill: COLORS.REMAINING, radius: PROGRESS_BAR_STYLE.RADIUS }}
+            barSize={PROGRESS_BAR_STYLE.SIZE}
             dataKey="displayValue"
             fill={COLORS.START}
             isAnimationActive={true}
-            radius={[10, 10, 10, 10]}
+            radius={PROGRESS_BAR_STYLE.RADIUS}
           />
         </BarChart>
       </ResponsiveContainer>
