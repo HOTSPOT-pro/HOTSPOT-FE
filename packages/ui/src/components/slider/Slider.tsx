@@ -6,6 +6,7 @@ import { cn } from '../../lib/cssMerge';
 interface SliderProps {
   minNum: number;
   maxNum: number;
+  step?: number;
   initialValue?: number;
   onChange?: (value: number) => void;
   className?: string;
@@ -14,6 +15,7 @@ interface SliderProps {
 export const Slider = ({
   minNum,
   maxNum,
+  step = 5,
   initialValue = minNum,
   onChange,
   className,
@@ -51,7 +53,7 @@ export const Slider = ({
           max={maxNum}
           min={minNum}
           onChange={handleChange}
-          step={5}
+          step={step}
           type="range"
           value={value}
         />

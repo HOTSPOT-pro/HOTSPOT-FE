@@ -47,6 +47,7 @@ export const Default: Story = {
     initialValue: 50,
     maxNum: 100,
     minNum: 0,
+    step: 5,
   },
 };
 
