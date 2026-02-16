@@ -4,14 +4,20 @@ import { useState } from 'react';
 import { cn } from '../../lib/cssMerge';
 
 interface SliderProps {
-  min: number;
-  max: number;
+  minNum: number;
+  maxNum: number;
   initialValue?: number;
   onChange?: (value: number) => void;
   className?: string;
 }
 
-export const Slider = ({ min, max, initialValue = min, onChange, className }: SliderProps) => {
+export const Slider = ({
+  minNum,
+  maxNum,
+  initialValue = minNum,
+  onChange,
+  className,
+}: SliderProps) => {
   const [value, setValue] = useState(initialValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +27,7 @@ export const Slider = ({ min, max, initialValue = min, onChange, className }: Sl
   };
 
   const PERCENT_MAX = 100;
-  const percentage = ((value - min) / (max - min)) * PERCENT_MAX;
+  const percentage = ((value - minNum) / (maxNum - minNum)) * PERCENT_MAX;
 
   return (
     <div className={cn('w-full py-4', className)}>
@@ -42,8 +48,8 @@ export const Slider = ({ min, max, initialValue = min, onChange, className }: Sl
                      [&::-webkit-slider-thumb]:bg-purple-600
                      [&::-webkit-slider-thumb]:border-2 
                      [&::-webkit-slider-thumb]:border-purple-600"
-          max={max}
-          min={min}
+          max={maxNum}
+          min={minNum}
           onChange={handleChange}
           step={5}
           type="range"
@@ -52,7 +58,7 @@ export const Slider = ({ min, max, initialValue = min, onChange, className }: Sl
       </div>
       <div className="flex justify-between mt-2 text-sm font-medium text-gray-600">
         <span>{value}GB</span>
-        <span className="text-gray-600">최대 {max}GB</span>
+        <span className="text-gray-600">최대 {maxNum}GB</span>
       </div>
     </div>
   );
