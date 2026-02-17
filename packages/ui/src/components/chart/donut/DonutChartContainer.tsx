@@ -1,8 +1,8 @@
 'use client';
 
 import { memo, useMemo } from 'react';
-import { cn } from '../../lib/cssMerge';
-import { COLORS, interpolateColor } from '../../lib/interpolateColor';
+import { cn } from '../../../lib/cssMerge';
+import { COLORS, interpolateColor } from '../../../lib/interpolateColor';
 import { DonutChart, type DonutChartDataProps } from './DonutChart';
 
 interface DonutChartContainerProps {

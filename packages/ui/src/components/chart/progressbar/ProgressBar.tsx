@@ -1,6 +1,6 @@
 'use client';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import { COLORS } from '../../lib/interpolateColor';
+import { COLORS } from '../../../lib/interpolateColor';
 
 interface ProgressBarProps {
   label: string;
