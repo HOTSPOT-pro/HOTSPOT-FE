@@ -20,7 +20,7 @@ const meta: Meta<typeof LineChart> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Components/Charts/LineChart',
+  title: 'Chart/LineChart',
 };
 
 // biome-ignore lint/style/noDefaultExport: <storybook 테스트>

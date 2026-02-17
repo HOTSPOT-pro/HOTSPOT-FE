@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
-import { COLORS } from '../../lib/interpolateColor';
+import { COLORS } from '../../../lib/interpolateColor';
 
 export interface DonutChartDataProps {
   name: string;

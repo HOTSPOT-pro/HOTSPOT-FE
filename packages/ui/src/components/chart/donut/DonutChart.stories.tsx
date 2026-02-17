@@ -15,7 +15,7 @@ const meta: Meta<typeof DonutChart> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Charts/DonutChart',
+  title: 'Chart/DonutChart',
 };
 
 // biome-ignore lint/style/noDefaultExport: <explanation>

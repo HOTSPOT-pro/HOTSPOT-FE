@@ -11,10 +11,9 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { COLORS } from '../../lib/interpolateColor';
+import { COLORS } from '../../../lib/interpolateColor';
 import { LineChartLegend } from './LineChartLegend';
 import { LineChartTooltip } from './LineChartTooltip';
-
 export interface LineChartDataProps {
   date: string;
   total: number;

@@ -25,7 +25,7 @@ const meta: Meta<typeof ProgressBar> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Components/Chart/ProgressBar',
+  title: 'Chart/ProgressBar',
 };
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
