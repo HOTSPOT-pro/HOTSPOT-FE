@@ -11,4 +11,13 @@ export const DESIGN_TOKENS = {
       chartGap: '1rem',
     },
   },
+  zIndex: {
+    base: '0',
+    dropdown: '20',
+    header: '10',
+    modal: '50',
+    overlay: '40',
+    sticky: '30',
+    toast: '100',
+  },
 } as const;

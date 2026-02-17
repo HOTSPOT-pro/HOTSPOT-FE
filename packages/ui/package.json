@@ -23,8 +23,9 @@
   },
   "exports": {
     ".": "./src/components/index.ts",
+    "./globals.css": "./src/styles/globals.css",
+    "./tokens": "./src/styles/tokens.ts"
     "./assets/*": "./src/assets/*",
-    "./globals.css": "./src/styles/globals.css"
   },
   "name": "@hotspot/ui",
   "private": true,
