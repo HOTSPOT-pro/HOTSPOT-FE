@@ -80,7 +80,7 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: <버튼 중첩 문제 때문에 여기 버튼 쓸 수 없음>
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center overflow-hidden"
+      className="fixed inset-0 flex items-end justify-center overflow-hidden"
       onMouseLeave={handleEnd}
       onMouseMove={handleMove}
       onMouseUp={handleEnd}
