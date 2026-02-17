@@ -12,6 +12,7 @@
   "devDependencies": {
     "@hotspot/typescript-config": "workspace:*",
     "@storybook/nextjs": "^10.2.8",
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/d3-interpolate": "^3.0.4",
     "@types/node": "^22.15.3",
@@ -24,7 +25,9 @@
   },
   "exports": {
     ".": "./src/components/index.ts",
-    "./globals.css": "./src/styles/globals.css"
+    "./globals.css": "./src/styles/globals.css",
+    "./tokens": "./src/styles/tokens.ts"
+    "./assets/*": "./src/assets/*",
   },
   "name": "@hotspot/ui",
   "private": true,
