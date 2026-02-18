@@ -6,6 +6,7 @@ interface ProgressBarProps {
   label: string;
   value: number;
   total: number;
+  color: string;
 }
 
 const PROGRESS_BAR_STYLE = {
@@ -13,7 +14,7 @@ const PROGRESS_BAR_STYLE = {
   SIZE: 10,
 } as const;
 
-export const ProgressBar = ({ label, value, total }: ProgressBarProps) => {
+export const ProgressBar = ({ label, value, total, color }: ProgressBarProps) => {
   const chartData = [{ displayValue: value, name: label }];
 
   return (
@@ -30,7 +31,7 @@ export const ProgressBar = ({ label, value, total }: ProgressBarProps) => {
             background={{ fill: COLORS.REMAINING, radius: PROGRESS_BAR_STYLE.RADIUS }}
             barSize={PROGRESS_BAR_STYLE.SIZE}
             dataKey="displayValue"
-            fill={COLORS.START}
+            fill={color}
             isAnimationActive={true}
             radius={PROGRESS_BAR_STYLE.RADIUS}
           />
