@@ -10,9 +10,14 @@ export const DESIGN_TOKENS = {
       start: '#4F46E5',
       stroke: '#FFFFFF',
     },
-    spacing: {
-      chartGap: '1rem',
+    kakao: {
+      container: '#FEE500',
+      label: '#000000',
+      symbol: '#000000',
     },
+  },
+  spacing: {
+    chartGap: '1rem',
   },
   zIndex: {
     base: '0',
