@@ -1,9 +1,9 @@
 'use client';
 
-import DownArrow from '@hotspot/ui/assets/images/icon/ArrowDown.svg';
-import LeftArrow from '@hotspot/ui/assets/images/icon/ArrowLeft.svg';
-import RightArrow from '@hotspot/ui/assets/images/icon/ArrowRight.svg';
-import UpArrow from '@hotspot/ui/assets/images/icon/ArrowUp.svg';
+import DownArrow from '@hotspot/ui/assets/images/icon/arrow-down.svg';
+import LeftArrow from '@hotspot/ui/assets/images/icon/arrow-left.svg';
+import RightArrow from '@hotspot/ui/assets/images/icon/arrow-right.svg';
+import UpArrow from '@hotspot/ui/assets/images/icon/arrow-up.svg';
 import { MonthPicker } from '@shared/ui';
 import { useState } from 'react';
 
@@ -44,7 +44,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
         onClick={() => moveMonth(-1)}
         type="button"
       >
-        <LeftArrow />
+        <LeftArrow className="text-gray-500" />
       </button>
 
       <button
@@ -53,7 +53,8 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
         type="button"
       >
         <div className="flex flex-row items-center justify-center">
-          {date.year}년 {date.month}월 {isOpen ? <UpArrow /> : <DownArrow />}
+          {date.year}년 {date.month}월{' '}
+          {isOpen ? <UpArrow className="text-gray-500" /> : <DownArrow className="text-gray-500" />}
         </div>
       </button>
 
@@ -63,7 +64,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
         onClick={() => moveMonth(1)}
         type="button"
       >
-        <RightArrow />
+        <RightArrow className="text-gray-500" />
       </button>
 
       {isOpen ? (

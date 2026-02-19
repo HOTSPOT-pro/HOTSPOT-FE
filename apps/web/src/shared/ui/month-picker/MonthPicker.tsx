@@ -1,7 +1,7 @@
 'use client';
 
-import LeftArrow from '@hotspot/ui/assets/images/icon/ArrowLeft.svg';
-import RightArrow from '@hotspot/ui/assets/images/icon/ArrowRight.svg';
+import LeftArrow from '@hotspot/ui/assets/images/icon/arrow-left.svg';
+import RightArrow from '@hotspot/ui/assets/images/icon/arrow-right.svg';
 import { cn } from '@hotspot/ui/lib';
 import { useState } from 'react';
 
@@ -31,7 +31,7 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
     <div className="w-100 h-full p-4 rounded-2xl ring-gray-200/50 ring-1 shadow-lg bg-white">
       <div className="flex items-center justify-between mb-4 pb-2">
         <button className="p-1 hover:bg-gray-100 rounded" onClick={handlePrevYear} type="button">
-          <LeftArrow />
+          <LeftArrow className="text-gray-500" />
         </button>
         <span className="font-bold text-lg">{viewYear}년</span>
         <button
@@ -40,7 +40,7 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
           onClick={handleNextYear}
           type="button"
         >
-          <RightArrow />
+          <RightArrow className="text-gray-500" />
         </button>
       </div>
 
