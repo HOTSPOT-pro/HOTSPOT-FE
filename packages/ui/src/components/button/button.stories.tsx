@@ -10,6 +10,7 @@ const meta: Meta<typeof Button> = {
     children: { control: 'text', description: '버튼 라벨' },
     className: { control: 'text', description: '추가 클래스' },
     disabled: { control: 'boolean', description: '비활성화 여부' },
+    isLoading: { control: 'boolean', description: '로딩 상태 여부' },
     onClick: { action: 'clicked', description: '클릭 이벤트' },
     type: {
       control: { type: 'select' },
@@ -65,6 +66,14 @@ export const Disabled: Story = {
   args: {
     children: 'Disabled',
     disabled: true,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    children: '저장하기',
+    isLoading: true,
+    variant: 'solid',
   },
 };
 
