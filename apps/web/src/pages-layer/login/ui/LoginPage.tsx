@@ -15,7 +15,7 @@ export const LoginPage = () => {
         <KakaoLogin />
         <GoogleLogin />
       </div>
-      <div className="absolute w-screen h-screen flex justify-center items-center">
+      <div className="-z-10 absolute w-screen h-screen flex justify-center items-center">
         <div className="absolute w-200 h-200 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" />
       </div>
     </div>
