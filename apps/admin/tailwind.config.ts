@@ -1,4 +1,4 @@
-import { DESIGN_TOKENS } from '@hotspot/ui/tokens';
+import { DESIGN_TOKENS } from '@hotspot/ui/styles';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {

@@ -1,10 +1,11 @@
 @import "tailwindcss";
 @source "../components/**/*.{ts,tsx}";
 
+@import "./zIndex.css";
+
 :root {
   --foreground: #171717;
   --background: #ffffff;
-  
 }
 
 @media (prefers-color-scheme: dark) {

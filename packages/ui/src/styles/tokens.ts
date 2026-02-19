@@ -10,17 +10,5 @@ export const DESIGN_TOKENS = {
       start: '#4F46E5',
       stroke: '#FFFFFF',
     },
-    spacing: {
-      chartGap: '1rem',
-    },
-  },
-  zIndex: {
-    base: '0',
-    dropdown: '20',
-    header: '10',
-    modal: '50',
-    overlay: '40',
-    sticky: '30',
-    toast: '100',
   },
 } as const;
