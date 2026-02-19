@@ -15,10 +15,9 @@ const meta: Meta<typeof DonutChart> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Chart/DonutChart',
+  title: 'Components/DonutChart',
 };
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
 export default meta;
 
 type Story = StoryObj<typeof DonutChart>;
