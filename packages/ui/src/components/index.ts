@@ -3,6 +3,7 @@ export { Card } from './card/card';
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
 export { LineChart } from './chart/line/LineChart';
 export { ProgressBar } from './chart/progressbar/ProgressBar';
+export { Loading } from './loading/Loading';
 export { Overlay } from './overlay/Overlay';
 export { Slider } from './slider/Slider';
 export { Toggle } from './toggle/Toggle';
