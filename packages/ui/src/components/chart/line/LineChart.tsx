@@ -63,7 +63,13 @@ export const LineChart = memo(
             />
 
             <Tooltip
-              content={<LineChartTooltip dateUnit={dateUnit} unit={unit} />}
+              content={
+                <LineChartTooltip
+                  dateUnit={dateUnit}
+                  hasPersonalData={hasPersonalData}
+                  unit={unit}
+                />
+              }
               cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
             />
 

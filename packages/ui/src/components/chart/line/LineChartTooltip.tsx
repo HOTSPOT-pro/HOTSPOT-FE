@@ -1,8 +1,7 @@
 // biome-ignore lint/suspicious/noExplicitAny: <TooltipProps에서 payload 못 불러옴>
-export const LineChartTooltip = ({ active, payload, unit, dateUnit }: any) => {
+export const LineChartTooltip = ({ active, payload, unit, dateUnit, hasPersonalData }: any) => {
   if (active && payload && payload.length) {
     const { date, total, totalRatio, personal, personalRatio } = payload[0].payload;
-    const hasPersonal = personal !== undefined && personal !== null;
 
     const formattedDate = `${date}${dateUnit}`;
 
@@ -18,7 +17,7 @@ export const LineChartTooltip = ({ active, payload, unit, dateUnit }: any) => {
           <span className="ml-2 text-purple-500 text-xs font-bold">{totalRatio}%</span>
         </div>
 
-        {hasPersonal ? (
+        {hasPersonalData ? (
           <div className="pt-1 border-t border-dotted border-gray-100 flex flex-col">
             <span className="text-xs text-gray-500 font-medium">개별 사용량</span>
             <div className="flex items-baseline gap-1 justify-between">
