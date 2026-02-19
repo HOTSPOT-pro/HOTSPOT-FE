@@ -3,16 +3,17 @@ import { COLORS, cn } from '@hotspot/ui/lib';
 import type { ReportAppUsage } from '../model/type';
 
 interface ServiceReportProps {
-  userName: string | null;
+  userName?: string | null;
+  isTotal: boolean;
   data: ReportAppUsage[];
 }
 
-export const ServiceReport = ({ userName, data }: ServiceReportProps) => {
+export const ServiceReport = ({ userName, data, isTotal }: ServiceReportProps) => {
   return (
-    <div className="mt-8 bg-white rounded-3xl flex flex-col gap-1">
+    <div className="mt-8 p-5 bg-white rounded-3xl flex flex-col gap-1">
       <p className="text-md font-bold leading-relaxed text-gray-900">앱별 상세 사용량</p>
 
-      <p className="text-sm text-gray-600 mb-2">{userName || '전체'}</p>
+      <p className="text-sm text-gray-600 mb-2">{isTotal ? '전체' : userName}</p>
 
       <div className="flex flex-col gap-3 h-fit">
         {data.map((item, index) => (
