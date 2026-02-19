@@ -6,5 +6,4 @@ const config: Config = {
   theme: {},
 };
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
 export default config;

@@ -25,10 +25,9 @@ const meta: Meta<typeof DonutChartContainer> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'CHART/DonutChartContainer', // FSD 계층에 따른 경로 설정
+  title: 'Components/DonutChart',
 };
 
-// biome-ignore lint/style/noDefaultExport: <storybook 테스트>
 export default meta;
 type Story = StoryObj<typeof DonutChartContainer>;
 

@@ -25,10 +25,9 @@ const meta: Meta<typeof ProgressBar> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Chart/ProgressBar',
+  title: 'Components/ProgressBar',
 };
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
 export default meta;
 type Story = StoryObj<typeof ProgressBar>;
 
