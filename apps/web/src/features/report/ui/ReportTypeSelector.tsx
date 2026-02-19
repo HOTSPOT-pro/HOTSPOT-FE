@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@hotspot/ui/components';
 import { cn } from '@hotspot/ui/lib';
 
 type ViewUnit = 'MONTH' | 'DAY';
@@ -16,23 +17,21 @@ export const ReportTypeSelector = ({ unit, onChange }: Props) => {
   };
 
   return (
-    <div className="flex w-full justify-center gap-2 p-1 bg-gray-100 rounded-lg">
-      <button
-        className={cn('w-full', unit === 'MONTH' ? 'active-style' : 'inactive-style')}
+    <div className="flex w-full justify-center gap-2 py-2 px-4">
+      <Button
         data-value="MONTH"
         onClick={handleUnitClick}
-        type="button"
+        variant={unit === 'MONTH' ? 'solid' : 'ghost'}
       >
         월별
-      </button>
-      <button
-        className={cn('w-full', unit === 'DAY' ? 'active-style' : 'inactive-style')}
+      </Button>
+      <Button
         data-value="DAY"
         onClick={handleUnitClick}
-        type="button"
+        variant={unit === 'DAY' ? 'solid' : 'ghost'}
       >
         일별
-      </button>
+      </Button>
     </div>
   );
 };
