@@ -5,7 +5,6 @@ import type { ReportAppUsage } from '../model/type';
 
 interface ServiceReportProps {
   userName: string | null;
-
   data: ReportAppUsage[];
 }
 
