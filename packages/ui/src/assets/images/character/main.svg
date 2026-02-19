@@ -1,0 +1,27 @@
+<svg viewBox="0 0 49 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="25.2614" cy="27.5343" r="23.2132" fill="#9051FE"/>
+<ellipse cx="15.703" cy="27.5343" rx="1.36548" ry="2.04822" fill="white"/>
+<ellipse cx="24.5787" cy="27.5343" rx="1.36548" ry="2.04822" fill="white"/>
+<path d="M17.7513 32.9962C18.0244 33.4514 18.9529 34.3617 20.4822 34.3617C22.0116 34.3617 22.9401 33.4514 23.2132 32.9962" stroke="white" stroke-width="1.22893" stroke-linecap="round" stroke-linejoin="round"/>
+<mask id="mask0_4657_7644" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="4" width="47" height="47">
+<circle cx="25.2614" cy="27.5343" r="23.2132" fill="#9051FE"/>
+</mask>
+<g mask="url(#mask0_4657_7644)">
+<g opacity="0.83" filter="url(#filter0_g_4657_7644)">
+<path d="M40.6828 34.3362C36.7838 45.4356 27.0228 49.8492 18.3046 50.3429L33.2161 58.4452C33.7132 58.7153 51.0655 45.3427 59.6796 38.6227L47.4491 13.143L35.9818 6.10737C42.4491 13.643 44.3623 23.8618 40.6828 34.3362Z" fill="#7A21E6" style="mix-blend-mode:darken"/>
+</g>
+</g>
+<ellipse cx="15.4712" cy="5.36021" rx="3.42432" ry="7.83298" transform="rotate(125.819 15.4712 5.36021)" fill="#9051FE"/>
+<ellipse cx="11.7923" cy="9.66633" rx="4.86629" ry="9.94428" transform="rotate(89.5436 11.7923 9.66633)" fill="#9051FE"/>
+<defs>
+<filter id="filter0_g_4657_7644" x="11.5046" y="-0.692639" width="54.975" height="65.9419" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="7049" />
+<feDisplacementMap in="shape" scale="13.600000381469727" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_4657_7644">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+</defs>
+</svg>
