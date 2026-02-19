@@ -15,19 +15,6 @@
   }
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  max-width: 100dvw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
-
 * {
   box-sizing: border-box;
 }
