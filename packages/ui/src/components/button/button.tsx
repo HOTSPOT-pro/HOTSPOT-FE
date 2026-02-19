@@ -39,20 +39,32 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       type = 'button',
       variant = 'solid',
-      ...props
+      onClick,
+      ...rest
     },
     ref,
   ) => {
+    const isAriaDisabled = disabled || isLoading;
+
     return (
       <button
-        aria-busy={isLoading}
-        className={buttonVariants({ className, variant })}
+        aria-busy={isLoading || undefined}
+        aria-disabled={isAriaDisabled || undefined}
+        className={cn(buttonVariants({ className, variant }), isLoading && 'pointer-events-none')}
         disabled={disabled}
+        onClick={(e) => {
+          if (isLoading) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
+          onClick?.(e);
+        }}
         ref={ref}
         type={type}
-        {...props}
+        {...rest}
       >
-        {isLoading ? <Loading /> : <span>{children}</span>}
+        {isLoading ? <Loading /> : children}
       </button>
     );
   },
