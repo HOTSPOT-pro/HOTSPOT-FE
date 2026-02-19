@@ -15,7 +15,7 @@ export const ReportPage = () => {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-full">
       {/* 월일별 탭 버튼 */}
       <div className="py-2 px-4">
         <ReportTypeSelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />
