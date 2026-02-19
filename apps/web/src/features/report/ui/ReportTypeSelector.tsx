@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from 'node_modules/@hotspot/ui/src/lib/cssMerge';
+import { cn } from '@hotspot/ui/lib';
 
 type ViewUnit = 'MONTH' | 'DAY';
 
@@ -26,7 +26,7 @@ export const ReportTypeSelector = ({ unit, onChange }: Props) => {
         월별
       </button>
       <button
-        className={cn('w-full', unit === 'MONTH' ? 'active-style' : 'inactive-style')}
+        className={cn('w-full', unit === 'DAY' ? 'active-style' : 'inactive-style')}
         data-value="DAY"
         onClick={handleUnitClick}
         type="button"

@@ -1,9 +1,6 @@
-import { ProgressBar } from '@hotspot/ui';
-
-import { DESIGN_TOKENS } from '@hotspot/ui/tokens';
-
-import { cn } from 'node_modules/@hotspot/ui/src/lib/cssMerge';
-
+import { ProgressBar } from '@hotspot/ui/components';
+import { cn } from '@hotspot/ui/lib';
+import { DESIGN_TOKENS } from '@hotspot/ui/styles';
 import type { ReportAppUsage } from '../model/type';
 
 interface ServiceReportProps {

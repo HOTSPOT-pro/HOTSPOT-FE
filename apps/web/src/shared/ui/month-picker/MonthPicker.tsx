@@ -2,7 +2,7 @@
 
 import LeftArrow from '@hotspot/ui/assets/images/icon/ArrowLeft.svg';
 import RightArrow from '@hotspot/ui/assets/images/icon/ArrowRight.svg';
-import { cn } from 'node_modules/@hotspot/ui/src/lib/cssMerge';
+import { cn } from '@hotspot/ui/lib';
 import { useState } from 'react';
 
 interface MonthPickerProps {

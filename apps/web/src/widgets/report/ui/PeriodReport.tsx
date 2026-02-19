@@ -2,7 +2,7 @@
 
 import { type ReportUser, ServiceReport, useUsageReport } from '@entities/report';
 import { UserSelector } from '@features/report';
-import { LineChart } from '@hotspot/ui';
+import { LineChart } from '@hotspot/ui/components';
 import { useState } from 'react';
 
 interface PeriodReportProps {
