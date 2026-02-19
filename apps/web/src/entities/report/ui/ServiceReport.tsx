@@ -28,7 +28,7 @@ export const ServiceReport = ({ userName, data, isTotal }: ServiceReportProps) =
             </div>
 
             <div className="flex-1 flex flex-col gap-1 min-w-0 py-1 w-full">
-              <div className="flex flex-row justify-between font-bold">
+              <div className="flex flex-row justify-between font-bold text-black">
                 <p>{item.appName}</p>
 
                 <p>{item.usage} GB</p>

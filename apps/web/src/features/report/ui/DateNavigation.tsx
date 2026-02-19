@@ -52,7 +52,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
         onClick={() => setIsOpen(!isOpen)}
         type="button"
       >
-        <div className="flex flex-row items-center justify-center gap-4">
+        <div className="flex flex-row items-center justify-center gap-4 text-black">
           {date.year}년 {date.month}월{' '}
           {isOpen ? <UpArrow className="text-gray-500" /> : <DownArrow className="text-gray-500" />}
         </div>

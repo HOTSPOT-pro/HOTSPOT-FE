@@ -33,7 +33,7 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
         <button className="p-1 hover:bg-gray-100 rounded" onClick={handlePrevYear} type="button">
           <LeftArrow className="text-gray-500" />
         </button>
-        <span className="font-bold text-lg">{viewYear}년</span>
+        <span className="font-bold text-lg text-black">{viewYear}년</span>
         <button
           className="p-1 hover:bg-gray-100 rounded disabled:opacity-30"
           disabled={viewYear >= currentYear}
