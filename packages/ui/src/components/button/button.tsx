@@ -1,3 +1,5 @@
+'use client';
+
 import type { ButtonHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import { cn } from '../../lib/cssMerge';
