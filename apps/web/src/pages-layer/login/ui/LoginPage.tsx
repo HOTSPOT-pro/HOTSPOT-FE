@@ -1,13 +1,11 @@
 import { GoogleLogin, KakaoLogin } from '@features/auth';
-import Main from '@hotspot/ui/assets/images/character/main.svg';
+import { Logo } from '@shared/ui';
 
 export const LoginPage = () => {
   return (
     <div className="flex flex-col w-full h-screen justify-center">
       <div className="flex flex-col items-center justify-center h-full">
-        <div className="w-30 h-30 bg-purple-800 flex justify-center items-center rounded-3xl">
-          <Main className="w-20 h-20" />
-        </div>
+        <Logo size="lg" />
         <p className="text-2xl font-black mt-8 text-black">hotspot</p>
         <p className="mt-2 text-gray-500 font-normal text-sm">가족 결합 데이터 관리 서비스</p>
       </div>
