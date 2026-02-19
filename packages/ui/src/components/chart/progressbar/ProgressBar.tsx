@@ -1,12 +1,13 @@
 'use client';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { COLORS } from '../../../lib/interpolateColor';
+import { DESIGN_TOKENS } from '../../../styles';
 
 interface ProgressBarProps {
   label: string;
   value: number;
   total: number;
-  color: string;
+  color?: string;
 }
 
 const PROGRESS_BAR_STYLE = {
@@ -14,7 +15,12 @@ const PROGRESS_BAR_STYLE = {
   SIZE: 10,
 } as const;
 
-export const ProgressBar = ({ label, value, total, color }: ProgressBarProps) => {
+export const ProgressBar = ({
+  label,
+  value,
+  total,
+  color = DESIGN_TOKENS.colors.graph.start,
+}: ProgressBarProps) => {
   const chartData = [{ displayValue: value, name: label }];
 
   return (
