@@ -1,6 +1,6 @@
 'use client';
 import { useMemo } from 'react';
-import { getChartData } from '../lib/ChartDataMapper';
+import { getChartData } from '../lib/chartDataMapper';
 import { APP_USAGE_DATA, REPORT_USERS, TOTAL_USAGE, USAGE_DATA_BY_USER } from './Mockup';
 
 interface UseUsageReportProps {
