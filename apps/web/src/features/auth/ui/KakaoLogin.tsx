@@ -6,7 +6,6 @@ export const KakaoLogin = () => {
   return (
     <Button
       className="flex w-full items-center justify-center gap-2 rounded-sm py-3 bg-kakao-container text-sm font-bold text-kakao-label hover:bg-yellow-400"
-      onClick={() => console.log('뭐야')}
       type="button"
       variant="solid"
     >
