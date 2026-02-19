@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { Button } from './button';
+import { Button } from './Button';
 
 const meta: Meta<typeof Button> = {
   args: {
@@ -74,13 +74,5 @@ export const Loading: Story = {
     children: '저장하기',
     isLoading: true,
     variant: 'solid',
-  },
-};
-
-export const WithClassName: Story = {
-  args: {
-    children: 'Custom class',
-    className:
-      'rounded-full px-6 py-2 font-semibold tracking-wide bg-emerald-600 text-white hover:bg-emerald-500',
   },
 };

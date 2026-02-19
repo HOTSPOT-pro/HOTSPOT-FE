@@ -1,5 +1,5 @@
-export { Button } from './button/button';
-export { Card } from './card/card';
+export { Button } from './button/Button';
+export { Card } from './card/Card';
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
 export { LineChart } from './chart/line/LineChart';
 export { ProgressBar } from './chart/progressbar/ProgressBar';
