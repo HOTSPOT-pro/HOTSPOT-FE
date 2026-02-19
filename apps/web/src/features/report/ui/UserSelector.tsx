@@ -1,7 +1,4 @@
-'use client';
-
-import { Chip } from '@shared/ui';
-import type { ReportUser } from '@/entities/report';
+import { type ReportUser, UserChip } from '@/entities/report';
 
 interface UserSelectorProps {
   users: ReportUser[];
@@ -13,11 +10,11 @@ export const UserSelector = ({ users, selectedUser, onSelect }: UserSelectorProp
   return (
     <div className="flex flex-wrap gap-2 pb-6">
       {users.map((user) => (
-        <Chip
+        <UserChip
           isSelected={selectedUser.id === user.id}
           key={user.id}
-          label={user.name || '전체'}
-          onClick={() => onSelect({ id: user.id, name: user.name })}
+          onSelect={onSelect}
+          user={user}
         />
       ))}
     </div>
