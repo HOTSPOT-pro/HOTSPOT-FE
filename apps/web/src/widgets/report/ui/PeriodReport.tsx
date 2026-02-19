@@ -12,7 +12,10 @@ interface PeriodReportProps {
 }
 
 export const PeriodReport = ({ unit, month, year }: PeriodReportProps) => {
-  const [selectedUser, setSelectedUser] = useState<ReportUser>({ id: 'all', name: null });
+  const [selectedUser, setSelectedUser] = useState<ReportUser>({
+    id: 'all',
+    name: null,
+  });
 
   const { users, chartData, appUsageData, isLoading } = useUsageReport({
     month,
