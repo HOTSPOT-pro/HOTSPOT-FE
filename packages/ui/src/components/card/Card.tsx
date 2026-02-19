@@ -14,10 +14,8 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ heading, description, children, className, ...props }, ref) => (
     <div className={cn(CARD_BASE_STYLES, className)} ref={ref} {...props}>
-      <div>
-        {heading ? <h2 className={CARD_TEXT_STYLES}>{heading}</h2> : null}
-        {description ? <p className={CARD_DESC_STYLES}>{description}</p> : null}
-      </div>
+      {heading && <h2 className={CARD_TEXT_STYLES}>{heading}</h2>}
+      {description && <p className={CARD_DESC_STYLES}>{description}</p>}
       {children}
     </div>
   ),
