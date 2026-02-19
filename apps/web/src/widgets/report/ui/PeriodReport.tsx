@@ -26,28 +26,31 @@ export const PeriodReport = ({ unit, month, year }: PeriodReportProps) => {
   if (isLoading) return <div>로딩 중...</div>;
 
   return (
-    <div className="mt-8 p-5 bg-white rounded-3xl flex flex-col gap-1">
-      <p className="text-base font-bold leading-relaxed text-gray-900">사용량 추이</p>
-      <p className="text-sm text-gray-600 mb-2">
-        {year}년 {month}월 {unit === 'MONTH' ? '월' : '일'}별 추이
-      </p>
-
+    <div className="mt-4">
       {/* 구성원 선택 */}
       <UserSelector onSelect={setSelectedUser} selectedUser={selectedUser} users={users} />
 
-      {/* 사용량 그래프 */}
-      <div className="w-full h-100 pt-3">
-        <LineChart
-          data={chartData}
-          max={100}
-          personalName={selectedUser.name}
-          type={unit}
-          unit="GB"
-        />
+      <div className="p-5 bg-white rounded-3xl flex flex-col gap-1">
+        <p className="text-base font-bold leading-relaxed text-gray-900">사용량 추이</p>
+
+        {/* 사용량 그래프 */}
+        <div className="w-full h-100 pt-3">
+          <LineChart
+            data={chartData}
+            max={100}
+            personalName={selectedUser.name}
+            type={unit}
+            unit="GB"
+          />
+        </div>
       </div>
 
       {/* 앱별 사용량 */}
-      <ServiceReport data={appUsageData} userName={selectedUser.name} />
+      <ServiceReport
+        data={appUsageData}
+        isTotal={selectedUser.id === 'all' ? true : false}
+        userName={selectedUser.name}
+      />
     </div>
   );
 };
