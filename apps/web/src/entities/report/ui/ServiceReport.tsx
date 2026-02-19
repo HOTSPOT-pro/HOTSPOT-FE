@@ -1,6 +1,5 @@
 import { ProgressBar } from '@hotspot/ui/components';
-import { cn } from '@hotspot/ui/lib';
-import { DESIGN_TOKENS } from '@hotspot/ui/styles';
+import { COLORS, cn } from '@hotspot/ui/lib';
 import type { ReportAppUsage } from '../model/type';
 
 interface ServiceReportProps {
@@ -35,11 +34,7 @@ export const ServiceReport = ({ userName, data }: ServiceReportProps) => {
               </div>
 
               <ProgressBar
-                color={
-                  index === 0
-                    ? DESIGN_TOKENS.colors.graph.start
-                    : DESIGN_TOKENS.colors.graph.secondary
-                }
+                color={index === 0 ? COLORS.START : COLORS.SECONDARY}
                 label={`ServiceUsage${index}`}
                 total={item.limit}
                 value={item.usage}
