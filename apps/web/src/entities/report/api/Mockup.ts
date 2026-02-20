@@ -6,7 +6,7 @@ export const REPORT_USERS: ReportUser[] = [
   { id: 'user2', name: '이영희' },
 ];
 
-export const TOTAL_USAGE = [30, 40, 40, 50, 60, 40, 30, 35, 45, 40, 60, 50];
+export const TOTAL_USAGE = [30, 40, 40, 50, 62, 40, 30, 35, 45, 40, 60, 50];
 
 export const USAGE_DATA_BY_USER: Record<string, number[]> = {
   all: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 전체일 땐 개인 선을 숨기거나 0으로 표시
