@@ -88,7 +88,7 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
               animationDuration={1500}
               dataKey="personal"
               dot={false}
-              name={personalName}
+              name={personalName || '개인 사용량'}
               stroke={SECOND_COLOR}
               strokeWidth={3}
               type="monotone"

@@ -28,7 +28,7 @@ export const PeriodReport = (range: ReportRange) => {
         <p className="text-base font-bold leading-relaxed text-gray-900">사용량 추이</p>
 
         {/* 사용량 그래프 */}
-        <div className="w-full h-100 pt-3">
+        <div className="w-full h-96 pt-3">
           <LineChart
             data={chartData}
             personalName={selectedUser.name}

@@ -40,6 +40,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
   return (
     <div className="relative flex w-full items-center gap-2 ">
       <button
+        aria-label="이전 달"
         className="p-2 rounded-md hover:bg-gray-50"
         onClick={() => moveMonth(-1)}
         type="button"
@@ -59,6 +60,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
       </button>
 
       <button
+        aria-label="다음 달"
         className="p-2 rounded-md hover:bg-gray-50 disabled:opacity-30"
         disabled={isNextDisabled}
         onClick={() => moveMonth(1)}

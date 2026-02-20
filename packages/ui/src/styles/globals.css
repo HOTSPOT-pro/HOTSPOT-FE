@@ -1,7 +1,6 @@
 @import "tailwindcss";
-@source "../components/**/*.{ts,tsx}";
-
 @import "./zIndex.css";
+@source "../components/**/*.{ts,tsx}";
 
 :root {
   --foreground: #171717;
