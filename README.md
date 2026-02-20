@@ -20,8 +20,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 - Framework: Next.js, React
 - Styling: Tailwind CSS
 - Visualization: Recharts
-- State Management: Redux Toolkit, TanStack Query(예정)
-- Monorepo: Turborepo
+- State Management: Redux Toolkit, TanStack Query
 
 ## 📂디렉토리 구조
 - apps
