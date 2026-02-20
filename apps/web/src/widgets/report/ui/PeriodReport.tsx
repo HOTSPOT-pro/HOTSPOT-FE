@@ -35,13 +35,7 @@ export const PeriodReport = ({ unit, month, year }: PeriodReportProps) => {
 
         {/* 사용량 그래프 */}
         <div className="w-full h-100 pt-3">
-          <LineChart
-            data={chartData}
-            max={100}
-            personalName={selectedUser.name}
-            type={unit}
-            unit="GB"
-          />
+          <LineChart data={chartData} personalName={selectedUser.name} type={unit} unit="GB" />
         </div>
       </div>
 
