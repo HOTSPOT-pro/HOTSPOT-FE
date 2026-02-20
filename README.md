@@ -48,7 +48,7 @@ src/
 │   └── 📂 report/               # features를 모아 만든 블록
 │
 ├── 📂 features/                 # [Features Layer] 사용자 액션 및 비즈니스 기능
-│   ├── 📂 auth-by-email/        # 이메일 로그인 로직 및 폼 UI
+│   ├── 📂 auth/                 # 이메일 로그인 로직 및 폼 UI
 │   ├── 📂 user-selector/        # 유저 선택 등 실제 상호작용 기능
 │   └── 💡 핵심 역할              # 동작 중심(API 호출, 상태 변경, 비즈니스 로직)
 │
@@ -64,13 +64,14 @@ src/
     ├── 📂 lib/                  # 유틸리티 함수, 공통 Hooks, 상수 정의
     └── 💡 핵심 역할              # 비즈니스 로직이 없는 순수 공통 모듈
 ```
+각 layer 밑으로 slices(`user, post 등 기능 분류`), segments(`ui, model, api 등 구현을 위한 세부사항`)가 들어간다.
 ### packages(공통) 내부 구조
 ```
 src/
-├── 📂 assets                    # 정적 이미지 소스 모음 (코드적 가공이 필요한 것만)
-├── 📂 components                # 공통 컴포넌트
-├── 📂 lib                       # 공통 함수
-└── 📂 styles                    # 전역 스타일 정의
+├── 📂 assets            # 정적 이미지 소스 모음 (코드적 가공이 필요한 것만)
+├── 📂 components        # 공통 컴포넌트
+├── 📂 lib               # 공통 함수
+└── 📂 styles            # 전역 스타일 정의
 ```
 
 ## 🏃실행 방법
