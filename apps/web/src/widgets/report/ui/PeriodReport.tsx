@@ -4,23 +4,17 @@ import { type ReportUser, ServiceReport, useUsageReport } from '@entities/report
 import { UserSelector } from '@features/report';
 import { LineChart } from '@hotspot/ui/components';
 import { useState } from 'react';
+import type { ReportRange } from '@/entities/report/model/type';
 
-interface PeriodReportProps {
-  unit: 'MONTH' | 'DAY';
-  month: number;
-  year: number;
-}
-
-export const PeriodReport = ({ unit, month, year }: PeriodReportProps) => {
+export const PeriodReport = (range: ReportRange) => {
   const [selectedUser, setSelectedUser] = useState<ReportUser>({
-    id: 'all',
+    id: null,
     name: null,
   });
 
   const { users, chartData, appUsageData, isLoading } = useUsageReport({
-    month,
+    range,
     userId: selectedUser.id,
-    year,
   });
 
   if (isLoading) return <div>로딩 중...</div>;
@@ -35,16 +29,17 @@ export const PeriodReport = ({ unit, month, year }: PeriodReportProps) => {
 
         {/* 사용량 그래프 */}
         <div className="w-full h-100 pt-3">
-          <LineChart data={chartData} personalName={selectedUser.name} type={unit} unit="GB" />
+          <LineChart
+            data={chartData}
+            personalName={selectedUser.name}
+            type={range.unit}
+            unit="GB"
+          />
         </div>
       </div>
 
       {/* 앱별 사용량 */}
-      <ServiceReport
-        data={appUsageData}
-        isTotal={selectedUser.id === 'all' ? true : false}
-        userName={selectedUser.name}
-      />
+      <ServiceReport data={appUsageData} isTotal={selectedUser.id === null} />
     </div>
   );
 };

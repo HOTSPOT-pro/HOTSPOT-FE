@@ -16,7 +16,7 @@ import { getRoundedMax } from './getRoundedMax';
 import { LineChartLegend } from './LineChartLegend';
 import { LineChartTooltip } from './LineChartTooltip';
 export interface LineChartDataProps {
-  date: string;
+  date: number;
   total: number;
   personal?: number;
   totalRatio: number;
