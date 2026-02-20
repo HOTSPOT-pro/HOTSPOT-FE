@@ -7,12 +7,14 @@ import EyeOff from '../../assets/images/icon/eye-off.svg';
 import { cn } from '../../lib/cssMerge';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  id: string;
   label: string;
   error?: string;
   onClear?: () => void;
 }
 
 export const Input = ({
+  id,
   label,
   error,
   className,
@@ -39,7 +41,7 @@ export const Input = ({
     <div className={cn('flex flex-col w-full max-w-sm group', className)}>
       <label
         className="text-sm font-medium text-gray-600 transition-colors group-focus-within:text-purple-600"
-        htmlFor={props.id}
+        htmlFor={id}
       >
         {label}
       </label>
@@ -52,7 +54,7 @@ export const Input = ({
             'placeholder:text-gray-400',
             error ? 'border-red-500' : 'focus:border-transparent',
           )}
-          id={props.id}
+          id={id}
           type={inputType}
           value={value}
         />
@@ -69,6 +71,7 @@ export const Input = ({
           {/* 삭제 */}
           {showClearButton ? (
             <button
+              aria-label="입력값 지우기"
               className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
               onClick={onClear}
               type="button"
@@ -80,6 +83,8 @@ export const Input = ({
           {/* 비밀번호 토글 */}
           {showPasswordButton ? (
             <button
+              aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+              aria-pressed={showPassword}
               className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
               onClick={() => setShowPassword(!showPassword)}
               type="button"
