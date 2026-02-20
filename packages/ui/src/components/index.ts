@@ -6,4 +6,5 @@ export { ProgressBar } from './chart/progressbar/ProgressBar';
 export { Loading } from './loading/Loading';
 export { Overlay } from './overlay/Overlay';
 export { Slider } from './slider/Slider';
+export { Tab, type TabItem } from './tab/Tab';
 export { Toggle } from './toggle/Toggle';
