@@ -25,7 +25,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 로그인
 
-![image.png](./source/login.png)
+<p align="center"> <img src="./source/login.png" width="300" /> </p>
 
 - 카카오 소셜 로그인
 - 구글 소셜 로그인
@@ -34,9 +34,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 온보딩
 
-![image.png](./source/onboarding.png)
-
-![image.png](./source/onboarding2.png)
+<p align="center"> <img src="./source/onboarding.png" width="300" /> <img src="./source/onboarding2.png" width="300" /> </p>
 
 - 생년월일, 전화번호 입력
 - 약관 동의
@@ -45,8 +43,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 가족 대시보드
 
-![image.png](./source/familyDash.png)
-![image.png](./source/familyDash2.png)
+<p align="center"> <img src="./source/familyDash.png" width="28%" /> <img src="./source/familyDash2.png" width="28%" /> </p>
 
 - `구성원 별 사용량/가족 데이터 총량`을 도넛 차트로 표시
 - `구성원 별 한도 및 사용량`을 프로그래스 바로 표시
@@ -54,7 +51,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 내 대시보드
 
-![image.png](./source/myDash.png)
+<p align="center"> <img src="./source/myDash.png" width="300" /> </p>
 
 - 요금제에 따른 `내 개별 데이터 사용량/내 개별 데이터 총량`을 도넛 차트로 표시
 - 월별 데이터 사용량
@@ -63,7 +60,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 알림 페이지
 
-![image.png](./source/noti.png)
+<p align="center"> <img src="./source/noti.png" width="300" /> </p>
 
 - 개인 데이터 임계치(50%/30%/10%/0%) 알림
 - 가족 공유 데이터 임계치 알림
@@ -75,15 +72,14 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 리포트 페이지
 
-![image.png](./source/report.png)
+<p align="center"> <img src="./source/report.png" width="300" /> </p>
 
 - 전체, 개인별 사용량 추이 확인
 - 전체, 개인별 앱 상세 사용량 확인
 
 ## 마이페이지
 
-![대표자, 부모 화면](./source/my.png)
-![일반 화면](./source/my2.png)
+<p align="center"> <img src="./source/my.png" width="28%" /> <img src="./source/my2.png" width="28%" /> </p>
 
 - 대표, 부모 메뉴
     - 가족 관리 페이지
@@ -97,9 +93,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 가족 관리 페이지
 
-![대표 화면](./source/familyManage.png)
-
-![image.png](./source/familyManage2.png)
+<p align="center"> <img src="./source/familyManage.png" width="28%" /> <img src="./source/familyManage2.png" width="28%" /> </p>
 
 - 대표자 기능
     - 구성원 추가(가족관계증명서 첨부 필요)
@@ -110,15 +104,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 정책 페이지
 
-![image.png](./source/policy.png)
-
-![image.png](./source/policy2.png)
-
-![image.png](./source/policy3.png)
-
-![image.png](./source/policy4.png)
-
-![image.png](./source/policy5.png)
+<p align="center"> <img src="./source/policy.png" width="28%" /> <img src="./source/policy2.png" width="28%" /> </p> <p align="center"> <img src="./source/policy3.png" width="28%" /> <img src="./source/policy4.png" width="28%" /> </p> <p align="center"> <img src="./source/policy5.png" width="300" /> </p>
 
 - 대표자 기능
     - 구성원 한도, 적용된 정책, 차단된 서비스 수정
@@ -128,9 +114,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 데이터 선물 페이지
 
-![image.png](./source/gift.png)
-
-![image.png](./source/gift2.png)
+<p align="center"> <img src="./source/gift.png" width="28%" /> <img src="./source/gift2.png" width="28%" /> </p>
 
 - 구성원에게 데이터 선물
 - 데이터 선물한 내역
@@ -138,7 +122,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 알림 설정 페이지/고객센터 및 약관 페이지
 
-![image.png](./source/noti.png)
+<p align="center"> <img src="./source/noti.png" width="300" /> </p>
 
 - 알림
     - 임계치 알림 설정
@@ -150,26 +134,24 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 로그인
 
-![image.png](./source/admin-login.png)
+<p align="center"> <img src="./source/admin-login.png" width="600" /> </p>
 
 - 관리자 키로 로그인
 
 ## 가족 조회
 
-![image.png](./source/admin-familylist.png)
+<p align="center"> <img src="./source/admin-familylist.png" width="700" /> </p>
 
 - 전화번호를 통해 가족 검색
 - 상세 버튼을 누르면 가족 상세 페이지로 이동
 
 ## 가족 상세 페이지
 
-![image.png](./source/admin-familydetail.png)
+<p align="center"> <img src="./source/admin-familydetail.png" width="650" /> </p> <p align="center"> <img src="./source/admin-familydetail2.png" width="650" /> </p>
 
 - `구성원 별 사용량/가족 데이터 총량`을 도넛 차트로 표시
 - 요금제에 따른 `개별 데이터 사용량/개별 데이터 총량`을 프로그래스 바로 표시
 - `선물받은 데이터 사용량/선물받은 데이터 양`을 받은 선물 별 프로그래스 바로 표시
-
-![image.png](./source/admin-familydetail2.png)
 
 - 구성원 권한 변경
 - 구성원 즉시 차단
@@ -178,9 +160,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 정책 관리 페이지
 
-![image.png](./source/admin-policy.png)
-
-![image.png](./source/admin-policy2.png)
+<p align="center"> <img src="./source/admin-policy.png" width="58%" /> <img src="./source/admin-policy2.png" width="35%" /> </p>
 
 - 정책 추가 및 정책 삭제
 - 정책 활성/비활성
@@ -189,7 +169,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 신청/승인 페이지
 
-![image.png](./source/admin-apply.png)
+<p align="center"> <img src="./source/admin-apply.png" width="700" /> </p>
 
 - 대기 중인 가족 구성원 신청 승인/거부
 - 승인한 신청 보기
