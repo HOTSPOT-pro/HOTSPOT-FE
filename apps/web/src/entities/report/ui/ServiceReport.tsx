@@ -8,7 +8,7 @@ interface ServiceReportProps {
 }
 
 export const ServiceReport = ({ data, isTotal }: ServiceReportProps) => {
-  const sortedData = data.usage.sort((a, b) => b.usage - a.usage);
+  const sortedData = [...data.usage].sort((a, b) => b.usage - a.usage);
 
   if (sortedData.length === 0) {
     return (
