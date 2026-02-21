@@ -1,10 +1,10 @@
 'use client';
 
 import { type ReportUser, ServiceReport, useUsageReport } from '@entities/report';
-import { UserSelector } from '@features/report';
+import type { ReportRange } from '@entities/report/model/type';
+import { UserSelector } from '@entities/user';
 import { LineChart } from '@hotspot/ui/components';
 import { useState } from 'react';
-import type { ReportRange } from '@/entities/report/model/type';
 
 export const PeriodReport = (range: ReportRange) => {
   const [selectedUser, setSelectedUser] = useState<ReportUser>({

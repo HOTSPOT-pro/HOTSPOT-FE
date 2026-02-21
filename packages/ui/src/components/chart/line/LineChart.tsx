@@ -11,8 +11,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { getRoundedMax } from '../../../lib/getRoundedMax';
 import { COLORS } from '../../../lib/interpolateColor';
-import { getRoundedMax } from './getRoundedMax';
 import { LineChartLegend } from './LineChartLegend';
 import { LineChartTooltip } from './LineChartTooltip';
 export interface LineChartDataProps {

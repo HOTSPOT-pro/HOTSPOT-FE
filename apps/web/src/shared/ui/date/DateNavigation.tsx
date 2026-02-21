@@ -4,8 +4,8 @@ import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 import LeftArrow from '@hotspot/ui/assets/icons/arrow-left.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import UpArrow from '@hotspot/ui/assets/icons/arrow-up.svg';
-import { MonthPicker } from '@shared/ui';
 import { useState } from 'react';
+import { MonthPicker } from './MonthPicker';
 
 interface DateNavigationProps {
   date: { year: number; month: number };

@@ -10,7 +10,7 @@ interface Props {
   onChange: (unit: ViewUnit) => void;
 }
 
-export const ReportTypeSelector = ({ unit, onChange }: Props) => {
+export const MonthDaySelector = ({ unit, onChange }: Props) => {
   const handleUnitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { value } = e.currentTarget.dataset;
     if (value) onChange(value as ViewUnit);

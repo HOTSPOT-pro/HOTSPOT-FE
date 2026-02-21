@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./zIndex.css";
+@import "./elevation.css";
 @source "../components/**/*.{ts,tsx}";
 
 :root {

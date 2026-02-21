@@ -1,7 +1,7 @@
 'use client';
-import { DateNavigation, ReportTypeSelector } from '@features/report';
+import { DateNavigation, MonthDaySelector } from '@shared/ui';
+import { PeriodReport } from '@widgets/report';
 import { useState } from 'react';
-import { PeriodReport } from '@/widgets/report';
 
 export const ReportPage = () => {
   const [selectedTab, setSelectedTab] = useState<'MONTH' | 'DAY'>('MONTH');
@@ -18,7 +18,7 @@ export const ReportPage = () => {
     <div className="w-full h-full">
       {/* 월일별 탭 버튼 */}
       <div className="py-2 px-4">
-        <ReportTypeSelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />
+        <MonthDaySelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />
       </div>
 
       <div className="px-5 py-4">
