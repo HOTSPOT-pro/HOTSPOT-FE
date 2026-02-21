@@ -104,7 +104,9 @@
         "apps/*/src/app/**/not-found.tsx",
         "apps/*/src/app/**/route.ts",
         "apps/*/src/app/**/default.tsx",
-        "**/*.mjs"
+        "**/*.mjs",
+        "**/*.stories.tsx",
+        "**/*.config.ts"
       ],
       "linter": {
         "rules": {

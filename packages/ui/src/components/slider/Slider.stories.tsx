@@ -1,4 +1,3 @@
-/* biome-ignore lint/style/noDefaultExport: Storybook requires default export */
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import type { ComponentProps } from 'react';
 import { useState } from 'react';
@@ -38,7 +37,6 @@ const meta: Meta<typeof Slider> = {
   title: 'Components/Slider',
 };
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
 export default meta;
 type Story = StoryObj<typeof Slider>;
 

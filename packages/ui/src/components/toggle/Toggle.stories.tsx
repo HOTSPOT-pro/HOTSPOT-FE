@@ -18,7 +18,6 @@ const meta: Meta<typeof Toggle> = {
   title: 'Components/Toggle',
 };
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
 export default meta;
 type Story = StoryObj<typeof Toggle>;
 
