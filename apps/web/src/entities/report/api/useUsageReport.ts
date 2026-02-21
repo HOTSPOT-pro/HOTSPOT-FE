@@ -9,7 +9,7 @@ import type {
   UsageDetail,
   UsageResponse,
 } from '../model/type';
-import { MOCK_APP_USAGE_DATA, MOCK_DAILY_USAGE, MOCK_MONTHLY_USAGE } from './Mockup';
+import { MOCK_APP_USAGE_DATA, MOCK_DAILY_USAGE, MOCK_MONTHLY_USAGE } from './mockup';
 
 interface UseUsageReportProps {
   userId: number | null;
