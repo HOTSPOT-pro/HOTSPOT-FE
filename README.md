@@ -1,11 +1,13 @@
 # 🔥HOTSPOT FE
-![](./source/readme_main_1.png)
-![](./source/readme_main_2.png)
+<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/637baee4-1956-4e63-85af-89461f7d0120" />
+<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/ebdb6a33-e4eb-4653-b76c-0287716d8467" />
+
 HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화하고, 관리자(부모)가 설정한 정책에 따라 자녀의 데이터 접근을 즉각적으로 제어하는 스마트 플랫폼입니다. 100만 가상 사용자의 트래픽 시뮬레이션을 견디는 고성능 실시간 대시보드와 일관된 사용자 경험을 제공합니다.
 
 ## ⚙️핵심 기능
-![](./source/readme_main_3.png)
-![](./source/readme_main_4.png)
+<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/fc0b61a9-b7be-49d7-9454-e7ee3043bc17" />
+<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/af029be0-6fe7-415d-bbcf-7db548acf720" />
+
 ### 1. 실시간 가족 데이터 통합 대시보드
 - 가족 구성원 전체의 데이터 소진 현황을 실시간으로 집계해 도넛 차트 및 막대 바 형태로 시각화합니다.
 - 복수 구성원이 동시에 데이터를 소진해도 잔여량 소진 시점과 차단 상태가 모든 단말에서 일관되게 반영됩니다.
