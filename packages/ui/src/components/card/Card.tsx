@@ -6,8 +6,8 @@ const CARD_BASE_STYLES = 'flex flex-col w-full p-4 gap-4 bg-white rounded-lg sha
 const CARD_HEADER_STYLES = 'flex flex-col';
 const CARD_TITLE_STYLES = 'text-black text-lg font-semibold';
 const CARD_DESC_STYLES = 'text-gray-600 text-sm';
-const CARD_CONTENT_STYLES = 'w-full';
-const CARD_FOOTER_STYLES = 'w-full';
+const CARD_CONTENT_STYLES = 'flex flex-col w-full';
+const CARD_FOOTER_STYLES = 'flex flex-col w-full';
 
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
