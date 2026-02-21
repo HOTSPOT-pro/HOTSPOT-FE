@@ -1,7 +1,7 @@
 'use client';
 
-import LeftArrow from '@hotspot/ui/assets/images/icon/arrow-left.svg';
-import RightArrow from '@hotspot/ui/assets/images/icon/arrow-right.svg';
+import LeftArrow from '@hotspot/ui/assets/icons/arrow-left.svg';
+import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { cn } from '@hotspot/ui/lib';
 import { useState } from 'react';
 
