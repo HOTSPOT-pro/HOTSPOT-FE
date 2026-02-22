@@ -1,15 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { DonutChart } from './DonutChart';
+import { DonutChartContainer } from './DonutChartContainer';
 
-const meta: Meta<typeof DonutChart> = {
+const meta: Meta<typeof DonutChartContainer> = {
   argTypes: {
-    data: { control: 'object' },
-    total: { control: 'number' },
+    type: {
+      control: 'radio',
+      options: ['MOBILE', 'WEB'],
+    },
   },
-  component: DonutChart,
+  component: DonutChartContainer,
+  // 중앙 정렬을 위한 데코레이터 (선택 사항)
   decorators: [
     (Story) => (
-      <div className="w-75 h-75 @container flex items-center justify-center">
+      <div
+        style={{
+          backgroundColor: '#ffffff',
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '2rem',
+        }}
+      >
         <Story />
       </div>
     ),
@@ -19,26 +29,46 @@ const meta: Meta<typeof DonutChart> = {
 };
 
 export default meta;
+type Story = StoryObj<typeof DonutChartContainer>;
 
-type Story = StoryObj<typeof DonutChart>;
-
-export const Default: Story = {
+// 1. 모바일 뷰 (기본값)
+export const Mobile: Story = {
   args: {
     data: [
-      { name: '엄마', value: 25.4 },
-      { name: '아빠', value: 18.2 },
-      { name: '나', value: 12.9 },
-      { name: '동생', value: 8.5 },
+      { name: '앱 사용', value: 35 },
+      { name: '시스템', value: 15 },
+      { name: '기타', value: 10 },
     ],
-    remaining: 34.3,
     total: 100,
-    totalUsed: 65.7,
+    type: 'MOBILE',
   },
 };
 
-export const OverCapacity: Story = {
+// 2. 웹 뷰 (세로 배치)
+export const Web: Story = {
   args: {
-    data: [{ name: '과사용자', value: 65.7 }],
+    ...Mobile.args,
+    type: 'WEB',
+  },
+};
+
+// 3. 데이터가 가득 찬 경우 (잔여 0)
+export const FullData: Story = {
+  args: {
+    data: [
+      { name: '비디오', value: 30 },
+      { name: '사진', value: 20 },
+    ],
     total: 50,
+    type: 'MOBILE',
+  },
+};
+
+// 4. 데이터가 하나만 있는 경우 (색상 보간 테스트)
+export const SingleData: Story = {
+  args: {
+    data: [{ name: '단일 데이터', value: 45 }],
+    total: 100,
+    type: 'MOBILE',
   },
 };
