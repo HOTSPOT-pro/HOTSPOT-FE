@@ -13,10 +13,10 @@ export const UserSelector = <T extends { id: number | null; name: string | null 
 }: UserSelectorProps<T>) => {
   return (
     <div className="flex gap-2">
-      {users.map((user) => (
+      {users.map((user, index) => (
         <UserChip
           isSelected={selectedUser.id === user.id}
-          key={user.id}
+          key={user.id ?? index}
           onSelect={() => onSelect(user)}
           user={user}
         />
