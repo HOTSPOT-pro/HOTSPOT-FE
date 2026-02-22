@@ -15,5 +15,25 @@ const config: StorybookConfig = {
   addons: [],
   framework: getAbsolutePath('@storybook/nextjs'),
   stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  webpackFinal: async (config) => {
+    if (!config.module?.rules) return config;
+    config.module.rules = config.module.rules.map((rule) => {
+      if (
+        rule && 
+        typeof rule === 'object' && 
+        rule.test instanceof RegExp && 
+        rule.test.test('.svg')
+      ) {
+        return { ...rule, exclude: /\.svg$/ };
+      }
+      return rule;
+    });
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
+
+    return config;
+  },
 };
 export default config;
