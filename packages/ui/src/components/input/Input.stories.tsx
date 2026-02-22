@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import { Input } from './Input'; // 경로에 맞게 수정하세요
+import { Input } from './Input';
 
 const meta: Meta<typeof Input> = {
   argTypes: {
+    onClear: { action: 'cleared' }, // Storybook 액션 로그에서 확인 가능
     type: {
       control: 'select',
       options: ['text', 'password', 'number', 'email', 'tel', 'date'],
@@ -19,6 +20,7 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
   args: {
+    id: 'name-input',
     label: '이름',
     placeholder: '이름을 입력하세요',
     type: 'text',
@@ -38,6 +40,7 @@ export const Default: Story = {
 
 export const Password: Story = {
   args: {
+    id: 'password-input',
     label: '비밀번호',
     placeholder: '비밀번호를 입력하세요',
     type: 'password',
@@ -57,25 +60,42 @@ export const Password: Story = {
 
 export const ErrorState: Story = {
   args: {
+    defaultValue: 'wrong-email-format',
     error: '올바른 이메일 형식이 아닙니다.',
+    id: 'email-error',
     label: '이메일',
     type: 'email',
-    value: 'invalid-email',
   },
 };
 
-export const Nums: Story = {
+export const Numbers: Story = {
   args: {
-    label: '데이터량',
-    max: 100,
-    min: 0,
+    id: 'number-input',
+    label: '데이터량 (GB)',
+    placeholder: '숫자만 입력 가능',
     type: 'number',
-    value: '25',
   },
   render: (args) => {
-    // 1. args.value가 readonly string[]이 아님을 확실히 해줍니다.
-    const [value, setValue] = useState<string | number>((args.value as string | number) ?? '');
-
+    const [value, setValue] = useState('');
     return <Input {...args} onChange={(e) => setValue(e.target.value)} value={value} />;
+  },
+};
+
+export const Uncontrolled: Story = {
+  args: {
+    defaultValue: '초기값입니다',
+    id: 'uncontrolled-input',
+    label: '비제어 인풋 (Ref 사용)',
+    placeholder: '수정 후 콘솔을 확인하세요',
+  },
+  render: (args) => {
+    return (
+      <div className="flex flex-col gap-2">
+        <Input {...args} />
+        <p className="text-xs text-gray-400 mt-2">
+          * 비제어 방식은 별도의 state 연결 없이 defaultValue와 ref로만 동작.
+        </p>
+      </div>
+    );
   },
 };
