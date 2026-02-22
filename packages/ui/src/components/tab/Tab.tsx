@@ -33,12 +33,14 @@ export const Tab = <T extends string>({
         isFullWidth ? 'w-full' : 'w-fit',
         className,
       )}
+      role="tablist"
     >
       {items.map((item) => {
         const isActive = activeValue === item.value;
 
         return (
           <button
+            aria-selected={isActive}
             className={cn(
               'transition-all duration-200 font-bold text-sm relative whitespace-nowrap',
               isFullWidth ? 'flex-1' : 'px-4',
@@ -56,11 +58,12 @@ export const Tab = <T extends string>({
             )}
             key={item.value}
             onClick={() => onTabChange(item.value)}
+            role="tab"
             type="button"
           >
             {item.label}
             {variant === 'underline' && isActive && (
-              <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-purple-600 animate-in fade-in duration-300" />
+              <div className="absolute -bottom-0.5 left-0 right-0 h-1 bg-purple-600" />
             )}
           </button>
         );
