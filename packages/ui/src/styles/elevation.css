@@ -1,0 +1,33 @@
+:root {
+  --z-base: 0;
+  --z-header: 10;
+  --z-dropdown: 20;
+  --z-sticky: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 100;
+}
+
+@layer utilities {
+  .z-base {
+    z-index: var(--z-base);
+  }
+  .z-header {
+    z-index: var(--z-header);
+  }
+  .z-dropdown {
+    z-index: var(--z-dropdown);
+  }
+  .z-sticky {
+    z-index: var(--z-sticky);
+  }
+  .z-overlay {
+    z-index: var(--z-overlay);
+  }
+  .z-toast {
+    z-index: var(--z-toast);
+  }
+  .z-modal {
+    z-index: var(--z-modal);
+  }
+}
