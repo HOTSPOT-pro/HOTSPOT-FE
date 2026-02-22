@@ -5,6 +5,7 @@ import type { ReportRange } from '@entities/report/model/type';
 import { UserSelector } from '@entities/user';
 import { LineChart } from '@hotspot/ui/components';
 import { useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export const PeriodReport = (range: ReportRange) => {
   const [selectedUser, setSelectedUser] = useState<ReportUser>({
@@ -29,12 +30,26 @@ export const PeriodReport = (range: ReportRange) => {
 
         {/* 사용량 그래프 */}
         <div className="w-full h-96 min-w-0 min-h-0 pt-3">
-          <LineChart
-            data={chartData}
-            personalName={selectedUser.name}
-            type={range.unit}
-            unit="GB"
-          />
+          <ErrorBoundary
+            fallback={
+              <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">
+                데이터를 불러오는 중 오류가 발생했습니다.
+              </div>
+            }
+          >
+            {chartData.length === 0 ? (
+              <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">
+                데이터가 없습니다.
+              </div>
+            ) : (
+              <LineChart
+                data={chartData}
+                personalName={selectedUser.name}
+                type={range.unit}
+                unit="GB"
+              />
+            )}
+          </ErrorBoundary>
         </div>
       </div>
 
