@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BottomNavigation } from './BottomNavigation';
 
 interface BottomNavControllerProps {
-  /** jQuery에서 documentHeight - 160 기준값 */
+  /** documentHeight - 160 기준값 */
   nearBottomOffset?: number;
   /** 모바일에서 숨길 때 이동 애니메이션 시간 */
   durationMs?: number;
@@ -83,7 +83,6 @@ export function BottomNavController({
 
         const nearBottom = current + windowHeight >= docHeight - nearBottomOffset;
 
-        // jQuery 로직 동일:
         // - 위로 스크롤: 보이기
         // - 아래로 스크롤: (바닥 근처면 보이기) 아니면 숨기기
         setHidden(!(goingUp || nearBottom));
