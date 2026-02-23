@@ -1,2 +1,1 @@
-export { GoogleLogin } from './ui/GoogleLogin';
-export { KakaoLogin } from './ui/KakaoLogin';
+export { SocialLoginContainer } from './ui/SocialLoginContainer';

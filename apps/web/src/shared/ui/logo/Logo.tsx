@@ -12,7 +12,7 @@ interface LogoProps {
 
 export const Logo = ({ size }: LogoProps) => {
   return (
-    <div className={cn('flex justify-center items-center bg-purple-800', SIZES[size])}>
+    <div className={cn('flex justify-center items-center bg-purple-800 shrink-0', SIZES[size])}>
       <Main className="w-3/5 h-3/5" />
     </div>
   );
