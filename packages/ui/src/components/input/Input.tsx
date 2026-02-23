@@ -19,6 +19,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [showPassword, setShowPassword] = useState(false);
     const isPassword = type === 'password';
 
+    const handleClear = () => {
+      if (ref && 'current' in ref && ref.current) {
+        ref.current.value = '';
+        ref.current.focus();
+      }
+      onClear?.();
+    };
+
     return (
       <div className={cn('flex flex-col w-full group', className)}>
         <label
@@ -54,7 +62,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <button
               aria-label="입력값 지우기"
               className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
-              onClick={onClear}
+              onClick={handleClear}
               type="button"
             >
               <XCircle className="w-4 h-4" />

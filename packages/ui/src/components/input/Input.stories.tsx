@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Input } from './Input';
 
 const meta: Meta<typeof Input> = {
   argTypes: {
-    onClear: { action: 'cleared' }, // Storybook 액션 로그에서 확인 가능
+    onClear: { action: 'cleared' },
     type: {
       control: 'select',
       options: ['text', 'password', 'number', 'email', 'tel'],
@@ -124,11 +124,12 @@ export const Uncontrolled: Story = {
     placeholder: '수정 후 콘솔을 확인하세요',
   },
   render: (args) => {
+    const inputRef = useRef<HTMLInputElement>(null);
     return (
       <div className="flex flex-col gap-2">
-        <Input {...args} />
+        <Input ref={inputRef} {...args} />
         <p className="text-xs text-gray-400 mt-2">
-          * 비제어 방식은 별도의 state 연결 없이 defaultValue와 ref로만 동작.
+          * 비제어 방식은 별도의 state 연결 없이 defaultValue와 *ref*로만 동작. ref는 있어야함.
         </p>
       </div>
     );
