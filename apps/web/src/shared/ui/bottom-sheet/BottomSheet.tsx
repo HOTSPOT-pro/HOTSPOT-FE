@@ -1,5 +1,6 @@
 'use client';
-import { cn, Overlay } from '@hotspot/ui';
+import { Overlay } from '@hotspot/ui/components';
+import { cn } from '@hotspot/ui/lib';
 import React, { type ReactNode, useEffect, useRef, useState } from 'react';
 
 interface BottomSheetProps {

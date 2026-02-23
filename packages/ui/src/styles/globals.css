@@ -1,28 +1,10 @@
 @import "tailwindcss";
+@import "./elevation.css";
 @source "../components/**/*.{ts,tsx}";
 
 :root {
   --foreground: #171717;
   --background: #ffffff;
-  
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100dvw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
 }
 
 * {
@@ -31,21 +13,4 @@ body {
 
 a {
   text-decoration: none;
-}
-
-.imgDark {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
-  }
 }

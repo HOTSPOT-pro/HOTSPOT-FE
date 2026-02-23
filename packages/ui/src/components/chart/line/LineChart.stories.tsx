@@ -20,10 +20,9 @@ const meta: Meta<typeof LineChart> = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Chart/LineChart',
+  title: 'Components/LineChart',
 };
 
-// biome-ignore lint/style/noDefaultExport: <storybook 테스트>
 export default meta;
 type Story = StoryObj<typeof LineChart>;
 
