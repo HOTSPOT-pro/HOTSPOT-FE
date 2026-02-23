@@ -12,7 +12,6 @@ interface TabsProps<T extends string> {
   activeValue: T;
   onTabChange: (value: T) => void;
   variant?: 'underline' | 'segment';
-  isFullWidth?: boolean;
   className?: string;
 }
 
@@ -21,16 +20,14 @@ export const Tab = <T extends string>({
   activeValue,
   onTabChange,
   variant = 'underline',
-  isFullWidth = true,
   className,
 }: TabsProps<T>) => {
   return (
     <div
       className={cn(
-        'flex',
+        'flex w-full',
         variant === 'underline' && 'border-b-2 border-gray-100',
-        variant === 'segment' && 'p-1 rounded-xl w-fit gap-2',
-        isFullWidth ? 'w-full' : 'w-fit',
+        variant === 'segment' && 'p-1 rounded-xl gap-2',
         className,
       )}
       role="tablist"
@@ -42,8 +39,7 @@ export const Tab = <T extends string>({
           <button
             aria-selected={isActive}
             className={cn(
-              'transition-all duration-200 font-bold text-sm relative whitespace-nowrap',
-              isFullWidth ? 'flex-1' : 'px-4',
+              'w-full transition-all duration-200 font-bold text-sm relative whitespace-nowrap flex-1',
 
               variant === 'underline' && [
                 'py-3 text-base font-semibold',
@@ -52,7 +48,7 @@ export const Tab = <T extends string>({
               variant === 'segment' && [
                 'py-3 rounded-lg',
                 isActive
-                  ? 'bg-purple-600 text-white shadow-sm'
+                  ? 'bg-purple-600 text-white shadow-sm border border-purple-600'
                   : 'border border-gray-200 text-black bg-white hover:bg-gray-100',
               ],
             )}
