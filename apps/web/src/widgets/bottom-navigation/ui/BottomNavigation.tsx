@@ -34,16 +34,20 @@ export function BottomNavigation({ className }: BottomNavigationProps) {
                 >
                   <div className="relative h-6 w-6">
                     <Icon
+                      aria-hidden="true"
                       className={cn(
                         'absolute inset-0 transition-opacity duration-200 text-black',
                         isActive ? 'opacity-0' : 'opacity-100 group-hover:opacity-0',
                       )}
+                      focusable="false"
                     />
                     <ActiveIcon
+                      aria-hidden="true"
                       className={cn(
                         'absolute inset-0 transition-opacity duration-200 text-purple-600',
                         isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
                       )}
+                      focusable="false"
                     />
                   </div>
 
