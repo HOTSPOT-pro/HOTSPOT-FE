@@ -1,4 +1,4 @@
-import { Button } from '@hotspot/ui';
+import { Button } from '@hotspot/ui/components';
 
 const page = () => {
   return (
