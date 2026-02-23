@@ -29,14 +29,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn('flex flex-col w-full group', className)}>
-        <label
-          className="text-sm font-medium text-gray-600 transition-colors group-focus-within:text-purple-600"
-          htmlFor={id}
-        >
+        <label className="text-sm font-medium text-gray-600 transition-colors" htmlFor={id}>
           {label}
         </label>
 
-        <div className="relative w-full flex items-center border-b-2 border-gray-200">
+        <div className="relative w-full flex items-center border-b border-gray-200 gap-4">
           <input
             {...props}
             className={cn(
@@ -52,20 +49,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {/* 하단 보더 애니메이션 */}
           <span
             className={cn(
-              'absolute -bottom-0.5 left-0 h-0.5 w-0 bg-purple-600 transition-all duration-300 group-focus-within:w-full',
+              'absolute -bottom-0.25 left-0 h-0.25 w-0 bg-purple-600 transition-all duration-300 group-focus-within:w-full',
               error && 'bg-red-500 w-full',
             )}
           />
 
-          <div className="right-0 flex items-center pr-1">
+          <div className="right-0 flex items-center gap-2">
             {/* 삭제 */}
             <button
               aria-label="입력값 지우기"
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              className="w-5.5 h-5.5 text-gray-400 hover:text-gray-600 transition-colors flex justify-center items-center"
               onClick={handleClear}
               type="button"
             >
-              <XCircle className="w-4 h-4" />
+              <XCircle className="w-4.5 h-4.5" />
             </button>
 
             {/* 비밀번호 토글 */}
@@ -73,11 +70,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               <button
                 aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
                 aria-pressed={showPassword}
-                className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                className="w-5.5 h-5.5 font-normal text-base line text-gray-400 hover:text-gray-600 transition-colors flex justify-center items-center"
                 onClick={() => setShowPassword(!showPassword)}
                 type="button"
               >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPassword ? (
+                  <EyeOff className="w-4.5 h-4.5" />
+                ) : (
+                  <Eye className="w-4.5 h-4.5" />
+                )}
               </button>
             ) : null}
           </div>
@@ -85,7 +86,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         {error ? <p className="mt-1.5 text-xs text-red-500">{error}</p> : null}
         {description ? (
-          <p className="mt-1.5 text-xs font-normal text-gray-500">{description}</p>
+          <p className="pt-2 text-xs font-normal text-gray-500">{description}</p>
         ) : null}
       </div>
     );
