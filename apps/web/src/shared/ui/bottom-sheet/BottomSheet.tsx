@@ -1,5 +1,5 @@
 'use client';
-import { Overlay } from '@hotspot/ui';
+import { Overlay } from '@hotspot/ui/components';
 import { cn } from 'node_modules/@hotspot/ui/src/lib/cssMerge';
 import React, { type ReactNode, useEffect, useRef, useState } from 'react';
 

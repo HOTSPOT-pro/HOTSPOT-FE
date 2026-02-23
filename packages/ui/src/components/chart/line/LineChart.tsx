@@ -11,11 +11,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { getRoundedMax } from '../../../lib/getRoundedMax';
 import { COLORS } from '../../../lib/interpolateColor';
 import { LineChartLegend } from './LineChartLegend';
 import { LineChartTooltip } from './LineChartTooltip';
 export interface LineChartDataProps {
-  date: string;
+  date: number;
   total: number;
   personal?: number;
   totalRatio: number;
@@ -23,18 +24,20 @@ export interface LineChartDataProps {
 }
 
 export interface UsageLineChartProps {
-  max: number;
+  personalName?: string | null;
   data: LineChartDataProps[];
   unit?: string;
   type: 'MONTH' | 'DAY';
 }
 
-export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartProps) => {
+export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageLineChartProps) => {
   const MAIN_COLOR = COLORS.SECONDARY || '#3b82f6';
   const SECOND_COLOR = COLORS.START || '#141414';
 
   const dateUnit = type === 'MONTH' ? '월' : '일';
-  const hasPersonalData = data.some((d) => d.personal !== null);
+  const hasPersonalData = personalName !== null;
+
+  const max = getRoundedMax(data.map((item) => item.total));
 
   return (
     <div className="w-full h-full @container">
@@ -61,7 +64,9 @@ export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartP
           />
 
           <Tooltip
-            content={<LineChartTooltip dateUnit={dateUnit} unit={unit} />}
+            content={
+              <LineChartTooltip dateUnit={dateUnit} hasPersonalData={hasPersonalData} unit={unit} />
+            }
             cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
           />
 
@@ -83,7 +88,7 @@ export const LineChart = memo(({ max, data, unit = 'GB', type }: UsageLineChartP
               animationDuration={1500}
               dataKey="personal"
               dot={false}
-              name="개별 사용량"
+              name={personalName || '개인 사용량'}
               stroke={SECOND_COLOR}
               strokeWidth={3}
               type="monotone"

@@ -1,17 +1,14 @@
 import { interpolateRgb } from 'd3-interpolate';
-import { DESIGN_TOKENS } from '../styles/tokens';
-
-const { graph } = DESIGN_TOKENS.colors;
 
 export const COLORS = {
-  CARTESIAN: graph.cartesian,
-  END: graph.end,
-  HOVER: graph.hover,
-  REMAINING: graph.remaining,
-  SECONDARY: graph.secondary,
-  START: graph.start,
-  STROKE: graph.stroke,
-  TEXT_SECONDARY: graph.gray600,
+  CARTESIAN: '#f0f0f0',
+  END: '#d9c9ff',
+  HOVER: '#141414',
+  REMAINING: '#E5E7EB',
+  SECONDARY: '#5BDD6A',
+  START: '#4F46E5',
+  STROKE: '#FFFFFF',
+  TEXT_SECONDARY: '#777777',
 } as const;
 
 export const interpolateColor = (factor: number): string => {
