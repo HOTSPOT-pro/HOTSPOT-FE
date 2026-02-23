@@ -7,7 +7,7 @@ const meta: Meta<typeof Input> = {
     onClear: { action: 'cleared' }, // Storybook 액션 로그에서 확인 가능
     type: {
       control: 'select',
-      options: ['text', 'password', 'number', 'email', 'tel', 'date'],
+      options: ['text', 'password', 'number', 'email', 'tel'],
     },
   },
   component: Input,
@@ -20,6 +20,7 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
   args: {
+    description: '이름을 입력하세요',
     id: 'name-input',
     label: '이름',
     placeholder: '이름을 입력하세요',
@@ -60,11 +61,38 @@ export const Password: Story = {
 
 export const ErrorState: Story = {
   args: {
-    defaultValue: 'wrong-email-format',
-    error: '올바른 이메일 형식이 아닙니다.',
-    id: 'email-error',
+    id: 'email-validation',
     label: '이메일',
+    placeholder: 'example@email.com',
     type: 'email',
+  },
+  render: (args) => {
+    const [value, setValue] = useState('');
+    const [error, setError] = useState('');
+
+    const validateEmail = (email: string) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setError('올바른 이메일 형식이 아닙니다.');
+      } else {
+        setError('');
+      }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      setValue(newValue);
+      validateEmail(newValue);
+    };
+
+    const handleClear = () => {
+      setValue('');
+      setError('이메일을 입력해 주세요.');
+    };
+
+    return (
+      <Input {...args} error={error} onChange={handleChange} onClear={handleClear} value={value} />
+    );
   },
 };
 
@@ -77,7 +105,14 @@ export const Numbers: Story = {
   },
   render: (args) => {
     const [value, setValue] = useState('');
-    return <Input {...args} onChange={(e) => setValue(e.target.value)} value={value} />;
+    return (
+      <Input
+        {...args}
+        onChange={(e) => setValue(e.target.value)}
+        onClear={() => setValue('0')}
+        value={value}
+      />
+    );
   },
 };
 
