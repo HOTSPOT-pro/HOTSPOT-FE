@@ -8,6 +8,7 @@ export {
   CardTitle,
 } from './card/Card';
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
+export type { LineChartDataProps, UsageLineChartProps } from './chart/line/LineChart';
 export { LineChart } from './chart/line/LineChart';
 export { ProgressBar } from './chart/progressbar/ProgressBar';
 export { Input } from './input/Input';
