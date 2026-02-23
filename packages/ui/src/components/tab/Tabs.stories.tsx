@@ -4,9 +4,6 @@ import { Tab } from './Tab';
 
 const meta: Meta<typeof Tab> = {
   argTypes: {
-    isFullWidth: {
-      control: 'boolean',
-    },
     variant: {
       control: 'radio',
       options: ['underline', 'segment'],
@@ -25,9 +22,8 @@ const TabsTemplate = (args: any) => {
   return <Tab {...args} activeValue={activeValue} onTabChange={(val) => setActiveValue(val)} />;
 };
 
-export const PolicyPageTabs: Story = {
+export const Default: Story = {
   args: {
-    isFullWidth: true,
     items: [
       { label: '가족 정책', value: 'FAMILY' },
       { label: '정책 관리', value: 'MANAGEMENT' },
@@ -39,7 +35,6 @@ export const PolicyPageTabs: Story = {
 
 export const MultiItemTabs: Story = {
   args: {
-    isFullWidth: true,
     items: [
       { label: '전체', value: 'ALL' },
       { label: '사용 중', value: 'ACTIVE' },
@@ -50,9 +45,8 @@ export const MultiItemTabs: Story = {
   render: (args) => <TabsTemplate {...args} />,
 };
 
-export const ReportSegmentTabs: Story = {
+export const Segment: Story = {
   args: {
-    isFullWidth: false,
     items: [
       { label: '일별', value: 'DAY' },
       { label: '월별', value: 'MONTH' },
@@ -60,4 +54,28 @@ export const ReportSegmentTabs: Story = {
     variant: 'segment',
   },
   render: (args) => <TabsTemplate {...args} />,
+};
+
+export const Uncontrolled: Story = {
+  args: {
+    defaultValue: 'account', // 초기 선택값만 설정
+    items: [
+      { label: '계정 설정', value: 'account' },
+      { label: '보안 정책', value: 'security' },
+      { label: '알림 설정', value: 'notification' },
+    ],
+    variant: 'underline',
+  },
+};
+
+export const UncontrolledSegment: Story = {
+  args: {
+    defaultValue: 'security',
+    items: [
+      { label: '계정 설정', value: 'account' },
+      { label: '보안 정책', value: 'security' },
+      { label: '알림 설정', value: 'notification' },
+    ],
+    variant: 'segment',
+  },
 };

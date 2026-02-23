@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { cn } from '../../lib/cssMerge';
 
 export interface TabItem<T extends string> {
@@ -9,19 +10,32 @@ export interface TabItem<T extends string> {
 
 interface TabsProps<T extends string> {
   items: TabItem<T>[];
-  activeValue: T;
-  onTabChange: (value: T) => void;
+  activeValue?: T;
+  onTabChange?: (value: T) => void;
+  defaultValue?: T;
   variant?: 'underline' | 'segment';
   className?: string;
 }
 
 export const Tab = <T extends string>({
   items,
-  activeValue,
+  activeValue: controlledValue,
   onTabChange,
+  defaultValue,
   variant = 'underline',
   className,
 }: TabsProps<T>) => {
+  const [internalValue, setInternalValue] = useState<T>(defaultValue || (items[0]?.value as T));
+  const isControlled = controlledValue !== undefined;
+  const activeValue = isControlled ? controlledValue : internalValue;
+
+  const handleTabClick = (value: T) => {
+    if (!isControlled) {
+      setInternalValue(value);
+    }
+    onTabChange?.(value);
+  };
+
   return (
     <div
       className={cn(
@@ -53,7 +67,7 @@ export const Tab = <T extends string>({
               ],
             )}
             key={item.value}
-            onClick={() => onTabChange(item.value)}
+            onClick={() => handleTabClick(item.value)}
             role="tab"
             type="button"
           >
