@@ -1,13 +1,14 @@
 'use client';
 import Kakao from '@hotspot/ui/assets/images/icon/Kakao.svg';
 import { Button } from '@hotspot/ui/components';
+import { cn } from '@hotspot/ui/lib';
 import { useSocialLogin } from '../api/useSocialLogin';
 
-export const KakaoLogin = () => {
+export const KakaoLogin = ({ className }: { className?: string }) => {
   const { loginWithKakao } = useSocialLogin();
   return (
     <Button
-      className="flex w-full items-center justify-center gap-2 rounded-sm py-3 bg-kakao-container text-sm font-bold text-kakao-label hover:bg-yellow-400"
+      className={cn('bg-kakao-container text-kakao-label hover:bg-yellow-400', className)}
       onClick={loginWithKakao}
       type="button"
       variant="solid"

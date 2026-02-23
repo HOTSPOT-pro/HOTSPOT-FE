@@ -2,7 +2,7 @@
 
 import { Button, Input } from '@hotspot/ui/components';
 import type React from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BottomSheet } from '@/shared/ui';
 import { useUserStore } from '../../auth/store/useUserStore';
 import { formatBirth, formatTel } from '../lib/format';
@@ -11,10 +11,12 @@ import { AgreementSection } from './AgreementSection';
 export const OnBoardingForm = () => {
   const auth = useUserStore();
   const [isOpen, setIsOpen] = useState(false);
-
   const [formData, setFormData] = useState({ birth: '', tel: '' });
 
-  // 핸들러: 입력값이 바뀔 때마다 포맷 적용
+  const openSheet = useCallback(() => setIsOpen(true), []);
+  const closeSheet = useCallback(() => setIsOpen(false), []);
+
+  // 입력값이 바뀔 때마다 포맷 적용
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
@@ -25,7 +27,7 @@ export const OnBoardingForm = () => {
     }
   };
 
-  // 유효성 검사 (숫자 개수 기준)
+  // 숫자 수 기준 유효성 검사
   const isBirthValid = formData.birth.replace(/\D/g, '').length === 6;
   const isTelValid = formData.tel.replace(/\D/g, '').length === 11;
 
@@ -34,7 +36,7 @@ export const OnBoardingForm = () => {
       <div>
         <div className="font-bold text-2xl flex flex-col gap-1">
           <p>환영합니다!</p>
-          <p>{auth.userName}님</p>
+          <p>{auth.userName ?? '사용자'}님</p>
         </div>
 
         <div className="text-gray-600 font-light mt-2">
@@ -62,12 +64,12 @@ export const OnBoardingForm = () => {
         </div>
       </div>
 
-      <Button disabled={!(isBirthValid && isTelValid)} onClick={() => setIsOpen(true)}>
+      <Button disabled={!(isBirthValid && isTelValid)} onClick={openSheet}>
         다음
       </Button>
 
       {isOpen && (
-        <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <BottomSheet isOpen={isOpen} onClose={closeSheet}>
           <AgreementSection />
         </BottomSheet>
       )}

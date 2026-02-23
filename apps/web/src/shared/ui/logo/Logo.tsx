@@ -1,5 +1,5 @@
 import Main from '@hotspot/ui/assets/images/character/main.svg';
-import { cn } from 'node_modules/@hotspot/ui/src/lib/cssMerge';
+import { cn } from '@hotspot/ui/lib';
 
 const SIZES = {
   lg: 'w-30 h-30 rounded-3xl',
