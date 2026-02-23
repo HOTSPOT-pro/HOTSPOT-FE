@@ -1,4 +1,4 @@
-import { BottomNavController } from '@/widgets/ui/BottomNavController';
+import { BottomNavController } from '@/widgets/bottom-navigation/ui/BottomNavController';
 
 export default function MobileLayout({
   children,
