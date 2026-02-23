@@ -1,6 +1,9 @@
-export { Button } from './button/button';
-export { Card } from './card/card';
+// export type { ButtonProps } from './button/Button';
+// export { Button } from './button/Button';
+// export { Card } from './card/Card';
+export type { DonutChartDataProps, DonutChartProps } from './chart/donut/DonutChart';
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
+export type { LineChartDataProps, UsageLineChartProps } from './chart/line/LineChart';
 export { LineChart } from './chart/line/LineChart';
 export { ProgressBar } from './chart/progressbar/ProgressBar';
 export { Code } from './code/code';

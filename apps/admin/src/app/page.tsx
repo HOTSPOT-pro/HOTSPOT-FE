@@ -1,9 +1,9 @@
-import { Button } from '@hotspot/ui';
+// import { Button } from '@hotspot/ui';
 
 const page = () => {
   return (
     <div>
-      <Button appName={''}>test</Button>
+      {/* <Button >test</Button> */}
       <span className="text-blue-500">하이</span>
     </div>
   );
