@@ -10,7 +10,9 @@ export {
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
 export { LineChart } from './chart/line/LineChart';
 export { ProgressBar } from './chart/progressbar/ProgressBar';
+export { Input } from './input/Input';
 export { Loading } from './loading/Loading';
 export { Overlay } from './overlay/Overlay';
 export { Slider } from './slider/Slider';
+export { Tab, type TabItem } from './tab/Tab';
 export { Toggle } from './toggle/Toggle';
