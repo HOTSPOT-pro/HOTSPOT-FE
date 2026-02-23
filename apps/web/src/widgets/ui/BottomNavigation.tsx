@@ -14,7 +14,7 @@ export function BottomNavigation({ className }: BottomNavigationProps) {
 
   return (
     <nav aria-label="Bottom navigation" className={className}>
-      <div className="mx-auto w-full bg-white">
+      <div className="mx-auto w-full px-6 bg-white">
         <ul className="flex">
           {BOTTOM_NAV_ITEMS.map((item) => {
             const isActive =
@@ -27,7 +27,7 @@ export function BottomNavigation({ className }: BottomNavigationProps) {
                 <Link
                   aria-current={isActive ? 'page' : undefined}
                   className={cn(
-                    'group flex h-14 flex-col items-center justify-center gap-1 text-xs transition-colors',
+                    'group flex h-full py-2 flex-col items-center justify-center gap-0.5 text-xs transition-colors',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                   )}
                   href={item.href}
