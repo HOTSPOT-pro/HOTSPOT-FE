@@ -28,8 +28,7 @@
     "./assets/*": "./src/assets/*",
     "./components": "./src/components/index.ts",
     "./globals.css": "./src/styles/globals.css",
-    "./lib": "./src/lib/index.ts",
-    "./tokens": "./src/styles/tokens.ts"
+    "./lib": "./src/lib/index.ts"
   },
   "name": "@hotspot/ui",
   "private": true,

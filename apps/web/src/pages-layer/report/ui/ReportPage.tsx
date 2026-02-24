@@ -29,7 +29,6 @@ export const ReportPage = () => {
         />
         {/* 기간별 리포트 */}
         <PeriodReport month={selectedDate.month} unit={selectedTab} year={selectedDate.year} />
-        <PeriodReport month={selectedDate.month} unit={selectedTab} year={selectedDate.year} />
       </div>
     </div>
   );
