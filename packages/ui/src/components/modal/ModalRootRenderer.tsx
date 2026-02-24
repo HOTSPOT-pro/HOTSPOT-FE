@@ -44,14 +44,14 @@ export function ModalRootRenderer({ registry }: { registry: Registry }) {
       if (e.key !== 'Tab') return;
 
       const focusableElements = getFocusableElements();
-      if (focusableElements.length === 0) {
+      const first = focusableElements[0];
+      if (!first) {
         e.preventDefault();
         dialog.focus();
         return;
       }
 
-      const first = focusableElements[0];
-      const last = focusableElements[focusableElements.length - 1];
+      const last = focusableElements[focusableElements.length - 1] ?? first;
       const active = document.activeElement;
       const isInsideDialog = active instanceof Node && dialog.contains(active);
 
@@ -88,7 +88,7 @@ export function ModalRootRenderer({ registry }: { registry: Registry }) {
   const closeOnOutside = state.options?.closeOnOutsideClick ?? true;
 
   return createPortal(
-    <div className="fixed inset-0 z-[999]">
+    <div className="fixed inset-0 z-modal">
       {closeOnOutside ? (
         <button
           aria-label="Close modal overlay"
