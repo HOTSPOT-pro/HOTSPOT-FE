@@ -1,12 +1,7 @@
-import { Button } from '@hotspot/ui/components';
+import { HomePage } from '@/pages-layer/home/ui/HomePage';
 
 const page = () => {
-  return (
-    <div>
-      <Button>test</Button>
-      <span className="text-red-500">안녕</span>
-    </div>
-  );
+  return <HomePage />;
 };
 
 export default page;
