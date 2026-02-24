@@ -21,7 +21,7 @@ const IconButton = ({ ariaLabel, children, onClick }: IconButtonProps) => {
   return (
     <button
       aria-label={ariaLabel}
-      className="flex h-6 w-6 items-center justify-center rounded-md"
+      className="flex h-10 w-10 items-center justify-center rounded-md"
       onClick={onClick}
       type="button"
     >
@@ -105,9 +105,9 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
 
       case 'custom':
         return (
-          <button aria-label={action.ariaLabel} onClick={action.onClick} type="button">
+          <IconButton ariaLabel={action.ariaLabel} onClick={action.onClick}>
             {action.node}
-          </button>
+          </IconButton>
         );
 
       default:
