@@ -10,8 +10,13 @@ import { ROUTES } from '@/shared/constants/routes';
 import { NAV_LABELS } from '../constants/navLabel';
 
 export const BOTTOM_NAV_ITEMS = [
-  { activeIcon: HomeSolid, href: ROUTES.FAMILYSTATUS, icon: Home, label: NAV_LABELS.FAMILY_STATUS },
-  { activeIcon: SmileSolid, href: ROUTES.MYSTATUS, icon: Smile, label: NAV_LABELS.MY_STATUS },
+  {
+    activeIcon: HomeSolid,
+    href: ROUTES.FAMILY_STATUS,
+    icon: Home,
+    label: NAV_LABELS.FAMILY_STATUS,
+  },
+  { activeIcon: SmileSolid, href: ROUTES.MY_STATUS, icon: Smile, label: NAV_LABELS.MY_STATUS },
   { activeIcon: ReportSolid, href: ROUTES.REPORT, icon: Report, label: NAV_LABELS.REPORT },
-  { activeIcon: UserSolid, href: ROUTES.MYPAGE, icon: User, label: NAV_LABELS.MY_PAGE },
+  { activeIcon: UserSolid, href: ROUTES.MY_PAGE, icon: User, label: NAV_LABELS.MY_PAGE },
 ] as const;
