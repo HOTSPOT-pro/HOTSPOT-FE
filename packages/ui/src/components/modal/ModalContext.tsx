@@ -46,17 +46,6 @@ export function useModal() {
   return ctx;
 }
 
-function lockScroll() {
-  const html = document.documentElement;
-  // iOS 대응: overscroll 방지
-  html.style.overflowY = 'hidden';
-}
-
-function unlockScroll() {
-  const html = document.documentElement;
-  html.style.overflowY = 'auto';
-}
-
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = React.useState<ModalState>({
     id: null,
@@ -79,7 +68,8 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   const value = React.useMemo<ModalContextValue>(() => {
     return {
       close,
-      getProps: () => (state.isOpen ? (state.props as any) : undefined),
+      getProps: <T extends Record<string, unknown> = Record<string, unknown>>() =>
+        state.isOpen ? (state.props as T | undefined) : undefined,
       isOpen: (id) => state.isOpen && state.id === id,
       open,
       state,
@@ -87,23 +77,35 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   }, [state, open, close]);
 
   React.useEffect(() => {
-    if (!state.isOpen) {
-      unlockScroll();
-      return;
-    }
+    if (!state.isOpen) return;
+
+    const html = document.documentElement;
+    const prevOverflowY = html.style.overflowY;
 
     const opts = state.options ?? {};
-    const shouldLock = opts.lockScroll ?? true;
-    if (shouldLock) lockScroll();
+    const shouldLockScroll = opts.lockScroll ?? true;
+    if (shouldLockScroll) {
+      // iOS 대응: overscroll 방지
+      html.style.overflowY = 'hidden';
+    }
 
-    const closeOnEsc = opts.closeOnEsc ?? true;
-    if (!closeOnEsc) return;
-
+    const shouldCloseOnEsc = opts.closeOnEsc ?? true;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') close();
     };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+
+    if (shouldCloseOnEsc) {
+      window.addEventListener('keydown', onKeyDown);
+    }
+
+    return () => {
+      if (shouldCloseOnEsc) {
+        window.removeEventListener('keydown', onKeyDown);
+      }
+      if (shouldLockScroll) {
+        html.style.overflowY = prevOverflowY;
+      }
+    };
   }, [state.isOpen, state.options, close]);
 
   return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
