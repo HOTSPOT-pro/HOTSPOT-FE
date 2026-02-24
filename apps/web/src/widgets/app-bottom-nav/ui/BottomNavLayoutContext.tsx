@@ -2,13 +2,12 @@
 
 import type { CSSProperties, ReactNode } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
+import { DEFAULT_BOTTOM_NAV_HEIGHT } from '../constants/navHeight';
 
 interface BottomNavLayoutContextValue {
   bottomNavHeight: number;
   setBottomNavHeight: (height: number) => void;
 }
-
-const DEFAULT_BOTTOM_NAV_HEIGHT = 58;
 
 const BottomNavLayoutContext = createContext<BottomNavLayoutContextValue | null>(null);
 
@@ -19,7 +18,10 @@ export function BottomNavLayoutProvider({ children }: { children: ReactNode }) {
 
   return (
     <BottomNavLayoutContext.Provider value={value}>
-      <div style={{ '--bottom-nav-height': `${bottomNavHeight}px` } as CSSProperties}>
+      <div
+        className="h-full"
+        style={{ '--bottom-nav-height': `${bottomNavHeight}px` } as CSSProperties}
+      >
         {children}
       </div>
     </BottomNavLayoutContext.Provider>
