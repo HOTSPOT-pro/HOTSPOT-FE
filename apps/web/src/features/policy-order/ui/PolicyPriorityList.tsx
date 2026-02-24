@@ -1,16 +1,21 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Button } from '@hotspot/ui/components';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { usePriorityOrder } from '../model/usePriorityOrder';
-import { MemberItem } from './OrderItem';
+import { OrderItem } from './OrderItem';
 
 export const PolicyPriorityList = () => {
   const [isEditing, setIsEditing] = useState(false);
+  //나중에 usePriorityOrder에서 useQuery
   const { members, handleDragEnd, moveStep } = usePriorityOrder([
     { id: 1, limit: 30.0, name: '김철수' },
     { id: 2, limit: 20.5, name: '이영희' },
     { id: 3, limit: 20.0, name: '박민수' },
   ]);
+
+  const toggleEditing = useCallback(() => {
+    setIsEditing((prev) => !prev);
+  }, []);
 
   return (
     <div className="w-full mx-auto bg-white">
@@ -23,9 +28,10 @@ export const PolicyPriorityList = () => {
           {(provided) => (
             <div {...provided.droppableProps} className="space-y-2" ref={provided.innerRef}>
               {members.map((member, index) => (
-                <MemberItem
+                <OrderItem
                   index={index}
                   isEditing={isEditing}
+                  isLast={index === members.length - 1}
                   key={member.id}
                   member={member}
                   onMove={moveStep}
@@ -38,7 +44,7 @@ export const PolicyPriorityList = () => {
       </DragDropContext>
 
       <footer className="mt-4">
-        <Button onClick={() => setIsEditing(!isEditing)} variant={isEditing ? 'solid' : 'outline'}>
+        <Button onClick={toggleEditing} variant={isEditing ? 'solid' : 'outline'}>
           {isEditing ? '저장' : '편집'}
         </Button>
       </footer>

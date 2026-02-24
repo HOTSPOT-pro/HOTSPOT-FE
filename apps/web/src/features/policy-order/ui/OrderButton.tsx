@@ -11,6 +11,7 @@ export const OrderButton = ({
   onClick: () => void;
 }) => (
   <button
+    aria-label={direction === 'up' ? '위로 이동' : '아래로 이동'}
     className="p-1 hover:bg-gray-200 rounded disabled:opacity-20 transition-colors"
     disabled={disabled}
     onClick={(e) => {

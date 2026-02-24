@@ -2,7 +2,7 @@
 import { PolicyUserCard, usePolicy } from '@entities/policy';
 import { Tab, type TabItem } from '@hotspot/ui/components';
 import { OrderSection } from '@widgets/policy';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
 
@@ -20,9 +20,13 @@ const HEADER_CONFIG: HeaderConfig = {
 };
 
 export const PolicyPage = () => {
-  const { data, loading } = usePolicy();
+  const { data = [], loading } = usePolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
-  useSubHeaderStore().setHeader(HEADER_CONFIG);
+
+  const { setHeader } = useSubHeaderStore();
+  useEffect(() => {
+    setHeader(HEADER_CONFIG);
+  }, [setHeader]);
 
   if (loading) return '로딩중';
 
@@ -42,17 +46,16 @@ export const PolicyPage = () => {
           {activeTab === 'FAMILY' && (
             <div>
               {data.map((i, index) => (
-                <>
+                <div key={i.id}>
                   {index !== 0 && <div className="w-full h-[0.5px] bg-gray-200" />}
                   <PolicyUserCard
                     blockServices={i.blockServices}
                     id={i.id}
-                    key={i.id}
                     limit={i.limit}
                     name={i.name}
                     policyList={i.policyList}
                   />
-                </>
+                </div>
               ))}
             </div>
           )}

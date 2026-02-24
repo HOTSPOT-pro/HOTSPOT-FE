@@ -1,10 +1,11 @@
+import { POLICY_ORDER_TYPE, type PolicyOrderType } from '@entities/policy-order';
 import More2Icon from '@hotspot/ui/assets/icons/more-2.svg';
 import UserIcon from '@hotspot/ui/assets/icons/user.svg';
 import { cn } from '@hotspot/ui/lib';
 
 interface PolicyOrderSelectorProps {
-  policy: 'FIFO' | 'PRIORITY';
-  setPolicy: (value: 'FIFO' | 'PRIORITY') => void;
+  policy: PolicyOrderType;
+  setPolicy: (value: PolicyOrderType) => void;
 }
 
 const BASE_STYLE =
@@ -16,14 +17,19 @@ export const PolicyOrderSelector = ({ policy, setPolicy }: PolicyOrderSelectorPr
   return (
     <div className="flex gap-2 py-3">
       <button
-        className={cn(BASE_STYLE, policy === 'FIFO' ? ACTIVE_STYLE : INACTIVE_STYLE)}
-        onClick={() => setPolicy('FIFO')}
+        className={cn(
+          BASE_STYLE,
+          policy === POLICY_ORDER_TYPE.FIFO ? ACTIVE_STYLE : INACTIVE_STYLE,
+        )}
+        onClick={() => setPolicy(POLICY_ORDER_TYPE.FIFO)}
         type="button"
       >
         <div
           className={cn(
             'w-8 h-8 flex justify-center items-center rounded-xl mb-1',
-            policy === 'FIFO' ? 'text-purple-600 bg-purple-200' : 'bg-gray-200 text-gray-500',
+            policy === POLICY_ORDER_TYPE.FIFO
+              ? 'text-purple-600 bg-purple-200'
+              : 'bg-gray-200 text-gray-500',
           )}
         >
           <UserIcon className="w-4 h-4" />
@@ -33,14 +39,19 @@ export const PolicyOrderSelector = ({ policy, setPolicy }: PolicyOrderSelectorPr
       </button>
 
       <button
-        className={cn(BASE_STYLE, policy === 'PRIORITY' ? ACTIVE_STYLE : INACTIVE_STYLE)}
-        onClick={() => setPolicy('PRIORITY')}
+        className={cn(
+          BASE_STYLE,
+          policy === POLICY_ORDER_TYPE.PRIORITY ? ACTIVE_STYLE : INACTIVE_STYLE,
+        )}
+        onClick={() => setPolicy(POLICY_ORDER_TYPE.PRIORITY)}
         type="button"
       >
         <div
           className={cn(
             'w-8 h-8 flex justify-center items-center rounded-xl mb-1',
-            policy === 'PRIORITY' ? 'text-purple-600 bg-purple-200' : 'bg-gray-200 text-gray-500',
+            policy === POLICY_ORDER_TYPE.PRIORITY
+              ? 'text-purple-600 bg-purple-200'
+              : 'bg-gray-200 text-gray-500',
           )}
         >
           <More2Icon className="w-4 h-4" />

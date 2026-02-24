@@ -1,11 +1,11 @@
-'use  client';
-import { useState } from 'react';
+'use client';
+import type { ReactNode } from 'react';
+import { useCallback, useState } from 'react';
 
 interface AccordionProps {
-  title: React.ReactNode;
-  children: React.ReactNode;
+  title: ReactNode;
+  children: ReactNode;
   defaultOpen?: boolean;
-  showArrow?: boolean;
 }
 
 import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
@@ -13,12 +13,16 @@ import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 export const Accordion = ({ title, children, defaultOpen = false }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
+  const handleToggle = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
+
   return (
     <div className="rounded-2xl bg-gray-100">
-      <div className="w-full flex items-stretch bg-gray-50transition-all">
+      <div className="w-full flex items-stretch transition-all">
         <button
           className="flex-1 flex items-center outline-none"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleToggle}
           type="button"
         >
           <div className="w-full">{title}</div>

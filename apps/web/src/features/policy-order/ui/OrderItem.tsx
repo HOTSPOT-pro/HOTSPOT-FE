@@ -6,17 +6,15 @@ import { useUserStore } from '@/features/user';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
 import { OrderButton } from './OrderButton';
 
-export const MemberItem = ({
-  member,
-  index,
-  isEditing,
-  onMove,
-}: {
+interface OrderItemProps {
   member: PolicyOrderMember;
   index: number;
   isEditing: boolean;
-  onMove: (index: number, dir: 'up' | 'down') => void;
-}) => {
+  onMove: (index: number, direction: 'up' | 'down') => void;
+  isLast: boolean;
+}
+
+export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderItemProps) => {
   const myId = useUserStore().userId;
 
   return (
@@ -57,7 +55,7 @@ export const MemberItem = ({
               />
               <OrderButton
                 direction="down"
-                disabled={index === 2}
+                disabled={isLast}
                 onClick={() => onMove(index, 'down')}
               />
             </div>
