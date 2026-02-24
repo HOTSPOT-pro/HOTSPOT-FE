@@ -24,9 +24,11 @@
     "typescript": "5.9.2"
   },
   "exports": {
-    "./*": "./src/*/index.ts",
+    ".": "./src/index.ts",
     "./assets/*": "./src/assets/*",
-    "./globals.css": "./src/styles/globals.css"
+    "./components": "./src/components/index.ts",
+    "./globals.css": "./src/styles/globals.css",
+    "./lib": "./src/lib/index.ts"
   },
   "name": "@hotspot/ui",
   "private": true,
