@@ -9,7 +9,7 @@ import NotificationIcon from '@/shared/assets/icons/notification.svg';
 import SettingIcon from '@/shared/assets/icons/setting.svg';
 import { ROUTES } from '@/shared/constants/routes';
 import { Header } from '@/shared/ui/header/Header';
-import type { HeaderAction, HeaderConfig } from '../model/types';
+import type { HeaderConfig } from '../model/types';
 
 interface IconButtonProps {
   ariaLabel: string;
@@ -31,6 +31,10 @@ const IconButton = ({ ariaLabel, children, onClick }: IconButtonProps) => {
 };
 
 type HeaderRenderableAction = Exclude<HeaderAction, { type: 'none' }>;
+
+type HeaderAction =
+  | NonNullable<HeaderConfig['leftAction']>
+  | NonNullable<HeaderConfig['rightAction']>;
 
 const isRenderableAction = (action?: HeaderAction): action is HeaderRenderableAction => {
   return Boolean(action && action.type !== 'none');
