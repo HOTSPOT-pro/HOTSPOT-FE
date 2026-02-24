@@ -2,10 +2,8 @@ import type { ReactNode } from 'react';
 
 export type HeaderVariant = 'main' | 'sub';
 
-export type HeaderAction =
+type CommonHeaderAction =
   | { type: 'none' }
-  // main 전용 (로고 버전)
-  | { type: 'brand'; label: string; onClick?: () => void }
   // 기본 아이콘들
   | { type: 'back'; onClick?: () => void }
   | { type: 'close'; onClick?: () => void }
@@ -14,15 +12,18 @@ export type HeaderAction =
   // 커스텀 슬롯
   | { type: 'custom'; ariaLabel: string; node: ReactNode; onClick?: () => void };
 
+// 메인
+type MainHeaderAction = { type: 'brand'; label: string; onClick?: () => void };
+
 export type HeaderConfig =
   | {
       variant: 'main';
-      leftAction?: HeaderAction; // default: brand(HOTSPOT)
-      rightAction?: HeaderAction; // default: notification
+      leftAction?: MainHeaderAction; // brand(HOTSPOT)
+      rightAction?: CommonHeaderAction; // default: notification
     }
   | {
       variant: 'sub';
       title: string;
-      leftAction: HeaderAction;
-      rightAction?: HeaderAction;
+      leftAction: CommonHeaderAction;
+      rightAction?: CommonHeaderAction;
     };

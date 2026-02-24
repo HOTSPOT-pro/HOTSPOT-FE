@@ -30,12 +30,12 @@ export const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps
           'fixed inset-x-0 bottom-0 z-sticky',
           'pb-[env(safe-area-inset-bottom)]',
           'transition-transform will-change-transform',
-          hidden ? 'translate-y-full' : 'translate-y-0',
+          hidden ? 'translate-y-full pointer-events-none' : 'translate-y-0',
         )}
         ref={ref}
         style={{ transitionDuration: `${durationMs}ms` }}
       >
-        <nav aria-label="Bottom navigation" className={className}>
+        <nav aria-hidden={hidden} aria-label="Bottom navigation" className={className}>
           <div className="mx-auto w-full px-6 bg-white">
             <ul className="flex">
               {items.map((item) => {
@@ -51,6 +51,7 @@ export const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                       )}
                       href={item.href}
+                      tabIndex={hidden ? -1 : undefined}
                     >
                       <div className="relative h-6 w-6">
                         <Icon

@@ -7,9 +7,9 @@ import ArrowLeftIcon from '@/shared/assets/icons/arrow-left.svg';
 import CloseIcon from '@/shared/assets/icons/close.svg';
 import NotificationIcon from '@/shared/assets/icons/notification.svg';
 import SettingIcon from '@/shared/assets/icons/setting.svg';
-
+import { ROUTES } from '@/shared/constants/routes';
 import { Header } from '@/shared/ui/header/Header';
-import type { HeaderAction, HeaderConfig } from '../model/types';
+import type { HeaderConfig } from '../model/types';
 
 interface IconButtonProps {
   ariaLabel: string;
@@ -21,7 +21,7 @@ const IconButton = ({ ariaLabel, children, onClick }: IconButtonProps) => {
   return (
     <button
       aria-label={ariaLabel}
-      className="flex h-6 w-6 items-center justify-center rounded-md"
+      className="flex h-10 w-10 items-center justify-center rounded-md"
       onClick={onClick}
       type="button"
     >
@@ -32,6 +32,10 @@ const IconButton = ({ ariaLabel, children, onClick }: IconButtonProps) => {
 
 type HeaderRenderableAction = Exclude<HeaderAction, { type: 'none' }>;
 
+type HeaderAction =
+  | NonNullable<HeaderConfig['leftAction']>
+  | NonNullable<HeaderConfig['rightAction']>;
+
 const isRenderableAction = (action?: HeaderAction): action is HeaderRenderableAction => {
   return Boolean(action && action.type !== 'none');
 };
@@ -40,8 +44,8 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
   const router = useRouter();
 
   const handleBackDefault = () => router.back();
-  const handleNotificationDefault = () => router.push('/notification');
-  const handleSettingsDefault = () => router.push('/settings');
+  const handleNotificationDefault = () => router.push(ROUTES.NOTIFICATION);
+  const handleSettingsDefault = () => router.push(ROUTES.SETTINGS); // 임시, 현재는 알림에서만 사용
 
   const renderLeft = (action?: HeaderAction) => {
     if (!isRenderableAction(action)) return null;
@@ -105,9 +109,9 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
 
       case 'custom':
         return (
-          <button aria-label={action.ariaLabel} onClick={action.onClick} type="button">
+          <IconButton ariaLabel={action.ariaLabel} onClick={action.onClick}>
             {action.node}
-          </button>
+          </IconButton>
         );
 
       default:
