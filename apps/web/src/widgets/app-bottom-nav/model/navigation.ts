@@ -6,10 +6,17 @@ import SmileSolid from '@/shared/assets/icons/smile-fill.svg';
 import Smile from '@/shared/assets/icons/smile-line.svg';
 import UserSolid from '@/shared/assets/icons/user-fill.svg';
 import User from '@/shared/assets/icons/user-line.svg';
+import { ROUTES } from '@/shared/constants/routes';
+import { NAV_LABELS } from '../constants/navLabel';
 
 export const BOTTOM_NAV_ITEMS = [
-  { activeIcon: HomeSolid, href: '/family', icon: Home, label: '가족 현황' },
-  { activeIcon: SmileSolid, href: '/me', icon: Smile, label: '내 현황' },
-  { activeIcon: ReportSolid, href: '/report', icon: Report, label: '리포트' },
-  { activeIcon: UserSolid, href: '/my', icon: User, label: '마이' },
+  {
+    activeIcon: HomeSolid,
+    href: ROUTES.FAMILY_STATUS,
+    icon: Home,
+    label: NAV_LABELS.FAMILY_STATUS,
+  },
+  { activeIcon: SmileSolid, href: ROUTES.MY_STATUS, icon: Smile, label: NAV_LABELS.MY_STATUS },
+  { activeIcon: ReportSolid, href: ROUTES.REPORT, icon: Report, label: NAV_LABELS.REPORT },
+  { activeIcon: UserSolid, href: ROUTES.MY_PAGE, icon: User, label: NAV_LABELS.MY_PAGE },
 ] as const;
