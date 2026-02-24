@@ -5,9 +5,9 @@ import React from 'react';
 export type ModalId = string;
 
 export type OpenModalOptions = {
-  closeOnOutsideClick?: boolean;
+  closeOnOutsideClick?: boolean; // TODO: 안됨 추후 해결
   closeOnEsc?: boolean;
-  lockScroll?: boolean;
+  lockScroll?: boolean; // TODO: 원래 막아두기
 };
 
 export type OpenModalPayload = {
