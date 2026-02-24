@@ -1,6 +1,5 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Button } from '@hotspot/ui/components';
-import { cn } from '@hotspot/ui/lib';
 import { useState } from 'react';
 import { usePriorityOrder } from '../model/usePriorityOrder';
 import { MemberItem } from './OrderItem';
@@ -14,7 +13,7 @@ export const PolicyPriorityList = () => {
   ]);
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white">
+    <div className="w-full mx-auto bg-white">
       <header className="flex justify-between items-center mb-3">
         <h3 className="text-base font-bold">우선순위 설정</h3>
       </header>

@@ -45,7 +45,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
         onClick={() => moveMonth(-1)}
         type="button"
       >
-        <LeftArrow className="text-gray-500" />
+        <LeftArrow className="text-gray-500 w-4 h-4" />
       </button>
 
       <button
@@ -55,7 +55,11 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
       >
         <div className="flex flex-row items-center justify-center gap-4 text-black">
           {date.year}년 {date.month}월{' '}
-          {isOpen ? <UpArrow className="text-gray-500" /> : <DownArrow className="text-gray-500" />}
+          {isOpen ? (
+            <UpArrow className="text-gray-500 w-3.5 h-3.5" />
+          ) : (
+            <DownArrow className="text-gray-500 w-3.5 h-3.5" />
+          )}
         </div>
       </button>
 
@@ -66,7 +70,7 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
         onClick={() => moveMonth(1)}
         type="button"
       >
-        <RightArrow className="text-gray-500" />
+        <RightArrow className="text-gray-500 w-4 h-4 " />
       </button>
 
       {isOpen ? (

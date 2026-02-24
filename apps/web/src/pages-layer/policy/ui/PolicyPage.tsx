@@ -3,6 +3,8 @@ import { PolicyUserCard, usePolicy } from '@entities/policy';
 import { Tab, type TabItem } from '@hotspot/ui/components';
 import { OrderSection } from '@widgets/policy';
 import { useState } from 'react';
+import type { HeaderConfig } from '@/widgets/app-header/model/types';
+import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
 
 type PolicyTabValue = 'FAMILY' | 'ORDER';
 const POLICY_TABS: TabItem<PolicyTabValue>[] = [
@@ -10,9 +12,17 @@ const POLICY_TABS: TabItem<PolicyTabValue>[] = [
   { label: '우선순위 정책', value: 'ORDER' },
 ];
 
+const HEADER_CONFIG: HeaderConfig = {
+  leftAction: { type: 'back' },
+  rightAction: { type: 'none' },
+  title: '가족 정책',
+  variant: 'sub',
+};
+
 export const PolicyPage = () => {
   const { data, loading } = usePolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
+  useSubHeaderStore().setHeader(HEADER_CONFIG);
 
   if (loading) return '로딩중';
 
