@@ -3,3 +3,8 @@ export interface UserAuth {
   userName: string | null;
   accessToken: string | null;
 }
+
+export interface OnboardingInput {
+  birth: string;
+  tel: string;
+}

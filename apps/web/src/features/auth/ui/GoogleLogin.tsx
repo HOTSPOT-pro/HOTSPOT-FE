@@ -1,5 +1,5 @@
 'use client';
-import Google from '@hotspot/ui/assets/images/icon/Google.svg';
+import GoogleIcon from '@hotspot/ui/assets/icons/google.svg';
 import { Button } from '@hotspot/ui/components';
 import { cn } from '@hotspot/ui/lib';
 import { useSocialLogin } from '../api/useSocialLogin';
@@ -15,7 +15,7 @@ export const GoogleLogin = ({ className }: { className?: string }) => {
       onClick={loginWithGoogle}
       type="button"
     >
-      <Google />
+      <GoogleIcon />
       <span>Google로 시작하기</span>
     </Button>
   );

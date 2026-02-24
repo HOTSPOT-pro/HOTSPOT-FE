@@ -1,8 +1,8 @@
-import Main from '@hotspot/ui/assets/images/character/main.svg';
+import MainIcon from '@hotspot/ui/assets/images/character/main.svg';
 import { cn } from '@hotspot/ui/lib';
 
 const SIZES = {
-  lg: 'w-30 h-30 rounded-3xl',
+  lg: 'w-29 h-29 rounded-3xl',
   md: 'w-20 h-20 rounded-2xl',
   sm: 'w-13 h-13 rounded-xl',
 } as const;
@@ -13,7 +13,7 @@ interface LogoProps {
 export const Logo = ({ size }: LogoProps) => {
   return (
     <div className={cn('flex justify-center items-center bg-purple-800 shrink-0', SIZES[size])}>
-      <Main className="w-3/5 h-3/5" />
+      <MainIcon className="w-3/5 h-3/5" />
     </div>
   );
 };

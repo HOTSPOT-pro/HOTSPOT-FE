@@ -1,5 +1,5 @@
 'use client';
-import Kakao from '@hotspot/ui/assets/images/icon/Kakao.svg';
+import KakaoIcon from '@hotspot/ui/assets/icons/kakao.svg';
 import { Button } from '@hotspot/ui/components';
 import { cn } from '@hotspot/ui/lib';
 import { useSocialLogin } from '../api/useSocialLogin';
@@ -13,7 +13,7 @@ export const KakaoLogin = ({ className }: { className?: string }) => {
       type="button"
       variant="solid"
     >
-      <Kakao />
+      <KakaoIcon />
       <span>카카오로 시작하기</span>
     </Button>
   );

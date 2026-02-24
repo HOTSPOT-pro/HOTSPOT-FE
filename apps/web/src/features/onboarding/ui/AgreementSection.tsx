@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { AgreementItem } from './AgreementItem';
 
-export const AgreementSection = () => {
+export const AgreementSection = ({ formId }: { formId: string }) => {
   const [agreements, setAgreements] = useState({
     privacy: false,
     terms: false,
@@ -38,7 +38,13 @@ export const AgreementSection = () => {
         />
       </div>
 
-      <Button className="mt-4" disabled={!essentialChecked} onClick={handleStart}>
+      <Button
+        className="mt-4"
+        disabled={!essentialChecked}
+        form={formId}
+        onClick={handleStart}
+        type="submit"
+      >
         동의하고 시작하기
       </Button>
     </div>

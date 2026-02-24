@@ -1,1 +1,1 @@
-export { OnBoardingPage } from './ui/OnBoarding';
+export { OnBoardingPage } from './ui/OnBoardingPage';
