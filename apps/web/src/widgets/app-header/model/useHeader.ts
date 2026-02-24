@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSubHeaderStore } from '../ui/SubHeaderProvider';
 import type { HeaderConfig } from './types';
 
@@ -13,9 +13,11 @@ type SubHeaderConfig = Extract<HeaderConfig, { variant: 'sub' }>;
  */
 export function useHeader(config: SubHeaderConfig) {
   const { setHeader, resetHeader } = useSubHeaderStore();
+  const configRef = useRef(config);
+  configRef.current = config;
 
   useEffect(() => {
-    setHeader(config);
+    setHeader(configRef.current);
     return () => resetHeader();
-  }, [config, resetHeader, setHeader]);
+  }, [resetHeader, setHeader]);
 }
