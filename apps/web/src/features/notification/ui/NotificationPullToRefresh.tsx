@@ -12,7 +12,7 @@ export const NotificationPullToRefresh = ({ onRefresh, children }: Props) => {
     <PullToRefresh
       onRefresh={onRefresh}
       refreshingContent={
-        <div className="w-full py-4 flex justify-center text-gray-500">
+        <div className="w-full h-full py-4 flex justify-center text-gray-500">
           <Loading />
         </div>
       }

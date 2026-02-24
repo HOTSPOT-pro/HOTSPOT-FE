@@ -1,3 +1,4 @@
+import WarningIcon from '@hotspot/ui/assets/icons/warning.svg';
 import { cn } from '@hotspot/ui/lib';
 import { NOTIFICATION_MESSAGES, type Notification } from '../model/type';
 
@@ -18,17 +19,19 @@ export const NotificationItem = ({ notification, onClick, className }: Notificat
   return (
     <button
       className={cn(
-        'w-full flex flex-col gap-1 p-4 transition-colors cursor-pointer items-start rounded',
+        'flex flex-row gap-4 p-4 transition-colors cursor-pointer',
         isRead ? 'bg-white' : 'bg-purple-100',
         className,
       )}
       onClick={() => onClick?.(id)}
       type="button"
     >
-      <h4 className={cn('text-sm font-semibold pr-4', isRead ? 'text-gray-600' : 'text-gray-900')}>
-        {message ?? renderMessage()}
-      </h4>
-      <span className="text-xs text-gray-400 mt-1">{createdAt}</span>
+      <WarningIcon className="w-5 h-5 text-purple-600" />
+      <div className="w-full flex flex-col gap-1 items-start">
+        <p className={cn('text-sm font-medium text-black')}>{message ?? renderMessage()}</p>
+        <p className="text-gray-600 font-normal text-xs">description</p>
+        <span className="text-[10px] text-gray-500 mt-1">{createdAt}</span>
+      </div>
     </button>
   );
 };

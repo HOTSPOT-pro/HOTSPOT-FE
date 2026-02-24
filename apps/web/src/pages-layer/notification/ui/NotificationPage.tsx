@@ -1,25 +1,26 @@
 'use client';
-import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
 import { NotificationList } from '@/widgets/notification';
 
-const HEADER_CONFIG: HeaderConfig = {
-  leftAction: { type: 'back' },
-  rightAction: { type: 'settings' },
-  title: '알림',
-  variant: 'sub',
-};
-
 export const NotificationPage = () => {
   const { setHeader } = useSubHeaderStore();
+  const router = useRouter();
+  const handleRouting = useCallback(() => {
+    router.push('/notification/settings');
+  }, [router]);
   useEffect(() => {
-    setHeader(HEADER_CONFIG);
-  }, [setHeader]);
+    const HEADER_CONFIG: HeaderConfig = {
+      leftAction: { type: 'back' },
+      rightAction: { onClick: handleRouting, type: 'settings' },
+      title: '알림',
+      variant: 'sub',
+    };
 
-  return (
-    <div>
-      <NotificationList />
-    </div>
-  );
+    setHeader(HEADER_CONFIG);
+  }, [setHeader, handleRouting]);
+
+  return <NotificationList />;
 };
