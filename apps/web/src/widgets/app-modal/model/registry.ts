@@ -4,4 +4,4 @@ import { TestAlertModal } from '../../../pages-layer/home/ui/modal/TeatAlertModa
 
 export const modalRegistry = {
   testmodal: TestAlertModal,
-};
+} as const;
