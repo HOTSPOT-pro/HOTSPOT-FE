@@ -1,11 +1,11 @@
 'use client';
 
+import type { OnboardingInput } from '@entities/user';
+import { useUserStore } from '@features/auth';
 import { Button, Input } from '@hotspot/ui/components';
+import { BottomSheet } from '@shared/ui';
 import { useCallback, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { OnboardingInput } from '@/entities/user';
-import { BottomSheet } from '@/shared/ui';
-import { useUserStore } from '../../auth/store/useUserStore';
 import { formatBirth, formatTel } from '../lib/format';
 import { ONBOARDING_RULES } from '../model/formatRule';
 import { AgreementSection } from './AgreementSection';
@@ -42,15 +42,16 @@ export const OnBoardingForm = () => {
       <form id={formId} onSubmit={handleSubmit(onSubmit)}>
         <div>
           <div className="font-bold text-2xl flex flex-col gap-1">
-            <p>환영합니다! {userName ?? '사용자'}님</p>
+            <p>환영합니다!</p>
+            <p>{userName ?? '사용자'}님</p>
             <div className="text-gray-600 font-light mt-2 text-base">
-              <p>서비스를 시작하기 전에 간단한 정보를 입력해 주세요.</p>
+              <p>서비스를 시작하기 전에</p>
+              <p>간단한 정보를 입력해 주세요.</p>
             </div>
           </div>
 
           <div className="mt-12 flex flex-col gap-10">
             <Input
-              description="6자리 숫자만 입력해주세요."
               id={'birth'}
               label="생년월일"
               placeholder="00.00.00"
@@ -59,7 +60,6 @@ export const OnBoardingForm = () => {
               onChange={handleInputChange('birth', formatBirth)}
             />
             <Input
-              description="11자리 숫자만 입력해주세요."
               id={'tel'}
               label="전화번호"
               placeholder="010-1234-5678"
