@@ -41,15 +41,18 @@ export const PolicyPage = () => {
         <div className="rounded-3xl bg-white">
           {activeTab === 'FAMILY' && (
             <div>
-              {data.map((i) => (
-                <PolicyUserCard
-                  blockServices={i.blockServices}
-                  id={i.id}
-                  key={i.id}
-                  limit={i.limit}
-                  name={i.name}
-                  policyList={i.policyList}
-                />
+              {data.map((i, index) => (
+                <>
+                  {index !== 0 && <div className="w-full h-[0.5px] bg-gray-200" />}
+                  <PolicyUserCard
+                    blockServices={i.blockServices}
+                    id={i.id}
+                    key={i.id}
+                    limit={i.limit}
+                    name={i.name}
+                    policyList={i.policyList}
+                  />
+                </>
               ))}
             </div>
           )}
