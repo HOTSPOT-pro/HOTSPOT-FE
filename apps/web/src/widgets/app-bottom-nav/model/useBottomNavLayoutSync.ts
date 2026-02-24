@@ -22,12 +22,13 @@ export function useBottomNavLayoutSync({ barRef }: UseBottomNavLayoutSyncOptions
       const footerHeight = footerWrap?.offsetHeight ?? 0;
       const footBottomHeight = footerHeight + barHeight;
 
+      const supportsDvh = CSS.supports('height: 100dvh');
       if (window.innerWidth <= 1024) {
-        sub.style.minHeight = '100vh';
-        sub.style.minHeight = '100dvh';
+        sub.style.minHeight = supportsDvh ? '100dvh' : '100vh';
       } else {
-        sub.style.minHeight = `calc(100vh - ${footBottomHeight}px)`;
-        sub.style.minHeight = `calc(100dvh - ${footBottomHeight}px)`;
+        sub.style.minHeight = supportsDvh
+          ? `calc(100dvh - ${footBottomHeight}px)`
+          : `calc(100vh - ${footBottomHeight}px)`;
       }
     };
 
