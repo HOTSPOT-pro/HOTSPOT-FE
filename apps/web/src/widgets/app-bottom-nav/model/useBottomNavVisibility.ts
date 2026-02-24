@@ -16,6 +16,7 @@ export function useBottomNavVisibility({
   const prevScrollY = useRef(0);
   const ticking = useRef(false);
   const [hidden, setHidden] = useState(false);
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
     const getScrollTop = () => {
@@ -35,7 +36,7 @@ export function useBottomNavVisibility({
       if (ticking.current) return;
       ticking.current = true;
 
-      requestAnimationFrame(() => {
+      rafId.current = requestAnimationFrame(() => {
         const current = getScrollTop();
         const prev = prevScrollY.current;
         const delta = current - prev;
@@ -58,12 +59,14 @@ export function useBottomNavVisibility({
 
         prevScrollY.current = current;
         ticking.current = false;
+        rafId.current = null;
       });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current);
     };
   }, [nearBottomOffset, scrollDeltaThreshold, topEpsilon]);
 
