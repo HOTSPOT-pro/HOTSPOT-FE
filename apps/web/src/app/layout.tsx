@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@hotspot/ui/globals.css';
-import { StoreProvider } from '@app/_providers';
+import { ModalProvider } from '@hotspot/ui';
+import { StoreProvider } from '@/app/_providers';
+import { AppModal } from '@/widgets/app-modal/ui/AppModal';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -26,7 +28,10 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-dvh`}>
         <StoreProvider>
-          <main className="bg-white min-h-dvh w-full">{children}</main>
+          <ModalProvider>
+            <main className="bg-white min-h-dvh w-full">{children}</main>
+            <AppModal />
+          </ModalProvider>
         </StoreProvider>
       </body>
     </html>
