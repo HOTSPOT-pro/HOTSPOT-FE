@@ -34,6 +34,7 @@
     "dev": "turbo run dev",
     "dev:admin": "turbo run dev --filter=@hotspot/admin",
     "dev:web": "turbo run dev --filter=@hotspot/web",
+    "dev:web:https": "turbo run dev --filter=@hotspot/web -- --experimental-https --experimental-https-cert ../../hotspot.pics.pem --experimental-https-key ../../hotspot.pics-key.pem",
     "format": "biome format --write .",
     "lint": "biome check .",
     "prepare": "husky install",
