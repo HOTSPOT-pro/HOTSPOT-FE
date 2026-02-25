@@ -1,0 +1,48 @@
+import { cn } from '@hotspot/ui';
+import CloseCircleIcon from '@hotspot/ui/assets/icons/close-circle.svg';
+import CloseCircleFillIcon from '@hotspot/ui/assets/icons/close-circle-fill.svg';
+
+interface BlockAddItemProps {
+  title: string;
+  description: string;
+  isApply: boolean;
+  onToggle: (checked: boolean) => void;
+}
+
+export const BlockAddItem = ({ title, description, isApply, onToggle }: BlockAddItemProps) => {
+  return (
+    <button
+      className={cn(
+        'flex items-center justify-between p-4 rounded-2xl cursor-pointer transition-all border',
+        isApply ? 'border-red-300 bg-white' : 'border-transparent bg-gray-100',
+      )}
+      onClick={() => onToggle(!isApply)}
+      type="button"
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className={cn(
+            'min-w-8 min-h-8 flex items-center justify-center rounded-xl transition-colors',
+            isApply ? 'bg-red-100' : 'bg-gray-200',
+          )}
+        >
+          <CloseCircleIcon className={cn('w-4 h-4', isApply ? 'text-red-600' : 'text-gray-600')} />
+        </div>
+
+        <div className="text-left">
+          <div className="text-sm font-bold">{title}</div>
+          <div className="text-xs text-gray-400">{description}</div>
+        </div>
+
+        <div
+          className={cn(
+            'min-w-6 min-h-6 rounded-full flex items-center justify-center border transition-all',
+            isApply ? 'bg-red-500 border-red-500' : 'bg-white border-gray-400',
+          )}
+        >
+          {isApply && <CloseCircleFillIcon className="w-3 h-3 text-white" />}
+        </div>
+      </div>
+    </button>
+  );
+};

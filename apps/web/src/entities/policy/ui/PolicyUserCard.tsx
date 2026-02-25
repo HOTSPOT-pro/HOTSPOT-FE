@@ -16,10 +16,11 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
   const handleOpenModal = useCallback(() => {
     open('policyDetailModal', {
       props: {
+        icon: <UserProfileIcon type={isMe ? 'MAIN' : 'OTHER'} />,
         title: name,
       },
     });
-  }, [open, name]);
+  }, [open, name, isMe]);
 
   const handleToggle = useCallback(() => {
     setIsAccodianOpen((prev) => !prev);

@@ -1,7 +1,9 @@
-import { MOCK_USER_WITH_POLICIES } from './mockup';
+import { MOCK_BLOCK_SERVICES, MOCK_POLICY_LIST, MOCK_USER_WITH_POLICIES } from './mockup';
 
 export const usePolicy = () => {
-  const data = MOCK_USER_WITH_POLICIES;
+  const policyPerUser = MOCK_USER_WITH_POLICIES;
+  const policyList = MOCK_POLICY_LIST;
+  const blockList = MOCK_BLOCK_SERVICES;
 
-  return { data, loading: false };
+  return { blockList, loading: false, policyList, policyPerUser };
 };

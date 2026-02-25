@@ -20,7 +20,7 @@ const HEADER_CONFIG: HeaderConfig = {
 };
 
 export const PolicyPage = () => {
-  const { data = [], loading } = usePolicy();
+  const { policyPerUser = [], loading } = usePolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
 
   const { setHeader } = useSubHeaderStore();
@@ -45,7 +45,7 @@ export const PolicyPage = () => {
         <div className="rounded-3xl bg-white">
           {activeTab === 'FAMILY' && (
             <div>
-              {data.map((i, index) => (
+              {policyPerUser.map((i, index) => (
                 <div key={i.id}>
                   {index !== 0 && <div className="w-full h-[0.5px] bg-gray-200" />}
                   <PolicyUserCard
