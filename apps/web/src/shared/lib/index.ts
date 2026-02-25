@@ -1,0 +1,1 @@
+export { getAuthInfoFromToken } from './decodeToken';
