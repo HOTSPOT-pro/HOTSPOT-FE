@@ -1,16 +1,17 @@
 'use client';
 
-import { type OnboardingInfo, useUserStore } from '@entities/user';
+import { useOnboarding } from '@entities/onboarding';
+import type { OnboardingInfo } from '@entities/user';
 import { Button, Input } from '@hotspot/ui/components';
+import { formatBirth, formatTel } from '@shared/lib';
 import { BottomSheet } from '@shared/ui';
 import { useCallback, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { formatBirth, formatTel } from '../lib/format';
 import { ONBOARDING_RULES } from '../model/formatRule';
 import { AgreementSection } from './AgreementSection';
 
 export const OnBoardingForm = () => {
-  const { userName } = useUserStore();
+  const { submitOnboarding } = useOnboarding();
   const [isOpen, setIsOpen] = useState(false);
   const formId = useId();
 
@@ -34,7 +35,9 @@ export const OnBoardingForm = () => {
       setValue(name, formattedValue, { shouldValidate: true });
     };
 
-  const onSubmit = (data: OnboardingInfo) => console.log('제출 데이터:', data);
+  const onSubmit = async (data: OnboardingInfo) => {
+    await submitOnboarding(data);
+  };
 
   return (
     <div className="w-full h-full my-10 flex flex-col justify-between">
@@ -42,7 +45,6 @@ export const OnBoardingForm = () => {
         <div>
           <div className="font-bold text-2xl flex flex-col gap-1">
             <p>환영합니다!</p>
-            <p>{userName ?? '사용자'}님</p>
             <div className="text-gray-600 font-light mt-2 text-base">
               <p>서비스를 시작하기 전에</p>
               <p>간단한 정보를 입력해 주세요.</p>
@@ -76,7 +78,7 @@ export const OnBoardingForm = () => {
 
       {isOpen && (
         <BottomSheet isOpen={isOpen} onClose={closeSheet}>
-          <AgreementSection formId={formId} />
+          <AgreementSection onValidSubmit={handleSubmit(onSubmit)} />
         </BottomSheet>
       )}
     </div>

@@ -36,6 +36,7 @@ export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemPro
         <span className={'py-2.5 text-sm text-black'}>{label}</span>
       </div>
       <Link
+        aria-label={`${label} 약관 상세 보기`}
         href={href}
         onClick={(e) => e.stopPropagation()}
         rel="noopener noreferrer"

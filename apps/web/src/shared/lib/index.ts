@@ -1,1 +1,1 @@
-export { getAuthInfoFromToken } from './decodeToken';
+export { formatBirth, formatTel, toPureDigits } from './format';

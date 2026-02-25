@@ -1,7 +1,6 @@
-export interface UserAuth {
+export interface UserInfo {
   userId: number | null;
   userName: string | null;
-  accessToken: string | null;
 }
 
 export interface OnboardingInfo {

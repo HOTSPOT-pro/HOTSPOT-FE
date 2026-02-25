@@ -11,3 +11,7 @@ export const formatTel = (value: string) => {
   if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
   return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
 };
+
+export const toPureDigits = (value: string) => {
+  return value.replace(/\D/g, '');
+};
