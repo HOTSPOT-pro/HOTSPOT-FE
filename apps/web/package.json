@@ -2,6 +2,7 @@
   "dependencies": {
     "@hotspot/ui": "workspace:*",
     "@reduxjs/toolkit": "^2.11.2",
+    "@tanstack/react-query": "^5.90.21",
     "axios": "^1.13.5",
     "clsx": "^2.1.1",
     "jwt-decode": "^4.0.0",

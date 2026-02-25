@@ -1,23 +1,30 @@
 import { postOnboarding } from '@entities/onboarding';
 import type { OnboardingInfo } from '@entities/user';
 import { toPureDigits } from '@shared/lib';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 export const useOnboarding = () => {
   const router = useRouter();
 
-  const submitOnboarding = async (data: OnboardingInfo) => {
-    try {
-      await postOnboarding({
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (data: OnboardingInfo) =>
+      postOnboarding({
         birthDate: toPureDigits(data.birth),
         phoneNumber: toPureDigits(data.tel),
-      });
+      }),
+
+    onError: (err) => {
+      console.error('온보딩 처리 중 에러:', err);
+    },
+    onSuccess: () => {
       router.replace('/');
-    } catch (error) {
-      console.error('온보딩 처리 중 에러:', error);
-      throw error;
-    }
+    },
+  });
+
+  const submitOnboarding = (data: OnboardingInfo) => {
+    mutate(data);
   };
 
-  return { submitOnboarding };
+  return { error, isPending, submitOnboarding };
 };

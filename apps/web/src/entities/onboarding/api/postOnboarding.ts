@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 import { api } from '@shared/api';
 import type { PostOnboardingReqeust } from '../type/onboardingType';
 

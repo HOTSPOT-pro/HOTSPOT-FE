@@ -5,7 +5,12 @@ import { useState } from 'react';
 import { TERMS } from '@/shared/constants/terms';
 import { AgreementRow } from './AgreementRow';
 
-export const AgreementSection = ({ onValidSubmit }: { onValidSubmit: () => void }) => {
+interface AgreementSectionProps {
+  onValidSubmit: () => void;
+  isPending: boolean;
+}
+
+export const AgreementSection = ({ onValidSubmit, isPending }: AgreementSectionProps) => {
   const [agreements, setAgreements] = useState({
     privacy: false,
     terms: false,
@@ -34,7 +39,13 @@ export const AgreementSection = ({ onValidSubmit }: { onValidSubmit: () => void 
         />
       </div>
 
-      <Button className="mt-4" disabled={!essentialChecked} onClick={onValidSubmit} type="submit">
+      <Button
+        className="mt-4"
+        disabled={!essentialChecked}
+        isLoading={isPending}
+        onClick={onValidSubmit}
+        type="submit"
+      >
         동의하고 시작하기
       </Button>
     </div>

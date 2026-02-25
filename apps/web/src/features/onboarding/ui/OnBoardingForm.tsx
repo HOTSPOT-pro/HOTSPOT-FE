@@ -11,7 +11,7 @@ import { ONBOARDING_RULES } from '../model/formatRule';
 import { AgreementSection } from './AgreementSection';
 
 export const OnBoardingForm = () => {
-  const { submitOnboarding } = useOnboarding();
+  const { submitOnboarding, isPending } = useOnboarding();
   const [isOpen, setIsOpen] = useState(false);
   const formId = useId();
 
@@ -78,7 +78,7 @@ export const OnBoardingForm = () => {
 
       {isOpen && (
         <BottomSheet isOpen={isOpen} onClose={closeSheet}>
-          <AgreementSection onValidSubmit={handleSubmit(onSubmit)} />
+          <AgreementSection isPending={isPending} onValidSubmit={handleSubmit(onSubmit)} />
         </BottomSheet>
       )}
     </div>
