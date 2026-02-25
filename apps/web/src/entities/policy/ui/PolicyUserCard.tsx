@@ -1,4 +1,5 @@
 'use client';
+import { useModal } from '@hotspot/ui';
 import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { useCallback, useState } from 'react';
@@ -8,11 +9,20 @@ import type { PolicyPerUser } from '../model/type';
 import { AccordionContainer } from './AccordionContainer';
 
 export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: PolicyPerUser) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAccodianOpen, setIsAccodianOpen] = useState(false);
+  const { open } = useModal();
   const isMe = id === useUserStore().userId;
 
+  const handleOpenModal = useCallback(() => {
+    open('policyDetailModal', {
+      props: {
+        title: name,
+      },
+    });
+  }, [open, name]);
+
   const handleToggle = useCallback(() => {
-    setIsOpen((prev) => !prev);
+    setIsAccodianOpen((prev) => !prev);
   }, []);
 
   return (
@@ -32,7 +42,9 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
             <p className="text-xs text-gray-600">한도 {limit}GB</p>
             <div className="text-xs text-gray-600 flex items-center gap-1">
               <span>정책 {blockServices.length + policyList.length}개</span>
-              <span className={`text-[10px] transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+              <span
+                className={`text-[10px] transition-transform ${isAccodianOpen ? 'rotate-180' : ''}`}
+              >
                 <DownArrow className="w-3 h-3" />
               </span>
             </div>
@@ -41,7 +53,7 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
 
         <button
           className="p-4 text-gray-400 hover:text-purple-600 transition-colors"
-          onClick={() => console.log('상세 페이지 이동')}
+          onClick={handleOpenModal}
           type="button"
         >
           <RightArrow />
@@ -49,7 +61,9 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
       </div>
 
       {/* 아코디언 */}
-      {isOpen && <AccordionContainer blockServices={blockServices} policyList={policyList} />}
+      {isAccodianOpen && (
+        <AccordionContainer blockServices={blockServices} policyList={policyList} />
+      )}
     </div>
   );
 };
