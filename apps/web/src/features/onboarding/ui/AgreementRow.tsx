@@ -10,7 +10,7 @@ interface AgreementItemProps {
   href: string;
 }
 
-export const AgreementItem = ({ label, checked, onCheck, href }: AgreementItemProps) => {
+export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCheck(e.target.checked);
   };

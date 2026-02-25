@@ -2,17 +2,16 @@
 import GoogleIcon from '@hotspot/ui/assets/icons/google.svg';
 import { Button } from '@hotspot/ui/components';
 import { cn } from '@hotspot/ui/lib';
-import { useSocialLogin } from '../api/useSocialLogin';
+import { login } from '../api/api';
 
 export const GoogleLogin = ({ className }: { className?: string }) => {
-  const { loginWithGoogle } = useSocialLogin();
   return (
     <Button
       className={cn(
         'bg-google-container border border-google-border text-google-label hover:bg-gray-100',
         className,
       )}
-      onClick={loginWithGoogle}
+      onClick={() => login({ provider: 'google' })}
       type="button"
     >
       <GoogleIcon />

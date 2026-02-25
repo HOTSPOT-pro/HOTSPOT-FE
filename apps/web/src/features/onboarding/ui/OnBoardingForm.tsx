@@ -1,7 +1,6 @@
 'use client';
 
-import type { OnboardingInput } from '@entities/user';
-import { useUserStore } from '@features/auth';
+import { type OnboardingInfo, useUserStore } from '@entities/user';
 import { Button, Input } from '@hotspot/ui/components';
 import { BottomSheet } from '@shared/ui';
 import { useCallback, useId, useState } from 'react';
@@ -23,19 +22,19 @@ export const OnBoardingForm = () => {
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-  } = useForm<OnboardingInput>({
+  } = useForm<OnboardingInfo>({
     defaultValues: { birth: '', tel: '' },
     mode: 'onChange',
   });
 
   const handleInputChange =
-    (name: keyof OnboardingInput, formatter: (v: string) => string) =>
+    (name: keyof OnboardingInfo, formatter: (v: string) => string) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const formattedValue = formatter(e.target.value);
       setValue(name, formattedValue, { shouldValidate: true });
     };
 
-  const onSubmit = (data: OnboardingInput) => console.log('제출 데이터:', data);
+  const onSubmit = (data: OnboardingInfo) => console.log('제출 데이터:', data);
 
   return (
     <div className="w-full h-full my-10 flex flex-col justify-between">

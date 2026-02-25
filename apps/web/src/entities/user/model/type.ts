@@ -4,7 +4,7 @@ export interface UserAuth {
   accessToken: string | null;
 }
 
-export interface OnboardingInput {
+export interface OnboardingInfo {
   birth: string;
   tel: string;
 }
