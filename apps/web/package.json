@@ -2,7 +2,9 @@
   "dependencies": {
     "@hotspot/ui": "workspace:*",
     "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.5",
     "clsx": "^2.1.1",
+    "jwt-decode": "^4.0.0",
     "next": "16.1.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
