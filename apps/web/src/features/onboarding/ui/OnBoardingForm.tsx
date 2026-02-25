@@ -35,6 +35,10 @@ export const OnBoardingForm = () => {
       setValue(name, formattedValue, { shouldValidate: true });
     };
 
+  const handleClear = (name: keyof OnboardingInfo) => () => {
+    setValue(name, '', { shouldValidate: true });
+  };
+
   const onSubmit = async (data: OnboardingInfo) => {
     await submitOnboarding(data);
   };
@@ -59,6 +63,7 @@ export const OnBoardingForm = () => {
               {...register('birth', ONBOARDING_RULES.birth)}
               error={errors.birth?.message}
               onChange={handleInputChange('birth', formatBirth)}
+              onClear={handleClear('birth')}
             />
             <Input
               id={'tel'}
@@ -67,6 +72,7 @@ export const OnBoardingForm = () => {
               {...register('tel', ONBOARDING_RULES.tel)}
               error={errors.tel?.message}
               onChange={handleInputChange('tel', formatTel)}
+              onClear={handleClear('tel')}
             />
           </div>
         </div>
