@@ -1,9 +1,24 @@
-import { MOCK_BLOCK_SERVICES, MOCK_POLICY_LIST, MOCK_USER_WITH_POLICIES } from '../api/mockup';
+import { useQuery } from '@tanstack/react-query';
+import { getAppliedPolicyClient } from '../api/getAppliedPolicyClient';
+import type { GetAppliedPolicyResponse } from '../api/types';
 
 export const usePolicy = () => {
-  const PolicyPerFamily = MOCK_USER_WITH_POLICIES;
-  const policyList = MOCK_POLICY_LIST;
-  const blockList = MOCK_BLOCK_SERVICES;
+  const { data, isPending } = useQuery<GetAppliedPolicyResponse>({
+    queryFn: () => getAppliedPolicyClient(true),
+    queryKey: ['appliedPolicy'],
+  });
+  const policyPerFamily = data;
 
-  return { blockList, loading: false, PolicyPerFamily, policyList };
+  // const policyList = MOCK_POLICY_LIST;
+  // const blockList = MOCK_BLOCK_SERVICES;
+
+  // const policyList = MOCK_POLICY_LIST;
+  // const blockList = MOCK_BLOCK_SERVICES;
+
+  return {
+    // blockList,
+    loading: isPending,
+    policyPerFamily,
+    // policyList
+  };
 };
