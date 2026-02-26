@@ -64,7 +64,6 @@
       },
       "nursery": {
         "noEqualsToNull": "warn",
-        "noLeakedRender": "info",
         "noNextAsyncClientComponent": "warn",
         "noScriptUrl": "warn",
         "noSyncScripts": "warn"
