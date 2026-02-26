@@ -1,1 +1,1 @@
-export { SocialLoginContainer } from './ui/SocialLoginBtnContainer';
+export { SocialLoginButtons } from './ui/SocialLoginButtons';
