@@ -1,5 +1,7 @@
+import { NotificationSettingPage } from '@pages-layer/notification-setting';
+
 const page = () => {
-  return <div>알림 설정 화면</div>;
+  return <NotificationSettingPage />;
 };
 
 export default page;
