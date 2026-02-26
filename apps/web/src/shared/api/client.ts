@@ -1,14 +1,17 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 import axios, { type AxiosInstance } from 'axios';
 
-export const api: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  timeout: 10000,
-  withCredentials: true,
-});
+export const createClientApi = (): AxiosInstance =>
+  axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    timeout: 10000,
+    withCredentials: true,
+  });
+
+export const api: AxiosInstance = createClientApi();
 
 api.interceptors.response.use(
   (response) => response,

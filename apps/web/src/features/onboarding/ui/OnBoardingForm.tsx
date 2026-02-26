@@ -11,7 +11,7 @@ import { useOnboarding } from '../model/useOnboarding';
 import { AgreementSection } from './AgreementSection';
 
 export const OnBoardingForm = () => {
-  const { submitOnboarding, isPending } = useOnboarding();
+  const { submitOnboarding, isPending, errorMessage } = useOnboarding();
   const [isOpen, setIsOpen] = useState(false);
   const formId = useId();
 
@@ -80,9 +80,12 @@ export const OnBoardingForm = () => {
         </div>
       </form>
 
-      <Button disabled={!isValid} onClick={openSheet}>
-        다음
-      </Button>
+      <div>
+        {errorMessage && <p className="mb-3 text-sm text-red-500">{errorMessage}</p>}
+        <Button disabled={!isValid} onClick={openSheet}>
+          다음
+        </Button>
+      </div>
 
       {isOpen && (
         <BottomSheet isOpen={isOpen} onClose={closeSheet}>

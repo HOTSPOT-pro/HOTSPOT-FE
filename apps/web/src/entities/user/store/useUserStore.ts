@@ -1,18 +1,29 @@
-import { useDispatch, useSelector } from 'react-redux';
+/** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 import type { UserInfo } from '@/entities/user/model/types';
-import { clearAuth, setAuth } from '@/shared/store/slices/userSlice';
-import type { RootState } from '@/shared/store/store';
+import type { UserState } from '@/entities/user/store/userSlice';
+import { clearUser, setUser } from '@/entities/user/store/userSlice';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 
-export const useUserStore = (): UserInfo & {
-  setAuth: (auth: UserInfo) => void;
-  clearAuth: () => void;
+export const useUserStore = (): UserState & {
+  setUser: (user: UserInfo) => void;
+  clearUser: () => void;
 } => {
-  const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.user);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector<{ user: UserState }, UserState>((state) => state.user);
 
   return {
-    ...auth,
-    clearAuth: () => dispatch(clearAuth()),
-    setAuth: (auth) => dispatch(setAuth(auth)),
+    ...user,
+    clearUser: () => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[userStore] clearUser dispatched');
+      }
+      dispatch(clearUser());
+    },
+    setUser: (user) => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[userStore] setUser payload', user);
+      }
+      dispatch(setUser(user));
+    },
   };
 };

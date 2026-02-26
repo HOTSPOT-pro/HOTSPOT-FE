@@ -1,6 +1,12 @@
+export type UserRole = 'OWNER' | 'PARENT' | 'CHILD';
+
 export interface UserInfo {
-  userId: number | null;
-  userName: string | null;
+  id: number;
+  familyId: number;
+  name: string;
+  email: string;
+  phone: string;
+  familyRole: UserRole;
 }
 
 export interface UserListItem {
