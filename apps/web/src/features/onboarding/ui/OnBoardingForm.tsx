@@ -48,10 +48,12 @@ export const OnBoardingForm = () => {
       <form id={formId} onSubmit={handleSubmit(onSubmit)}>
         <div>
           <div className="font-bold text-2xl flex flex-col gap-1">
-            <p>환영합니다!</p>
+            <h2>환영합니다!</h2>
             <div className="text-gray-600 font-light mt-2 text-base">
-              <p>서비스를 시작하기 전에</p>
-              <p>간단한 정보를 입력해 주세요.</p>
+              <p className="mt-2 text-base font-light text-gray-600">
+                서비스를 시작하기 전에 <br />
+                간단한 정보를 입력해 주세요.
+              </p>
             </div>
           </div>
 
