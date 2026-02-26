@@ -1,7 +1,7 @@
+import type { PolicyPerUser } from '@entities/policy';
 import { BlockAddList, PolicyAddList } from '@features/policy-add';
 import { Button, Modal, Slider, Tab, type TabItem, Toggle, useModal } from '@hotspot/ui';
 import { type ReactNode, useState } from 'react';
-import { usePolicy } from '@/entities/policy';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
@@ -10,18 +10,16 @@ const TABS: TabItem<PolicyModalTabValue>[] = [
   { label: '차단 설정', value: 'BLOCK' },
 ];
 
+interface PolicyDetailModalProps {
+  user: PolicyPerUser;
+  icon: ReactNode;
+  [key: string]: unknown;
+}
+
 export const PolicyDetailModal = ({ close }: { close: () => void }) => {
   const { getProps } = useModal();
+  const props = getProps<PolicyDetailModalProps>();
   const [activeTab, setActiveTab] = useState<PolicyModalTabValue>('DATA');
-  const { policyList, blockList } = usePolicy();
-
-  const {
-    title = '기본 정책',
-    icon = null,
-    maxNum = 100,
-    minNum = 0,
-    initialValue = 5,
-  } = getProps<any>() || {};
 
   return (
     <div>
@@ -29,8 +27,8 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
         <Modal.Header>
           <Modal.Title>
             <div className="flex items-center gap-1">
-              {icon}
-              {title}
+              {props?.icon}
+              {props?.user.memberName}
             </div>
           </Modal.Title>
         </Modal.Header>
@@ -42,10 +40,14 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
             variant="underline"
           />
           {activeTab === 'DATA' && (
-            <DataLimitSection initialValue={initialValue} maxNum={maxNum} minNum={minNum} />
+            <DataLimitSection initialValue={props?.user.dataLimit} maxNum={100} minNum={0} />
           )}
-          {activeTab === 'POLICY' && <PolicyAddList data={policyList} />}
-          {activeTab === 'BLOCK' && <BlockAddList data={blockList} />}
+          {activeTab === 'POLICY' && (
+            <PolicyAddList data={props?.user.blockPolicyResponseList ?? []} />
+          )}
+          {activeTab === 'BLOCK' && (
+            <BlockAddList data={props?.user.appBlockedServiceResponseList ?? []} />
+          )}
         </Modal.Content>
         <Modal.Footer>
           <Button>저장</Button>

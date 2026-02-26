@@ -1,101 +1,76 @@
-import type { Policy, PolicyPerUser } from '../model/type';
+import type { Block, Policy, PolicyPerFamily, PolicyPerUser } from '../model/types';
 
-export const MOCK_USER_WITH_POLICIES: PolicyPerUser[] = [
-  {
-    blockServices: [{ description: '동영상 스트리밍 제한', id: 50, name: '유튜브' }],
-    id: 101,
-    limit: 50,
-    name: '김철수',
-    policyList: [
-      { description: '표준 보안 정책', id: 1, name: '기본 보안' },
-      { description: '외부 접속 허용', id: 2, name: 'VPN 접근' },
-    ],
-  },
-  {
-    blockServices: [
-      { description: '오락 관련 서비스 차단', id: 51, name: '게임 사이트' },
-      { description: '불법 사이트 접근 차단', id: 52, name: '도박 사이트' },
-    ],
-    id: 102,
-    limit: 70,
-    name: '이영희',
-    policyList: [{ description: '표준 보안 정책', id: 1, name: '기본 보안' }],
-  },
-];
+// 1. 개별 정책을 상수로 분리
+const NIGHT_LIMIT: Policy = {
+  endTime: '07:00',
+  id: 101,
+  name: '평일 밤 데이터 제한',
+  policySnapshot: { days: ['MON', 'TUE', 'WED', 'THU', 'FRI'] },
+  policyType: 'TIME_LIMIT',
+  startTime: '22:00',
+};
 
-export const MOCK_POLICY_LIST: Policy[] = [
-  {
-    description: '사내 표준 단말 보안 가이드라인을 일괄 적용합니다.',
-    id: 1,
-    name: '기본 보안 정책',
-  },
-  { description: '외부망에서 사내 인트라넷 접근을 허용합니다.', id: 2, name: 'VPN 원격 접속' },
-  {
-    description: '기밀 유출 방지를 위해 사내 앱 캡처 기능을 제한합니다.',
-    id: 3,
-    name: '화면 캡처 방지',
-  },
-  {
-    description: '로그인 시 모바일 OTP를 통한 추가 인증을 요구합니다.',
-    id: 4,
-    name: '2단계 인증(2FA)',
-  },
-  {
-    description: '특정 용량 이상의 외부 메일 첨부 파일 전송을 통제합니다.',
-    id: 5,
-    name: '이메일 첨부 제한',
-  },
-  {
-    description: '사용자의 접속 기록을 90일간 보안 서버에 저장합니다.',
-    id: 6,
-    name: '로그 보존 정책',
-  },
-  {
-    description: '탈옥/루팅된 기기의 서비스 접속을 즉시 차단합니다.',
-    id: 7,
-    name: '단말기 무결성 검사',
-  },
-];
+const WEEKEND_BLOCK: Policy = {
+  endTime: '23:59',
+  id: 102,
+  name: '주말 종일 차단',
+  policySnapshot: { days: ['SAT', 'SUN'] },
+  policyType: 'FULL_BLOCK',
+  startTime: '00:00',
+};
 
-export const MOCK_BLOCK_SERVICES: Policy[] = [
-  {
-    description: '업무 집중도를 위해 동영상 스트리밍 접속을 제한합니다.',
-    id: 50,
-    name: '유튜브(YouTube)',
-  },
-  {
-    description: '배틀그라운드, 롤 등 주요 게임 서버 접속을 차단합니다.',
-    id: 51,
-    name: '온라인 게임',
-  },
-  {
-    description: '방송통신심의위원회 지정 유해 사이트 접근을 금지합니다.',
-    id: 52,
-    name: '불법/도박 사이트',
-  },
-  {
-    description: '구글 드라이브, 드롭박스로의 파일 업로드를 차단합니다.',
-    id: 53,
-    name: '개인용 클라우드',
-  },
-  {
-    description: '페이스북, 인스타그램, 틱톡 접속을 통제합니다.',
-    id: 54,
-    name: '소셜 미디어(SNS)',
-  },
-  {
-    description: '카카오톡 PC버전 및 텔레그램 등의 사용을 제한합니다.',
-    id: 55,
-    name: '외부 메신저',
-  },
-  {
-    description: '파일 공유 프로토콜을 이용한 대용량 다운로드를 막습니다.',
-    id: 56,
-    name: 'P2P/토렌트',
-  },
-  {
-    description: '개인용 네이버, 지메일 접속 및 메일 발송을 차단합니다.',
-    id: 57,
-    name: '웹메일 제한',
-  },
-];
+const FOCUS_MODE: Policy = {
+  endTime: '19:00',
+  id: 103,
+  name: '학원 시간 집중 모드',
+  policySnapshot: { days: ['MON', 'WED', 'FRI'] },
+  policyType: 'FOCUS',
+  startTime: '16:00',
+};
+
+// 2. 개별 서비스도 상수로 분리
+const YOUTUBE: Block = { id: 1, name: 'YouTube', serviceCode: 'SVC_YT_01' };
+const TIKTOK: Block = { id: 2, name: 'TikTok', serviceCode: 'SVC_TT_02' };
+const INSTAGRAM: Block = { id: 3, name: 'Instagram', serviceCode: 'SVC_IG_03' };
+const ROBLOX: Block = { id: 4, name: 'Roblox', serviceCode: 'SVC_RB_04' };
+
+// 목록형이 필요할 때만 배열로 묶기
+export const MOCK_POLICY_LIST: Policy[] = [NIGHT_LIMIT, WEEKEND_BLOCK, FOCUS_MODE];
+export const MOCK_BLOCK_SERVICES: Block[] = [YOUTUBE, TIKTOK, INSTAGRAM, ROBLOX];
+
+// 3. 이제 인덱스 대신 '객체 이름'으로 직접 할당
+export const MOCK_USER_WITH_POLICIES: PolicyPerFamily = {
+  familyDataAmount: 51200,
+  familyId: 5001,
+  familyNum: 3,
+  memberPolicies: [
+    {
+      appBlockedServiceResponseList: [],
+      blockPolicyResponseList: [],
+      dataLimit: 0,
+      memberId: 1,
+      memberName: '김철수',
+      priority: 1,
+      subId: 10001,
+    },
+    {
+      appBlockedServiceResponseList: [INSTAGRAM], // index [2] 대신 객체 직접 할당
+      blockPolicyResponseList: [NIGHT_LIMIT], // index [0] 대신 객체 직접 할당
+      dataLimit: 10240,
+      memberId: 2,
+      memberName: '이영희',
+      priority: 2,
+      subId: 10002,
+    },
+    {
+      appBlockedServiceResponseList: [YOUTUBE, TIKTOK, ROBLOX],
+      blockPolicyResponseList: [NIGHT_LIMIT, FOCUS_MODE],
+      dataLimit: 5120,
+      memberId: 3,
+      memberName: '김민수',
+      priority: 3,
+      subId: 10003,
+    },
+  ],
+  priorityType: 'DATA_USAGE',
+};

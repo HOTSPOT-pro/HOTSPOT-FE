@@ -1,13 +1,14 @@
-import type { Policy } from '@entities/policy';
+import { type Block, usePolicy } from '@entities/policy';
 import { BlockAddItem } from '@entities/policy-add';
 import { useEffect, useState } from 'react';
 
 interface PolicyAddListProps {
-  data: Policy[];
+  data: Block[];
 }
 
 export const BlockAddList = ({ data }: PolicyAddListProps) => {
   const [selectedPolicies, setSelectedPolicies] = useState(data);
+  const { blockList } = usePolicy();
 
   //TODO: useQuery로 바꾸어 캐싱 고려
   useEffect(() => {
@@ -30,11 +31,10 @@ export const BlockAddList = ({ data }: PolicyAddListProps) => {
 
   return (
     <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">
-      {data.map((policy) => {
+      {blockList.map((policy) => {
         const isApply = selectedPolicies.some((p) => p.id === policy.id);
         return (
           <BlockAddItem
-            description={policy.description}
             isApply={isApply}
             key={policy.id}
             name={policy.name}

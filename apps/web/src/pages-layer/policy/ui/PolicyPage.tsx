@@ -1,7 +1,7 @@
 'use client';
-import { PolicyUserCard, usePolicy } from '@entities/policy';
+import { usePolicy } from '@entities/policy';
 import { Tab, type TabItem } from '@hotspot/ui/components';
-import { OrderSection } from '@widgets/policy';
+import { OrderSection, PolicyUserSection } from '@widgets/policy';
 import { useEffect, useState } from 'react';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
@@ -20,7 +20,7 @@ const HEADER_CONFIG: HeaderConfig = {
 };
 
 export const PolicyPage = () => {
-  const { policyPerUser = [], loading } = usePolicy();
+  const { PolicyPerFamily, loading } = usePolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
 
   const { setHeader } = useSubHeaderStore();
@@ -43,22 +43,7 @@ export const PolicyPage = () => {
 
       <main className="w-full px-5 py-4">
         <div className="rounded-3xl bg-white">
-          {activeTab === 'FAMILY' && (
-            <div>
-              {policyPerUser.map((i, index) => (
-                <div key={i.id}>
-                  {index !== 0 && <div className="w-full h-[0.5px] bg-gray-200" />}
-                  <PolicyUserCard
-                    blockServices={i.blockServices}
-                    id={i.id}
-                    limit={i.limit}
-                    name={i.name}
-                    policyList={i.policyList}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          {activeTab === 'FAMILY' && <PolicyUserSection data={PolicyPerFamily} />}
           {activeTab === 'ORDER' && (
             <div className="px-5 py-4">
               <OrderSection />

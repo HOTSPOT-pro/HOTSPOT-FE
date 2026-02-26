@@ -1,3 +1,3 @@
-export { usePolicy } from './api/usePolicy';
-export type { Policy } from './model/type';
+export type { Block, Policy, PolicyPerFamily, PolicyPerUser } from './model/types';
+export { usePolicy } from './model/usePolicy';
 export { PolicyUserCard } from './ui/PolicyUserCard';

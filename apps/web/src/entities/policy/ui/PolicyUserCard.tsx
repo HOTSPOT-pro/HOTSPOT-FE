@@ -5,22 +5,26 @@ import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { useCallback, useState } from 'react';
 import { useUserStore } from '@/features/user';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
-import type { PolicyPerUser } from '../model/type';
+import type { PolicyPerUser } from '../model/types';
 import { AccordionContainer } from './AccordionContainer';
 
-export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: PolicyPerUser) => {
+interface PolicyUserCardProps {
+  data: PolicyPerUser;
+}
+
+export const PolicyUserCard = ({ data }: PolicyUserCardProps) => {
   const [isAccordianOpen, setIsAccordianOpen] = useState(false);
   const { open } = useModal();
-  const isMe = id === useUserStore().userId;
+  const isMe = data.memberId === useUserStore().userId;
 
   const handleOpenModal = useCallback(() => {
     open('policyDetailModal', {
       props: {
         icon: <UserProfileIcon type={isMe ? 'MAIN' : 'OTHER'} />,
-        title: name,
+        user: data,
       },
     });
-  }, [open, name, isMe]);
+  }, [open, isMe, data]);
 
   const handleToggle = useCallback(() => {
     setIsAccordianOpen((prev) => !prev);
@@ -39,10 +43,13 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
           </div>
 
           <div className="flex-1 flex flex-col gap-0.5">
-            <p className="font-bold text-sm">{name}</p>
-            <p className="text-xs text-gray-600">한도 {limit}GB</p>
+            <p className="font-bold text-sm">{data.memberName}</p>
+            <p className="text-xs text-gray-600">한도 {data.dataLimit}GB</p>
             <div className="text-xs text-gray-600 flex items-center gap-1">
-              <span>정책 {blockServices.length + policyList.length}개</span>
+              <span>
+                정책{' '}
+                {data.appBlockedServiceResponseList.length + data.blockPolicyResponseList.length}개
+              </span>
               <span
                 className={`text-[10px] transition-transform ${isAccordianOpen ? 'rotate-180' : ''}`}
               >
@@ -63,7 +70,10 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
 
       {/* 아코디언 */}
       {isAccordianOpen && (
-        <AccordionContainer blockServices={blockServices} policyList={policyList} />
+        <AccordionContainer
+          blockServices={data.appBlockedServiceResponseList}
+          policyList={data.blockPolicyResponseList}
+        />
       )}
     </div>
   );

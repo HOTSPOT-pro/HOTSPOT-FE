@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import type { Policy } from '@/entities/policy';
+import { type Policy, usePolicy } from '@/entities/policy';
+import { policyDescriptionFormatter } from '@/entities/policy/lib/policyDescriptionFormatter';
 import { PolicyAddItem } from '@/entities/policy-add';
 
 interface PolicyAddListProps {
@@ -7,12 +8,14 @@ interface PolicyAddListProps {
 }
 
 export const PolicyAddList = ({ data }: PolicyAddListProps) => {
-  const [selectedPolicies, setSelectedPolicies] = useState(data);
+  const [selectedPolicies, setSelectedPolicies] = useState<Policy[]>(data);
+
+  const { policyList } = usePolicy();
 
   const handleToggle = (policyId: number, checked: boolean) => {
     setSelectedPolicies((prev) => {
       if (checked) {
-        const policyToAdd = data.find((p) => p.id === policyId);
+        const policyToAdd = policyList.find((p) => p.id === policyId);
         if (policyToAdd && !prev.some((p) => p.id === policyId)) {
           return [...prev, policyToAdd];
         }
@@ -25,11 +28,16 @@ export const PolicyAddList = ({ data }: PolicyAddListProps) => {
 
   return (
     <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">
-      {data.map((policy) => {
+      {policyList.map((policy) => {
         const isApply = selectedPolicies.some((p) => p.id === policy.id);
+
         return (
           <PolicyAddItem
-            description={policy.description}
+            description={policyDescriptionFormatter(
+              policy.policySnapshot.days,
+              policy.startTime,
+              policy.endTime,
+            )}
             id={policy.id}
             isApply={isApply}
             key={policy.id}
