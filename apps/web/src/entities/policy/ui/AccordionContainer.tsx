@@ -1,13 +1,13 @@
 import CloseCircle from '@hotspot/ui/assets/icons/close-circle.svg';
 import Time from '@hotspot/ui/assets/icons/time.svg';
 import { policyDescriptionFormatter } from '../lib/policyDescriptionFormatter';
-import type { Block, Policy } from '../model/types';
+import type { BlockPolicy, Policy } from '../model/types';
 import { Accordion } from './Accordion';
 import { PolicyItem } from './PolicyItem';
 
 interface AccordionContainerProps {
   policyList: Policy[];
-  blockServices: Block[];
+  blockServices: BlockPolicy[];
 }
 
 export const AccordionContainer = ({ policyList, blockServices }: AccordionContainerProps) => {
@@ -24,7 +24,7 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
       >
         {policyList.map((i) => (
           <PolicyItem
-            description={policyDescriptionFormatter(i.policySnapshot.days, i.startTime, i.endTime)}
+            description={policyDescriptionFormatter(i)}
             icon={<Time className="w-4.5 text-purple-600" />}
             item={i}
             key={i.id}

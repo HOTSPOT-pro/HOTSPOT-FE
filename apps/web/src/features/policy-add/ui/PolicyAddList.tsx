@@ -34,12 +34,7 @@ export const PolicyAddList = ({ data }: PolicyAddListProps) => {
 
         return (
           <PolicyAddItem
-            description={policyDescriptionFormatter({
-              days: policy.policySnapshot.days,
-              durationMinutes: policy.policySnapshot.durationMinutes,
-              endTime: policy.endTime,
-              startTime: policy.startTime,
-            })}
+            description={policyDescriptionFormatter(policy)}
             id={policy.id}
             isApply={isApply}
             key={policy.id}
