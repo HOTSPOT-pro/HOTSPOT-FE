@@ -3,11 +3,11 @@
 
 import { useUserStore } from '@entities/user';
 import type { PostOnboardingResponse } from '@features/onboarding/api/types';
-import type { ApiErrorResponse } from '@shared/api/types';
 import { toPureDigits } from '@shared/lib';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import type { ApiErrorResponse } from '@/shared/api/types';
 import { postOnboarding } from '../api/postOnboarding';
 import type { OnboardingInfo } from './types';
 

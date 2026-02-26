@@ -45,7 +45,15 @@ export const OnBoardingForm = () => {
 
   return (
     <div className="w-full h-full my-10 flex flex-col justify-between">
-      <form id={formId} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id={formId}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+          }
+        }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div>
           <div className="font-bold text-2xl flex flex-col gap-1">
             <h2>환영합니다!</h2>
