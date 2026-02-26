@@ -2,20 +2,20 @@ export interface GetAppliedPolicyRequest {
   isFamily: boolean;
 }
 
-interface Policy {
+export interface Policy {
   id: number;
   name: string;
   policyType: string;
-  policySnapshot: { days: string[] };
+  policySnapshot: { days?: string[]; durationMinutes?: number };
   startTime: string;
   endTime: string;
 }
-interface Block {
+export interface Block {
   id: number;
   name: string;
   serviceCode: string;
 }
-interface PolicyPerUser {
+export interface PolicyPerUser {
   memberId: number;
   memberName: string;
   subId: number;

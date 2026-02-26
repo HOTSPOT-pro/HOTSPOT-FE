@@ -8,14 +8,18 @@ const DAY_MAP: Record<string, string> = {
   WED: '수',
 };
 
-export const policyDescriptionFormatter = (
-  days: string[],
-  startTime: string,
-  endTime: string,
-): string => {
-  if (!days || days.length === 0) return '';
-
+export const policyDescriptionFormatter = ({
+  startTime,
+  endTime,
+  days,
+  durationMinutes,
+}: {
+  startTime: string;
+  endTime: string;
+  days: string[] | undefined;
+  durationMinutes: number | undefined;
+}): string => {
+  if (!days || days.length === 0) return `${durationMinutes}`;
   const korDays = days.map((day) => DAY_MAP[day] || day).join(', ');
-
   return `${korDays} ${startTime}~${endTime}`;
 };

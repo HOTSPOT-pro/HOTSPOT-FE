@@ -1,5 +1,5 @@
 'use client';
-import { usePolicy } from '@entities/policy';
+import { useFamilyPolicy } from '@entities/policy';
 import { Tab, type TabItem, useModal } from '@hotspot/ui/components';
 import { OrderSection, PolicyUserSection } from '@widgets/policy';
 import { useRouter } from 'next/navigation';
@@ -23,7 +23,7 @@ const HEADER_CONFIG: HeaderConfig = {
 
 export const PolicyPage = () => {
   const router = useRouter();
-  const { policyPerFamily, loading } = usePolicy();
+  const { policyPerFamily, loading } = useFamilyPolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
   const user = useUserStore();
   const { open } = useModal();

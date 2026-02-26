@@ -1,24 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAppliedPolicyClient } from '../api/getAppliedPolicyClient';
-import type { GetAppliedPolicyResponse } from '../api/types';
+import { getPolicyClientApi } from '../api/getPolicyClientApi';
+import type { Policy } from './types';
 
 export const usePolicy = () => {
-  const { data, isPending } = useQuery<GetAppliedPolicyResponse>({
-    queryFn: () => getAppliedPolicyClient(true),
-    queryKey: ['appliedPolicy'],
+  const { data, isPending } = useQuery<Policy[]>({
+    queryFn: () => getPolicyClientApi(),
+    queryKey: ['policy'],
   });
-  const policyPerFamily = data;
-
-  // const policyList = MOCK_POLICY_LIST;
-  // const blockList = MOCK_BLOCK_SERVICES;
-
-  // const policyList = MOCK_POLICY_LIST;
-  // const blockList = MOCK_BLOCK_SERVICES;
-
+  const policyList = data ?? [];
   return {
-    // blockList,
     loading: isPending,
-    policyPerFamily,
-    // policyList
+    policyList,
   };
 };

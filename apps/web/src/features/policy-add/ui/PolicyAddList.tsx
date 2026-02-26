@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { type Policy, usePolicy } from '@/entities/policy';
+import type { Policy } from '@/entities/policy';
 import { policyDescriptionFormatter } from '@/entities/policy/lib/policyDescriptionFormatter';
+import { usePolicy } from '@/entities/policy/model/usePolicy';
 import { PolicyAddItem } from '@/entities/policy-add';
 
 interface PolicyAddListProps {
@@ -33,11 +34,12 @@ export const PolicyAddList = ({ data }: PolicyAddListProps) => {
 
         return (
           <PolicyAddItem
-            description={policyDescriptionFormatter(
-              policy.policySnapshot.days,
-              policy.startTime,
-              policy.endTime,
-            )}
+            description={policyDescriptionFormatter({
+              days: policy.policySnapshot.days,
+              durationMinutes: policy.policySnapshot.durationMinutes,
+              endTime: policy.endTime,
+              startTime: policy.startTime,
+            })}
             id={policy.id}
             isApply={isApply}
             key={policy.id}

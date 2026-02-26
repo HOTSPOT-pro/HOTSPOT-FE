@@ -2,11 +2,11 @@ export interface Policy {
   id: number;
   name: string;
   policyType: string;
-  policySnapshot: { days: string[] };
+  policySnapshot: { days?: string[]; durationMinutes?: number };
   startTime: string;
   endTime: string;
 }
-export interface Block {
+export interface BlockPolicy {
   id: number;
   name: string;
   serviceCode: string;
@@ -18,7 +18,7 @@ export interface PolicyPerUser {
   dataLimit: number;
   priority: number;
   blockPolicyResponseList: Policy[];
-  appBlockedServiceResponseList: Block[];
+  appBlockedServiceResponseList: BlockPolicy[];
 }
 export interface PolicyPerFamily {
   familyId: number;
