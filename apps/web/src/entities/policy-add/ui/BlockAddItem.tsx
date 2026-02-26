@@ -3,15 +3,17 @@ import CloseCircleIcon from '@hotspot/ui/assets/icons/close-circle.svg';
 import CloseCircleFillIcon from '@hotspot/ui/assets/icons/close-circle-fill.svg';
 
 interface BlockAddItemProps {
-  title: string;
+  name: string;
   description: string;
   isApply: boolean;
   onToggle: (checked: boolean) => void;
 }
 
-export const BlockAddItem = ({ title, description, isApply, onToggle }: BlockAddItemProps) => {
+export const BlockAddItem = ({ name, description, isApply, onToggle }: BlockAddItemProps) => {
   return (
     <button
+      aria-label={`${name} ${isApply ? '해제' : '적용'}`}
+      aria-pressed={isApply}
       className={cn(
         'flex items-center justify-between p-4 rounded-2xl cursor-pointer transition-all border',
         isApply ? 'border-red-300 bg-white' : 'border-transparent bg-gray-100',
@@ -30,7 +32,7 @@ export const BlockAddItem = ({ title, description, isApply, onToggle }: BlockAdd
         </div>
 
         <div className="text-left">
-          <div className="text-sm font-bold">{title}</div>
+          <div className="text-sm font-bold">{name}</div>
           <div className="text-xs text-gray-400">{description}</div>
         </div>
 

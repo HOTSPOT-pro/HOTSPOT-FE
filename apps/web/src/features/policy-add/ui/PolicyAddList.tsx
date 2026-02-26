@@ -12,7 +12,6 @@ export const PolicyAddList = ({ data }: PolicyAddListProps) => {
   const handleToggle = (policyId: number, checked: boolean) => {
     setSelectedPolicies((prev) => {
       if (checked) {
-        [];
         const policyToAdd = data.find((p) => p.id === policyId);
         if (policyToAdd && !prev.some((p) => p.id === policyId)) {
           return [...prev, policyToAdd];
@@ -31,10 +30,11 @@ export const PolicyAddList = ({ data }: PolicyAddListProps) => {
         return (
           <PolicyAddItem
             description={policy.description}
+            id={policy.id}
             isApply={isApply}
             key={policy.id}
+            name={policy.name}
             onToggle={(checked) => handleToggle(policy.id, checked)}
-            title={policy.name}
           />
         );
       })}

@@ -2,13 +2,14 @@ import { cn, Toggle } from '@hotspot/ui';
 import TimeIcon from '@hotspot/ui/assets/icons/time.svg';
 
 interface PolicyAddItemProps {
-  title: string;
+  id: number;
+  name: string;
   description: string;
   isApply: boolean;
   onToggle: (checked: boolean) => void;
 }
 
-export const PolicyAddItem = ({ title, description, isApply, onToggle }: PolicyAddItemProps) => {
+export const PolicyAddItem = ({ id, name, description, isApply, onToggle }: PolicyAddItemProps) => {
   return (
     <div className="flex items-center justify-between p-4 bg-gray-100 rounded-2xl">
       <div className="flex items-center gap-3">
@@ -17,12 +18,12 @@ export const PolicyAddItem = ({ title, description, isApply, onToggle }: PolicyA
         </div>
 
         <div>
-          <div className="text-sm font-bold">{title}</div>
+          <div className="text-sm font-bold">{name}</div>
           <div className="text-xs text-gray-400">{description}</div>
         </div>
       </div>
 
-      <Toggle checked={isApply} id={title} onChange={onToggle} />
+      <Toggle checked={isApply} id={id.toString()} onChange={onToggle} />
     </div>
   );
 };

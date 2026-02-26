@@ -1,6 +1,6 @@
 import type { Policy } from '@entities/policy';
 import { BlockAddItem } from '@entities/policy-add';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface PolicyAddListProps {
   data: Policy[];
@@ -9,10 +9,14 @@ interface PolicyAddListProps {
 export const BlockAddList = ({ data }: PolicyAddListProps) => {
   const [selectedPolicies, setSelectedPolicies] = useState(data);
 
+  //TODO: useQuery로 바꾸어 캐싱 고려
+  useEffect(() => {
+    setSelectedPolicies(data);
+  }, [data]);
+
   const handleToggle = (policyId: number, checked: boolean) => {
     setSelectedPolicies((prev) => {
       if (checked) {
-        [];
         const policyToAdd = data.find((p) => p.id === policyId);
         if (policyToAdd && !prev.some((p) => p.id === policyId)) {
           return [...prev, policyToAdd];
@@ -33,8 +37,8 @@ export const BlockAddList = ({ data }: PolicyAddListProps) => {
             description={policy.description}
             isApply={isApply}
             key={policy.id}
+            name={policy.name}
             onToggle={(checked) => handleToggle(policy.id, checked)}
-            title={policy.name}
           />
         );
       })}

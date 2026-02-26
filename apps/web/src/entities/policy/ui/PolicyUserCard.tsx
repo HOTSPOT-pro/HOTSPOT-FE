@@ -9,7 +9,7 @@ import type { PolicyPerUser } from '../model/type';
 import { AccordionContainer } from './AccordionContainer';
 
 export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: PolicyPerUser) => {
-  const [isAccodianOpen, setIsAccodianOpen] = useState(false);
+  const [isAccordianOpen, setIsAccordianOpen] = useState(false);
   const { open } = useModal();
   const isMe = id === useUserStore().userId;
 
@@ -23,7 +23,7 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
   }, [open, name, isMe]);
 
   const handleToggle = useCallback(() => {
-    setIsAccodianOpen((prev) => !prev);
+    setIsAccordianOpen((prev) => !prev);
   }, []);
 
   return (
@@ -44,7 +44,7 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
             <div className="text-xs text-gray-600 flex items-center gap-1">
               <span>정책 {blockServices.length + policyList.length}개</span>
               <span
-                className={`text-[10px] transition-transform ${isAccodianOpen ? 'rotate-180' : ''}`}
+                className={`text-[10px] transition-transform ${isAccordianOpen ? 'rotate-180' : ''}`}
               >
                 <DownArrow className="w-3 h-3" />
               </span>
@@ -62,7 +62,7 @@ export const PolicyUserCard = ({ id, name, limit, blockServices, policyList }: P
       </div>
 
       {/* 아코디언 */}
-      {isAccodianOpen && (
+      {isAccordianOpen && (
         <AccordionContainer blockServices={blockServices} policyList={policyList} />
       )}
     </div>
