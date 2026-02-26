@@ -1,8 +1,10 @@
-import { postOnboarding } from '@entities/onboarding';
+'use client';
+
 import type { OnboardingInfo } from '@entities/user';
 import { toPureDigits } from '@shared/lib';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { postOnboarding } from '../api/postOnboarding';
 
 export const useOnboarding = () => {
   const router = useRouter();
