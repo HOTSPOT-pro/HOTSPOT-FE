@@ -1,1 +1,1 @@
-export { OnBoardingForm } from './ui/OnboardingForm';
+export { OnBoardingForm } from './ui/OnboardingSection';
