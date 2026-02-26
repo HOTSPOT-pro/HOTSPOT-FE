@@ -1,4 +1,5 @@
-import { type ApiResponse, api } from '@shared/api';
+import type { ApiResponse } from '@shared/api/types';
+import { api } from '@/shared/api/client';
 import type { PostOnboardingRequest, PostOnboardingResponse } from './types';
 
 export const postOnboarding = async ({ phoneNumber, birthDate }: PostOnboardingRequest) => {
