@@ -1,13 +1,9 @@
 import { memo } from 'react';
 import { Chip } from '@/shared/ui';
-
-interface BaseUser {
-  id: number | null;
-  name?: string | null;
-}
+import type { UserListItem } from '../model/types';
 
 export const UserChip = memo(
-  <T extends BaseUser>({
+  <T extends UserListItem>({
     user,
     isSelected,
     onSelect,

@@ -1,0 +1,49 @@
+import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
+import Check from '@hotspot/ui/assets/icons/check.svg';
+import { cn } from '@hotspot/ui/lib';
+import Link from 'next/link';
+
+interface AgreementItemProps {
+  label: string;
+  checked: boolean;
+  onCheck: (checked: boolean) => void;
+  href: string;
+}
+
+export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemProps) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onCheck(e.target.checked);
+  };
+
+  return (
+    <label className="flex items-center justify-between cursor-pointer group">
+      <input
+        aria-checked={checked}
+        checked={checked}
+        className="sr-only"
+        onChange={handleChange}
+        type="checkbox"
+      />
+      <div className="flex items-center gap-4">
+        <div
+          className={cn(
+            ' rounded-full w-fit h-fit p-1.5 border ',
+            checked ? 'border-purple-600 bg-purple-600' : 'border-gray-200 bg-white',
+          )}
+        >
+          <Check className="w-4 h-4 text-white" />
+        </div>
+        <span className={'py-2.5 text-sm text-black'}>{label}</span>
+      </div>
+      <Link
+        aria-label={`${label} 약관 상세 보기`}
+        href={href}
+        onClick={(e) => e.stopPropagation()}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <RightArrow className="w-6 h-6 text-gray-400" />
+      </Link>
+    </label>
+  );
+};

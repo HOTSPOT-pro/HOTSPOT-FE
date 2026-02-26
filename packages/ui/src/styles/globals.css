@@ -2,6 +2,15 @@
 @import "./elevation.css";
 @source "../components/**/*.{ts,tsx}";
 
+@theme {
+  --color-kakao-container: #FEE500;
+  --color-kakao-label: #000000;
+  --color-kakao-symbol: rgba(0,0,0,0.85);
+  --color-google-border: #E5E7EB;
+  --color-google-label: #000000;
+  --color-google-container: #ffffff;
+}
+
 :root {
   --foreground: #171717;
   --background: #ffffff;
