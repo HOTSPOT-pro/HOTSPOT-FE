@@ -1,11 +1,7 @@
 import { OnBoardingPage } from '@pages-layer/onboarding';
 
 const page = () => {
-  return (
-    <div>
-      <OnBoardingPage />
-    </div>
-  );
+  return <OnBoardingPage />;
 };
 
 export default page;
