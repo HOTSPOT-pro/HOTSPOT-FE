@@ -3,8 +3,8 @@ import { useModal } from '@hotspot/ui';
 import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { useCallback, useState } from 'react';
-import { useUserStore } from '@/features/user';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
+import { useUserStore } from '../../user';
 import type { PolicyPerUser } from '../model/types';
 import { AccordionContainer } from './AccordionContainer';
 
@@ -15,7 +15,7 @@ interface PolicyUserCardProps {
 export const PolicyUserCard = ({ data }: PolicyUserCardProps) => {
   const [isAccordianOpen, setIsAccordianOpen] = useState(false);
   const { open } = useModal();
-  const isMe = data.memberId === useUserStore().userId;
+  const isMe = data.memberId === useUserStore().id;
 
   const handleOpenModal = useCallback(() => {
     open('policyDetailModal', {

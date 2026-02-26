@@ -21,10 +21,10 @@ export const BlockAddItem = ({ name, isApply, onToggle }: BlockAddItemProps) => 
       type="button"
     >
       <div className="flex items-center gap-3 justify-between w-full">
-        <div className="">
+        <div className="flex flex-row gap-3">
           <div
             className={cn(
-              'min-w-8 min-h-8 flex items-center justify-center rounded-xl transition-colors',
+              'min-w-8 min-h-8 w-8 h-8 flex items-center justify-center rounded-xl transition-colors',
               isApply ? 'bg-red-100' : 'bg-gray-200',
             )}
           >
@@ -33,9 +33,8 @@ export const BlockAddItem = ({ name, isApply, onToggle }: BlockAddItemProps) => 
             />
           </div>
 
-          <div className="text-left">
+          <div className="text-left flex items-center">
             <div className="text-sm font-bold">{name}</div>
-            <div className="text-xs text-gray-400">설명</div>
           </div>
         </div>
 

@@ -1,8 +1,8 @@
+import type { PolicyOrderMember } from '@entities/policy-order';
+import { useUserStore } from '@entities/user';
 import { Draggable } from '@hello-pangea/dnd';
 import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
 import { cn } from '@hotspot/ui/lib';
-import type { PolicyOrderMember } from '@/entities/policy-order';
-import { useUserStore } from '@/features/user';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
 import { OrderButton } from './OrderButton';
 
@@ -15,7 +15,7 @@ interface OrderItemProps {
 }
 
 export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderItemProps) => {
-  const myId = useUserStore().userId;
+  const myId = useUserStore().id;
 
   return (
     <Draggable draggableId={`item${member.id}`} index={index} isDragDisabled={!isEditing}>
