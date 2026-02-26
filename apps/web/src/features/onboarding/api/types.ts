@@ -1,4 +1,4 @@
-export interface PostOnboardingReqeust {
+export interface PostOnboardingRequest {
   phoneNumber: string;
   birthDate: string;
 }

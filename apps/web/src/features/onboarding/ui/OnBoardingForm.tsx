@@ -1,12 +1,12 @@
 'use client';
 
-import type { OnboardingInfo } from '@entities/user';
 import { Button, Input } from '@hotspot/ui/components';
 import { formatBirth, formatTel } from '@shared/lib';
 import { BottomSheet } from '@shared/ui';
 import { useCallback, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ONBOARDING_RULES } from '../model/formatRule';
+import type { OnboardingInfo } from '../model/types';
 import { useOnboarding } from '../model/useOnboarding';
 import { AgreementSection } from './AgreementSection';
 

@@ -1,3 +1,3 @@
-export type { OnboardingInfo, UserInfo } from './model/types';
+export type { UserInfo, UserListItem } from './model/types';
 export { useUserStore } from './store/useUserStore';
 export { UserSelector } from './ui/UserSelector';

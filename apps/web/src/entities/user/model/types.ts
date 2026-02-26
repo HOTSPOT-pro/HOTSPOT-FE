@@ -3,7 +3,7 @@ export interface UserInfo {
   userName: string | null;
 }
 
-export interface OnboardingInfo {
-  birth: string;
-  tel: string;
+export interface UserListItem {
+  id: number | null;
+  name: string | null;
 }
