@@ -1,5 +1,5 @@
-import type { UserInfo } from '@entities/user/model/type';
 import { useDispatch, useSelector } from 'react-redux';
+import type { UserInfo } from '@/entities/user/model/types';
 import { clearAuth, setAuth } from '@/shared/store/slices/userSlice';
 import type { RootState } from '@/shared/store/store';
 
