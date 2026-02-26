@@ -1,9 +1,9 @@
-import { type Block, useBlock } from '@entities/policy';
+import { type BlockPolicy, useBlock } from '@entities/policy';
 import { BlockAddItem } from '@entities/policy-add';
 import { useEffect, useState } from 'react';
 
 interface PolicyAddListProps {
-  data: Block[];
+  data: BlockPolicy[];
 }
 
 export const BlockAddList = ({ data }: PolicyAddListProps) => {
