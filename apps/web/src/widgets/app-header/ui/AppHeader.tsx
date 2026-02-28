@@ -1,8 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import type { ReactNode } from 'react';
-
+import { type ReactNode, useState } from 'react';
+import { SettingDropDown } from '@/features/header-setting';
+import { useNotification } from '@/features/notification';
 import ArrowLeftIcon from '@/shared/assets/icons/arrow-left.svg';
 import CloseIcon from '@/shared/assets/icons/close.svg';
 import NotificationIcon from '@/shared/assets/icons/notification.svg';
@@ -42,10 +43,12 @@ const isRenderableAction = (action?: HeaderAction): action is HeaderRenderableAc
 
 export function AppHeader({ config }: { config: HeaderConfig }) {
   const router = useRouter();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const { unReadCount } = useNotification();
 
   const handleBackDefault = () => router.back();
   const handleNotificationDefault = () => router.push(ROUTES.NOTIFICATION);
-  const handleSettingsDefault = () => router.push(ROUTES.SETTINGS); // 임시, 현재는 알림에서만 사용
+  const handleSettingsDefault = () => setIsSettingsOpen(true); // 임시, 현재는 알림에서만 사용
 
   const renderLeft = (action?: HeaderAction) => {
     if (!isRenderableAction(action)) return null;
@@ -95,15 +98,25 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
     switch (action.type) {
       case 'settings':
         return (
-          <IconButton ariaLabel="설정" onClick={action.onClick ?? handleSettingsDefault}>
-            <SettingIcon className="h-6 w-6" />
-          </IconButton>
+          <div>
+            <IconButton ariaLabel="설정" onClick={action.onClick ?? handleSettingsDefault}>
+              <SettingIcon className="h-6 w-6" />
+            </IconButton>
+            {isSettingsOpen && (
+              <SettingDropDown handleDropDown={() => setIsSettingsOpen(!isSettingsOpen)} />
+            )}
+          </div>
         );
 
       case 'notification':
         return (
           <IconButton ariaLabel="알림" onClick={action.onClick ?? handleNotificationDefault}>
-            <NotificationIcon className="h-6 w-6" />
+            <div className="relative w-7 h-7 flex items-center justify-center">
+              <NotificationIcon className="h-6 w-6" />
+              <div className="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 text-[10px] border border-white text-white px-1 bg-purple-600 rounded-full">
+                {unReadCount.data}
+              </div>
+            </div>
           </IconButton>
         );
 
