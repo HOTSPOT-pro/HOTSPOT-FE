@@ -4,6 +4,7 @@ import '@hotspot/ui/globals.css';
 import { ModalProvider } from '@hotspot/ui';
 import { StoreProvider } from '@/app/_providers';
 import { AppModal } from '@/widgets/app-modal/ui/AppModal';
+import { QueryProvider } from './_providers/query/QueryProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -28,10 +29,12 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-dvh`}>
         <StoreProvider>
-          <ModalProvider>
-            <main className="bg-white min-h-dvh w-full">{children}</main>
-            <AppModal />
-          </ModalProvider>
+          <QueryProvider>
+            <ModalProvider>
+              <main className="bg-white min-h-dvh w-full">{children}</main>
+              <AppModal />
+            </ModalProvider>
+          </QueryProvider>
         </StoreProvider>
       </body>
     </html>
