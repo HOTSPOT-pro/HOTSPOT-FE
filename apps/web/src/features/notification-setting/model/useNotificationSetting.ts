@@ -1,37 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getNotificationAllow } from '../api/getNotificationAllow';
+import { patchNotificationAllow } from '../api/patchNotificationAllow';
+import type { NotificationAllowResponse } from '../api/type';
+import { NOTIFICATION_SETTINGS } from '../constants/notificationSettingList';
 
 export type NotificationSettings = Record<string, boolean>;
 
 export const useNotificationSettings = () => {
-  const [settings, setSettings] = useState<NotificationSettings>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setSettings({
-          'family-policy': false,
-          'gift-data': true,
-          'service-block': true,
-          threshold: true,
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchSettings();
-  }, []);
+  const notiSettingList = useQuery({
+    queryFn: getNotificationAllow,
+    queryKey: ['notificationsSettings'],
+    select: (data: NotificationAllowResponse) => {
+      const serverData = data.notificationAllows;
+      return NOTIFICATION_SETTINGS.map((setting) => {
+        const serverStatus = serverData.find((item) => item.notificationCategory === setting.id);
+        return {
+          ...setting,
+          isAllowed: serverStatus?.notificationAllow ?? false,
+        };
+      });
+    },
+  });
 
-  const updateSetting = async (id: string, checked: boolean) => {
-    setSettings((prev) => ({ ...prev, [id]: checked }));
+  const updateSetting = useMutation({
+    mutationFn: ({ category, isAllowed }: { category: string; isAllowed: boolean }) =>
+      patchNotificationAllow(category, isAllowed),
 
-    try {
-      console.log(`API 전송: ${id} -> ${checked}`);
-    } catch (error) {
-      setSettings((prev) => ({ ...prev, [id]: !checked }));
-    }
+    onError: (error) => {
+      console.error('업데이트 실패:', error);
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notificationsSettings'] });
+    },
+  });
+
+  return {
+    settings: notiSettingList.data,
+    updateSetting: updateSetting.mutate,
   };
-
-  return { isLoading, settings, updateSetting };
 };
