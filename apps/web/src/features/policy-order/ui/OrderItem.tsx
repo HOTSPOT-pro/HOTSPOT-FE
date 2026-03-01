@@ -1,13 +1,13 @@
-import type { PolicyOrderMember } from '@entities/policy-order';
 import { useUserStore } from '@entities/user';
 import { Draggable } from '@hello-pangea/dnd';
 import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
 import { cn } from '@hotspot/ui/lib';
+import type { MemberPriority } from '@/entities/policy-order/model/type';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
 import { OrderButton } from './OrderButton';
 
 interface OrderItemProps {
-  member: PolicyOrderMember;
+  member: MemberPriority;
   index: number;
   isEditing: boolean;
   onMove: (index: number, direction: 'up' | 'down') => void;
@@ -18,7 +18,7 @@ export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderIte
   const myId = useUserStore().id;
 
   return (
-    <Draggable draggableId={`item${member.id}`} index={index} isDragDisabled={!isEditing}>
+    <Draggable draggableId={`item${member.subId}`} index={index} isDragDisabled={!isEditing}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -39,7 +39,7 @@ export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderIte
             <span className="text-sm font-bold text-purple-500 rounded-2xl bg-purple-100 w-7 h-7 flex items-center justify-center">
               {index + 1}
             </span>
-            <UserProfileIcon type={myId === member.id ? 'MAIN' : 'OTHER'} />
+            <UserProfileIcon type={myId === member.subId ? 'MAIN' : 'OTHER'} />
             <div>
               <p className="font-medium text-gray-900">{member.name}</p>
               <p className="text-xs text-gray-500">한도 {member.limit.toFixed(1)}GB</p>

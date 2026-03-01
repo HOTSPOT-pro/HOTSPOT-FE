@@ -1,2 +1,2 @@
-export type { PolicyOrderMember, PolicyOrderType } from './model/type';
+export type { PolicyOrderType } from './model/type';
 export { POLICY_ORDER_TYPE } from './model/type';
