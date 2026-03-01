@@ -6,8 +6,8 @@ import { type ReactNode, useState } from 'react';
 import { BlockAddList, PolicyAddList } from '@/features/policy-apply';
 import type { PolicyApply } from '@/features/policy-apply/model/types';
 import { useApplyPolicy } from '@/features/policy-apply/model/useApplyPolicy';
-import type { BlockApply } from '@/features/policy-block/model/types';
-import { useApplyBlock } from '@/features/policy-block/model/useApplyBlock';
+import type { BlockApply } from '@/features/policy-blockapply/model/types';
+import { useApplyBlock } from '@/features/policy-blockapply/model/useApplyBlock';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
