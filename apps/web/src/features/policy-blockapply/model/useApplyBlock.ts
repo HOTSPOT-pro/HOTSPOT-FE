@@ -11,7 +11,6 @@ export const useApplyBlock = ({ subId, familyId }: useApplyPolicyParams) => {
   const queryClient = useQueryClient();
   const updateBlock = useMutation({
     mutationFn: (updates: BlockApply) => {
-      console.log(subId, familyId, updates);
       return patchBlockApplyClientApi({
         blockServiceIdList: updates.blockedServiceIdList,
         familyId,

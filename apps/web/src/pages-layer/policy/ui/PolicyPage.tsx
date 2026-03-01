@@ -23,7 +23,7 @@ const HEADER_CONFIG: HeaderConfig = {
 
 export const PolicyPage = () => {
   const router = useRouter();
-  const { policyPerFamily, loading } = useFamilyPolicy();
+  const { policyPerFamily, priorityPerFamily, loading } = useFamilyPolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
   const user = useUserStore();
   const { open } = useModal();
@@ -35,7 +35,7 @@ export const PolicyPage = () => {
 
   useEffect(() => {
     if (loading) return;
-    if (!policyPerFamily || user.familyRole === 'CHILD') {
+    if (!(policyPerFamily && priorityPerFamily) || user.familyRole === 'CHILD') {
       open('errorModal', {
         props: {
           content: '부모 계정만 접근할 수 있는 페이지입니다.',
@@ -44,9 +44,9 @@ export const PolicyPage = () => {
         },
       });
     }
-  }, [loading, policyPerFamily, user.familyRole, open, router]);
+  }, [loading, policyPerFamily, priorityPerFamily, user.familyRole, open, router]);
 
-  if (!policyPerFamily || user.familyRole === 'CHILD') {
+  if (!(policyPerFamily && priorityPerFamily) || user.familyRole === 'CHILD') {
     return null;
   }
 
@@ -66,7 +66,7 @@ export const PolicyPage = () => {
           {activeTab === 'FAMILY' && <PolicyUserSection data={policyPerFamily} />}
           {activeTab === 'ORDER' && (
             <div className="px-5 py-4">
-              <OrderSection />
+              <OrderSection data={priorityPerFamily} />
             </div>
           )}
         </div>
