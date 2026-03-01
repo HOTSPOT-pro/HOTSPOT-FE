@@ -10,7 +10,7 @@ export const PolicyUserSection = ({ data }: PolicyUserSectionProps) => {
       {data.memberPolicies.map((i, index) => (
         <div key={i.memberId}>
           {index !== 0 && <div className="w-full h-[0.5px] bg-gray-200" />}
-          <PolicyUserCard data={i} />
+          <PolicyUserCard data={i} familyId={data.familyId} />
         </div>
       ))}
     </div>

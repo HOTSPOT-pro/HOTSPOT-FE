@@ -4,12 +4,12 @@ import { patchDatalimitClientApi } from '../api/patchDatalimitClientApi';
 import type { GetDatalimitResponse } from '../api/types';
 import type { Datalimit, UpdateDatalimit } from './types';
 
-interface useDatalimitProps {
+interface useDatalimitParams {
   subId: number;
   familyId: number;
 }
 
-export const useDatalimit = ({ subId, familyId }: useDatalimitProps) => {
+export const useDatalimit = ({ subId, familyId }: useDatalimitParams) => {
   const queryClient = useQueryClient();
   const { data, isPending } = useQuery<GetDatalimitResponse, Error, Datalimit>({
     enabled: Boolean(subId),

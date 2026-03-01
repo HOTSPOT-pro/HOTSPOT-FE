@@ -11,20 +11,20 @@ const DAY_MAP: Record<string, string> = {
 };
 
 export const policyDescriptionFormatter = (policy: Policy): string => {
-  const { policyType, startTime, endTime, policySnapshot } = policy;
-  const { days, durationMinutes } = policySnapshot;
+  const { policyType, policySnapshot } = policy;
+  const { days, durationMinutes, startTime, endTime } = policySnapshot;
 
   if (policyType === 'SCHEDULED') {
     const korDays = days ? days.map((day) => DAY_MAP[day] || day).join(', ') : '';
-    return korDays + ' ' + startTime + '~' + endTime;
+    return `${korDays} ${startTime}~${endTime}`;
   }
 
   if (policyType === 'ONCE') {
     if (startTime && endTime) {
-      return startTime + '~' + endTime;
+      return `${startTime}~${endTime}`;
     }
     if (durationMinutes) {
-      return durationMinutes + '분';
+      return `${durationMinutes}분`;
     }
   }
   return '정보 없음';

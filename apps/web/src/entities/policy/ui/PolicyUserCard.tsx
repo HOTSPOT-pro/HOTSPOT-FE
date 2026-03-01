@@ -9,10 +9,11 @@ import type { PolicyPerUser } from '../model/types';
 import { AccordionContainer } from './AccordionContainer';
 
 interface PolicyUserCardProps {
+  familyId: number;
   data: PolicyPerUser;
 }
 
-export const PolicyUserCard = ({ data }: PolicyUserCardProps) => {
+export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
   const [isAccordianOpen, setIsAccordianOpen] = useState(false);
   const { open } = useModal();
   const isMe = data.memberId === useUserStore().id;
@@ -20,11 +21,12 @@ export const PolicyUserCard = ({ data }: PolicyUserCardProps) => {
   const handleOpenModal = useCallback(() => {
     open('policyDetailModal', {
       props: {
+        familyId: familyId,
         icon: <UserProfileIcon type={isMe ? 'MAIN' : 'OTHER'} />,
         user: data,
       },
     });
-  }, [open, isMe, data]);
+  }, [open, isMe, data, familyId]);
 
   const handleToggle = useCallback(() => {
     setIsAccordianOpen((prev) => !prev);

@@ -31,7 +31,7 @@ export const DataLimitSection = ({ datalimit, draft, onUpdate }: DataLimitSectio
           maxNum={datalimit?.familyDataAmount ?? 0}
           minNum={0}
           onChange={handleSliderChange}
-          step={5}
+          step={1}
         />
       </div>
     </div>

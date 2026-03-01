@@ -2,9 +2,12 @@ export interface Policy {
   id: number;
   name: string;
   policyType: string;
-  policySnapshot: { days?: string[]; durationMinutes?: number };
-  startTime: string;
-  endTime: string;
+  policySnapshot: {
+    days?: string[];
+    durationMinutes?: number;
+    startTime?: string;
+    endTime?: string;
+  };
 }
 export interface BlockPolicy {
   id: number;

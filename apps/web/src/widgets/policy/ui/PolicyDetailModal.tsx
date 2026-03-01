@@ -1,9 +1,13 @@
 import type { PolicyPerUser } from '@entities/policy';
-import { BlockAddList, PolicyAddList } from '@features/policy-add';
-import type { PatchDatalimitRequest, TotalDraft } from '@features/policy-datalimite';
+import type { UpdateDatalimit } from '@features/policy-datalimite';
 import { DataLimitSection, useDatalimit } from '@features/policy-datalimite';
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
 import { type ReactNode, useState } from 'react';
+import { BlockAddList, PolicyAddList } from '@/features/policy-apply';
+import type { PolicyApply } from '@/features/policy-apply/model/types';
+import { useApplyPolicy } from '@/features/policy-apply/model/useApplyPolicy';
+import type { BlockApply } from '@/features/policy-block/model/types';
+import { useApplyBlock } from '@/features/policy-block/model/useApplyBlock';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
@@ -18,6 +22,8 @@ interface PolicyDetailModalProps {
   icon: ReactNode;
   [key: string]: unknown;
 }
+
+type TotalDraft = Partial<UpdateDatalimit & PolicyApply & BlockApply>;
 
 export const PolicyDetailModal = ({ close }: { close: () => void }) => {
   const { getProps } = useModal();
@@ -36,33 +42,50 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
   });
 
   // policy
+  const { updatePolicy } = useApplyPolicy({
+    familyId: props?.familyId as number,
+    subId: props?.user.subId as number,
+  });
 
   // block
+  const { updateBlock } = useApplyBlock({
+    familyId: props?.familyId as number,
+    subId: props?.user.subId as number,
+  });
 
   const handleSave = async () => {
     if (!(props && datalimit)) return;
 
+    const promises: Promise<unknown>[] = [];
+
     if (draft.dataLimit !== undefined || draft.isLocked !== undefined) {
-      const dataLimitPayload: PatchDatalimitRequest = {
+      const dataLimitPayload: UpdateDatalimit = {
         dataLimit: draft.dataLimit ?? datalimit.dataLimit,
-        familyId: props.familyId,
         isLocked: draft.isLocked ?? datalimit.isLocked,
-        subId: props.user.subId,
       };
-      updateLockStatus.mutate(dataLimitPayload);
+      promises.push(updateLockStatus.mutateAsync(dataLimitPayload));
     }
 
-    // 2. POLICY 관련 변경사항이 있을 때 (예: blockPolicyList가 draft에 담겼을 때)
-    // if (draft.blockPolicyList) {
-    // updatePolicy.mutate({ subId: props.user.subId, policies: draft.blockPolicyList });
-    // }
+    if (draft.blockPolicyIdList) {
+      const policyPayload: PolicyApply = {
+        blockPolicyIdList: draft.blockPolicyIdList,
+      };
+      promises.push(updatePolicy.mutateAsync(policyPayload));
+    }
 
-    // 3. BLOCK 관련 변경사항이 있을 때
-    // if (draft.appBlockedList) {
-    // updateBlock.mutate({ subId: props.user.subId, apps: draft.appBlockedList });
-    // }
+    if (draft.blockedServiceIdList) {
+      const blockPayload: BlockApply = {
+        blockedServiceIdList: draft.blockedServiceIdList,
+      };
+      promises.push(updateBlock.mutateAsync(blockPayload));
+    }
 
-    close();
+    try {
+      await Promise.all(promises);
+      close();
+    } catch (error) {
+      console.error('일부 업데이트 실패:', error);
+    }
   };
 
   if (!props || typeof props.familyId !== 'number' || !props.user?.subId) {
@@ -91,10 +114,18 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
             <DataLimitSection datalimit={datalimit} draft={draft} onUpdate={handleUpdate} />
           )}
           {activeTab === 'POLICY' && (
-            <PolicyAddList data={props?.user.blockPolicyResponseList ?? []} />
+            <PolicyAddList
+              data={props?.user.blockPolicyResponseList ?? []}
+              draft={draft}
+              onUpdate={(ids) => handleUpdate({ blockPolicyIdList: ids })}
+            />
           )}
           {activeTab === 'BLOCK' && (
-            <BlockAddList data={props?.user.appBlockedServiceResponseList ?? []} />
+            <BlockAddList
+              data={props?.user.appBlockedServiceResponseList ?? []}
+              draft={draft}
+              onUpdate={handleUpdate}
+            />
           )}
         </Modal.Content>
         <Modal.Footer>

@@ -1,37 +1,34 @@
-import { useState } from 'react';
 import type { Policy } from '@/entities/policy';
 import { policyDescriptionFormatter } from '@/entities/policy/lib/policyDescriptionFormatter';
 import { usePolicy } from '@/entities/policy/model/usePolicy';
 import { PolicyAddItem } from '@/entities/policy-add';
+import type { PolicyApply } from '../model/types';
 
 interface PolicyAddListProps {
   data: Policy[];
+  draft: Partial<PolicyApply>;
+  onUpdate: (policyIds: number[]) => void;
 }
 
-export const PolicyAddList = ({ data }: PolicyAddListProps) => {
-  const [selectedPolicies, setSelectedPolicies] = useState<Policy[]>(data);
-
+export const PolicyAddList = ({ data, draft, onUpdate }: PolicyAddListProps) => {
   const { policyList } = usePolicy();
 
+  const currentSelectedIds = draft.blockPolicyIdList ?? data.map((p) => p.id);
+
   const handleToggle = (policyId: number, checked: boolean) => {
-    setSelectedPolicies((prev) => {
-      if (checked) {
-        const policyToAdd = policyList.find((p) => p.id === policyId);
-        if (policyToAdd && !prev.some((p) => p.id === policyId)) {
-          return [...prev, policyToAdd];
-        }
-        return prev;
-      } else {
-        return prev.filter((p) => p.id !== policyId);
-      }
-    });
+    let nextIds: number[];
+    if (checked) {
+      nextIds = [...currentSelectedIds, policyId];
+    } else {
+      nextIds = currentSelectedIds.filter((id) => id !== policyId);
+    }
+    onUpdate(nextIds);
   };
 
   return (
     <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">
       {policyList.map((policy) => {
-        const isApply = selectedPolicies.some((p) => p.id === policy.id);
-
+        const isApply = currentSelectedIds.includes(policy.id);
         return (
           <PolicyAddItem
             description={policyDescriptionFormatter(policy)}

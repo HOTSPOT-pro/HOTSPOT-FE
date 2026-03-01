@@ -6,7 +6,7 @@ import type { PolicyPerFamily } from './types';
 export const useFamilyPolicy = () => {
   const { data, isPending } = useQuery<GetAppliedPolicyResponse>({
     queryFn: () => getAppliedPolicyClientApi(true),
-    queryKey: ['block'],
+    queryKey: ['policyPerFamily'],
   });
   const policyPerFamily = data as PolicyPerFamily;
   return {
