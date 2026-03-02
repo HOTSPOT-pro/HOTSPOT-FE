@@ -2,7 +2,6 @@
 'use client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import type { Notification } from '@/entities/notification';
 
 export const NotificationSubscribeProvider = () => {
   const queryClient = useQueryClient();
@@ -14,23 +13,34 @@ export const NotificationSubscribeProvider = () => {
     );
 
     eventSource.onmessage = (event) => {
-      const sseData = JSON.parse(event.data);
-      const newNotification: Notification = {
-        createdAt: sseData.createdTime,
-        eventId: sseData.eventId,
-        id: sseData.id,
-        isRead: sseData.isRead,
-        message: sseData.content,
-        title: sseData.title,
-        type: sseData.notificationType,
-      };
+      try {
+        const sseData = JSON.parse(event.data);
 
-      queryClient.setQueryData<Notification[]>(['notifications'], (old) => {
-        if (!old) return [newNotification];
-        if (old.some((n) => n.id === newNotification.id)) return old;
-        return [newNotification, ...old];
-      });
-      queryClient.setQueryData(['unreadCount'], sseData.unreadCount);
+        const newRawNotification = {
+          content: sseData.content,
+          createdTime: sseData.createdTime,
+          eventId: sseData.eventId,
+          id: sseData.id,
+          isRead: sseData.isRead,
+          notificationType: sseData.notificationType,
+          title: sseData.title,
+        };
+
+        queryClient.setQueryData<
+          import('@/entities/notification/api/types').GetNotificationResponse
+        >(['notifications'], (old) => {
+          if (!old || old.notifications.some((n) => n.id === newRawNotification.id)) {
+            return old;
+          }
+          return {
+            ...old,
+            notifications: [newRawNotification, ...old.notifications],
+          };
+        });
+        queryClient.setQueryData(['unreadCount'], sseData.unreadCount);
+      } catch (error) {
+        console.error('SSE onmessage error:', error);
+      }
     };
 
     eventSource.onerror = (error) => {

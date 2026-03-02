@@ -27,11 +27,6 @@ export const useNotificationSettings = () => {
   const updateSetting = useMutation({
     mutationFn: ({ category, isAllowed }: { category: string; isAllowed: boolean }) =>
       patchNotificationAllow(category, isAllowed),
-
-    onError: (error) => {
-      console.error('업데이트 실패:', error);
-    },
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notificationsSettings'] });
     },
