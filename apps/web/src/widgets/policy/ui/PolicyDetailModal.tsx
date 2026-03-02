@@ -6,7 +6,7 @@ import { BlockAddList, useApplyBlock } from '@features/policy-blockapply';
 import type { UpdateDatalimit } from '@features/policy-datalimite';
 import { DataLimitSection, useDatalimit } from '@features/policy-datalimite';
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
@@ -91,6 +91,8 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
     return <Modal.Content>데이터를 불러올 수 없습니다.</Modal.Content>;
   }
 
+  if (loading) return <Modal.Content>데이터를 불러오는 중입니다.</Modal.Content>;
+
   return (
     <div>
       <Modal className="w-100">
@@ -128,9 +130,7 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
           )}
         </Modal.Content>
         <Modal.Footer>
-          <Button isLoading={loading} onClick={handleSave}>
-            저장
-          </Button>
+          <Button onClick={handleSave}>저장</Button>
           <Button onClick={close} variant="ghost">
             취소
           </Button>
