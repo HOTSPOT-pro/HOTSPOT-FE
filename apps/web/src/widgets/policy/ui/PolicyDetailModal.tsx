@@ -1,7 +1,12 @@
 import type { PolicyPerUser } from '@entities/policy';
-import { BlockAddList, PolicyAddList } from '@features/policy-add';
-import { Button, Modal, Slider, Tab, type TabItem, Toggle, useModal } from '@hotspot/ui';
-import { type ReactNode, useState } from 'react';
+import type { PolicyApply } from '@features/policy-apply';
+import { PolicyAddList, useApplyPolicy } from '@features/policy-apply';
+import type { BlockApply } from '@features/policy-blockapply';
+import { BlockAddList, useApplyBlock } from '@features/policy-blockapply';
+import type { UpdateDatalimit } from '@features/policy-datalimite';
+import { DataLimitSection, useDatalimit } from '@features/policy-datalimite';
+import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
@@ -11,15 +16,82 @@ const TABS: TabItem<PolicyModalTabValue>[] = [
 ];
 
 interface PolicyDetailModalProps {
+  familyId: number;
   user: PolicyPerUser;
   icon: ReactNode;
   [key: string]: unknown;
 }
 
+type TotalDraft = Partial<UpdateDatalimit & PolicyApply & BlockApply>;
+
 export const PolicyDetailModal = ({ close }: { close: () => void }) => {
   const { getProps } = useModal();
   const props = getProps<PolicyDetailModalProps>();
   const [activeTab, setActiveTab] = useState<PolicyModalTabValue>('DATA');
+
+  const [draft, setDraft] = useState<TotalDraft>({});
+  const handleUpdate = (updates: TotalDraft) => {
+    setDraft((prev) => ({ ...prev, ...updates }));
+  };
+
+  // data limit
+  const { datalimit, updateLockStatus, loading } = useDatalimit({
+    familyId: props?.familyId as number,
+    subId: props?.user.subId as number,
+  });
+
+  // policy
+  const { updatePolicy } = useApplyPolicy({
+    familyId: props?.familyId as number,
+    subId: props?.user.subId as number,
+  });
+
+  // block
+  const { updateBlock } = useApplyBlock({
+    familyId: props?.familyId as number,
+    subId: props?.user.subId as number,
+  });
+
+  const handleSave = async () => {
+    if (!(props && datalimit)) return;
+
+    const promises: Promise<unknown>[] = [];
+
+    if (draft.dataLimit !== undefined || draft.isLocked !== undefined) {
+      const dataLimitPayload: UpdateDatalimit = {
+        dataLimit: draft.dataLimit ?? datalimit.dataLimit,
+        isLocked: draft.isLocked ?? datalimit.isLocked,
+      };
+      promises.push(updateLockStatus.mutateAsync(dataLimitPayload));
+    }
+
+    if (draft.blockPolicyIdList) {
+      const policyPayload: PolicyApply = {
+        blockPolicyIdList: draft.blockPolicyIdList,
+      };
+      promises.push(updatePolicy.mutateAsync(policyPayload));
+    }
+
+    if (draft.blockedServiceIdList) {
+      const blockPayload: BlockApply = {
+        blockedServiceIdList: draft.blockedServiceIdList,
+      };
+      promises.push(updateBlock.mutateAsync(blockPayload));
+    }
+
+    try {
+      await Promise.all(promises);
+      close();
+    } catch (error) {
+      console.error('일부 업데이트 실패:', error);
+    }
+  };
+
+  if (!props || typeof props.familyId !== 'number' || !props.user?.subId) {
+    return <Modal.Content>데이터를 불러올 수 없습니다.</Modal.Content>;
+  }
+
+  if (loading) return <Modal.Content>데이터를 불러오는 중입니다.</Modal.Content>;
 
   return (
     <div>
@@ -40,50 +112,30 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
             variant="underline"
           />
           {activeTab === 'DATA' && (
-            <DataLimitSection initialValue={props?.user.dataLimit} maxNum={100} minNum={0} />
+            <DataLimitSection datalimit={datalimit} draft={draft} onUpdate={handleUpdate} />
           )}
           {activeTab === 'POLICY' && (
-            <PolicyAddList data={props?.user.blockPolicyResponseList ?? []} />
+            <PolicyAddList
+              data={props?.user.blockPolicyResponseList ?? []}
+              draft={draft}
+              onUpdate={(ids) => handleUpdate({ blockPolicyIdList: ids })}
+            />
           )}
           {activeTab === 'BLOCK' && (
-            <BlockAddList data={props?.user.appBlockedServiceResponseList ?? []} />
+            <BlockAddList
+              data={props?.user.appBlockedServiceResponseList ?? []}
+              draft={draft}
+              onUpdate={handleUpdate}
+            />
           )}
         </Modal.Content>
         <Modal.Footer>
-          <Button>저장</Button>
+          <Button onClick={handleSave}>저장</Button>
           <Button onClick={close} variant="ghost">
             취소
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
-  );
-};
-
-const DataLimitSection = ({
-  initialValue,
-  maxNum,
-  minNum,
-}: {
-  initialValue?: number;
-  maxNum: number;
-  minNum: number;
-}) => {
-  const [isBlocked, setIsBlocked] = useState(false);
-  const handleBlockToggle = () => {
-    setIsBlocked((prev) => !prev);
-  };
-
-  return (
-    <div className="py-4 flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-2">
-        <p className="text-xs font-bold leading-4">즉시 차단</p>
-        <Toggle checked={isBlocked} id={'block'} onChange={handleBlockToggle} />
-      </div>
-      <div>
-        <p className="text-xs font-bold leading-4">데이터 한도</p>
-        <Slider initialValue={initialValue} maxNum={maxNum} minNum={minNum} step={5} />
-      </div>
     </div>
   );
 };

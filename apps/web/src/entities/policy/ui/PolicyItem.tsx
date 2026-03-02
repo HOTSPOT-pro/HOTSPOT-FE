@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
-import type { Block, Policy } from '../model/types';
+import type { BlockPolicy, Policy } from '../model/types';
 
 interface PolicyItemProps {
-  item: Policy | Block;
+  item: Policy | BlockPolicy;
   icon: ReactNode;
   description?: string;
 }

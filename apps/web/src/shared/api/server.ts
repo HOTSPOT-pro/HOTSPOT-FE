@@ -19,3 +19,5 @@ export const createServerApi = async (): Promise<AxiosInstance> => {
     withCredentials: true,
   });
 };
+
+export const serverApi: Promise<AxiosInstance> = createServerApi();

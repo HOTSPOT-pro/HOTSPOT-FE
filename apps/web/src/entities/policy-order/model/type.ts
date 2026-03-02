@@ -1,7 +1,13 @@
-export interface PolicyOrderMember {
-  id: number;
+export interface MemberPriority {
+  subId: number;
+  priority: number;
   name: string;
   limit: number;
+}
+export interface FamilyPriority {
+  familyId: number;
+  priorityType: PolicyOrderType;
+  memberPriorities: MemberPriority[];
 }
 
 export const POLICY_ORDER_TYPE = {

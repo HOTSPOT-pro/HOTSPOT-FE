@@ -1,21 +1,31 @@
+import type { Policy } from '../model/types';
+
 const DAY_MAP: Record<string, string> = {
-  FRI: '금',
-  MON: '월',
-  SAT: '토',
-  SUN: '일',
-  THU: '목',
-  TUE: '화',
-  WED: '수',
+  FRIDAY: '금',
+  MONDAY: '월',
+  SATURDAY: '토',
+  SUNDAY: '일',
+  THURSDAY: '목',
+  TUESDAY: '화',
+  WEDNESDAY: '수',
 };
 
-export const policyDescriptionFormatter = (
-  days: string[],
-  startTime: string,
-  endTime: string,
-): string => {
-  if (!days || days.length === 0) return '';
+export const policyDescriptionFormatter = (policy: Policy): string => {
+  const { policyType, policySnapshot } = policy;
+  const { days, durationMinutes, startTime, endTime } = policySnapshot;
 
-  const korDays = days.map((day) => DAY_MAP[day] || day).join(', ');
+  if (policyType === 'SCHEDULED') {
+    const korDays = days ? days.map((day) => DAY_MAP[day] || day).join(', ') : '';
+    return `${korDays} ${startTime}~${endTime}`;
+  }
 
-  return `${korDays} ${startTime}~${endTime}`;
+  if (policyType === 'ONCE') {
+    if (startTime && endTime) {
+      return `${startTime}~${endTime}`;
+    }
+    if (durationMinutes) {
+      return `${durationMinutes}분`;
+    }
+  }
+  return '정보 없음';
 };
