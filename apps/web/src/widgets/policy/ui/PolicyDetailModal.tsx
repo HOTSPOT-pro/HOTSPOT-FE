@@ -1,13 +1,12 @@
 import type { PolicyPerUser } from '@entities/policy';
+import type { PolicyApply } from '@features/policy-apply';
+import { PolicyAddList, useApplyPolicy } from '@features/policy-apply';
+import type { BlockApply } from '@features/policy-blockapply';
+import { BlockAddList, useApplyBlock } from '@features/policy-blockapply';
 import type { UpdateDatalimit } from '@features/policy-datalimite';
 import { DataLimitSection, useDatalimit } from '@features/policy-datalimite';
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
 import { type ReactNode, useState } from 'react';
-import { BlockAddList, PolicyAddList } from '@/features/policy-apply';
-import type { PolicyApply } from '@/features/policy-apply/model/types';
-import { useApplyPolicy } from '@/features/policy-apply/model/useApplyPolicy';
-import type { BlockApply } from '@/features/policy-blockapply/model/types';
-import { useApplyBlock } from '@/features/policy-blockapply/model/useApplyBlock';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [

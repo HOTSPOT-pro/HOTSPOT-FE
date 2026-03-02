@@ -1,7 +1,6 @@
-import type { Policy } from '@/entities/policy';
-import { policyDescriptionFormatter } from '@/entities/policy/lib/policyDescriptionFormatter';
-import { usePolicy } from '@/entities/policy/model/usePolicy';
-import { PolicyAddItem } from '@/entities/policy-add';
+import type { Policy } from '@entities/policy';
+import { policyDescriptionFormatter, usePolicy } from '@entities/policy';
+import { PolicyAddItem } from '@entities/policy-add';
 import type { PolicyApply } from '../model/types';
 
 interface PolicyAddListProps {

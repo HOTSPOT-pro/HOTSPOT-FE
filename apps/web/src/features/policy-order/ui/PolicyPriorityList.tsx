@@ -1,7 +1,7 @@
+import type { FamilyPriority } from '@entities/policy-order';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Button } from '@hotspot/ui/components';
 import { useCallback, useState } from 'react';
-import type { FamilyPriority } from '@/entities/policy-order/model/type';
 import { usePriorityOrder } from '../model/usePriorityOrder';
 import { OrderItem } from './OrderItem';
 

@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBlockClientApi } from '../api/getBlockClientApi';
-import { Block } from '../api/types';
 import type { BlockPolicy } from './types';
 
 export const useBlock = () => {

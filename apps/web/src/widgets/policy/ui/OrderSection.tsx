@@ -1,7 +1,6 @@
+import type { FamilyPriority, PolicyOrderType } from '@entities/policy-order';
+import { PolicyOrderSelector, PolicyPriorityList, useFifoOrder } from '@features/policy-order';
 import { useState } from 'react';
-import type { FamilyPriority, PolicyOrderType } from '@/entities/policy-order/model/type';
-import { PolicyOrderSelector, PolicyPriorityList } from '@/features/policy-order';
-import { useFifoOrder } from '@/features/policy-order/model/useFifoOrder';
 
 interface OrderSectionProps {
   data: FamilyPriority;

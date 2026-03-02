@@ -2,8 +2,8 @@
 import { useModal } from '@hotspot/ui';
 import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
+import { UserProfileIcon } from '@shared/ui';
 import { useCallback, useState } from 'react';
-import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
 import { useUserStore } from '../../user';
 import type { PolicyPerUser } from '../model/types';
 import { AccordionContainer } from './AccordionContainer';

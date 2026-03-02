@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { FamilyPriority } from '@/entities/policy-order/model/type';
+import type { FamilyPriority, PolicyOrderType } from '@/entities/policy-order';
 import { getAppliedPolicyClientApi } from '../api/getAppliedPolicyClientApi';
 import type { GetAppliedPolicyResponse } from '../api/types';
 
@@ -23,7 +23,7 @@ export const useFamilyPolicy = () => {
           priority: member.priority,
           subId: member.subId,
         })),
-        priorityType: serverData.priorityType,
+        priorityType: serverData.priorityType as PolicyOrderType,
       };
 
       return {

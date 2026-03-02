@@ -1,3 +1,4 @@
+export { policyDescriptionFormatter } from './lib/policyDescriptionFormatter';
 export type { BlockPolicy, Policy, PolicyPerFamily, PolicyPerUser } from './model/types';
 export { useBlock } from './model/useBlock';
 export { useFamilyPolicy } from './model/useFamilyPolicy';
