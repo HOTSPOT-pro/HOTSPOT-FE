@@ -7,6 +7,10 @@ export {
   CardHeader,
   CardTitle,
 } from './card/Card';
+export {
+  DonutChart,
+  type DonutChartDataProps,
+} from './chart/donut/DonutChart';
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
 export {
   LineChart,
@@ -14,6 +18,7 @@ export {
   type UsageLineChartProps,
 } from './chart/line/LineChart';
 export { ProgressBar } from './chart/progressbar/ProgressBar';
+export { ChartTooltip, type ChartTooltipSection } from './chart/tooltip/ChartTooltip';
 export { Input } from './input/Input';
 export { Loading } from './loading/Loading';
 export { Modal } from './modal/Modal';
