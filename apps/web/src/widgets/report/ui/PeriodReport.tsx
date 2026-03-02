@@ -18,7 +18,7 @@ export const PeriodReport = (range: ReportRange) => {
     userId: selectedUser.subId,
   });
 
-  if (!(users && appUsageData)) return <div>오류 발생. 나중에 다시 시도해주세요.</div>;
+  if (!users) return <div>Loading...</div>;
 
   return (
     <div className="mt-4">
@@ -30,7 +30,7 @@ export const PeriodReport = (range: ReportRange) => {
 
         {/* 사용량 그래프 */}
         <div className="w-full h-96 min-w-0 min-h-0 pt-3">
-          {isAppLoading ? (
+          {isChartLoading ? (
             <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">
               Loading...
             </div>
@@ -60,7 +60,7 @@ export const PeriodReport = (range: ReportRange) => {
       </div>
 
       {/* 앱별 사용량 */}
-      {isChartLoading ? (
+      {isAppLoading ? (
         <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">Loading...</div>
       ) : (
         <ServiceReport data={appUsageData} isTotal={selectedUser.subId === null} />

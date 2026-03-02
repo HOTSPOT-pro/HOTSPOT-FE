@@ -95,13 +95,10 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
       return {
         memberId: userId ?? -1,
         name: userId === -1 || userId === null ? '전체' : currentUserName,
-        total: res.appUsages.reduce(
-          (acc: number, cur: any) => acc + (cur.appDataUsageAmount || cur.appDayDataUsageAmount),
-          0,
-        ),
-        usage: res.appUsages.map((app: any) => ({
+        total: res.appUsages.reduce((acc, cur) => acc + cur.appDataUsageAmount, 0),
+        usage: res.appUsages.map((app) => ({
           appName: app.appName,
-          usage: app.appDataUsageAmount || app.appDayDataUsageAmount,
+          usage: app.appDataUsageAmount,
         })),
       };
     },

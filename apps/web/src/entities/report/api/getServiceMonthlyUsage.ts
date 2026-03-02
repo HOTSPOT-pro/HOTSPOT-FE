@@ -2,7 +2,7 @@ import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
 import type { ServiceUsageResponse } from './types';
 
-export const getServiceMonthlyUsage = async (subId?: number | null) => {
+export const getServiceMonthlyUsage = async (subId?: number) => {
   const { data } = await api.get<ApiResponse<ServiceUsageResponse>>(
     `/api/v1/reportUsage/app/month${`?targetSubId=${subId}`}`,
   );
