@@ -1,4 +1,4 @@
-import { cn, Toggle } from '@hotspot/ui';
+import { Toggle } from '@hotspot/ui';
 import TimeIcon from '@hotspot/ui/assets/icons/time.svg';
 
 interface PolicyAddItemProps {

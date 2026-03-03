@@ -1,16 +1,18 @@
 import CloseCircle from '@hotspot/ui/assets/icons/close-circle.svg';
 import Time from '@hotspot/ui/assets/icons/time.svg';
 import { policyDescriptionFormatter } from '../lib/policyDescriptionFormatter';
-import type { Block, Policy } from '../model/types';
+import type { BlockPolicy, Policy } from '../model/types';
 import { Accordion } from './Accordion';
 import { PolicyItem } from './PolicyItem';
 
 interface AccordionContainerProps {
   policyList: Policy[];
-  blockServices: Block[];
+  blockServices: BlockPolicy[];
 }
 
 export const AccordionContainer = ({ policyList, blockServices }: AccordionContainerProps) => {
+  console.log(policyList);
+
   return (
     <div className="flex gap-1.5 flex-col">
       <Accordion
@@ -22,14 +24,18 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
           </div>
         }
       >
-        {policyList.map((i) => (
-          <PolicyItem
-            description={policyDescriptionFormatter(i.policySnapshot.days, i.startTime, i.endTime)}
-            icon={<Time className="w-4.5 text-purple-600" />}
-            item={i}
-            key={i.id}
-          />
-        ))}
+        {policyList.length !== 0 ? (
+          policyList.map((i) => (
+            <PolicyItem
+              description={policyDescriptionFormatter(i)}
+              icon={<Time className="w-4.5 text-purple-600" />}
+              item={i}
+              key={i.id}
+            />
+          ))
+        ) : (
+          <div className="px-1 py-2 text-xs text-gray-600">적용된 정책이 없습니다.</div>
+        )}
       </Accordion>
       <Accordion
         title={
@@ -40,9 +46,13 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
           </div>
         }
       >
-        {blockServices.map((i) => (
-          <PolicyItem icon={<CloseCircle className="w-4.5 text-red-600" />} item={i} key={i.id} />
-        ))}
+        {policyList.length !== 0 ? (
+          blockServices.map((i) => (
+            <PolicyItem icon={<CloseCircle className="w-4.5 text-red-600" />} item={i} key={i.id} />
+          ))
+        ) : (
+          <div className="px-1 py-2 text-xs text-gray-600">차단된 서비스가 없습니다.</div>
+        )}
       </Accordion>
     </div>
   );
