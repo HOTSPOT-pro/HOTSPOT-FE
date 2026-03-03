@@ -19,6 +19,7 @@ export const PresentTab = () => {
       presentData.mutate({ dataAmount: presentAmount, targetSubId: selectedFamily });
   };
 
+  if (familyData.isPending) return <div>Loading...</div>;
   if (!familyData.data) return <div>데이터를 불러오지 못했습니다.</div>;
 
   return (
