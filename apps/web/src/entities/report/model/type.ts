@@ -20,7 +20,7 @@ export interface UsageResponse {
 }
 
 export interface ReportUser {
-  id: number | null; // 전체일 때 null
+  subId: number | null; // 전체일 때 null
   name: string | null;
 }
 
