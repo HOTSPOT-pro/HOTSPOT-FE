@@ -1,13 +1,13 @@
-import type { UserListItem } from '../model/types';
+import type { ReportUser } from '@/entities/report';
 import { UserChip } from './UserChip';
 
-interface UserSelectorProps<T extends UserListItem> {
+interface UserSelectorProps<T extends ReportUser> {
   users: T[];
   selectedUser: T;
   onSelect: (user: T) => void;
 }
 
-export const UserSelector = <T extends UserListItem>({
+export const UserSelector = <T extends ReportUser>({
   users,
   selectedUser,
   onSelect,
@@ -16,8 +16,8 @@ export const UserSelector = <T extends UserListItem>({
     <div className="flex gap-2">
       {users.map((user, index) => (
         <UserChip
-          isSelected={selectedUser.id === user.id}
-          key={user.id ?? index}
+          isSelected={selectedUser.subId === user.subId}
+          key={user.subId ?? index}
           onSelect={() => onSelect(user)}
           user={user}
         />
