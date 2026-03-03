@@ -1,6 +1,5 @@
 'use client';
 
-import { DonutChartContainer } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
@@ -19,6 +18,8 @@ const getSubscriptionUsage = async () => {
   return data.data;
 };
 
+const formatData = (value: number) => `${value.toFixed(1)}GB`;
+
 const formatCurrentTime = (currentTime: string) => {
   const parsedDate = new Date(currentTime);
 
@@ -31,7 +32,11 @@ const formatCurrentTime = (currentTime: string) => {
     hour: '2-digit',
     minute: '2-digit',
     month: '2-digit',
-  }).format(parsedDate);
+    year: 'numeric',
+  })
+    .format(parsedDate)
+    .replace(/\.\s?/g, '.')
+    .replace(',', '');
 };
 
 export const MyDataStatusPage = () => {
@@ -69,20 +74,51 @@ export const MyDataStatusPage = () => {
     <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
       <h2 className="text-lg font-semibold">내 요금제 데이터</h2>
 
-      <DonutChartContainer
-        data={[{ name: '사용량', value: data.subDataUsageAmount }]}
-        total={Math.max(data.subDataAmount, 0)}
-        totalUsedLabel="사용량"
-      />
+      <div className="flex items-center gap-4">
+        <div
+          className="relative h-28 w-28 shrink-0 rounded-full"
+          style={{
+            background: `conic-gradient(#7C4DFF ${Math.max(0, Math.min(100, data.dataUsagePercent))}%, #E5E7EB 0)`,
+          }}
+        >
+          <div className="absolute inset-[10px] flex items-center justify-center rounded-full bg-white">
+            <span className="text-3xl font-bold text-gray-900">{data.dataUsagePercent}%</span>
+          </div>
+        </div>
 
-      <div className="h-px bg-gray-200" />
+        <div className="w-full space-y-3">
+          <div className="flex items-center justify-between text-gray-600">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-purple-500" />
+              <span className="text-2xl font-semibold">사용량</span>
+            </div>
+            <span className="text-2xl font-bold text-gray-900">
+              {formatData(data.subDataUsageAmount)}
+            </span>
+          </div>
 
-      <div className="flex items-center justify-between text-sm">
-        <span className="font-semibold text-gray-600">전체</span>
-        <span className="font-semibold text-gray-900">{data.subDataAmount.toFixed(1)}GB</span>
+          <div className="flex items-center justify-between text-gray-500">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-gray-300" />
+              <span className="text-2xl font-semibold">잔여량</span>
+            </div>
+            <span className="text-2xl font-bold text-gray-900">
+              {formatData(data.subDataRemainAmount)}
+            </span>
+          </div>
+
+          <div className="h-px bg-gray-200" />
+
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-semibold text-gray-600">전체</span>
+            <span className="text-2xl font-bold text-gray-900">
+              {formatData(data.subDataAmount)}
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center justify-end gap-2 text-xs text-gray-500">
+      <div className="flex items-center justify-end gap-2 text-base text-gray-500">
         <time>{formatCurrentTime(data.currentTime)} 기준</time>
         <div className="flex items-center gap-1">
           {isFetching ? <span>갱신 중</span> : null}
