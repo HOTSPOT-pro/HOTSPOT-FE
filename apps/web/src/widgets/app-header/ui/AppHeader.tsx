@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useState } from 'react';
-import { SettingDropDown } from '@/features/header-setting';
-import { useNotification } from '@/features/notification';
+import { SettingDropDown, useNotification } from '@/features/notification';
 import ArrowLeftIcon from '@/shared/assets/icons/arrow-left.svg';
 import CloseIcon from '@/shared/assets/icons/close.svg';
 import NotificationIcon from '@/shared/assets/icons/notification.svg';
