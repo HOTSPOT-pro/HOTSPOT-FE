@@ -11,7 +11,7 @@ export const LineChartTooltip = ({ active, payload, unit, dateUnit, hasPersonalD
 
         <div className="flex items-baseline gap-1 justify-between">
           <div className="flex items-baseline gap-1">
-            <span className="text-lg font-bold text-black">{total}</span>
+            <span className="text-lg font-bold text-black">{total.toFixed(2)}</span>
             <span className="text-xs font-semibold text-black">{unit}</span>
           </div>
           <span className="ml-2 text-purple-500 text-xs font-bold">{totalRatio}%</span>
@@ -22,7 +22,7 @@ export const LineChartTooltip = ({ active, payload, unit, dateUnit, hasPersonalD
             <span className="text-xs text-gray-500 font-medium">개별 사용량</span>
             <div className="flex items-baseline gap-1 justify-between">
               <div className="flex items-baseline gap-1">
-                <span className="text-md font-semibold text-black">{personal}</span>
+                <span className="text-md font-semibold text-black">{personal.toFixed(2)}</span>
                 <span className="text-xs font-semibold text-black">{unit}</span>
               </div>
               <span className="ml-2 text-purple-500 text-xs font-bold">{personalRatio}%</span>
