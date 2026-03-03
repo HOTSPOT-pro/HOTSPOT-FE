@@ -1,0 +1,1 @@
+export const DATA_OPTIONS = [1.0, 2.0, 3.0, 5.0];
