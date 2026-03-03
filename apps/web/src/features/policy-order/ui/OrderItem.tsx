@@ -2,7 +2,7 @@ import { useUserStore } from '@entities/user';
 import { Draggable } from '@hello-pangea/dnd';
 import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
 import { cn } from '@hotspot/ui/lib';
-import type { MemberPriority } from '@/features/policy-order/model/type';
+import type { MemberPriority } from '@/entities/policy';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
 import { OrderButton } from './OrderButton';
 

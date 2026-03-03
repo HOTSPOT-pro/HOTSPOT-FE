@@ -1,4 +1,4 @@
-import type { FamilyPriority, PolicyOrderType } from '@entities/policy-order';
+import type { FamilyPriority, PolicyOrderType } from '@entities/policy';
 import { PolicyOrderSelector, PolicyPriorityList, useFifoOrder } from '@features/policy-order';
 import { useState } from 'react';
 

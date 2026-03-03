@@ -1,4 +1,4 @@
-import type { FamilyPriority } from '@entities/policy-order';
+import type { FamilyPriority } from '@entities/policy';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Button } from '@hotspot/ui/components';
 import { useCallback, useState } from 'react';
