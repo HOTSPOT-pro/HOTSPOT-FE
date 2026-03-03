@@ -26,12 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-dvh`}>
+    <html className="h-full" lang="ko">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh min-w-dvw bg-gray-200`}
+      >
         <StoreProvider>
           <QueryProvider>
             <ModalProvider>
-              <main className="bg-white min-h-dvh w-full">{children}</main>
+              <div className="mx-auto flex min-h-dvh w-full justify-center">
+                <main className="flex min-h-dvh w-full max-w-[500px] flex-col bg-white shadow-[0_0_8px_rgba(0,0,0,0.16)]">
+                  {children}
+                </main>
+              </div>
               <AppModal />
             </ModalProvider>
           </QueryProvider>

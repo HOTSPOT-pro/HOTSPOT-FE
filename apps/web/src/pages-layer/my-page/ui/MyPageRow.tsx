@@ -12,7 +12,7 @@ interface MyPageRowProps {
 export const MyPageRow = ({ href, icon: Icon, label, onClick }: MyPageRowProps) => {
   return (
     <Link
-      className="flex items-center justify-between py-[1.125rem]"
+      className="flex w-full items-center justify-between py-[1.125rem]"
       href={href}
       onClick={(event) => {
         if (!onClick) return;

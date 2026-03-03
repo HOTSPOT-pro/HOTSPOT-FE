@@ -36,7 +36,7 @@ export const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps
         style={{ transitionDuration: `${durationMs}ms` }}
       >
         <nav aria-hidden={hidden} aria-label="Bottom navigation" className={className}>
-          <div className="mx-auto w-full px-6 bg-white">
+          <div className="mx-auto w-full max-w-[500px] bg-white px-6">
             <ul className="flex">
               {items.map((item) => {
                 const Icon = item.icon;
