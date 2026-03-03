@@ -1,7 +1,7 @@
+import type { FamilyPriority, MemberPriority } from '@entities/policy';
 import type { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import type { FamilyPriority, MemberPriority } from '@/entities/policy-order/model/type';
 import { patchPriorityPriorityClientApi } from '../api/patchFamilyPriorityClientApi';
 import { getSortedMembers } from '../lib/memberSorting';
 

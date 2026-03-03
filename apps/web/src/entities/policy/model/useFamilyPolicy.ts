@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import type { FamilyPriority, PolicyOrderType } from '@/entities/policy-order';
 import { getAppliedPolicyClientApi } from '../api/getAppliedPolicyClientApi';
 import type { GetAppliedPolicyResponse } from '../api/types';
+import type { FamilyPriority, PolicyOrderType } from './types';
 
 export const useFamilyPolicy = () => {
   const { data, isPending } = useQuery<

@@ -1,6 +1,6 @@
 import { type BlockPolicy, useBlock } from '@entities/policy';
-import { BlockAddItem } from '@entities/policy-add';
 import type { BlockApply } from '../model/types';
+import { BlockAddItem } from './BlockAddItem';
 
 interface PolicyAddListProps {
   data: BlockPolicy[];
