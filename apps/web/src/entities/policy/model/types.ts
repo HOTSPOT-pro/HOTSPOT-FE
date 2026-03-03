@@ -2,11 +2,14 @@ export interface Policy {
   id: number;
   name: string;
   policyType: string;
-  policySnapshot: { days: string[] };
-  startTime: string;
-  endTime: string;
+  policySnapshot: {
+    days?: string[];
+    durationMinutes?: number;
+    startTime?: string;
+    endTime?: string;
+  };
 }
-export interface Block {
+export interface BlockPolicy {
   id: number;
   name: string;
   serviceCode: string;
@@ -18,7 +21,7 @@ export interface PolicyPerUser {
   dataLimit: number;
   priority: number;
   blockPolicyResponseList: Policy[];
-  appBlockedServiceResponseList: Block[];
+  appBlockedServiceResponseList: BlockPolicy[];
 }
 export interface PolicyPerFamily {
   familyId: number;
@@ -27,3 +30,21 @@ export interface PolicyPerFamily {
   priorityType: string;
   memberPolicies: PolicyPerUser[];
 }
+
+export interface MemberPriority {
+  subId: number;
+  priority: number;
+  name: string;
+  limit: number;
+}
+export interface FamilyPriority {
+  familyId: number;
+  priorityType: PolicyOrderType;
+  memberPriorities: MemberPriority[];
+}
+
+export const POLICY_ORDER_TYPE = {
+  FIFO: 'FIFO',
+  PRIORITY: 'PRIORITY',
+} as const;
+export type PolicyOrderType = (typeof POLICY_ORDER_TYPE)[keyof typeof POLICY_ORDER_TYPE];
