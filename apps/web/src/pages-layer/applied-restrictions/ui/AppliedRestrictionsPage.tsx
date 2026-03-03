@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
 
@@ -41,6 +40,7 @@ const DAY_LABEL: Record<string, string> = {
   TUESDAY: '화',
   WEDNESDAY: '수',
 };
+const BYTES_PER_KILOBYTE = 1024;
 
 const getAppliedRestrictions = async () => {
   const { data } = await api.get<ApiResponse<AppliedRestrictions>>('/api/v1/policies/applied', {
@@ -51,7 +51,7 @@ const getAppliedRestrictions = async () => {
 };
 
 const formatMegaBytes = (bytes: number) => {
-  const megaBytes = bytes / (1024 * 1024);
+  const megaBytes = bytes / (BYTES_PER_KILOBYTE * BYTES_PER_KILOBYTE);
   return `${megaBytes.toFixed(1)}MB`;
 };
 
@@ -65,7 +65,7 @@ const formatSchedule = (snapshot: AppliedPolicy['policySnapshot']) => {
 };
 
 export const AppliedRestrictionsPage = () => {
-  const { data, isError, isFetching, isPending, refetch } = useQuery({
+  const { data, isError, isPending, refetch } = useQuery({
     queryFn: getAppliedRestrictions,
     queryKey: ['appliedRestrictions', 'self'],
   });
@@ -86,7 +86,9 @@ export const AppliedRestrictionsPage = () => {
         <p className="text-sm text-red-500">정책 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
-          onClick={() => void refetch()}
+          onClick={async () => {
+            await refetch();
+          }}
           type="button"
         >
           다시 시도
@@ -103,10 +105,6 @@ export const AppliedRestrictionsPage = () => {
           <p className="text-sm text-gray-600">
             {data.memberName} | 데이터 한도 {formatMegaBytes(data.dataLimit)}
           </p>
-        </div>
-        <div className="flex items-center gap-1 text-xs text-gray-500">
-          {isFetching ? <span>갱신 중</span> : null}
-          <RefreshButton onRefresh={() => void refetch()} />
         </div>
       </div>
 

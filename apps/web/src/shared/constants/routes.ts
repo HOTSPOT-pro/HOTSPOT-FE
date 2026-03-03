@@ -1,6 +1,7 @@
 export const ROUTES = {
   FAMILY: '/family',
   FAMILY_STATUS: '/family-usage',
+  GIFT: '/gift',
   LOGIN: '/login',
   ME_POLICY: '/me/policy',
   MY_PAGE: '/me',
