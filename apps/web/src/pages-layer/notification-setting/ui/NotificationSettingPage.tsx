@@ -18,11 +18,12 @@ export const NotificationSettingPage = () => {
   }, [setHeader]);
 
   return (
-    <div className="pt-4 px-4 divide-y divide-gray-100">
-      {settings?.map(({ id, Icon, label, isAllowed }) => (
+    <div className="pt-4 px-4">
+      {settings?.map(({ id, icon, label, isAllowed, description }) => (
         <NotificationSettingItem
           checked={isAllowed}
-          Icon={Icon}
+          description={description}
+          Icon={icon}
           id={id}
           key={id}
           label={label}
