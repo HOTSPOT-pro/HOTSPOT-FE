@@ -1,12 +1,13 @@
 'use client';
 import { useFamilyPolicy } from '@entities/policy';
 import { Tab, type TabItem, useModal } from '@hotspot/ui/components';
-import { OrderSection, PolicyUserSection } from '@widgets/policy';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/entities/user';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
+import { OrderSection } from './OrderSection';
+import { PolicyUserSection } from './PolicyUserSection';
 
 type PolicyTabValue = 'FAMILY' | 'ORDER';
 const POLICY_TABS: TabItem<PolicyTabValue>[] = [
@@ -51,7 +52,7 @@ export const PolicyPage = () => {
   }
 
   return (
-    <div>
+    <>
       <nav>
         <Tab<PolicyTabValue>
           activeValue={activeTab}
@@ -71,6 +72,6 @@ export const PolicyPage = () => {
           )}
         </div>
       </main>
-    </div>
+    </>
   );
 };

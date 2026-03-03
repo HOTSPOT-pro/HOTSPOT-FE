@@ -6,7 +6,7 @@ import { BlockAddList, useApplyBlock } from '@features/policy-blockapply';
 import type { UpdateDatalimit } from '@features/policy-datalimite';
 import { DataLimitSection, useDatalimit } from '@features/policy-datalimite';
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
