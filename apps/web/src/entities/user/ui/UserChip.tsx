@@ -1,9 +1,9 @@
 import { memo } from 'react';
+import type { ReportUser } from '@/entities/report';
 import { Chip } from '@/shared/ui';
-import type { UserListItem } from '../model/types';
 
 export const UserChip = memo(
-  <T extends UserListItem>({
+  <T extends ReportUser>({
     user,
     isSelected,
     onSelect,

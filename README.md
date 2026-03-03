@@ -6,7 +6,9 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## ⚙️핵심 기능
 <img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/fc0b61a9-b7be-49d7-9454-e7ee3043bc17" />
-<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/af029be0-6fe7-415d-bbcf-7db548acf720" />
+<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/83b04276-8ce7-456c-bf26-91fb5014cc0b"/>
+<img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/e0a310da-b8f3-4164-9231-4c976e688108"/>
+<!-- <img width="924" height="520" alt="image" src="https://github.com/user-attachments/assets/af029be0-6fe7-415d-bbcf-7db548acf720" /> -->
 
 ### 1. 실시간 가족 데이터 통합 대시보드
 - 가족 구성원 전체의 데이터 소진 현황을 실시간으로 집계해 도넛 차트 및 막대 바 형태로 시각화합니다.
@@ -26,8 +28,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 ### Web(사용자)
 
 ## 로그인
-
-<p align="center"> <img src="./source/login.png" width="300" /> </p>
+<p align="center"><img width="300" alt="image" src="https://github.com/user-attachments/assets/a2d678f4-dc62-4998-8f59-6dc6a3934c81" /></p>
 
 - 카카오 소셜 로그인
 - 구글 소셜 로그인
@@ -36,7 +37,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 온보딩
 
-<p align="center"> <img src="./source/onboarding.png" width="300" /> <img src="./source/onboarding2.png" width="300" /> </p>
+<p align="center"> <img width="300" alt="image" src="https://github.com/user-attachments/assets/1eebdfd7-33dc-450e-bf32-c947a4ea46fa" /> <img width="300" alt="image" src="https://github.com/user-attachments/assets/9b98cb1b-0777-4845-b034-a208dbb66a6d" /> </p>
 
 - 생년월일, 전화번호 입력
 - 약관 동의
@@ -45,7 +46,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 가족 대시보드
 
-<p align="center"> <img src="./source/familyDash.png" width="28%" /> <img src="./source/familyDash2.png" width="28%" /> </p>
+<p align="center"> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/ce85f145-f16c-4e97-ad71-c8457ac2220d" /> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/c72cbb10-62d7-499e-a0ef-cb18f9e3f2e6" /> </p>
 
 - `구성원 별 사용량/가족 데이터 총량`을 도넛 차트로 표시
 - `구성원 별 한도 및 사용량`을 프로그래스 바로 표시
@@ -53,7 +54,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 내 대시보드
 
-<p align="center"> <img src="./source/myDash.png" width="300" /> </p>
+<p align="center"> <img width="300" alt="image" src="https://github.com/user-attachments/assets/f3b1c7d1-d07e-4296-a934-9eda51babd21" /> </p>
 
 - 요금제에 따른 `내 개별 데이터 사용량/내 개별 데이터 총량`을 도넛 차트로 표시
 - 월별 데이터 사용량
@@ -62,7 +63,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 알림 페이지
 
-<p align="center"> <img src="./source/noti.png" width="300" /> </p>
+<p align="center"> <img width="300" alt="image" src="https://github.com/user-attachments/assets/f994688e-701d-4da5-9925-77c8055c780d" /> </p>
 
 - 개인 데이터 임계치(50%/30%/10%/0%) 알림
 - 가족 공유 데이터 임계치 알림
@@ -74,14 +75,14 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 리포트 페이지
 
-<p align="center"> <img src="./source/report.png" width="300" /> </p>
+<p align="center"> <img width="300" alt="image" src="https://github.com/user-attachments/assets/2df41cf7-b1e7-41dd-890a-5907fa1532a5" /> </p>
 
 - 전체, 개인별 사용량 추이 확인
 - 전체, 개인별 앱 상세 사용량 확인
 
 ## 마이페이지
 
-<p align="center"> <img src="./source/my.png" width="28%" /> <img src="./source/my2.png" width="28%" /> </p>
+<p align="center"> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/0cc90c8e-e01c-41ee-a41b-6897860695cf" /> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/f402c2dc-3043-4778-8640-1792a5d78e02" /> </p>
 
 - 대표, 부모 메뉴
     - 가족 관리 페이지
@@ -95,7 +96,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 가족 관리 페이지
 
-<p align="center"> <img src="./source/familyManage.png" width="28%" /> <img src="./source/familyManage2.png" width="28%" /> </p>
+<p align="center"> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/31398cb7-d39b-4a02-af5c-11fb273d7c29" /> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/9fda9afb-866e-418e-9851-8e2874172860" /> </p>
 
 - 대표자 기능
     - 구성원 추가(가족관계증명서 첨부 필요)
@@ -106,7 +107,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 정책 페이지
 
-<p align="center"> <img src="./source/policy.png" width="28%" /> <img src="./source/policy2.png" width="28%" /> </p> <p align="center"> <img src="./source/policy3.png" width="28%" /> <img src="./source/policy4.png" width="28%" /> </p> <p align="center"> <img src="./source/policy5.png" width="300" /> </p>
+<p align="center"> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/c094d2cd-c849-4b96-9d9e-15ae24e6d07f" /> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/214b0742-3354-4723-9b91-c3ae2b83ea71" /> </p> <p align="center"> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/e2a26189-0788-4380-b522-cde98ce00447" /> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/d9d6c5ac-a3bf-4026-aadf-43e7364a1d1b" /> </p> <p align="center"> <img width="300" alt="image" src="https://github.com/user-attachments/assets/1efc702a-aaee-48bf-87f6-01f387f42591" /> </p>
 
 - 대표자 기능
     - 구성원 한도, 적용된 정책, 차단된 서비스 수정
@@ -116,7 +117,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 데이터 선물 페이지
 
-<p align="center"> <img src="./source/gift.png" width="28%" /> <img src="./source/gift2.png" width="28%" /> </p>
+<p align="center"> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/a7d0b50b-f2fc-4041-bd60-ad5606257460" /> <img width="28%" alt="image" src="https://github.com/user-attachments/assets/ad54153d-55eb-479b-8137-d3f55bb805e5" /> </p>
 
 - 구성원에게 데이터 선물
 - 데이터 선물한 내역
@@ -124,7 +125,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 알림 설정 페이지/고객센터 및 약관 페이지
 
-<p align="center"> <img src="./source/noti.png" width="300" /> </p>
+<p align="center"> <img width="300" alt="image" src="https://github.com/user-attachments/assets/8aa694ab-b6b3-4994-a4e3-3a717091449d" /> </p>
 
 - 알림
     - 임계치 알림 설정
@@ -136,20 +137,20 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 로그인
 
-<p align="center"> <img src="./source/admin-login.png" width="600" /> </p>
+<p align="center"> <img width="600" alt="image" src="https://github.com/user-attachments/assets/8aa694ab-b6b3-4994-a4e3-3a717091449d" /> </p>
 
 - 관리자 키로 로그인
 
 ## 가족 조회
 
-<p align="center"> <img src="./source/admin-familylist.png" width="700" /> </p>
+<p align="center"> <img width="700" alt="image" src="https://github.com/user-attachments/assets/8aa694ab-b6b3-4994-a4e3-3a717091449d" /> </p>
 
 - 전화번호를 통해 가족 검색
 - 상세 버튼을 누르면 가족 상세 페이지로 이동
 
 ## 가족 상세 페이지
 
-<p align="center"> <img src="./source/admin-familydetail.png" width="650" /> </p> <p align="center"> <img src="./source/admin-familydetail2.png" width="650" /> </p>
+<p align="center"> <img width="650" alt="image" src="https://github.com/user-attachments/assets/40f937fb-a011-410b-bd77-d543982e853d" /> </p> <p align="center"> <img width="650" alt="image" src="https://github.com/user-attachments/assets/40f937fb-a011-410b-bd77-d543982e853d" /> </p>
 
 - `구성원 별 사용량/가족 데이터 총량`을 도넛 차트로 표시
 - 요금제에 따른 `개별 데이터 사용량/개별 데이터 총량`을 프로그래스 바로 표시
@@ -162,7 +163,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 정책 관리 페이지
 
-<p align="center"> <img src="./source/admin-policy.png" width="58%" /> <img src="./source/admin-policy2.png" width="35%" /> </p>
+<p align="center"> <img width="58%" alt="image" src="https://github.com/user-attachments/assets/40f937fb-a011-410b-bd77-d543982e853d" /> <img width="35%" alt="image" src="https://github.com/user-attachments/assets/b45a3262-2b19-414a-85b0-faa81861f0f1" /> </p>
 
 - 정책 추가 및 정책 삭제
 - 정책 활성/비활성
@@ -171,7 +172,7 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 
 ## 신청/승인 페이지
 
-<p align="center"> <img src="./source/admin-apply.png" width="700" /> </p>
+<p align="center"> <img width="700" alt="image" src="https://github.com/user-attachments/assets/ce16ed5e-5d5a-486c-9c59-8615a108610a" /> </p>
 
 - 대기 중인 가족 구성원 신청 승인/거부
 - 승인한 신청 보기
