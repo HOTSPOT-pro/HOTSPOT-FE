@@ -17,6 +17,7 @@ const WEBP_QUALITY = 0.92;
 interface PresignedUrlData {
   objectKey?: string;
   presignedUrl?: string;
+  s3TempKey?: string;
   tempKey?: string;
   uploadUrl?: string;
   url?: string;
@@ -29,7 +30,7 @@ interface FamilyAddRequest {
     phone: string;
     targetFamilyRole: 'PARENT' | 'CHILD';
   }>;
-  tempKey: string;
+  s3TempKey: string;
 }
 
 const ParentRoleIcon = () => (
@@ -246,14 +247,14 @@ export const AddFamilyMemberModal = ({
           'data' in data ? (data.data as PresignedUrlData) : (data as PresignedUrlData);
 
         const presignedUrl = normalized.presignedUrl ?? normalized.uploadUrl ?? normalized.url;
-        const tempKey = normalized.tempKey ?? normalized.objectKey;
+        const s3TempKey = normalized.s3TempKey ?? normalized.tempKey ?? normalized.objectKey;
 
-        if (!(presignedUrl && tempKey)) {
+        if (!(presignedUrl && s3TempKey)) {
           throw new Error('Presigned URL 응답 형식이 올바르지 않습니다.');
         }
 
         setGeneratedPresignedUrl(presignedUrl);
-        setUploadedTempKey(tempKey);
+        setUploadedTempKey(s3TempKey);
         const uploadResponse = await fetch(presignedUrl, {
           body: convertedWebpBlob,
           headers: {
@@ -295,7 +296,7 @@ export const AddFamilyMemberModal = ({
             targetFamilyRole: formValues.familyRole,
           },
         ],
-        tempKey: uploadedTempKey,
+        s3TempKey: uploadedTempKey,
       };
 
       await api.post('/api/v1/families/add', payload);
