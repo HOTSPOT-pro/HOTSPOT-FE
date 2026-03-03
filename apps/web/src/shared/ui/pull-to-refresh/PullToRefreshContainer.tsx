@@ -7,7 +7,7 @@ interface Props {
   children: ReactNode;
 }
 
-export const NotificationPullToRefresh = ({ onRefresh, children }: Props) => {
+export const PullToRefreshContainer = ({ onRefresh, children }: Props) => {
   return (
     <PullToRefresh
       onRefresh={onRefresh}

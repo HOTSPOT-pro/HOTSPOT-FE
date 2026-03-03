@@ -1,10 +1,8 @@
-// pages/notification-setting/ui/Page.tsx
 'use client';
 
 import { NotificationSettingItem, useNotificationSettings } from '@features/notification-setting';
 import { useSubHeaderStore } from '@widgets/app-header/ui/SubHeaderProvider';
 import { useEffect } from 'react';
-import { NOTIFICATION_SETTINGS } from '../constants/notificationSettingList';
 
 export const NotificationSettingPage = () => {
   const { setHeader } = useSubHeaderStore();
@@ -21,14 +19,14 @@ export const NotificationSettingPage = () => {
 
   return (
     <div className="pt-4 px-4 divide-y divide-gray-100">
-      {NOTIFICATION_SETTINGS.map((item) => (
+      {settings?.map(({ id, Icon, label, isAllowed }) => (
         <NotificationSettingItem
-          checked={settings[item.id] ?? false}
-          Icon={item.Icon}
-          id={item.id}
-          key={item.id}
-          label={item.label}
-          onToggle={updateSetting}
+          checked={isAllowed}
+          Icon={Icon}
+          id={id}
+          key={id}
+          label={label}
+          onToggle={(checked) => updateSetting({ category: id, isAllowed: checked })}
         />
       ))}
     </div>

@@ -1,12 +1,13 @@
+import type { UserListItem } from '../model/types';
 import { UserChip } from './UserChip';
 
-interface UserSelectorProps<T extends { id: number | null; name: string | null }> {
+interface UserSelectorProps<T extends UserListItem> {
   users: T[];
   selectedUser: T;
   onSelect: (user: T) => void;
 }
 
-export const UserSelector = <T extends { id: number | null; name: string | null }>({
+export const UserSelector = <T extends UserListItem>({
   users,
   selectedUser,
   onSelect,
