@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+
+  output: 'standalone',
+  
   transpilePackages: ['@hotspot/ui'],
   turbopack: {
     rules: {
