@@ -1,5 +1,5 @@
 const Page = () => {
-  return <button type="button">일반</button>;
+  return null;
 };
 
 export default Page;

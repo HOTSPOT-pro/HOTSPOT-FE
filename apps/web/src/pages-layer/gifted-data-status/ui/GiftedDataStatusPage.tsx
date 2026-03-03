@@ -1,11 +1,12 @@
 'use client';
 
-import { DonutChart, ProgressBar } from '@hotspot/ui';
+import { Button } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
+import { ROUTES } from '@/shared/constants/routes';
 
 interface GiftUsage {
   giftId: number;
@@ -24,34 +25,14 @@ interface GiftedDataStatus {
   giftUsagePercent: number;
   giftUsages: GiftUsage[];
 }
-
-const START_COLOR = '#4F46E5';
-const END_COLOR = '#D9C9FF';
-const REMAINING_COLOR = '#E5E7EB';
-
-const interpolateColor = (factor: number) => {
-  const clamped = Math.min(1, Math.max(0, factor));
-  const start = Number.parseInt(START_COLOR.slice(1), 16);
-  const end = Number.parseInt(END_COLOR.slice(1), 16);
-
-  const sr = (start >> 16) & 255;
-  const sg = (start >> 8) & 255;
-  const sb = start & 255;
-  const er = (end >> 16) & 255;
-  const eg = (end >> 8) & 255;
-  const eb = end & 255;
-
-  const r = Math.round(sr + (er - sr) * clamped);
-  const g = Math.round(sg + (eg - sg) * clamped);
-  const b = Math.round(sb + (eb - sb) * clamped);
-
-  return `rgb(${r}, ${g}, ${b})`;
-};
+const PERCENT_MAX = 100;
 
 const getGiftedDataStatus = async () => {
   const { data } = await api.get<ApiResponse<GiftedDataStatus>>('/api/v1/subscriptionUsage');
   return data.data;
 };
+
+const formatData = (value: number) => `${value.toFixed(1)}GB`;
 
 const formatCurrentTime = (currentTime: string) => {
   const parsedDate = new Date(currentTime);
@@ -65,44 +46,25 @@ const formatCurrentTime = (currentTime: string) => {
     hour: '2-digit',
     minute: '2-digit',
     month: '2-digit',
-  }).format(parsedDate);
+    year: 'numeric',
+  })
+    .format(parsedDate)
+    .replace(/\.\s?/g, '.')
+    .replace(',', '');
 };
 
 export const GiftedDataStatusPage = () => {
-  const { data, isError, isFetching, isPending, refetch } = useQuery({
+  const router = useRouter();
+
+  const { data, isError, isPending, refetch } = useQuery({
     queryFn: getGiftedDataStatus,
     queryKey: ['giftedDataStatus'],
   });
 
-  const coloredGiftUsages = useMemo(
-    () =>
-      data?.giftUsages.map((giftUsage, index, list) => ({
-        ...giftUsage,
-        color: interpolateColor(list.length > 1 ? index / (list.length - 1) : 0),
-      })) ?? [],
-    [data],
-  );
-
-  const donutData = useMemo(
-    () => [
-      {
-        fill: REMAINING_COLOR,
-        name: '잔여량',
-        value: Math.max(0, (data?.giftDataAmount ?? 0) - (data?.giftDataUsageAmount ?? 0)),
-      },
-      ...coloredGiftUsages.map((giftUsage) => ({
-        fill: giftUsage.color,
-        name: giftUsage.giftUserName,
-        value: giftUsage.giftDataUsageAmount,
-      })),
-    ],
-    [coloredGiftUsages, data?.giftDataAmount, data?.giftDataUsageAmount],
-  );
-
   if (isPending) {
     return (
       <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-lg font-semibold">선물받은 데이터</h2>
+        <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
         <p className="text-sm text-gray-500">선물 데이터 정보를 불러오는 중입니다.</p>
       </div>
     );
@@ -111,11 +73,13 @@ export const GiftedDataStatusPage = () => {
   if (isError || !data) {
     return (
       <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-lg font-semibold">선물받은 데이터</h2>
+        <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
         <p className="text-sm text-red-500">선물 데이터 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
-          onClick={() => void refetch()}
+          onClick={async () => {
+            await refetch();
+          }}
           type="button"
         >
           다시 시도
@@ -126,51 +90,105 @@ export const GiftedDataStatusPage = () => {
 
   return (
     <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-      <h2 className="text-lg font-semibold">선물받은 데이터</h2>
-      <div className="flex w-full justify-center items-center">
-        <div className="flex w-full max-w-70">
-          <DonutChart
-            data={donutData}
-            total={data.giftDataAmount}
-            totalUsed={data.giftDataUsageAmount}
-            totalUsedLabel="총 사용"
-          />
+      <div className="space-y-1">
+        <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
+      </div>
+
+      <div className="flex items-center gap-8">
+        <div
+          className="relative h-28 w-28 shrink-0 rounded-full"
+          style={{
+            background: `conic-gradient(#7BD67A ${Math.max(0, Math.min(PERCENT_MAX, data.giftUsagePercent))}%, #E5E7EB 0)`,
+          }}
+        >
+          <div className="absolute inset-[10px] flex items-center justify-center rounded-full bg-white">
+            <span className="text-[1.5rem] font-bold text-gray-900">{data.giftUsagePercent}%</span>
+          </div>
+        </div>
+
+        <div className="w-full space-y-3">
+          <div className="flex items-center justify-between text-gray-600">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-green-400" />
+              <span className="text-[1rem] font-semibold">사용량</span>
+            </div>
+            <span className="text-[1rem] font-bold text-gray-900">
+              {formatData(data.giftDataUsageAmount)}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between text-gray-500">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-gray-300" />
+              <span className="text-[1rem] font-semibold">잔여</span>
+            </div>
+            <span className="text-[1rem] font-bold text-gray-900">
+              {formatData(data.giftDataRemainAmount)}
+            </span>
+          </div>
+
+          <div className="h-px bg-gray-200" />
+
+          <div className="flex items-center justify-between">
+            <span className="text-[1rem] font-semibold text-gray-600">총 선물</span>
+            <span className="text-[1rem] font-bold text-gray-900">
+              {formatData(data.giftDataAmount)}
+            </span>
+          </div>
         </div>
       </div>
-      <div className="h-px bg-gray-200" />
 
-      <div className="space-y-3">
-        {coloredGiftUsages.map((giftUsage) => (
-          <div className="space-y-0" key={giftUsage.giftId}>
-            <div className="flex items-center justify-between text-sm">
-              <div className="flex flex-row items-center gap-2">
-                <div
-                  className="w-2.5 h-2.5 rounded-full shrink-0"
-                  style={{ backgroundColor: giftUsage.color }}
-                />
-                <span className="text-gray-700">{giftUsage.giftUserName}</span>
+      <div className="space-y-5 pt-2">
+        {data.giftUsages.map((giftUsage) => {
+          const isOver = giftUsage.dataUsagePercent >= PERCENT_MAX;
+          const barColor = isOver ? 'bg-red-500' : 'bg-green-400';
+
+          return (
+            <div key={giftUsage.giftId}>
+              <div className="mb-2 flex items-center justify-between">
+                <p className="text-[1rem] font-semibold text-gray-900">{giftUsage.giftUserName}</p>
+                <p className="text-[1rem] font-semibold text-gray-900">
+                  {giftUsage.giftDataUsageAmount.toFixed(1)}GB{' '}
+                  <span className="text-gray-500">/ {giftUsage.giftDataLimit.toFixed(1)}GB</span>
+                </p>
               </div>
-              <span className="text-gray-900">
-                {giftUsage.giftDataUsageAmount.toFixed(1)}GB / {giftUsage.giftDataLimit.toFixed(1)}
-                GB ({giftUsage.dataUsagePercent}%)
-              </span>
+
+              <div className="h-4 overflow-hidden rounded-full bg-gray-200">
+                <div
+                  className={`h-full rounded-full ${barColor}`}
+                  style={{
+                    width: `${Math.max(0, Math.min(giftUsage.dataUsagePercent, PERCENT_MAX))}%`,
+                  }}
+                />
+              </div>
+
+              <div className="mt-1 flex items-center justify-between text-sm">
+                <span className={isOver ? 'text-red-500' : 'text-gray-600'}>
+                  {giftUsage.dataUsagePercent}% 사용
+                </span>
+                <span className="text-gray-500">
+                  잔여 {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB
+                </span>
+              </div>
             </div>
-            <ProgressBar
-              label={giftUsage.giftUserName}
-              total={Math.max(giftUsage.giftDataLimit, 1)}
-              value={giftUsage.giftDataUsageAmount}
-            />
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="flex items-center justify-end gap-2 text-xs text-gray-500">
         <time>{formatCurrentTime(data.currentTime)} 기준</time>
         <div className="flex items-center gap-1">
-          {isFetching ? <span>갱신 중</span> : null}
-          <RefreshButton onRefresh={() => void refetch()} />
+          <RefreshButton
+            onRefresh={async () => {
+              await refetch();
+            }}
+          />
         </div>
       </div>
+
+      <Button onClick={() => router.push(ROUTES.GIFT)} type="button">
+        데이터 선물하기
+      </Button>
     </section>
   );
 };

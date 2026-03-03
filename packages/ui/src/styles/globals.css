@@ -16,10 +16,25 @@
   --background: #ffffff;
 }
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-a {
-  text-decoration: none;
+  a {
+    text-decoration: none;
+  }
+
+  button,
+  a {
+    @apply cursor-pointer;
+  }
+
+  button:disabled,
+  a[aria-disabled='true'],
+  a.disabled {
+    @apply cursor-not-allowed;
+  }
 }
