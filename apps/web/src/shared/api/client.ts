@@ -19,6 +19,9 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (originalRequest.url?.includes('/api/v1/auth/reissue')) {
+        return Promise.reject(error);
+      }
       originalRequest._retry = true;
       try {
         await api.post('/api/v1/auth/reissue', undefined, { withCredentials: true });
