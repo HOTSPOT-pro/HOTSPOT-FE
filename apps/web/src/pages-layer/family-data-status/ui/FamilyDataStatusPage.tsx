@@ -69,7 +69,7 @@ const formatCurrentTime = (currentTime: string) => {
 };
 
 export const FamilyDataStatusPage = () => {
-  const { data, isError, isFetching, isPending, refetch } = useQuery({
+  const { data, isError, isPending, refetch } = useQuery({
     queryFn: getFamilyUsage,
     queryKey: ['familyUsage'],
   });
@@ -115,7 +115,9 @@ export const FamilyDataStatusPage = () => {
         <p className="text-sm text-red-500">가족 데이터 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
-          onClick={() => void refetch()}
+          onClick={async () => {
+            await refetch();
+          }}
           type="button"
         >
           다시 시도
@@ -167,8 +169,11 @@ export const FamilyDataStatusPage = () => {
       <div className="flex items-center justify-end gap-2 text-xs text-gray-500">
         <time>{formatCurrentTime(data.currentTime)} 기준</time>
         <div className="flex items-center gap-1">
-          {isFetching ? <span>갱신 중</span> : null}
-          <RefreshButton onRefresh={() => void refetch()} />
+          <RefreshButton
+            onRefresh={async () => {
+              await refetch();
+            }}
+          />
         </div>
       </div>
     </section>
