@@ -17,7 +17,50 @@ export const Table = <T extends { id: string | number }>({
   data,
   isLoading,
 }: DynamicTableProps<T>) => {
-  if (isLoading) return <div className="p-4 text-center">로딩 중...</div>;
+  const renderBodyContent = () => {
+    // 로딩 중일 때
+    if (isLoading) {
+      return [...Array(10)].map((_, rowIndex) => (
+        <tr className="border-b border-gray-50" key={`skeleton-row-${rowIndex}`}>
+          {columns.map((_, colIndex) => (
+            <td className="px-6 py-5" key={`skeleton-col-${colIndex}`}>
+              <div className="h-7 bg-gray-100 rounded-md animate-pulse w-full" />
+            </td>
+          ))}
+        </tr>
+      ));
+    }
+
+    // 데이터가 없을 때
+    if (data.length === 0) {
+      return (
+        <tr>
+          <td className="px-6 py-20 text-center text-gray-400 font-medium" colSpan={columns.length}>
+            데이터가 존재하지 않습니다.
+          </td>
+        </tr>
+      );
+    }
+
+    // 정상 데이터가 있을 때
+    return data.map((row) => (
+      <tr className="hover:bg-gray-50/50 transition-colors group" key={row.id}>
+        {columns.map((col, index) => {
+          const cellValue =
+            col.accessor !== 'actions' ? (row[col.accessor as keyof T] as React.ReactNode) : null;
+
+          return (
+            <td
+              className="px-6 py-4 whitespace-nowrap text-black text-[14px] font-normal"
+              key={`cell-${row.id}-${index}`}
+            >
+              {col.render ? col.render(cellValue, row) : cellValue}
+            </td>
+          );
+        })}
+      </tr>
+    ));
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -38,39 +81,7 @@ export const Table = <T extends { id: string | number }>({
         </thead>
 
         {/* Body */}
-        <tbody className="divide-y divide-gray-100">
-          {data.length > 0 ? (
-            data.map((row) => (
-              <tr className="hover:bg-blue-50/30 transition-colors group" key={row.id}>
-                {columns.map((col, index) => {
-                  const cellValue =
-                    col.accessor !== 'actions'
-                      ? (row[col.accessor as keyof T] as React.ReactNode)
-                      : null;
-
-                  return (
-                    <td
-                      className={`px-6 py-4 whitespace-nowrap text-black text-[14px] font-normal`}
-                      key={`cell-${row.id}-${index}`}
-                    >
-                      {col.render ? col.render(cellValue, row) : cellValue}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))
-          ) : (
-            /* 데이터 없을 때 */
-            <tr>
-              <td
-                className="px-6 py-20 text-center text-gray-400 font-medium"
-                colSpan={Math.max(1, columns.length)}
-              >
-                데이터가 존재하지 않습니다.
-              </td>
-            </tr>
-          )}
-        </tbody>
+        <tbody className="divide-y divide-gray-100">{renderBodyContent()}</tbody>
       </table>
     </div>
   );

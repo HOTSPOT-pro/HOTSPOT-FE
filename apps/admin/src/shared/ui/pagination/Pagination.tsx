@@ -12,12 +12,20 @@ export const Pagination = ({
 }) => {
   const normalizedTotal = Math.max(0, total);
   const normalizedCurrent = Math.min(Math.max(current, 1), Math.max(normalizedTotal, 1));
-  const pages = Array.from({ length: normalizedTotal }, (_, i) => i + 1);
-  const canMovePrev = normalizedCurrent > 1;
-  const canMoveNext = normalizedTotal > 0 && normalizedCurrent < normalizedTotal;
+
+  const PAGE_GROUP_SIZE = 10;
+  const currentGroup = Math.floor((normalizedCurrent - 1) / PAGE_GROUP_SIZE);
+
+  const startPage = currentGroup * PAGE_GROUP_SIZE + 1;
+  const endPage = Math.min(startPage + PAGE_GROUP_SIZE - 1, normalizedTotal);
+
+  const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+
+  const canMovePrev = currentGroup > 0;
+  const canMoveNext = endPage < normalizedTotal;
 
   const NEXT_MOVE_STYLE =
-    'p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row text-black';
+    'p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row items-center gap-1 text-black text-[14px]';
 
   return (
     <div className="flex items-center justify-center gap-2 py-4 border-t border-gray-100">
@@ -25,7 +33,7 @@ export const Pagination = ({
         className={NEXT_MOVE_STYLE}
         disabled={!canMovePrev}
         onClick={() => {
-          if (canMovePrev) onMove(normalizedCurrent - 1);
+          if (canMovePrev) onMove(startPage - 1);
         }}
         type="button"
       >
@@ -35,8 +43,8 @@ export const Pagination = ({
       {pages.map((p) => (
         <button
           className={`w-8 h-8 rounded-md text-sm font-medium transition-colors ${
-            current === p
-              ? 'border-purple-600 text-purple-600 border'
+            normalizedCurrent === p
+              ? 'border-purple-600 text-purple-600 border bg-purple-50'
               : 'hover:bg-purple-50 text-black'
           }`}
           key={p}
@@ -51,7 +59,7 @@ export const Pagination = ({
         className={NEXT_MOVE_STYLE}
         disabled={!canMoveNext}
         onClick={() => {
-          if (canMoveNext) onMove(normalizedCurrent + 1);
+          if (canMoveNext) onMove(endPage + 1);
         }}
         type="button"
       >
