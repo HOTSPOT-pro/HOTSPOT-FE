@@ -40,9 +40,7 @@ export const Pagination = ({
               : 'hover:bg-purple-50 text-black'
           }`}
           key={p}
-          onClick={() => {
-            if (canMoveNext) onMove(normalizedCurrent + 1);
-          }}
+          onClick={() => onMove(p)}
           type="button"
         >
           {p}
@@ -52,7 +50,9 @@ export const Pagination = ({
       <button
         className={NEXT_MOVE_STYLE}
         disabled={!canMoveNext}
-        onClick={() => onMove(current + 1)}
+        onClick={() => {
+          if (canMoveNext) onMove(normalizedCurrent + 1);
+        }}
         type="button"
       >
         다음 <RightArrow />
