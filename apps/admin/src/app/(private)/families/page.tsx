@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchBar } from '@/shared/ui/search-bar/SearchBar';
+import { SearchBar } from '@/shared';
 
 const Page = () => {
   return (
