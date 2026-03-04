@@ -15,32 +15,28 @@ export const NotificationSubscribeProvider = () => {
 
     const handleMessage = (event: MessageEvent) => {
       try {
-        try {
-          const sseData = JSON.parse(event.data);
+        const sseData = JSON.parse(event.data);
 
-          const newRawNotification = {
-            content: sseData.content,
-            createdTime: sseData.createdTime,
-            eventId: sseData.eventId,
-            id: sseData.notificationId,
-            isRead: sseData.isRead,
-            notificationType: sseData.notificationType,
-            title: sseData.title,
+        const newRawNotification = {
+          content: sseData.content,
+          createdTime: sseData.createdTime,
+          eventId: sseData.eventId,
+          id: sseData.notificationId,
+          isRead: sseData.isRead,
+          notificationType: sseData.notificationType,
+          title: sseData.title,
+        };
+
+        queryClient.setQueryData<GetNotificationResponse>(['notifications'], (old) => {
+          if (!old || old.notifications.some((n) => n.id === newRawNotification.id)) {
+            return old;
+          }
+          return {
+            ...old,
+            notifications: [newRawNotification, ...old.notifications],
           };
-
-          queryClient.setQueryData<GetNotificationResponse>(['notifications'], (old) => {
-            if (!old || old.notifications.some((n) => n.id === newRawNotification.id)) {
-              return old;
-            }
-            return {
-              ...old,
-              notifications: [newRawNotification, ...old.notifications],
-            };
-          });
-          queryClient.setQueryData(['unreadCount'], { unreadCount: sseData.unreadCount });
-        } catch (error) {
-          console.error('SSE onmessage error:', error);
-        }
+        });
+        queryClient.setQueryData(['unreadCount'], { unreadCount: sseData.unreadCount });
       } catch (error) {
         console.error('SSE onmessage error:', error);
       }
@@ -54,7 +50,7 @@ export const NotificationSubscribeProvider = () => {
     eventSource.addEventListener('error', handleError);
 
     return () => {
-      eventSource.removeEventListener('notifications', handleMessage);
+      eventSource.removeEventListener('notification', handleMessage);
       eventSource.removeEventListener('error', handleError);
       eventSource.close();
     };
