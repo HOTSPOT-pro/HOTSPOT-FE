@@ -15,7 +15,7 @@ export const ReportPage = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="flex flex-col w-full h-full pb-8">
       {/* 월일별 탭 버튼 */}
 
       <div className="px-5 py-4">

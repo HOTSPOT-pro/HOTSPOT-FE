@@ -1,4 +1,4 @@
-export default function FamilyUsageLayout({
+export default function MyUsageLayout({
   children,
   giftedDataStatus,
   myDataStatus,

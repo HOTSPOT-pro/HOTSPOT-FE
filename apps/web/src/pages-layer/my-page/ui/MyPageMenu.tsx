@@ -18,7 +18,7 @@ export const MyPageMenu = ({ familyRole }: { familyRole: UserRole | null }) => {
   );
 
   return (
-    <div className="mt-4 space-y-8">
+    <div className="flex flex-col w-full mt-4 space-y-8">
       {visibleSections.map((section) => (
         <div key={section.id}>
           <h2 className="mb-2 text-[0.875rem] font-semibold leading-tight text-gray-500">

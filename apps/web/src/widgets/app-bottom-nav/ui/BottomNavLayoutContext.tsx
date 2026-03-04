@@ -19,7 +19,7 @@ export function BottomNavLayoutProvider({ children }: { children: ReactNode }) {
   return (
     <BottomNavLayoutContext.Provider value={value}>
       <div
-        className="h-full"
+        className="flex flex-1 min-h-0 flex-col"
         style={{ '--bottom-nav-height': `${bottomNavHeight}px` } as CSSProperties}
       >
         {children}

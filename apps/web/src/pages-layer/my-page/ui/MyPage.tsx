@@ -11,8 +11,8 @@ interface MyPageUserInfo {
 
 export const MyPage = ({ userInfo }: { userInfo: MyPageUserInfo | null }) => {
   return (
-    <section className="flex flex-col h-full bg-white px-4 pt-4 pb-8">
-      <div className="flex items-center gap-4 pb-4">
+    <section className="flex flex-col h-full w-full bg-white px-4 pt-4 pb-8">
+      <div className="flex w-full items-center gap-4 pb-4">
         <div className="flex h-[4rem] w-[4rem] overflow-hidden rounded-xl bg-purple-100 items-center justify-center">
           <ViewRight />
         </div>
