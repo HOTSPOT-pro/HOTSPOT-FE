@@ -1,11 +1,10 @@
 'use client';
 
-import { Button, Input } from '@hotspot/ui';
+import { Button, Input, Logo } from '@hotspot/ui';
 import { isAxiosError } from 'axios';
 import { useId } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useLoginMutation } from '@/features/login/model';
-import { setAccessToken } from '@/shared/api/token';
 import { getApiErrorMessage } from '@/shared/api/types';
 
 const DEFAULT_ERROR_MESSAGE = '로그인에 실패했습니다. 관리자 키를 확인해주세요.';
@@ -36,10 +35,9 @@ export const LoginPage = () => {
 
   const onSubmit = async ({ adminCode }: LoginFormValues) => {
     try {
-      const result = await loginMutation.mutateAsync({
+      await loginMutation.mutateAsync({
         adminCode: adminCode.trim(),
       });
-      setAccessToken(result.data.accessToken);
 
       window.location.href = '/';
     } catch (error) {
@@ -61,7 +59,7 @@ export const LoginPage = () => {
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-150 h-100 flex flex-col shadow-2xl p-8 rounded-2xl gap-20">
         <div className="flex flex-col items-center text-center">
-          {/* <Logo size="sm" /> */}
+          <Logo size="sm" />
           <h1 className="text-[30px] font-bold">Hotspot Admin</h1>
         </div>
         <form className="flex flex-col h-full justify-between" onSubmit={handleSubmit(onSubmit)}>

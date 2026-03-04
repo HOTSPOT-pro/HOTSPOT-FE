@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 import axios, { type AxiosInstance } from 'axios';
-import { clearAccessToken, getAccessToken } from './token';
 
 export const createClientApi = (): AxiosInstance =>
   axios.create({
@@ -9,19 +8,18 @@ export const createClientApi = (): AxiosInstance =>
       'Content-Type': 'application/json',
     },
     timeout: 10000,
+    withCredentials: true,
   });
 
 export const api: AxiosInstance = createClientApi();
 
-api.interceptors.request.use((config) => {
-  const token = getAccessToken();
-  if (!token) {
-    return config;
+const isLoginRequest = (url?: string): boolean => {
+  if (!url) {
+    return false;
   }
 
-  config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+  return url.includes('/api/v1/admin/auth/login');
+};
 
 api.interceptors.response.use(
   (response) => response,
@@ -33,17 +31,14 @@ api.interceptors.response.use(
     }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (originalRequest.url?.includes('/api/v1/admin/auth/login')) {
+      if (isLoginRequest(originalRequest.url)) {
         return Promise.reject(error);
       }
 
       originalRequest._retry = true;
-
-      clearAccessToken();
       if (typeof window !== 'undefined') {
         window.location.href = '/login';
       }
-      return Promise.reject(error);
     }
     return Promise.reject(error);
   },
