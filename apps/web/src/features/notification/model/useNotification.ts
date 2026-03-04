@@ -35,7 +35,7 @@ export const useNotification = () => {
   const unReadCount = useQuery({
     queryFn: getUnreadCountClientApi,
     queryKey: ['unreadCount'],
-    select: (data) => data.unreadCount ?? 0,
+    select: (data) => data?.unreadCount ?? 0,
     staleTime: STALE_TIME,
   });
 
