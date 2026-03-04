@@ -1,10 +1,8 @@
 import { api } from '@/shared/api/client';
-import type { LoginRequest, LoginResponse } from './types';
+import type { LoginRequest } from './types';
 
-export const postLogin = async ({ adminCode }: LoginRequest) => {
-  const response = await api.post<LoginResponse>('/api/v1/admin/auth/login', {
+export const postLogin = async ({ adminCode }: LoginRequest): Promise<void> => {
+  await api.post('/api/v1/admin/auth/login', {
     adminCode,
   });
-
-  return response.data;
 };
