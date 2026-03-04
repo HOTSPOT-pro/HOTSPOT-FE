@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { MENU_ITEMS, SideBar } from '@/shared';
+import { isMenuActive, MENU_ITEMS, SideBar } from '@/shared';
 
 interface AppSideBarProps {
   onClose?: () => void;
@@ -13,7 +13,7 @@ export const AppSideBar = ({ onClose }: AppSideBarProps) => {
 
   const menuItems = MENU_ITEMS.map((item) => ({
     id: item.id,
-    isActive: pathname === item.path || pathname.startsWith(`${item.path}/`),
+    isActive: isMenuActive(pathname, item),
     label: item.label,
     path: item.path,
   }));

@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Header, MENU_ITEMS } from '@/shared';
+import { Header, isMenuActive, MENU_ITEMS } from '@/shared';
 
 interface AppHeaderProps {
   isSideBarOpen: boolean;
@@ -11,9 +11,7 @@ interface AppHeaderProps {
 export const AppHeader = ({ isSideBarOpen, onOpenSideBar }: AppHeaderProps) => {
   const pathname = usePathname();
 
-  const currentMenu = MENU_ITEMS.find(
-    (item) => pathname === item.path || pathname.startsWith(`${item.path}/`),
-  );
+  const currentMenu = MENU_ITEMS.find((item) => isMenuActive(pathname, item));
 
   return (
     <Header
