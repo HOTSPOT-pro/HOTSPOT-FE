@@ -21,6 +21,7 @@ export { ProgressBar } from './chart/progressbar/ProgressBar';
 export { ChartTooltip, type ChartTooltipSection } from './chart/tooltip/ChartTooltip';
 export { Input } from './input/Input';
 export { Loading } from './loading/Loading';
+export { Logo } from './logo/Logo';
 export { Modal } from './modal/Modal';
 export {
   type ModalId,
