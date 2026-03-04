@@ -10,14 +10,23 @@ export const Pagination = ({
   total: number;
   onMove: (p: number) => void;
 }) => {
-  const pages = Array.from({ length: total }, (_, i) => i + 1);
+  const normalizedTotal = Math.max(0, total);
+  const normalizedCurrent = Math.min(Math.max(current, 1), Math.max(normalizedTotal, 1));
+  const pages = Array.from({ length: normalizedTotal }, (_, i) => i + 1);
+  const canMovePrev = normalizedCurrent > 1;
+  const canMoveNext = normalizedTotal > 0 && normalizedCurrent < normalizedTotal;
+
+  const NEXT_MOVE_STYLE =
+    'p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row text-black';
 
   return (
     <div className="flex items-center justify-center gap-2 py-4 border-t border-gray-100">
       <button
-        className="p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row text-black"
-        disabled={current === 1}
-        onClick={() => onMove(current - 1)}
+        className={NEXT_MOVE_STYLE}
+        disabled={!canMovePrev}
+        onClick={() => {
+          if (canMovePrev) onMove(normalizedCurrent - 1);
+        }}
         type="button"
       >
         <LeftArrow /> 이전
@@ -31,7 +40,9 @@ export const Pagination = ({
               : 'hover:bg-purple-50 text-black'
           }`}
           key={p}
-          onClick={() => onMove(p)}
+          onClick={() => {
+            if (canMoveNext) onMove(normalizedCurrent + 1);
+          }}
           type="button"
         >
           {p}
@@ -39,8 +50,8 @@ export const Pagination = ({
       ))}
 
       <button
-        className="p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row text-black"
-        disabled={current === total}
+        className={NEXT_MOVE_STYLE}
+        disabled={!canMoveNext}
         onClick={() => onMove(current + 1)}
         type="button"
       >

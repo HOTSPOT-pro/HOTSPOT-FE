@@ -29,6 +29,7 @@ export const Table = <T extends { id: string | number }>({
               <th
                 className={`p-5 tracking-wider font-medium text-[15px] whitespace-nowrap`}
                 key={`head-${index}`}
+                scope="col"
               >
                 <div className="flex items-center gap-2">{col.header}</div>
               </th>
@@ -63,7 +64,7 @@ export const Table = <T extends { id: string | number }>({
             <tr>
               <td
                 className="px-6 py-20 text-center text-gray-400 font-medium"
-                colSpan={columns.length}
+                colSpan={Math.max(1, columns.length)}
               >
                 데이터가 존재하지 않습니다.
               </td>
