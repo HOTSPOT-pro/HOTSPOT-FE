@@ -1,58 +1,104 @@
 'use client';
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  Input,
-} from '@hotspot/ui';
-import LockIcon from '@hotspot/ui/assets/icons/lock.svg';
-import { useId, useState } from 'react';
+import { Button, Input } from '@hotspot/ui';
+import { isAxiosError } from 'axios';
+import { useId } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useLoginMutation } from '@/features/login/model';
+import { setAccessToken } from '@/shared/api/token';
+import { getApiErrorMessage } from '@/shared/api/types';
+
+const DEFAULT_ERROR_MESSAGE = '로그인에 실패했습니다. 관리자 키를 확인해주세요.';
+
+interface LoginFormValues {
+  adminCode: string;
+}
 
 export const LoginPage = () => {
-  const [adminKey, setAdminKey] = useState('');
   const adminKeyInputId = useId();
+  const loginMutation = useLoginMutation();
+  const {
+    clearErrors,
+    control,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    setError,
+    watch,
+  } = useForm<LoginFormValues>({
+    defaultValues: {
+      adminCode: '',
+    },
+    mode: 'onChange',
+  });
+  const adminCode = watch('adminCode');
+  const isSubmitDisabled = !adminCode.trim() || isSubmitting;
+  const inputError = errors.adminCode?.message ?? errors.root?.server?.message;
+
+  const onSubmit = async ({ adminCode }: LoginFormValues) => {
+    try {
+      const result = await loginMutation.mutateAsync({
+        adminCode: adminCode.trim(),
+      });
+      setAccessToken(result.data.accessToken);
+
+      window.location.href = '/';
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setError('root.server', {
+          message: getApiErrorMessage(error.response?.data, DEFAULT_ERROR_MESSAGE),
+          type: 'server',
+        });
+      } else {
+        setError('root.server', {
+          message: DEFAULT_ERROR_MESSAGE,
+          type: 'server',
+        });
+      }
+    }
+  };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
-      <Card className="w-full max-w-[360px] gap-6 rounded-xl p-6 shadow-2xl shadow-black/10">
-        <CardHeader className="items-center text-center">
-          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-purple-600">
-            <LockIcon aria-hidden className="h-5 w-5 text-white" />
-          </div>
-          <CardTitle className="text-[34px]">Hotspot Admin</CardTitle>
-          <CardDescription className="mt-2 text-sm text-gray-400">
-            관리자 인증이 필요합니다.
-          </CardDescription>
-        </CardHeader>
-
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <CardContent className="p-0">
-            <Input
-              id={adminKeyInputId}
-              label="관리자 키"
-              onChange={(event) => setAdminKey(event.target.value)}
-              onClear={() => setAdminKey('')}
-              type="password"
-              value={adminKey}
-            />
-          </CardContent>
-          <CardFooter className="p-0">
-            <Button disabled={!adminKey.trim()} type="submit">
-              로그인
-            </Button>
-          </CardFooter>
+    <section className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="w-150 h-100 flex flex-col shadow-2xl p-8 rounded-2xl gap-20">
+        <div className="flex flex-col items-center text-center">
+          {/* <Logo size="sm" /> */}
+          <h1 className="text-[30px] font-bold">Hotspot Admin</h1>
+        </div>
+        <form className="flex flex-col h-full justify-between" onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            control={control}
+            name="adminCode"
+            render={({ field }) => (
+              <Input
+                autoComplete="off"
+                error={inputError}
+                id={adminKeyInputId}
+                label="관리자 키"
+                onChange={(event) => {
+                  if (errors.root?.server) {
+                    clearErrors('root.server');
+                  }
+                  field.onChange(event.target.value);
+                }}
+                onClear={() => {
+                  if (errors.root?.server) {
+                    clearErrors('root.server');
+                  }
+                  field.onChange('');
+                }}
+                type="password"
+                value={field.value}
+              />
+            )}
+            rules={{
+              required: '관리자 키를 입력해주세요.',
+            }}
+          />
+          <Button disabled={isSubmitDisabled} isLoading={isSubmitting} type="submit">
+            로그인
+          </Button>
         </form>
-      </Card>
-    </main>
+      </div>
+    </section>
   );
 };
