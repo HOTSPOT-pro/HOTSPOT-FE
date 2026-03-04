@@ -18,7 +18,7 @@ export const ProgressBar = ({ label, value, total, color = COLORS.START }: Progr
   const chartData = [{ displayValue: value, name: label }];
 
   return (
-    <div className="w-full h-3">
+    <div className="w-full h-3 [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
       <ResponsiveContainer className="w-full h-full">
         <BarChart
           data={chartData}

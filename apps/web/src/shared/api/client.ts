@@ -1,16 +1,13 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 import axios, { type AxiosInstance } from 'axios';
 
-const API_TIMEOUT = 10000;
-const HTTP_STATUS_UNAUTHORIZED = 401;
-
 export const createClientApi = (): AxiosInstance =>
   axios.create({
     baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     headers: {
       'Content-Type': 'application/json',
     },
-    timeout: API_TIMEOUT,
+    timeout: 10000,
     withCredentials: true,
   });
 
@@ -21,7 +18,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === HTTP_STATUS_UNAUTHORIZED && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       if (originalRequest.url?.includes('/api/v1/auth/reissue')) {
         return Promise.reject(error);
       }

@@ -12,7 +12,7 @@ export default function MobileLayout({
     <BottomNavLayoutProvider>
       <NotificationSubscribeProvider />
       <div
-        className="flex flex-col h-full overflow-auto"
+        className="flex flex-1 min-h-0 flex-col overflow-auto"
         style={{
           paddingBottom: `var(--bottom-nav-height, ${DEFAULT_BOTTOM_NAV_HEIGHT}px)`,
         }}

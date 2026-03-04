@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
-import { NotificationList } from '@/widgets/notification';
+import { NotificationList } from './NotificationList';
 
 export const NotificationPage = () => {
   const { setHeader } = useSubHeaderStore();

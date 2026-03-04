@@ -5,8 +5,10 @@ import { SubHeaderRenderer } from '@/widgets/app-header/ui/SubHeaderRenderer';
 export default function SubLayout({ children }: { children: ReactNode }) {
   return (
     <SubHeaderProvider>
-      <SubHeaderRenderer />
-      {children}
+      <div className="flex h-full flex-col">
+        <SubHeaderRenderer />
+        <div className="flex-1 min-h-0">{children}</div>
+      </div>
     </SubHeaderProvider>
   );
 }
