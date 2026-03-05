@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-const PUBLIC_PATHS = ['/login', '/onboarding', '/health'];
+const PUBLIC_PATHS = ['/login', '/health'];
 
 function isPublicPath(pathname: string) {
   return PUBLIC_PATHS.some((p) => pathname === p);
