@@ -2,6 +2,7 @@
 'use client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import type { GetNotificationResponse } from '@/entities/notification/api/types';
 
 export const NotificationSubscribeProvider = () => {
   const queryClient = useQueryClient();
@@ -12,7 +13,7 @@ export const NotificationSubscribeProvider = () => {
       { withCredentials: true },
     );
 
-    eventSource.onmessage = (event) => {
+    const handleMessage = (event: MessageEvent) => {
       try {
         const sseData = JSON.parse(event.data);
 
@@ -20,15 +21,13 @@ export const NotificationSubscribeProvider = () => {
           content: sseData.content,
           createdTime: sseData.createdTime,
           eventId: sseData.eventId,
-          id: sseData.id,
+          id: sseData.notificationId,
           isRead: sseData.isRead,
           notificationType: sseData.notificationType,
           title: sseData.title,
         };
 
-        queryClient.setQueryData<
-          import('@/entities/notification/api/types').GetNotificationResponse
-        >(['notifications'], (old) => {
+        queryClient.setQueryData<GetNotificationResponse>(['notifications'], (old) => {
           if (!old || old.notifications.some((n) => n.id === newRawNotification.id)) {
             return old;
           }
@@ -37,18 +36,24 @@ export const NotificationSubscribeProvider = () => {
             notifications: [newRawNotification, ...old.notifications],
           };
         });
-        queryClient.setQueryData(['unreadCount'], sseData.unreadCount);
+        queryClient.setQueryData(['unreadCount'], { unreadCount: sseData.unreadCount });
       } catch (error) {
         console.error('SSE onmessage error:', error);
       }
     };
 
-    eventSource.onerror = (error) => {
+    eventSource.addEventListener('notification', handleMessage);
+
+    const handleError = (error: Event) => {
       console.error('SSE Connection Error:', error);
+    };
+    eventSource.addEventListener('error', handleError);
+
+    return () => {
+      eventSource.removeEventListener('notification', handleMessage);
+      eventSource.removeEventListener('error', handleError);
       eventSource.close();
     };
-
-    return () => eventSource.close();
   }, [queryClient]);
 
   return null;

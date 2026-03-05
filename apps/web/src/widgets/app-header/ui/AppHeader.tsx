@@ -112,9 +112,11 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
           <IconButton ariaLabel="알림" onClick={action.onClick ?? handleNotificationDefault}>
             <div className="relative w-7 h-7 flex items-center justify-center">
               <NotificationIcon className="h-6 w-6" />
-              <div className="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 text-[10px] border border-white text-white px-1 bg-purple-600 rounded-full">
-                {unReadCount.data}
-              </div>
+              {unReadCount.data !== 0 ? (
+                <div className="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 text-[10px] border border-white text-white px-1 bg-purple-600 rounded-full">
+                  {unReadCount.data}
+                </div>
+              ) : null}
             </div>
           </IconButton>
         );
