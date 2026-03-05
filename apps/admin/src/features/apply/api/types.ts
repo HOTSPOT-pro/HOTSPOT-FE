@@ -19,7 +19,7 @@ export interface ApplicationItem {
   requesterName: string;
   requesterPhoneNumber: string;
   targets: ApplicationTarget[];
-  relationDocumentUrl: string;
+  relationDocumentUrl: string | null;
   requestedAt: string;
 }
 
@@ -39,4 +39,9 @@ export interface GetApplicationsRequest {
   status: ApplicationStatus;
   page: number;
   size: number;
+}
+
+export interface PatchApplicationStatusRequest {
+  applyType: ApplicationType;
+  requestId: number;
 }
