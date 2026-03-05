@@ -19,7 +19,7 @@ interface SideBarProps {
 export const SideBar = ({ menuItems, onClose, onMenuClick }: SideBarProps) => {
   return (
     <aside className="flex min-h-screen w-[300px] shrink-0 flex-col border-r border-gray-200 bg-white">
-      <div className="flex h-[58px] items-center justify-between border-b border-gray-200 pl-4 pr-2">
+      <div className="flex h-[58px] items-center justify-between pl-4 pr-2">
         <div className="flex h-full items-center justify-center gap-2">
           <Logo size="xs" />
           <strong className="text-[18px] leading-none font-semibold text-black">Hotspot</strong>
