@@ -4,7 +4,7 @@ import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useFamilyList } from '@/features/families';
-import { type Column, Pagination, Table } from '@/shared';
+import { type Column, Pagination, SearchBar, Table } from '@/shared';
 
 export const FamiliesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +49,9 @@ export const FamiliesPage = () => {
 
   return (
     <div className="p-8 w-full">
-      <div className="p-4 bg-white rounded-xl shadow-xs mb-6">서치 바 컴포넌트</div>
+      <div className="p-4 bg-white rounded-xl shadow-xs mb-6">
+        <SearchBar />
+      </div>
 
       <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden">
         <p className="p-6 pb-4 border-b border-gray-100 text-[16px] text-gray-500 font-medium">
