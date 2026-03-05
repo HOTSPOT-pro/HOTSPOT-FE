@@ -20,7 +20,7 @@ export const Table = <T extends { id: string }>({
   const renderBodyContent = () => {
     // 로딩 중일 때
     if (isLoading) {
-      return [...Array(10)].map((_, rowIndex) => (
+      return [...Array(5)].map((_, rowIndex) => (
         <tr className="border-b border-gray-50" key={`skeleton-row-${rowIndex}`}>
           {columns.map((_, colIndex) => (
             <td className="px-6 py-5" key={`skeleton-col-${colIndex}`}>
@@ -63,7 +63,7 @@ export const Table = <T extends { id: string }>({
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0">
       <table className="w-full text-sm text-left border-collapse">
         {/* Header */}
         <thead className="text-xs text-gray-700 uppercase border-b border-gray-200">
