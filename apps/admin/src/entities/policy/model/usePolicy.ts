@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBlockedClient } from '../api/getBlockedClient';
 import { getPolicyClient } from '../api/getPolicyClient';
-import type { GetPolicyRequest, GetPolicyResponse, Policy } from './types';
+import type { Block, GetBlockResponse, GetPolicyRequest, GetPolicyResponse, Policy } from './types';
 
 export const usePolicy = (params: GetPolicyRequest) => {
   const { data, isPending } = useQuery<GetPolicyResponse, Error, Policy[]>({
@@ -19,10 +19,10 @@ export const usePolicy = (params: GetPolicyRequest) => {
 };
 
 export const useBlocked = (params: GetPolicyRequest) => {
-  const { data, isPending } = useQuery<GetPolicyResponse, Error, Policy[]>({
+  const { data, isPending } = useQuery<GetBlockResponse, Error, Block[]>({
     queryFn: () => getBlockedClient(params),
     queryKey: ['adminBlock'],
-    select: (data: GetPolicyResponse): Policy[] => {
+    select: (data: GetBlockResponse): Block[] => {
       return data.items;
     },
   });
