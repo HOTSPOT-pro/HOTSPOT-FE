@@ -1,4 +1,4 @@
-import { useMemberPolicy } from '../../member-info/model/useMemberPolicy';
+import { useMemberPolicy } from '@/domains/member-policy';
 import type { PolicyApply } from '../model/types';
 import { PolicyAddItem } from './PolicyAddItem';
 

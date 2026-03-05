@@ -3,7 +3,7 @@
 import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useFamilyList } from '@/features/families';
+import { useFamilyList } from '@/domains/family';
 import { type Column, Pagination, SearchBar, Table } from '@/shared';
 
 export const FamiliesPage = () => {

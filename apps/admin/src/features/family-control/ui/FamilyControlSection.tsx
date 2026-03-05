@@ -1,7 +1,7 @@
 import { Button, Input, Slider, Toggle } from '@hotspot/ui';
 import { useEffect, useState } from 'react';
-import type { MemberControl, MemberControlItem } from '../model/types';
-import { useFamilyUpdateControl } from '../model/useFamilyUpdateControl'; // 훅 이름 가정
+import type { MemberControl, MemberControlItem } from '@/domains/member-control';
+import { useFamilyUpdateControl } from '../model/useFamilyUpdateControl';
 
 interface FamilyControlSectionProps {
   familyId: number;
@@ -30,11 +30,12 @@ export const FamilyControlSection = ({
   const handleSave = async (member: MemberControlItem) => {
     try {
       await updateMember.mutateAsync({
-        data: {
+        body: {
           dataLimitGb: member.dataLimitGb,
           isBlocked: member.isBlocked,
           isParent: member.isParent,
         },
+        familyId,
         subId: member.subId,
       });
     } catch (error) {

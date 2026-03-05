@@ -1,6 +1,6 @@
 import { useParams } from 'next/navigation';
 
-import { useFamilyDetailControl } from '../model/useFamilyDetailControl';
+import { useFamilyDetailControl } from '@/domains/member-control';
 import { FamilyControlSection } from './FamilyControlSection';
 import { FamilyOrderSection } from './FamilyOrderSection';
 

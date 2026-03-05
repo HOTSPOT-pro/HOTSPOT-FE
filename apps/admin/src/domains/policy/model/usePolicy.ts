@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBlockedClient } from '../api/getBlockedClient';
 import { getPolicyClient } from '../api/getPolicyClient';
-import type { GetBlockResponse, GetPolicyRequest, GetPolicyResponse, Policy } from './types';
+import type { GetBlockResponse, GetPolicyRequest, GetPolicyResponse } from './types';
 
 export const usePolicy = (params: GetPolicyRequest) => {
   const { data, isPending } = useQuery<GetPolicyResponse, Error>({

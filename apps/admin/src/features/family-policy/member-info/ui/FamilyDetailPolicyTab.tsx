@@ -3,8 +3,8 @@ import { useModal } from '@hotspot/ui';
 import RightArrowIcon from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { useParams } from 'next/navigation';
 import { useCallback } from 'react';
-import type { FamilyPolicy } from '@/features/families/model/types';
-import { useFamilyDetailPolicy } from '../model/useFamilyDetailPolicy';
+import type { FamilyPolicy } from '@/domains/family';
+import { useFamilyDetailPolicy } from '@/domains/member-policy';
 
 export const FamilyDetailPolicyTab = () => {
   const params = useParams();

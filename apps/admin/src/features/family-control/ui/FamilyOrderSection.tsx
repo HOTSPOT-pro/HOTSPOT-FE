@@ -4,8 +4,8 @@ import DownIcon from '@hotspot/ui/assets/icons/arrow-down.svg';
 import UpIcon from '@hotspot/ui/assets/icons/arrow-up.svg';
 import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
 import { useEffect, useState } from 'react';
+import type { MemberControl, MemberControlItem } from '@/domains/member-control';
 import { Dropdown } from '@/shared/ui/dropdown/Dropdown';
-import type { MemberControl, MemberControlItem } from '../model/types';
 import { useFamilyOrder } from '../model/useFamilyOrder';
 
 interface FamilyOrderSectionProps {
@@ -83,7 +83,9 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
       });
 
       setIsEditing(false);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

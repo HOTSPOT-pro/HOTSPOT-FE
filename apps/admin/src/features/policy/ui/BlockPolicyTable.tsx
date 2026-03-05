@@ -4,7 +4,7 @@ import { Button, Toggle, useModal } from '@hotspot/ui';
 import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
 import TimeIcon from '@hotspot/ui/assets/icons/time.svg';
 import { useCallback, useState } from 'react';
-import { useBlocked } from '@/entities/policy/model/usePolicy';
+import { useBlocked } from '@/domains/policy';
 import { type Column, Pagination, Table } from '@/shared';
 import { useUpdatePolicyActive } from '../model/useActivePolicy';
 import { useDeletePolicy } from '../model/useDeletePolicy';

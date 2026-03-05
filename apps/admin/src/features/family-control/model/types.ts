@@ -1,17 +1,3 @@
-export interface MemberControl {
-  priorityType: 'PRIORITY' | 'FIFO';
-  members: MemberControlItem[];
-}
-export interface MemberControlItem {
-  subId: number;
-  memberName: string;
-  familyRole: string;
-  isParent?: boolean;
-  isBlocked: boolean;
-  dataLimitGb: number;
-  priorityOrder: number;
-}
-
 export interface MemberOrderItem {
   subId: number;
   priority: number;
@@ -21,4 +7,9 @@ export interface PatchOrderRequest {
   familyId: number;
   priorityType: 'FIFO' | 'PRIORITY';
   memberPriorities: MemberOrderItem[];
+}
+export interface PatchControlRequest {
+  familyId: number;
+  subId: number;
+  body: { dataLimitGb: number; isBlocked: boolean; isParent?: boolean };
 }
