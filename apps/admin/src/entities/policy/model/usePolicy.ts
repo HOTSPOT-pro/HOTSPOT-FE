@@ -1,34 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBlockedClient } from '../api/getBlockedClient';
 import { getPolicyClient } from '../api/getPolicyClient';
-import type { Block, GetBlockResponse, GetPolicyRequest, GetPolicyResponse, Policy } from './types';
+import type { GetBlockResponse, GetPolicyRequest, GetPolicyResponse, Policy } from './types';
 
 export const usePolicy = (params: GetPolicyRequest) => {
-  const { data, isPending } = useQuery<GetPolicyResponse, Error, Policy[]>({
+  const { data, isPending } = useQuery<GetPolicyResponse, Error>({
     queryFn: () => getPolicyClient(params),
-    queryKey: ['adminPolicy'],
-    select: (data: GetPolicyResponse): Policy[] => {
-      return data.items;
-    },
+    queryKey: ['adminPolicy', params.page, params.size],
   });
-  const policyList = data ?? [];
   return {
     loading: isPending,
-    policyList,
+    policyList: data,
   };
 };
 
 export const useBlocked = (params: GetPolicyRequest) => {
-  const { data, isPending } = useQuery<GetBlockResponse, Error, Block[]>({
+  const { data, isPending } = useQuery<GetBlockResponse, Error>({
     queryFn: () => getBlockedClient(params),
-    queryKey: ['adminBlock'],
-    select: (data: GetBlockResponse): Block[] => {
-      return data.items;
-    },
+    queryKey: ['adminBlock', params.page, params.size],
   });
-  const blockedList = data ?? [];
   return {
-    blockedList,
+    blockedList: data,
     loading: isPending,
   };
 };
