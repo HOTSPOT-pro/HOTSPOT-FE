@@ -48,7 +48,9 @@ export const Pagination = ({
               : 'hover:bg-purple-50 text-black'
           }`}
           key={p}
-          onClick={() => onMove(p)}
+          onClick={() => {
+            if (p !== normalizedCurrent) onMove(p);
+          }}
           type="button"
         >
           {p}
