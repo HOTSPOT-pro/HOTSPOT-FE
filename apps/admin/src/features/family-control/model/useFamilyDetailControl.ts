@@ -7,7 +7,7 @@ export const useFamilyDetailControl = (familyId: number) => {
   const familyData = useQuery({
     placeholderData: (previousData) => previousData,
     queryFn: () => getFamilyDetailPolicyClient(familyId),
-    queryKey: ['adminFamilyDatailPolicy', familyId],
+    queryKey: ['adminFamilyDatailControl', familyId],
     staleTime: STALE_TIME,
   });
 

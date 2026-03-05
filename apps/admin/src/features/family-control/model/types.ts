@@ -1,5 +1,5 @@
 export interface MemberControl {
-  priorityType: string;
+  priorityType: 'PRIORITY' | 'FIFO';
   members: MemberControlItem[];
 }
 export interface MemberControlItem {
@@ -10,4 +10,15 @@ export interface MemberControlItem {
   isBlocked: boolean;
   dataLimitGb: number;
   priorityOrder: number;
+}
+
+export interface MemberOrderItem {
+  subId: number;
+  priority: number;
+}
+
+export interface PatchOrderRequest {
+  familyId: number;
+  priorityType: 'FIFO' | 'PRIORITY';
+  memberPriorities: MemberOrderItem[];
 }
