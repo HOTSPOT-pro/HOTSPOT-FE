@@ -1,5 +1,8 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 import axios, { type AxiosInstance } from 'axios';
+import { ROUTES } from '..';
+
+const LOGIN_PATH = '/api/v1/admin/auth/login';
 
 export const createClientApi = (): AxiosInstance =>
   axios.create({
@@ -18,7 +21,12 @@ const isLoginRequest = (url?: string): boolean => {
     return false;
   }
 
-  return url.includes('/api/v1/admin/auth/login');
+  try {
+    const parsed = new URL(url, 'http://localhost');
+    return parsed.pathname === LOGIN_PATH;
+  } catch {
+    return false;
+  }
 };
 
 api.interceptors.response.use(
@@ -37,7 +45,8 @@ api.interceptors.response.use(
 
       originalRequest._retry = true;
       if (typeof window !== 'undefined') {
-        window.location.href = '/login';
+        window.location.replace(ROUTES.LOGIN);
+        return new Promise(() => {});
       }
     }
     return Promise.reject(error);

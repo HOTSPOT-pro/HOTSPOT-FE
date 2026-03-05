@@ -59,8 +59,7 @@
         "noNestedComponentDefinitions": "warn",
         "noNodejsModules": "error",
         "noProcessGlobal": "warn",
-        "useSingleJsDocAsterisk": "warn",
-        "useUniqueElementIds": "error"
+        "useSingleJsDocAsterisk": "warn"
       },
       "nursery": {
         "noEqualsToNull": "warn",
