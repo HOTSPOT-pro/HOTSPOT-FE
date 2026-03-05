@@ -42,8 +42,9 @@ export const CategorySelect = <T extends string = string>({
   return (
     <div className={`relative inline-block ${className ?? ''}`} ref={rootRef}>
       <button
+        aria-controls="category-select-listbox"
         aria-expanded={isOpen}
-        aria-haspopup="menu"
+        aria-haspopup="listbox"
         className="flex w-full items-center gap-2 rounded-md p-2 text-[0.8rem] font-semibold text-black"
         onClick={() => setIsOpen((prev) => !prev)}
         type="button"
@@ -55,7 +56,10 @@ export const CategorySelect = <T extends string = string>({
       </button>
 
       {isOpen && (
-        <ul className="absolute mt-[-2.9rem] z-20 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white py-2 shadow-lg">
+        <ul
+          className="absolute mt-[-2.9rem] z-20 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white py-2 shadow-lg"
+          id="category-select-listbox"
+        >
           {options.map((option) => {
             const isSelected = option.value === value;
 
