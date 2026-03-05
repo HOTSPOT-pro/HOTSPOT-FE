@@ -3,15 +3,15 @@ import { Logo } from '@shared/ui';
 
 export const LoginPage = () => {
   return (
-    <div className="flex flex-col w-full h-screen justify-center">
-      <div className="z-header flex flex-col items-center justify-center h-full">
+    <div className="flex min-h-dvh w-full flex-col justify-between bg-[radial-gradient(120%_90%_at_50%_40%,rgba(168,85,247,0.2)_0%,rgba(255,255,255,1)_65%),linear-gradient(180deg,#f5f3ff_0%,#ffffff_45%)] px-6 pb-8 pt-16">
+      <div className="flex flex-1 flex-col items-center justify-center text-center">
         <Logo size="lg" />
-        <p className="text-2xl font-black mt-8 text-black">hotspot</p>
-        <p className="mt-2 text-gray-500 font-normal text-sm">가족 결합 데이터 관리 서비스</p>
+        <p className="mt-8 text-2xl font-black text-black">hotspot</p>
+        <p className="mt-2 text-sm font-normal text-gray-500">가족 결합 데이터 관리 서비스</p>
       </div>
-      <SocialLoginButtons />
-      <div className="absolute w-screen h-screen flex justify-center items-center">
-        <div className="absolute w-screen h-screen bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" />
+
+      <div className="pb-4">
+        <SocialLoginButtons />
       </div>
     </div>
   );
