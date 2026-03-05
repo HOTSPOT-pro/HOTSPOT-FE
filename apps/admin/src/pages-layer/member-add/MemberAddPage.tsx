@@ -1,146 +1,92 @@
 'use client';
 
-import { Tab } from '@hotspot/ui';
-import { useMemo, useState } from 'react';
-import { type Column, Pagination, SearchBar, Table } from '@/shared';
+import { Card, CardContent, Tab } from '@hotspot/ui';
+import { useEffect, useMemo, useState } from 'react';
+import { useApplicationsQuery } from '@/features/apply';
+import type { ApplicationStatus } from '@/features/apply/api/types';
+import { type Column, Pagination, Table } from '@/shared';
+import { getApiErrorMessage } from '@/shared/api/types';
 
-type MemberAddStatus = 'WAITING' | 'APPROVED' | 'REJECTED';
-
-interface MemberAddRequest {
+interface MemberAddRequestRow {
   id: string;
-  name: string;
-  phone: string;
   familyName: string;
+  requesterName: string;
+  requesterPhoneNumber: string;
+  requestDisplayId: string;
   requestedAt: string;
-  status: MemberAddStatus;
-  reviewedAt?: string;
+  status: ApplicationStatus;
+  targetText: string;
+  targets: { id: string; name: string; phone: string }[];
 }
 
-const STATUS_ITEMS: ReadonlyArray<{ label: string; value: MemberAddStatus }> = [
-  { label: '대기 중', value: 'WAITING' },
+const STATUS_ITEMS: ReadonlyArray<{ label: string; value: ApplicationStatus }> = [
+  { label: '대기 중', value: 'PENDING' },
   { label: '승인 완료', value: 'APPROVED' },
   { label: '승인 거절', value: 'REJECTED' },
+  { label: '취소', value: 'CANCELED' },
 ];
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 20;
 
-const MEMBER_ADD_REQUESTS: MemberAddRequest[] = [
-  {
-    familyName: '김지훈 가족',
-    id: 'req-001',
-    name: '김민수',
-    phone: '010-1234-5678',
-    requestedAt: '2026-03-05 09:22',
-    status: 'WAITING',
-  },
-  {
-    familyName: '김지훈 가족',
-    id: 'req-002',
-    name: '김서연',
-    phone: '010-3344-2211',
-    requestedAt: '2026-03-05 08:41',
-    status: 'WAITING',
-  },
-  {
-    familyName: '이수진 가족',
-    id: 'req-003',
-    name: '이도현',
-    phone: '010-7171-8282',
-    requestedAt: '2026-03-04 19:15',
-    status: 'WAITING',
-  },
-  {
-    familyName: '박성호 가족',
-    id: 'req-004',
-    name: '박지은',
-    phone: '010-2391-9977',
-    requestedAt: '2026-03-04 16:30',
-    status: 'WAITING',
-  },
-  {
-    familyName: '정하늘 가족',
-    id: 'req-005',
-    name: '정윤아',
-    phone: '010-3001-7777',
-    requestedAt: '2026-03-04 14:07',
-    status: 'WAITING',
-  },
-  {
-    familyName: '한소영 가족',
-    id: 'req-006',
-    name: '한지훈',
-    phone: '010-9090-2020',
-    requestedAt: '2026-03-03 12:05',
-    reviewedAt: '2026-03-03 12:16',
-    status: 'APPROVED',
-  },
-  {
-    familyName: '오지혜 가족',
-    id: 'req-007',
-    name: '오수민',
-    phone: '010-8734-0033',
-    requestedAt: '2026-03-03 09:11',
-    reviewedAt: '2026-03-03 09:28',
-    status: 'APPROVED',
-  },
-  {
-    familyName: '장민호 가족',
-    id: 'req-008',
-    name: '장다은',
-    phone: '010-5345-1212',
-    requestedAt: '2026-03-02 18:10',
-    reviewedAt: '2026-03-02 18:27',
-    status: 'APPROVED',
-  },
-  {
-    familyName: '유다인 가족',
-    id: 'req-009',
-    name: '유재호',
-    phone: '010-2000-1122',
-    requestedAt: '2026-03-02 11:45',
-    reviewedAt: '2026-03-02 12:03',
-    status: 'REJECTED',
-  },
-  {
-    familyName: '최한결 가족',
-    id: 'req-010',
-    name: '최서진',
-    phone: '010-6677-1122',
-    requestedAt: '2026-03-01 17:32',
-    reviewedAt: '2026-03-01 17:50',
-    status: 'REJECTED',
-  },
-  {
-    familyName: '송민재 가족',
-    id: 'req-011',
-    name: '송지우',
-    phone: '010-7171-1111',
-    requestedAt: '2026-03-01 11:09',
-    reviewedAt: '2026-03-01 11:41',
-    status: 'REJECTED',
-  },
-];
-
-const statusLabelMap: Record<MemberAddStatus, string> = {
+const statusLabelMap: Record<ApplicationStatus, string> = {
   APPROVED: '승인 완료',
+  CANCELED: '취소',
+  PENDING: '대기 중',
   REJECTED: '승인 거절',
-  WAITING: '대기 중',
 };
 
-const statusBadgeMap: Record<MemberAddStatus, string> = {
+const statusBadgeMap: Record<ApplicationStatus, string> = {
   APPROVED: 'bg-emerald-100 text-emerald-700',
+  CANCELED: 'bg-gray-100 text-gray-700',
+  PENDING: 'bg-amber-100 text-amber-700',
   REJECTED: 'bg-rose-100 text-rose-700',
-  WAITING: 'bg-amber-100 text-amber-700',
 };
 
-const tableColumns: Column<MemberAddRequest>[] = [
+const formatRequestedAt = (requestedAt: string): string => {
+  const date = new Date(requestedAt);
+  if (Number.isNaN(date.getTime())) {
+    return requestedAt;
+  }
+
+  const formatter = new Intl.DateTimeFormat('ko-KR', {
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
+  return formatter.format(date).replaceAll('. ', '-').replace('.', '');
+};
+
+const tableColumns: Column<MemberAddRequestRow>[] = [
   {
-    accessor: 'name',
-    header: '구성원 이름',
+    accessor: 'requestDisplayId',
+    header: '요청번호',
   },
   {
-    accessor: 'phone',
-    header: '연락처',
+    accessor: 'requesterName',
+    header: '신청자',
+  },
+  {
+    accessor: 'requesterPhoneNumber',
+    header: '신청자 연락처',
+  },
+  {
+    accessor: 'targets',
+    header: '대상자',
+    render: (_, row) => {
+      return (
+        <ul className="space-y-1">
+          {row.targets.map((target) => (
+            <li key={target.id}>
+              <p className="text-sm font-medium text-gray-900">{target.name}</p>
+              <p className="text-xs text-gray-500">{target.phone}</p>
+            </li>
+          ))}
+        </ul>
+      );
+    },
   },
   {
     accessor: 'familyName',
@@ -151,15 +97,10 @@ const tableColumns: Column<MemberAddRequest>[] = [
     header: '요청 시각',
   },
   {
-    accessor: 'reviewedAt',
-    header: '처리 시각',
-    render: (value) => value ?? '-',
-  },
-  {
     accessor: 'status',
     header: '상태',
     render: (value) => {
-      const status = value as MemberAddStatus;
+      const status = value as ApplicationStatus;
 
       return (
         <span className={`rounded-full px-2 py-1 text-xs font-semibold ${statusBadgeMap[status]}`}>
@@ -171,79 +112,107 @@ const tableColumns: Column<MemberAddRequest>[] = [
 ];
 
 export const MemberAddPage = () => {
-  const [activeStatus, setActiveStatus] = useState<MemberAddStatus>('WAITING');
+  const [activeStatus, setActiveStatus] = useState<ApplicationStatus>('PENDING');
   const [keyword, setKeyword] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleStatusChange = (nextStatus: MemberAddStatus) => {
+  const { data, error, isLoading, isFetching } = useApplicationsQuery({
+    applyType: 'ADD',
+    page: currentPage - 1,
+    size: PAGE_SIZE,
+    status: activeStatus,
+  });
+
+  const totalPages = Math.max(data?.totalPages ?? 0, 1);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [currentPage, totalPages]);
+
+  const handleStatusChange = (nextStatus: ApplicationStatus) => {
     setActiveStatus(nextStatus);
     setCurrentPage(1);
   };
 
-  const handleKeywordChange = (nextKeyword: string) => {
-    setKeyword(nextKeyword);
-    setCurrentPage(1);
-  };
+  const rows = useMemo<MemberAddRequestRow[]>(() => {
+    return (data?.requests ?? []).map((request) => {
+      const targets = request.targets.map((target) => ({
+        id: `${request.requestId}-${target.targetSubId}`,
+        name: target.targetName,
+        phone: target.targetPhoneNumber,
+      }));
 
-  const handleKeywordClear = () => {
-    setKeyword('');
-    setCurrentPage(1);
-  };
+      return {
+        familyName: request.familyName,
+        id: request.requestDisplayId,
+        requestDisplayId: request.requestDisplayId,
+        requestedAt: formatRequestedAt(request.requestedAt),
+        requesterName: request.requesterName,
+        requesterPhoneNumber: request.requesterPhoneNumber,
+        status: activeStatus,
+        targets,
+        targetText: targets.map((target) => `${target.name} ${target.phone}`).join(' '),
+      };
+    });
+  }, [activeStatus, data?.requests]);
 
-  const filteredData = useMemo(() => {
+  const filteredRows = useMemo(() => {
     const normalizedKeyword = keyword.trim().toLowerCase();
 
-    return MEMBER_ADD_REQUESTS.filter((request) => {
-      if (request.status !== activeStatus) {
-        return false;
-      }
-
+    return rows.filter((request) => {
       if (!normalizedKeyword) {
         return true;
       }
 
-      return [request.name, request.phone, request.familyName].some((value) =>
-        value.toLowerCase().includes(normalizedKeyword),
-      );
+      return [
+        request.requesterName,
+        request.requesterPhoneNumber,
+        request.familyName,
+        request.targetText,
+      ].some((value) => value.toLowerCase().includes(normalizedKeyword));
     });
-  }, [activeStatus, keyword]);
+  }, [keyword, rows]);
 
-  const totalPages = Math.ceil(filteredData.length / PAGE_SIZE);
-  const pagedData = useMemo(() => {
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    return filteredData.slice(startIndex, startIndex + PAGE_SIZE);
-  }, [currentPage, filteredData]);
+  const errorMessage = useMemo(() => {
+    if (!error) {
+      return null;
+    }
+
+    return getApiErrorMessage(
+      error.response?.data ?? error,
+      '요청 목록 조회 중 오류가 발생했습니다.',
+    );
+  }, [error]);
 
   return (
-    <section className="m-4 flex min-w-0 flex-col overflow-hidden rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900">구성원 추가 요청 관리</h2>
-          <p className="mt-2 text-sm text-gray-500">
-            요청 상태를 확인하고 승인/거절 내역을 조회할 수 있습니다.
-          </p>
-        </div>
-        <div className="w-full max-w-[360px]">
-          <SearchBar
-            onChange={handleKeywordChange}
-            onClear={handleKeywordClear}
-            placeholder="이름, 연락처, 가족명 검색"
-            value={keyword}
-          />
-        </div>
+    <section className="flex flex-col h-full pb-8">
+      <Tab
+        activeValue={activeStatus}
+        items={[...STATUS_ITEMS]}
+        onTabChange={handleStatusChange}
+        variant="segment"
+      />
+      <div className="flex flex-col px-4 h-full">
+        <Card className="h-full flex flex-col">
+          <CardContent className="h-full flex flex-col">
+            {errorMessage && (
+              <p className="mb-4 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+                {errorMessage}
+              </p>
+            )}
+            <div className="h-full flex flex-col justify-between">
+              <Table
+                columns={tableColumns}
+                data={filteredRows}
+                isLoading={isLoading || isFetching}
+              />
+              <Pagination current={currentPage} onMove={setCurrentPage} total={totalPages} />
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
-      <div className="mb-4">
-        <Tab
-          activeValue={activeStatus}
-          items={[...STATUS_ITEMS]}
-          onTabChange={handleStatusChange}
-          variant="segment"
-        />
-      </div>
-
-      <Table columns={tableColumns} data={pagedData} />
-      <Pagination current={currentPage} onMove={setCurrentPage} total={totalPages} />
     </section>
   );
 };

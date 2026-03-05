@@ -1,0 +1,1 @@
+export { useApplicationsQuery } from './useApplicationsQuery';
