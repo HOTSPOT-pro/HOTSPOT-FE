@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@hotspot/ui/globals.css';
+import { ModalProvider } from '@hotspot/ui';
+import { AppModal } from '@/widgets/app-modal/ui/AppModal';
 import { QueryProvider } from './_providers/query/QueryProvider';
 
 const geistSans = localFont({
@@ -25,7 +27,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <ModalProvider>
+            {children}
+            <AppModal />
+          </ModalProvider>
+        </QueryProvider>
       </body>
     </html>
   );

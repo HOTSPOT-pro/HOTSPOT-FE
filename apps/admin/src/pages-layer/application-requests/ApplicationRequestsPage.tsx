@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Card, CardContent } from '@hotspot/ui';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   useApplicationsQuery,
   useApproveApplicationMutation,
@@ -104,6 +104,8 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
   const [processingRequestId, setProcessingRequestId] = useState<number | null>(null);
   const [processingAction, setProcessingAction] = useState<'approve' | 'reject' | null>(null);
 
+  const actionLockRef = useRef(false);
+
   const { data, error, isLoading, isFetching, refetch } = useApplicationsQuery({
     applyType,
     page: currentPage - 1,
@@ -152,6 +154,8 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
 
   const handleApprove = useCallback(
     async (requestId: number) => {
+      if (actionLockRef.current) return;
+      actionLockRef.current = true;
       try {
         setActionErrorMessage(null);
         setProcessingRequestId(requestId);
@@ -163,6 +167,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
           getApiErrorMessage(mutationError, '요청 승인 처리 중 오류가 발생했습니다.'),
         );
       } finally {
+        actionLockRef.current = false;
         setProcessingRequestId(null);
         setProcessingAction(null);
       }
@@ -172,6 +177,8 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
 
   const handleReject = useCallback(
     async (requestId: number) => {
+      if (actionLockRef.current) return;
+      actionLockRef.current = true;
       try {
         setActionErrorMessage(null);
         setProcessingRequestId(requestId);
@@ -183,6 +190,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
           getApiErrorMessage(mutationError, '요청 거절 처리 중 오류가 발생했습니다.'),
         );
       } finally {
+        actionLockRef.current = false;
         setProcessingRequestId(null);
         setProcessingAction(null);
       }
@@ -212,6 +220,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
                     processingRequestId === row.requestId && processingAction === 'approve'
                   }
                   onClick={() => {
+                    if (processingRequestId !== null) return;
                     void handleApprove(row.requestId);
                   }}
                   variant="solid"
@@ -222,6 +231,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
                   className="h-8 w-auto rounded-md px-3 text-xs"
                   isLoading={processingRequestId === row.requestId && processingAction === 'reject'}
                   onClick={() => {
+                    if (processingRequestId !== null) return;
                     void handleReject(row.requestId);
                   }}
                   variant="destructive"

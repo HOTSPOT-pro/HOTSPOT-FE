@@ -1,7 +1,9 @@
-import { FamilyInquiryPage } from '@/pages-layer/family-inquiry/FamilyInquiryPage';
+'use client';
+
+import { FamiliesPage } from '@/pages-layer/families';
 
 const Page = () => {
-  return <FamilyInquiryPage />;
+  return <FamiliesPage />;
 };
 
 export default Page;

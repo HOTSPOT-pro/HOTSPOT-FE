@@ -29,6 +29,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@hello-pangea/dnd':
+        specifier: ^18.0.1
+        version: 18.0.1(@types/react@19.2.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@hotspot/ui':
         specifier: workspace:*
         version: link:../../packages/ui
