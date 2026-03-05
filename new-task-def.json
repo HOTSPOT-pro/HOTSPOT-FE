@@ -1,0 +1,42 @@
+{
+  "containerDefinitions": [
+    {
+      "command": [],
+      "cpu": 0,
+      "credentialSpecs": [],
+      "dnsSearchDomains": [],
+      "dnsServers": [],
+      "dockerLabels": {},
+      "dockerSecurityOptions": [],
+      "entryPoint": [],
+      "environment": [],
+      "environmentFiles": [],
+      "essential": true,
+      "extraHosts": [],
+      "image": "121834501390.dkr.ecr.ap-northeast-2.amazonaws.com/hotspot-front-user:test",
+      "links": [],
+      "mountPoints": [],
+      "name": "FrontWebContainer",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "secrets": [],
+      "systemControls": [],
+      "ulimits": [],
+      "volumesFrom": []
+    }
+  ],
+  "cpu": "512",
+  "executionRoleArn": "arn:aws:iam::121834501390:role/FrontWebServiceStack-FrontWebExecutionRoleDF8B8D23-WCKTqNH0oOvi",
+  "family": "FrontWebServiceStackFrontWebTaskDef503A9E92",
+  "memory": "1024",
+  "networkMode": "awsvpc",
+  "placementConstraints": [],
+  "requiresCompatibilities": ["FARGATE"],
+  "taskRoleArn": "arn:aws:iam::121834501390:role/FrontWebServiceStack-FrontWebTaskDefTaskRole48F47D3-gIVY70AOTs6c",
+  "volumes": []
+}
