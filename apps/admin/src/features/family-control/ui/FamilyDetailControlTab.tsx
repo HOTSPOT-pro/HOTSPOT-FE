@@ -12,7 +12,7 @@ export const FamilyDetailControlTab = () => {
   return (
     <div className="flex flex-col gap-5">
       <FamilyOrderSection familyControlData={familyControlData} familyId={familyId} />
-      <FamilyControlSection familyControlData={familyControlData} />
+      <FamilyControlSection familyControlData={familyControlData} familyId={familyId} />
     </div>
   );
 };
