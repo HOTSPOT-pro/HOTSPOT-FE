@@ -57,15 +57,21 @@ jobs:
           IMAGE_TAG=${{ github.sha }}
           IMAGE_URI=121834501390.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:$IMAGE_TAG
 
-          jq --arg IMAGE "$IMAGE_URI" \
-            '.containerDefinitions[0].image = $IMAGE
-             | del(.taskDefinitionArn)
-             | del(.revision)
-             | del(.status)
-             | del(.requiresAttributes)
-             | del(.compatibilities)
-             | del(.registeredAt)
-             | del(.registeredBy)' \
+          jq --arg IMAGE "$IMAGE_URI" --arg NAME "$CONTAINER_NAME" \
+            '.containerDefinitions |= map(
+                if .name == $NAME then
+                  .image = $IMAGE
+                else
+                  .
+                end
+              )
+            | del(.taskDefinitionArn)
+            | del(.revision)
+            | del(.status)
+            | del(.requiresAttributes)
+            | del(.compatibilities)
+            | del(.registeredAt)
+            | del(.registeredBy)' \
             task-def.json > new-task-def.json
 
       - name: Register New Revision
