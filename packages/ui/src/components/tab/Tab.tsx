@@ -41,7 +41,7 @@ export const Tab = <T extends string>({
       className={cn(
         'flex w-full',
         variant === 'underline' && 'shadow-[inset_0_-1px_0_0_#EFEFEF]',
-        variant === 'segment' && 'p-1 rounded-xl gap-2',
+        variant === 'segment' && 'rounded-[8px] gap-2 px-4 py-2',
         className,
       )}
       role="tablist"
