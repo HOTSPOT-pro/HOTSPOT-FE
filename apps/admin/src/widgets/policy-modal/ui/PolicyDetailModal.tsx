@@ -1,8 +1,13 @@
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
 import { useState } from 'react';
-import { BlockAddList, type BlockApply } from '@/features/family-policy/blocked-list';
-import { useMemberPolicy } from '@/features/family-policy/member-info/model/useMemberPolicy';
-import { PolicyAddList, type PolicyApply } from '@/features/family-policy/policy-list';
+import type { FamilyPolicy } from '@/features/families/model/types';
+import {
+  BlockAddList,
+  PolicyAddList,
+  type PolicyApply,
+  useApplyBlock,
+  useApplyPolicy,
+} from '@/features/family-policy/policy-apply';
 import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
@@ -13,67 +18,50 @@ const TABS: TabItem<PolicyModalTabValue>[] = [
 
 interface PolicyDetailModalProps {
   familyId: number;
-  subId: number;
+  member: FamilyPolicy;
   [key: string]: unknown;
 }
-
-type TotalDraft = Partial<PolicyApply & BlockApply>;
 
 export const PolicyDetailModal = ({ close }: { close: () => void }) => {
   const { getProps } = useModal();
   const props = getProps<PolicyDetailModalProps>();
   const [activeTab, setActiveTab] = useState<PolicyModalTabValue>('POLICY');
 
-  const [draft, setDraft] = useState<TotalDraft>({});
-  const handleUpdate = (updates: TotalDraft) => {
-    setDraft((prev) => ({ ...prev, ...updates }));
-  };
-
-  const { userData, isLoading } = useMemberPolicy({
-    familyId: props?.familyId as number,
-    subId: props?.subId as number,
-  });
+  const [draft, setDraft] = useState<{
+    policyIds?: PolicyApply[];
+    blockIds?: PolicyApply[];
+  }>({});
 
   // policy
-  // const { updatePolicy } = useApplyPolicy({
-  //   familyId: props?.familyId as number,
-  //   subId: props?.user.subId as number,
-  // });
+  const { updatePolicy } = useApplyPolicy({
+    familyId: props?.familyId as number,
+    subId: props?.member.subId as number,
+  });
 
   // block
-  // const { updateBlock } = useApplyBlock({
-  //   familyId: props?.familyId as number,
-  //   subId: props?.user.subId as number,
-  // });
+  const { updateBlock } = useApplyBlock({
+    familyId: props?.familyId as number,
+    subId: props?.member.subId as number,
+  });
 
   const handleSave = async () => {
-    // if (!(props && datalimit)) return;
-    // const promises: Promise<unknown>[] = [];
-    // if (draft.blockPolicyIdList) {
-    //   const policyPayload: PolicyApply = {
-    //     blockPolicyIdList: draft.blockPolicyIdList,
-    //   };
-    //   promises.push(updatePolicy.mutateAsync(policyPayload));
-    // }
-    // if (draft.blockedServiceIdList) {
-    //   const blockPayload: BlockApply = {
-    //     blockedServiceIdList: draft.blockedServiceIdList,
-    //   };
-    //   promises.push(updateBlock.mutateAsync(blockPayload));
-    // }
-    // try {
-    //   await Promise.all(promises);
-    //   close();
-    // } catch (error) {
-    //   console.error('일부 업데이트 실패:', error);
-    // }
+    const promises: Promise<unknown>[] = [];
+    if (draft.policyIds) {
+      promises.push(updatePolicy.mutateAsync(draft.policyIds));
+    }
+    if (draft.blockIds) {
+      promises.push(updateBlock.mutateAsync(draft.blockIds));
+    }
+
+    try {
+      await Promise.all(promises);
+      close();
+    } catch (error) {
+      console.error('업데이트 실패:', error);
+    }
   };
 
-  if (!userData) {
-    return <Modal.Content>데이터를 불러올 수 없습니다.</Modal.Content>;
-  }
-
-  if (isLoading) return <Modal.Content>데이터를 불러오는 중입니다.</Modal.Content>;
+  if (!(props?.familyId && props?.member)) return <>Error 발생</>;
 
   return (
     <div>
@@ -82,7 +70,7 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
           <Modal.Title>
             <div className="flex items-center gap-1">
               <UserProfileIcon type={'MAIN'} />
-              {userData?.memberName}
+              {props.member.memberName}
             </div>
           </Modal.Title>
         </Modal.Header>
@@ -95,16 +83,18 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
           />
           {activeTab === 'POLICY' && (
             <PolicyAddList
-              data={userData?.appliedTimePolicies ?? []}
-              draft={draft}
-              onUpdate={(ids) => handleUpdate({ blockPolicyIdList: ids })}
+              draft={draft.policyIds}
+              familyId={props.familyId}
+              onUpdate={(items) => setDraft((prev) => ({ ...prev, policyIds: items }))}
+              subId={props.member.subId}
             />
           )}
           {activeTab === 'BLOCK' && (
             <BlockAddList
-              data={userData?.appliedBlockedServicePolicies ?? []}
-              draft={draft}
-              onUpdate={handleUpdate}
+              draft={draft.blockIds}
+              familyId={props.familyId}
+              onUpdate={(items) => setDraft((prev) => ({ ...prev, blockIds: items }))}
+              subId={props.member.subId}
             />
           )}
         </Modal.Content>

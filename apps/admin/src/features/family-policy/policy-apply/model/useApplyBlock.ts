@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { patchBlockApplyClientApi } from '../api/putBlockApplyClientApi';
-import type { BlockApply } from './types';
+import { patchBlockApplyClientApi } from '../api/patchBlockApplyClientApi';
+import type { PolicyApply } from './types';
 
 interface useApplyPolicyParams {
   subId: number;
@@ -10,10 +10,10 @@ interface useApplyPolicyParams {
 export const useApplyBlock = ({ subId, familyId }: useApplyPolicyParams) => {
   const queryClient = useQueryClient();
   const updateBlock = useMutation({
-    mutationFn: (updates: BlockApply) => {
+    mutationFn: (updates: PolicyApply[]) => {
       return patchBlockApplyClientApi({
-        blockServiceIdList: updates.blockedServiceIdList,
         familyId,
+        policies: updates,
         subId,
       });
     },
@@ -22,8 +22,12 @@ export const useApplyBlock = ({ subId, familyId }: useApplyPolicyParams) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['policyPerFamily'],
-        refetchType: 'all',
+        queryKey: ['adminMemberBlock', { familyId, subId }],
+        refetchType: 'active',
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['adminFamilyDatailPolicy', familyId],
+        refetchType: 'active',
       });
     },
   });

@@ -4,7 +4,7 @@ import type { GetMemberPolicyRequest, MemberPolicy } from '../model/types';
 
 export const getMemberPolicyClient = async ({ familyId, subId }: GetMemberPolicyRequest) => {
   const { data } = await api.get<ApiResponse<MemberPolicy>>(
-    `api/v1/admin/families/${familyId}/members/${subId}/policy-status`,
+    `api/v1/admin/families/${familyId}/members/${subId}/policy-status/time`,
   );
   return data.data;
 };

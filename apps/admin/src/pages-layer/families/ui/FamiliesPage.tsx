@@ -20,7 +20,7 @@ export const FamiliesPage = () => {
   const tableData =
     familyData?.familyList.map((item) => ({
       ...item,
-      id: item.familyId,
+      id: `가족 리스트 ${item.familyId}`,
     })) ?? [];
 
   const totalCount = familyData?.totalElements ?? 0;
@@ -48,7 +48,7 @@ export const FamiliesPage = () => {
   ];
 
   return (
-    <div className="p-8 w-full">
+    <div className="p-4 w-full">
       <div className="p-4 bg-white rounded-xl shadow-xs mb-6">
         <SearchBar />
       </div>

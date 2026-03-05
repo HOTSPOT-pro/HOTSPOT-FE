@@ -12,7 +12,7 @@ export interface DynamicTableProps<T> {
   isLoading?: boolean;
 }
 
-export const Table = <T extends { id: string | number }>({
+export const Table = <T extends { id: string }>({
   columns,
   data,
   isLoading,

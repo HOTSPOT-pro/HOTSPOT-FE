@@ -2,8 +2,11 @@
 import { Tab, type TabItem } from '@hotspot/ui';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import { useFamilyDetail } from '@/features/families';
-import { FamilyDetailPolicyTab } from '@/features/families/ui/FamilyDetailPolicyTab';
+import {
+  FamilyDetailControlTab,
+  FamilyDetailPolicyTab,
+  useFamilyDetail,
+} from '@/features/families';
 
 type FamilyDetailTabValue = 'STATE' | 'POLICY' | 'CONTROL';
 const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [
@@ -19,7 +22,7 @@ export const FamiliesDetailPage = () => {
   const [activeTab, setActiveTab] = useState<FamilyDetailTabValue>('STATE');
 
   return (
-    <div className="p-8 flex flex-col gap-5">
+    <div className="p-4 flex flex-col gap-5">
       <div className="p-4 bg-white rounded-xl shadow-xs">
         <div className="flex flex-row gap-2.5">
           <h1 className="text-[19px] font-bold">{familyData?.representativeName} 가족</h1>
@@ -42,7 +45,7 @@ export const FamiliesDetailPage = () => {
       <main className="w-full">
         {activeTab === 'STATE' && <div>실시간 상태</div>}
         {activeTab === 'POLICY' && <FamilyDetailPolicyTab />}
-        {activeTab === 'CONTROL' && <div>제어 기능</div>}
+        {activeTab === 'CONTROL' && <FamilyDetailControlTab />}
       </main>
     </div>
   );

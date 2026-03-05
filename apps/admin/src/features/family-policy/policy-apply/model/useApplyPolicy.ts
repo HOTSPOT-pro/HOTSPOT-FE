@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { putPolicyApplyClientApi } from '../api/putPolicyApplyClientApi';
+import { patchPolicyApplyClientApi } from '../api/patchPolicyApplyClientApi';
 import type { PolicyApply } from './types';
 
 interface useApplyPolicyParams {
@@ -10,19 +10,23 @@ interface useApplyPolicyParams {
 export const useApplyPolicy = ({ subId, familyId }: useApplyPolicyParams) => {
   const queryClient = useQueryClient();
   const updatePolicy = useMutation({
-    mutationFn: (updates: PolicyApply) =>
-      putPolicyApplyClientApi({
+    mutationFn: (updates: PolicyApply[]) =>
+      patchPolicyApplyClientApi({
         familyId,
+        policies: updates,
         subId,
-        ...updates,
       }),
     onError: (error) => {
       console.error('적용 정책 수정 실패:', error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['policyPerFamily'],
-        refetchType: 'all',
+        queryKey: ['adminMemberPolicy', { familyId, subId }],
+        refetchType: 'active',
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['adminFamilyDatailPolicy', familyId],
+        refetchType: 'active',
       });
     },
   });

@@ -3,6 +3,7 @@ import { useModal } from '@hotspot/ui';
 import RightArrowIcon from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { useParams } from 'next/navigation';
 import { useCallback } from 'react';
+import type { FamilyPolicy } from '@/features/families/model/types';
 import { useFamilyDetailPolicy } from '../model/useFamilyDetailPolicy';
 
 export const FamilyDetailPolicyTab = () => {
@@ -12,11 +13,11 @@ export const FamilyDetailPolicyTab = () => {
   const { open } = useModal();
 
   const handleOpenModal = useCallback(
-    (subId: number) => {
+    (member: FamilyPolicy) => {
       open('policyDetailModal', {
         props: {
-          familyId: familyId,
-          subId: subId,
+          familyId,
+          member,
         },
       });
     },
@@ -32,7 +33,7 @@ export const FamilyDetailPolicyTab = () => {
         <div className="px-4 py-3.5 rounded-xl border border-gray-200" key={member.subId}>
           <span className="flex flex-row justify-between">
             {member.memberName}
-            <button onClick={() => handleOpenModal(member.subId)} type="button">
+            <button onClick={() => handleOpenModal(member)} type="button">
               <RightArrowIcon className="w-6 h-6 text-black" />
             </button>
           </span>

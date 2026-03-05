@@ -8,6 +8,12 @@ export interface MemberPolicy {
   familyRole: string;
   blocked: boolean;
   appliedTimePolicies: PolicyItem[];
+}
+export interface MemberBlock {
+  memberName: string;
+  phoneNumber: string;
+  familyRole: string;
+  blocked: boolean;
   appliedBlockedServicePolicies: BlockItem[];
 }
 export interface PolicyItem {

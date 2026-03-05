@@ -21,7 +21,7 @@ export const usePolicy = (params: GetPolicyRequest) => {
 export const useBlocked = (params: GetPolicyRequest) => {
   const { data, isPending } = useQuery<GetPolicyResponse, Error, Policy[]>({
     queryFn: () => getBlockedClient(params),
-    queryKey: ['adminPolicy'],
+    queryKey: ['adminBlock'],
     select: (data: GetPolicyResponse): Policy[] => {
       return data.items;
     },
