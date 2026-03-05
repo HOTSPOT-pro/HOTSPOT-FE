@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react';
 import { useBlocked } from '@/entities/policy/model/usePolicy';
 import { type Column, Pagination, Table } from '@/shared';
 import { useUpdatePolicyActive } from '../model/useActivePolicy';
+import { useDeletePolicy } from '../model/useDeletePolicy';
 
 export const BlockPolicyTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,6 +24,7 @@ export const BlockPolicyTable = () => {
   }, [open]);
 
   const { updatePolicyActive } = useUpdatePolicyActive();
+  const { deletePolicy } = useDeletePolicy();
 
   const tableData =
     blockedList?.items.map((item) => ({
@@ -61,7 +63,7 @@ export const BlockPolicyTable = () => {
       render: (_val, row) => (
         <button
           className="flex items-center px-3 py-2 gap-2 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
-          onClick={() => console.log(`${row.policyId} 정책 삭제`)}
+          onClick={() => deletePolicy({ policyId: row.policyId, policyType: 'APP' })}
           type="button"
         >
           <ArrowIcon className="rotate-90 w-4 h-4" />

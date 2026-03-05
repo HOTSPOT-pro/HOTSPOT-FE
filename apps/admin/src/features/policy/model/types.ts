@@ -21,3 +21,8 @@ export interface PostTimePolicyRequest {
   };
 }
 export type DAYS = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+
+export interface DeletePolicyRequest {
+  policyType: 'TIME' | 'APP';
+  policyId: number;
+}
