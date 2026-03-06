@@ -5,7 +5,7 @@ export const ROUTES = {
   LOGIN: '/login',
   ME_POLICY: '/me/policy',
   MY_PAGE: '/me',
-  MY_STATUS: '/gift',
+  MY_STATUS: '/my-usage',
   NOTIFICATION: '/notification',
   NOTIFICATION_SETTINGS: '/notification/settings',
   REPORT: '/report',
