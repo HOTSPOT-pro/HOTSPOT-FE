@@ -7,6 +7,7 @@ interface SliderProps {
   minNum: number;
   maxNum: number;
   step?: number;
+  value?: number;
   initialValue?: number;
   onChange?: (value: number) => void;
   className?: string;
@@ -16,24 +17,30 @@ export const Slider = ({
   minNum,
   maxNum,
   step = 5,
+  value,
   initialValue = minNum,
   onChange,
   className,
 }: SliderProps) => {
-  const [value, setValue] = useState(initialValue);
+  const startValue = value ?? initialValue ?? minNum;
+  const [internalValue, setInternalValue] = useState(startValue);
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    if (value !== undefined) {
+      setInternalValue(value);
+    }
+  }, [value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
-    setValue(newValue);
+    if (value === undefined) {
+      setInternalValue(newValue);
+    }
     onChange?.(newValue);
   };
 
-  const PERCENT_MAX = 100;
-  const percentage = ((value - minNum) / (maxNum - minNum)) * PERCENT_MAX;
+  const displayValue = value ?? internalValue;
+  const percentage = ((displayValue - minNum) / (maxNum - minNum)) * 100;
 
   return (
     <div className={cn('w-full py-4', className)}>

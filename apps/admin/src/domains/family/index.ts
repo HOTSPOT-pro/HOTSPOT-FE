@@ -1,4 +1,5 @@
 export type {
+  FAMILY_ROLE,
   FamilyDetail,
   FamilyItem,
   FamilyList,

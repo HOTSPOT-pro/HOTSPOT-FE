@@ -28,11 +28,7 @@ export const useFamilyOrder = ({ familyId }: UseUpdateFamilyPriorityParams) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['adminFamilyDetailPolicy', familyId],
-        refetchType: 'active',
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['adminMemberControl', familyId],
+        queryKey: ['adminFamilyDatailControl', familyId],
         refetchType: 'active',
       });
     },

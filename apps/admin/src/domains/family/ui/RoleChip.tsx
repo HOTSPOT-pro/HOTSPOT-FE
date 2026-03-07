@@ -6,7 +6,7 @@ interface RoleChipProps {
 }
 
 const OWNDER_STYLE = 'border-sky-300 text-sky-600';
-const PARENT_STYLE = 'border-purple-300 border-purple-600';
+const PARENT_STYLE = 'border-purple-300 text-purple-600';
 const CHILD_STYLE = 'border-lime-300 text-lime-600';
 
 export const RoleChip = ({ role }: RoleChipProps) => {
