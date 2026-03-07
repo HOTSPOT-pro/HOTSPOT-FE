@@ -1,6 +1,6 @@
 'use client';
 import type React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '../../lib/cssMerge';
 
 interface SliderProps {
@@ -21,6 +21,10 @@ export const Slider = ({
   className,
 }: SliderProps) => {
   const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
