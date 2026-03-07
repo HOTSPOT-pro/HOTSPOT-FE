@@ -50,7 +50,21 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
   const endTime = watch('endTime');
   const duration = watch('duration');
 
-  // 1. 조건부 저장 로직 (onSubmit)
+  const handleDurationChange = (val: string) => {
+    setValue('duration', val);
+    if (val.trim() !== '') {
+      setValue('startTime', '');
+      setValue('endTime', '');
+    }
+  };
+  const handleTimeChange = (field: 'startTime' | 'endTime', val: string) => {
+    setValue(field, val);
+    if (val !== '') {
+      setValue('duration', '');
+    }
+  };
+
+  // 조건부 저장 로직 (onSubmit)
   const onSave = (data: PolicyFormValues) => {
     const snapshot: any = {};
 
@@ -59,9 +73,9 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
       snapshot.startTime = data.startTime;
       snapshot.endTime = data.endTime;
     } else {
-      const numDuration = Number(data.duration);
-      if (numDuration > 0) snapshot.durationMinutes = numDuration;
-      if (data.startTime && data.endTime) {
+      if (data.duration) {
+        snapshot.durationMinutes = Number(data.duration);
+      } else if (data.startTime && data.endTime) {
         snapshot.startTime = data.startTime;
         snapshot.endTime = data.endTime;
       }
@@ -78,16 +92,13 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
     );
   };
 
-  // 2. 전체 폼 유효성 수동 체크 (Zod의 refine 대신 사용)
+  // 전체 폼 유효성 체크
   const isFormValid = () => {
-    if (!watch('name')) return false;
-    if (!watch('description')) return false;
+    if (!(watch('name') && watch('description'))) return false;
 
     if (currentType === 'SCHEDULED') {
       return selectedDays.length > 0 && Boolean(startTime) && Boolean(endTime);
     }
-
-    // ONCE인 경우: 기간이 있거나, 시간 범위가 있거나 둘 중 하나는 필수
     const hasDuration = Number(duration) > 0;
     const hasTimeRange = Boolean(startTime) && Boolean(endTime);
     return hasDuration || hasTimeRange;
@@ -187,32 +198,51 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
               placeholder="예: 60"
               type="number"
               {...register('duration')}
+              onChange={(e) => handleDurationChange(e.target.value)}
+              value={duration}
             />
+
             <div className="flex items-center gap-3 py-1">
               <div className="h-px bg-gray-200 flex-1" />
               <span className="text-[10px] text-gray-400 font-bold">OR</span>
               <div className="h-px bg-gray-200 flex-1" />
             </div>
+
             <div className="grid grid-cols-2 gap-4">
-              <Input id="startTime" label="시작 시간" type="time" {...register('startTime')} />
-              <Input id="endTime" label="종료 시간" type="time" {...register('endTime')} />
+              <Input
+                id="startTime"
+                label="시작 시간"
+                type="time"
+                {...register('startTime')}
+                onChange={(e) => handleTimeChange('startTime', e.target.value)}
+                value={startTime}
+              />
+              <Input
+                id="endTime"
+                label="종료 시간"
+                type="time"
+                {...register('endTime')}
+                onChange={(e) => handleTimeChange('endTime', e.target.value)}
+                value={endTime}
+              />
             </div>
+            {/* 안내 문구 추가 (선택) */}
+            <p className="text-[11px] text-gray-400 mt-1">
+              * 차단 기간과 시작/종료 시간 둘 중 하나만 입력 가능합니다.
+            </p>
           </div>
         )}
       </Modal.Content>
 
-      <Modal.Footer className="flex gap-2">
-        <Button className="flex-1" onClick={close} variant="ghost">
+      <Modal.Footer className="flex gap-2 flex-row">
+        <Button onClick={close} variant="ghost">
           취소
         </Button>
         <Button
-          className="flex-1"
           disabled={isPending || !isFormValid()}
           isLoading={isPending}
           onClick={handleSubmit(onSave)}
-        >
-          정책 저장
-        </Button>
+        ></Button>
       </Modal.Footer>
     </Modal>
   );
