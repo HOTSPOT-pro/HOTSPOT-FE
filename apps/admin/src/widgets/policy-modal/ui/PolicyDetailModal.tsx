@@ -70,7 +70,10 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
           <Modal.Title>
             <div className="flex items-center gap-1">
               <UserProfileIcon type={'MAIN'} />
-              {props.member.memberName}
+              <div className="flex flex-col">
+                {props.member.memberName}
+                <p className="text-gray-600 text-[12px] font-normal">{props.member.phoneNumber}</p>
+              </div>
             </div>
           </Modal.Title>
         </Modal.Header>

@@ -1,0 +1,53 @@
+import RightArrowIcon from '@hotspot/ui/assets/icons/arrow-right.svg';
+import { BlockedStateChip, type FamilyPolicy, RoleChip } from '@/domains/family';
+import { PolicyChip } from './PolicyChip';
+
+interface FamilyPolicyCardProps {
+  member: FamilyPolicy;
+  handleOpenModal: (member: FamilyPolicy) => void;
+}
+
+const POLICY_LABEL = 'text-[13px] font-normal text-black';
+
+export const FamilyPolicyCard = ({ member, handleOpenModal }: FamilyPolicyCardProps) => {
+  return (
+    <div
+      className="px-4 py-3.5 rounded-xl border border-gray-200 gap-1 flex flex-col"
+      key={member.subId}
+    >
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-3 items-center">
+          <span className="text-[14px] font-bold">{member.memberName}</span>
+          <RoleChip role={member.familyRole} />
+          <BlockedStateChip isBlocked={member.blocked} />
+        </div>
+
+        <button onClick={() => handleOpenModal(member)} type="button">
+          <RightArrowIcon className="w-6 h-6 text-black" />
+        </button>
+      </div>
+
+      {member.appliedTimePolicies.length !== 0 && (
+        <>
+          <p className={POLICY_LABEL}>적용된 시간대별 정책</p>
+          <div className="flex flex-row gap-2">
+            {member.appliedTimePolicies.map((i) => (
+              <PolicyChip key={i} name={i} />
+            ))}
+          </div>
+        </>
+      )}
+
+      {member.appliedBlockedServicePolicies.length !== 0 && (
+        <>
+          <p className={POLICY_LABEL}>적용된 차단 서비스 정책</p>
+          <div className="flex flex-row gap-2">
+            {member.appliedBlockedServicePolicies.map((i) => (
+              <PolicyChip key={i} name={i} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
