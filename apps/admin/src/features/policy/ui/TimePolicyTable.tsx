@@ -38,9 +38,17 @@ export const TimePolicyTable = () => {
   const columns: Column<(typeof tableData)[0]>[] = [
     { accessor: 'displayId', header: 'ID' },
     { accessor: 'policyName', header: '정책명' },
-    { accessor: 'policyDescription', header: '설명' },
     {
-      accessor: 'actions',
+      accessor: 'policyDescription',
+      header: '설명',
+      render: (value) => (
+        <div className="max-w-200 whitespace-normal break-all line-clamp-3" title={value}>
+          {value}
+        </div>
+      ),
+    },
+    {
+      accessor: 'active_actions',
       header: '활성',
       render: (_val, row) => (
         <Toggle
@@ -58,10 +66,11 @@ export const TimePolicyTable = () => {
     },
     { accessor: 'createdTime', header: '생성일' },
     {
-      accessor: 'actions',
+      accessor: 'delete_actions',
       header: '삭제',
       render: (_val, row) => (
         <button
+          aria-label={`정책 ${row.policyName} 삭제`}
           className="flex items-center px-3 py-2 gap-2 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
           onClick={() => deletePolicy({ policyId: row.policyId, policyType: 'TIME' })}
           type="button"
@@ -79,9 +88,7 @@ export const TimePolicyTable = () => {
           <TimeIcon className="w-6 h-6 text-purple-600" />
           시간대별 정책
         </p>
-        <Button className="w-30 h-10" onClick={handleOpenModal}>
-          추가
-        </Button>
+        <Button onClick={handleOpenModal}>추가</Button>
       </div>
 
       <Table columns={columns} data={tableData} isLoading={loading} />

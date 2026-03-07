@@ -1,8 +1,18 @@
 'use client';
 
 import { Button, Input, Modal } from '@hotspot/ui';
-import { useState } from 'react';
-import { type DAYS, type PostTimePolicyRequest, useCreateTimePolicy } from '@/features/policy';
+import { useForm } from 'react-hook-form';
+import { type DAYS, useCreateTimePolicy } from '@/features/policy';
+
+interface PolicyFormValues {
+  name: string;
+  description: string;
+  type: 'SCHEDULED' | 'ONCE';
+  selectedDays: DAYS[];
+  startTime: string;
+  endTime: string;
+  duration: string;
+}
 
 const DAY_OPTIONS: { label: string; value: DAYS }[] = [
   { label: '월', value: 'MON' },
@@ -17,59 +27,70 @@ const DAY_OPTIONS: { label: string; value: DAYS }[] = [
 export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
   const { mutate, isPending } = useCreateTimePolicy();
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [type, setType] = useState<'SCHEDULED' | 'ONCE'>('SCHEDULED');
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<PolicyFormValues>({
+    defaultValues: {
+      description: '',
+      duration: '',
+      name: '',
+      selectedDays: [],
+      type: 'SCHEDULED',
+    },
+    mode: 'onChange', // 실시간 버튼 활성화 체크를 위해 설정
+  });
 
-  const [selectedDays, setSelectedDays] = useState<DAYS[]>([]);
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [duration, setDuration] = useState<string>('');
+  const currentType = watch('type');
+  const selectedDays = watch('selectedDays');
+  const startTime = watch('startTime');
+  const endTime = watch('endTime');
+  const duration = watch('duration');
 
-  // 요일 선택/해제 토글 함수
-  const toggleDay = (day: DAYS) => {
-    setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day],
-    );
-  };
+  // 1. 조건부 저장 로직 (onSubmit)
+  const onSave = (data: PolicyFormValues) => {
+    const snapshot: any = {};
 
-  const handleSave = async () => {
-    const snapshot: PostTimePolicyRequest['policySnapshot'] = {};
-
-    if (type === 'SCHEDULED') {
-      if (selectedDays.length === 0 || !startTime || !endTime) {
-        return;
-      }
-      snapshot.days = selectedDays;
-      snapshot.startTime = startTime;
-      snapshot.endTime = endTime;
+    if (data.type === 'SCHEDULED') {
+      snapshot.days = data.selectedDays;
+      snapshot.startTime = data.startTime;
+      snapshot.endTime = data.endTime;
     } else {
-      const numDuration = Number(duration);
-      const hasDuration = numDuration > 0;
-      const hasTimeRange = startTime && endTime;
-
-      if (!(hasDuration || hasTimeRange)) {
-        return;
-      }
-
-      if (hasDuration) snapshot.durationMinutes = numDuration;
-      if (hasTimeRange) {
-        snapshot.startTime = startTime;
-        snapshot.endTime = endTime;
+      const numDuration = Number(data.duration);
+      if (numDuration > 0) snapshot.durationMinutes = numDuration;
+      if (data.startTime && data.endTime) {
+        snapshot.startTime = data.startTime;
+        snapshot.endTime = data.endTime;
       }
     }
 
     mutate(
       {
-        policyDescription: description,
-        policyName: name,
+        policyDescription: data.description,
+        policyName: data.name,
         policySnapshot: snapshot,
-        policyType: type,
+        policyType: data.type,
       },
-      {
-        onSuccess: () => close(),
-      },
+      { onSuccess: () => close() },
     );
+  };
+
+  // 2. 전체 폼 유효성 수동 체크 (Zod의 refine 대신 사용)
+  const isFormValid = () => {
+    if (!watch('name')) return false;
+    if (!watch('description')) return false;
+
+    if (currentType === 'SCHEDULED') {
+      return selectedDays.length > 0 && Boolean(startTime) && Boolean(endTime);
+    }
+
+    // ONCE인 경우: 기간이 있거나, 시간 범위가 있거나 둘 중 하나는 필수
+    const hasDuration = Number(duration) > 0;
+    const hasTimeRange = Boolean(startTime) && Boolean(endTime);
+    return hasDuration || hasTimeRange;
   };
 
   return (
@@ -77,19 +98,21 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
       <Modal.Header>
         <Modal.Title>시간대별 정책 생성</Modal.Title>
       </Modal.Header>
+
       <Modal.Content className="flex flex-col gap-5">
         <Input
-          id="policyName"
+          id="name"
           label="정책명"
-          onChange={(e) => setName(e.target.value)}
           placeholder="예: 취침 시간 차단"
-          value={name}
+          {...register('name', { required: '정책명은 필수입니다.' })}
+          error={errors.name?.message}
         />
         <Input
-          id="policyDescription"
+          id="description"
           label="설명"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
+          placeholder="예: 매일 지정한 수면 시간 동안 앱 사용을 제한해 규칙적인 생활을 돕는 정책입니다."
+          {...register('description', { required: '정책 설명은 필수입니다.' })}
+          error={errors.description?.message}
         />
 
         <div className="flex flex-col gap-2">
@@ -98,20 +121,22 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
             <Button
               className="flex-1"
               onClick={() => {
-                setType('SCHEDULED');
-                setDuration('');
+                setValue('type', 'SCHEDULED', { shouldValidate: true });
+                setValue('duration', '');
               }}
-              variant={type === 'SCHEDULED' ? 'solid' : 'outline'}
+              type="button"
+              variant={currentType === 'SCHEDULED' ? 'solid' : 'outline'}
             >
               반복 일정
             </Button>
             <Button
               className="flex-1"
               onClick={() => {
-                setType('ONCE');
-                setSelectedDays([]);
+                setValue('type', 'ONCE', { shouldValidate: true });
+                setValue('selectedDays', []);
               }}
-              variant={type === 'ONCE' ? 'solid' : 'outline'}
+              type="button"
+              variant={currentType === 'ONCE' ? 'solid' : 'outline'}
             >
               일회성
             </Button>
@@ -120,24 +145,27 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
 
         <hr className="border-gray-100" />
 
-        {type === 'SCHEDULED' ? (
+        {currentType === 'SCHEDULED' ? (
           <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded-xl">
             <div className="flex flex-col gap-3">
-              <p className="text-xs font-bold text-gray-500 uppercase">
-                반복 요일 선택 (중복 가능)
-              </p>
+              <p className="text-xs font-bold text-gray-500 uppercase">반복 요일 선택</p>
               <div className="flex flex-wrap gap-2">
                 {DAY_OPTIONS.map((day) => {
                   const isSelected = selectedDays.includes(day.value);
                   return (
                     <button
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                         isSelected
                           ? 'bg-purple-600 text-white shadow-md'
                           : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'
                       }`}
                       key={day.value}
-                      onClick={() => toggleDay(day.value)}
+                      onClick={() => {
+                        const next = isSelected
+                          ? selectedDays.filter((d) => d !== day.value)
+                          : [...selectedDays, day.value];
+                        setValue('selectedDays', next, { shouldValidate: true });
+                      }}
                       type="button"
                     >
                       {day.label}
@@ -147,31 +175,18 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-2">
-              <Input
-                id="startTime"
-                label="시작 시간"
-                onChange={(e) => setStartTime(e.target.value)}
-                type="time"
-                value={startTime}
-              />
-              <Input
-                id="endTime"
-                label="종료 시간"
-                onChange={(e) => setEndTime(e.target.value)}
-                type="time"
-                value={endTime}
-              />
+              <Input id="startTime" label="시작 시간" type="time" {...register('startTime')} />
+              <Input id="endTime" label="종료 시간" type="time" {...register('endTime')} />
             </div>
           </div>
         ) : (
           <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded-xl">
             <Input
-              id="blockDuration"
+              id="duration"
               label="차단 기간 (분)"
-              onChange={(e) => setDuration(e.target.value)}
               placeholder="예: 60"
               type="number"
-              value={duration}
+              {...register('duration')}
             />
             <div className="flex items-center gap-3 py-1">
               <div className="h-px bg-gray-200 flex-1" />
@@ -179,30 +194,24 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
               <div className="h-px bg-gray-200 flex-1" />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Input
-                id="startTime"
-                label="시작 시간"
-                onChange={(e) => setStartTime(e.target.value)}
-                type="time"
-                value={startTime}
-              />
-              <Input
-                id="endTime"
-                label="종료 시간"
-                onChange={(e) => setEndTime(e.target.value)}
-                type="time"
-                value={endTime}
-              />
+              <Input id="startTime" label="시작 시간" type="time" {...register('startTime')} />
+              <Input id="endTime" label="종료 시간" type="time" {...register('endTime')} />
             </div>
           </div>
         )}
       </Modal.Content>
+
       <Modal.Footer className="flex gap-2">
         <Button className="flex-1" onClick={close} variant="ghost">
           취소
         </Button>
-        <Button className="flex-1" disabled={isPending} onClick={handleSave}>
-          {isPending ? '저장 중...' : '정책 저장'}
+        <Button
+          className="flex-1"
+          disabled={isPending || !isFormValid()}
+          isLoading={isPending}
+          onClick={handleSubmit(onSave)}
+        >
+          정책 저장
         </Button>
       </Modal.Footer>
     </Modal>

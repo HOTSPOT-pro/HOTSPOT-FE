@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchActivePolicy } from '../api/patchActivePolicy';
-import type { PolicyActivateRequest } from '../model/types';
+import type { PolicyActivateRequest } from './types';
 
 export const useUpdatePolicyActive = () => {
   const queryClient = useQueryClient();

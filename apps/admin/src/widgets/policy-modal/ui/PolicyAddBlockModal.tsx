@@ -2,7 +2,7 @@
 
 import { Button, Input, Modal } from '@hotspot/ui';
 import { useState } from 'react';
-import { useCreateAppPolicy } from '@/features/policy'; // 해당 기능을 수행할 훅 (가칭)
+import { useCreateAppPolicy } from '@/features/policy';
 
 export const PolicyAddBlockModal = ({ close }: { close: () => void }) => {
   const { mutate, isPending } = useCreateAppPolicy();

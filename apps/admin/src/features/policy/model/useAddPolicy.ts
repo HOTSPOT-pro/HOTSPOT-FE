@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postAppPolicy } from '../api/postAppPolicy';
 import { postTimePolicy } from '../api/postTimePolicy';
-import type { PostAppPolicyRequest, PostTimePolicyRequest } from '../model/types';
+import type { PostAppPolicyRequest, PostTimePolicyRequest } from './types';
 
 export const useCreateTimePolicy = () => {
   const queryClient = useQueryClient();

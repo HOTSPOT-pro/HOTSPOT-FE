@@ -2,7 +2,7 @@
 
 import { Button, Toggle, useModal } from '@hotspot/ui';
 import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
-import TimeIcon from '@hotspot/ui/assets/icons/time.svg';
+import BlockIcon from '@hotspot/ui/assets/icons/close-circle.svg';
 import { useCallback, useState } from 'react';
 import { useBlocked } from '@/domains/policy';
 import { type Column, Pagination, Table } from '@/shared';
@@ -76,12 +76,10 @@ export const BlockPolicyTable = () => {
     <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden">
       <div className="flex justify-between p-6 pb-4 border-b border-gray-100">
         <p className="flex flex-row text-[16px] text-gray-500 font-medium">
-          <TimeIcon className="w-6 h-6 text-purple-600" />
+          <BlockIcon className="w-6 h-6 text-purple-600" />
           차단 서비스 정책
         </p>
-        <Button className="w-30 h-10" onClick={handleOpenModal}>
-          추가
-        </Button>
+        <Button onClick={handleOpenModal}>추가</Button>
       </div>
 
       <Table columns={columns} data={tableData} isLoading={loading} />
