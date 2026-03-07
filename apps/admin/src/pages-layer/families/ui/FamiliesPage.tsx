@@ -4,6 +4,7 @@ import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useFamilyList } from '@/domains/family';
+import { FamilySearch } from '@/features/families/ui/FamilySearch';
 import { type Column, Pagination, SearchBar, Table } from '@/shared';
 
 export const FamiliesPage = () => {
@@ -50,11 +51,11 @@ export const FamiliesPage = () => {
   return (
     <div className="p-4 w-full">
       <div className="p-4 bg-white rounded-xl shadow-xs mb-6">
-        <SearchBar />
+        <FamilySearch />
       </div>
 
-      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden">
-        <p className="p-6 pb-4 border-b border-gray-100 text-[16px] text-gray-500 font-medium">
+      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden px-5 min-w-full">
+        <p className="py-4 border-b border-gray-100 text-[16px] text-gray-500 font-medium">
           총 {totalCount}건
         </p>
 
