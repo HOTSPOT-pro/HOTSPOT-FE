@@ -9,12 +9,12 @@ interface PresentAmountProps {
 
 export const PresentAmount = ({ presentAmount, handleSelect }: PresentAmountProps) => {
   return (
-    <div className="p-5 gap-1 flex flex-col">
-      <p className="text-[13px] font-bold">선물할 데이터량</p>
-      <p className="text-[11px] text-gray-500">선물할 데이터량을 선택하세요.</p>
+    <div className="gap-1 flex flex-col">
+      <p className="text-[13px] font-bold">선물할 데이터 양</p>
+      <p className="text-[11px] text-gray-500">선물할 데이터 양을 선택하세요.</p>
       <div className="flex flex-row gap-4 items-center justify-center pt-3">
         <button
-          className="p-3 bg-gray-100 rounded-xl"
+          className="p-3 border bg-gray-50 border-gray-200 rounded-xl hover:bg-gray-100"
           onClick={() => {
             handleSelect(presentAmount - 1);
           }}
@@ -24,7 +24,7 @@ export const PresentAmount = ({ presentAmount, handleSelect }: PresentAmountProp
         </button>
         <p className="text-[23px] font-bold">{presentAmount.toFixed(1)}GB</p>
         <button
-          className="p-3 bg-gray-100 rounded-xl"
+          className="p-3 border bg-gray-50 border-gray-200 rounded-xl hover:bg-gray-100"
           onClick={() => {
             handleSelect(presentAmount + 1);
           }}
@@ -45,15 +45,15 @@ interface GiftAmountButtonsProps {
 
 export const GiftAmountButtons = ({ presentAmount, handleSelect }: GiftAmountButtonsProps) => {
   return (
-    <div className="flex w-full justify-center gap-2">
+    <div className="flex w-full justify-center gap-2 pt-3">
       {DATA_OPTIONS.map((amount) => {
         const isSelected = presentAmount === amount;
 
         return (
           <button
             className={`
-              px-4 py-2 rounded-full transition-all font-bold
-              ${isSelected ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-500'}
+              px-4 py-2 rounded-full transition-all font-medium border
+              ${isSelected ? 'bg-purple-600 text-white border-purple-600' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}
             `}
             key={amount}
             onClick={(e) => handleSelect(Number(e.currentTarget.value))}
