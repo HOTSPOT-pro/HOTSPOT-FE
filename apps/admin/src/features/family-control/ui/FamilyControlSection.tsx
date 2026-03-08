@@ -144,7 +144,6 @@ export const FamilyControlSection = ({
                   </div>
                   <div className="flex flex-row gap-6 items-center">
                     <Slider
-                      key={`${member.subId}-${member.dataLimitGb}`}
                       maxNum={100}
                       minNum={0}
                       onChange={(val) => handleUpdateField(member.subId, 'dataLimitGb', val)}
@@ -154,11 +153,17 @@ export const FamilyControlSection = ({
                     <Input
                       className="w-25"
                       disabled={!isCurrentEditing}
-                      id={'dataLimitGb'}
+                      id={`dataLimitGb-${member.subId}`}
                       label=""
-                      onChange={(e) =>
-                        handleUpdateField(member.subId, 'dataLimitGb', Number(e.target.value))
-                      }
+                      onChange={(e) => {
+                        const next = e.target.valueAsNumber;
+                        if (Number.isNaN(next)) return;
+                        handleUpdateField(
+                          member.subId,
+                          'dataLimitGb',
+                          Math.min(100, Math.max(0, next)),
+                        );
+                      }}
                       type="number"
                       value={member.dataLimitGb}
                     />

@@ -17,7 +17,7 @@ export const useFamilySearch = () => {
       ...data,
       familyList: data.familyList.map((item) => ({
         ...item,
-        id: `가족 리스트 ${item.familyId}`,
+        id: `${item.familyId}`,
       })),
     }),
     staleTime: STALE_TIME,

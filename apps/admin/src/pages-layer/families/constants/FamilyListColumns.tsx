@@ -18,6 +18,7 @@ export const familyColumns = (onDetail: (id: number) => void): Column<FamilyRow>
     header: '상세',
     render: (_, row) => (
       <button
+        aria-label={`${row.representativeName} 가족 상세 보기`}
         className="flex items-center px-3 py-2 gap-2 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
         onClick={() => onDetail(row.familyId)}
         type="button"

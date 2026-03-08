@@ -22,7 +22,11 @@ export const FamilyPolicyCard = ({ member, handleOpenModal }: FamilyPolicyCardPr
           <BlockedStateChip isBlocked={member.blocked} />
         </div>
 
-        <button onClick={() => handleOpenModal(member)} type="button">
+        <button
+          aria-label={`${member.memberName} 정책 상세 열기`}
+          onClick={() => handleOpenModal(member)}
+          type="button"
+        >
           <RightArrowIcon className="w-6 h-6 text-black" />
         </button>
       </div>

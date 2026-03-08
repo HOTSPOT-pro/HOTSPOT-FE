@@ -112,7 +112,15 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
           {isEditing && (
             <Button
               className="w-fit px-6"
-              onClick={() => setIsEditing(!isEditing)}
+              onClick={() => {
+                setSelectedType(familyControlData?.priorityType ?? 'FIFO');
+                setMembers(
+                  [...(familyControlData?.members ?? [])].sort(
+                    (a, b) => a.priorityOrder - b.priorityOrder,
+                  ),
+                );
+                setIsEditing(false);
+              }}
               variant="outline"
             >
               취소
@@ -149,6 +157,7 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
                         } ${!isEditing && 'opacity-90'}`}
                         style={provided.draggableProps.style}
                       >
+                        <MoreIcon className="w-6 h-6 text-gray-300 cursor-grab" />
                         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-purple-600 font-bold text-sm">
                           {index + 1}
                         </div>
@@ -160,25 +169,22 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
 
                         {isEditing && (
                           <div className="flex items-center gap-2">
-                            <div className="flex flex-col border-r border-gray-100 pr-2 mr-2">
-                              <button
-                                className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
-                                disabled={index === 0}
-                                onClick={() => moveStep(index, 'UP')}
-                                type="button"
-                              >
-                                <UpIcon className="w-4 h-4 text-gray-600" />
-                              </button>
-                              <button
-                                className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
-                                disabled={index === members.length - 1}
-                                onClick={() => moveStep(index, 'DOWN')}
-                                type="button"
-                              >
-                                <DownIcon className="w-4 h-4 text-gray-600" />
-                              </button>
-                            </div>
-                            <MoreIcon className="w-6 h-6 text-gray-300 cursor-grab" />
+                            <button
+                              className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
+                              disabled={index === 0}
+                              onClick={() => moveStep(index, 'UP')}
+                              type="button"
+                            >
+                              <UpIcon className="w-4 h-4 text-gray-600" />
+                            </button>
+                            <button
+                              className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
+                              disabled={index === members.length - 1}
+                              onClick={() => moveStep(index, 'DOWN')}
+                              type="button"
+                            >
+                              <DownIcon className="w-4 h-4 text-gray-600" />
+                            </button>
                           </div>
                         )}
                       </div>

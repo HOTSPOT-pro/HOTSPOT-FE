@@ -242,7 +242,9 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
           disabled={isPending || !isFormValid()}
           isLoading={isPending}
           onClick={handleSubmit(onSave)}
-        ></Button>
+        >
+          저장
+        </Button>
       </Modal.Footer>
     </Modal>
   );

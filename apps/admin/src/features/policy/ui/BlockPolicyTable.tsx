@@ -76,6 +76,7 @@ export const BlockPolicyTable = () => {
       header: '삭제',
       render: (_val, row) => (
         <button
+          aria-label={`정책 ${row.policyName} 삭제`}
           className="flex items-center px-3 py-2 gap-2 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
           onClick={() => deletePolicy({ policyId: row.policyId, policyType: 'APP' })}
           type="button"
