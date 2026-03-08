@@ -66,11 +66,11 @@ export const Slider = ({
           onChange={handleChange}
           step={step}
           type="range"
-          value={value}
+          value={displayValue}
         />
       </div>
       <div className="flex justify-between mt-2 text-sm font-medium text-gray-600">
-        <span>{value}GB</span>
+        <span>{displayValue}GB</span>
         <span className="text-gray-600">최대 {maxNum}GB</span>
       </div>
     </div>
