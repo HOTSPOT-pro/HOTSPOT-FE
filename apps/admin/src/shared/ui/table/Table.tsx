@@ -20,10 +20,10 @@ export const Table = <T extends { id: string }>({
   const renderBodyContent = () => {
     // 로딩 중일 때
     if (isLoading) {
-      return [...Array(10)].map((_, rowIndex) => (
+      return [...Array(5)].map((_, rowIndex) => (
         <tr className="border-b border-gray-50" key={`skeleton-row-${rowIndex}`}>
           {columns.map((_, colIndex) => (
-            <td className="px-6 py-5" key={`skeleton-col-${colIndex}`}>
+            <td className="p-4" key={`skeleton-col-${colIndex}`}>
               <div className="h-7 bg-gray-100 rounded-md animate-pulse w-full" />
             </td>
           ))}
@@ -51,7 +51,7 @@ export const Table = <T extends { id: string }>({
 
           return (
             <td
-              className="px-6 py-4 whitespace-nowrap text-black text-[14px] font-normal"
+              className="p-4 whitespace-nowrap text-black text-[14px] font-normal"
               key={`cell-${row.id}-${index}`}
             >
               {col.render ? col.render(cellValue, row) : cellValue}
@@ -63,14 +63,14 @@ export const Table = <T extends { id: string }>({
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0">
       <table className="w-full text-sm text-left border-collapse">
         {/* Header */}
         <thead className="text-xs text-gray-700 uppercase border-b border-gray-200">
           <tr>
             {columns.map((col, index) => (
               <th
-                className={`p-5 tracking-wider font-medium text-[15px] whitespace-nowrap`}
+                className={`p-4 tracking-wider font-medium text-[15px] whitespace-nowrap`}
                 key={`head-${index}`}
                 scope="col"
               >
