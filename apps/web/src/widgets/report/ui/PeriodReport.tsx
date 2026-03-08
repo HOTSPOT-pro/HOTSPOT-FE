@@ -21,7 +21,7 @@ export const PeriodReport = (range: ReportRange) => {
   if (!users) return <div>Loading...</div>;
 
   return (
-    <div className="mt-4">
+    <>
       {/* 구성원 선택 */}
       <UserSelector onSelect={setSelectedUser} selectedUser={selectedUser} users={users} />
 
@@ -65,6 +65,6 @@ export const PeriodReport = (range: ReportRange) => {
       ) : (
         <ServiceReport data={appUsageData} isTotal={selectedUser.subId === null} />
       )}
-    </div>
+    </>
   );
 };

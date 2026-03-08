@@ -19,11 +19,13 @@ export const ReportPage = () => {
       {/* 월일별 탭 버튼 */}
 
       <div className="px-5 py-4">
+        {selectedTab === 'DAY' && (
+          <DateNavigation
+            date={{ month: selectedDate.month, year: selectedDate.year }}
+            onChange={handleDateChange}
+          />
+        )}
         {/* 날짜 선택 바*/}
-        <DateNavigation
-          date={{ month: selectedDate.month, year: selectedDate.year }}
-          onChange={handleDateChange}
-        />
 
         <div className="py-2">
           <MonthDaySelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />

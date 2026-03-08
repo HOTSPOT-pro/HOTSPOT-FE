@@ -10,6 +10,14 @@ export const UserChip = memo(
   }: {
     user: T;
     isSelected: boolean;
-    onSelect: (user: T) => void;
-  }) => <Chip isSelected={isSelected} label={user.name || '전체'} onClick={() => onSelect(user)} />,
+    onSelect: (user: T | ReportUser) => void;
+  }) => (
+    <Chip
+      isSelected={isSelected}
+      label={user.name || '전체'}
+      onClick={() => {
+        user.name === '전체' ? onSelect({ name: null, subId: null }) : onSelect(user);
+      }}
+    />
+  ),
 );

@@ -7,7 +7,7 @@ import { UserChip } from './UserChip';
 interface UserSelectorProps<T extends ReportUser> {
   users: T[];
   selectedUser: T;
-  onSelect: (user: T) => void;
+  onSelect: (user: ReportUser) => void;
 }
 
 export const UserSelector = <T extends ReportUser>({
@@ -53,7 +53,7 @@ export const UserSelector = <T extends ReportUser>({
           <div className="shrink-0" key={user.subId ?? index}>
             <UserChip
               isSelected={selectedUser.subId === user.subId}
-              onSelect={() => onSelect(user)}
+              onSelect={onSelect}
               user={user}
             />
           </div>
