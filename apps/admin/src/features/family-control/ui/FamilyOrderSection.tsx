@@ -170,20 +170,22 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
                         {isEditing && (
                           <div className="flex items-center gap-2">
                             <button
+                              aria-label={`${member.memberName} 우선순위를 위로 이동`}
                               className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
                               disabled={index === 0}
                               onClick={() => moveStep(index, 'UP')}
                               type="button"
                             >
-                              <UpIcon className="w-4 h-4 text-gray-600" />
+                              <UpIcon aria-hidden="true" className="w-4 h-4 text-gray-600" />
                             </button>
                             <button
+                              aria-label={`${member.memberName} 우선순위를 아래로 이동`}
                               className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
                               disabled={index === members.length - 1}
                               onClick={() => moveStep(index, 'DOWN')}
                               type="button"
                             >
-                              <DownIcon className="w-4 h-4 text-gray-600" />
+                              <DownIcon aria-hidden="true" className="w-4 h-4 text-gray-600" />
                             </button>
                           </div>
                         )}

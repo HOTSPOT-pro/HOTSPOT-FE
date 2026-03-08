@@ -4,7 +4,7 @@ import { Button, Toggle, useModal } from '@hotspot/ui';
 import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
 import BlockIcon from '@hotspot/ui/assets/icons/close-circle.svg';
 import PlusIcon from '@hotspot/ui/assets/icons/plus.svg';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useBlocked } from '@/domains/policy';
 import { CategorySelect, type Column, Pagination, Table } from '@/shared';
 import { useUpdatePolicyActive } from '../model/useActivePolicy';
@@ -49,6 +49,12 @@ export const BlockPolicyTable = () => {
   const totalCount = blockedList?.totalElements ?? 0;
   const totalPages = Math.max(blockedList?.totalPages ?? 0, 1);
 
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
   const columns: Column<(typeof tableData)[0]>[] = [
     { accessor: 'displayId', header: 'ID' },
     { accessor: 'policyName', header: '정책명' },
@@ -59,6 +65,7 @@ export const BlockPolicyTable = () => {
       render: (_val, row) => (
         <Toggle
           checked={row.is_active}
+          disabled={updatePolicyActive.isPending}
           id={`차단 활성 ${row.policyId}`}
           onChange={() => {
             updatePolicyActive.mutate({
