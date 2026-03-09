@@ -2,7 +2,7 @@
 
 import { ErrorModal } from '@shared/ui';
 import type { ComponentType } from 'react';
-import { PresentConfirmModal } from '@/features/gift/presentData/ui/PresentConfirmModal';
+import { PresentConfirmModal } from '@/features/gift/present-data/ui/PresentConfirmModal';
 import { AddFamilyMemberModal } from '@/pages-layer/family/ui/modal/AddFamilyMemberModal';
 import { ChangeFamilyRoleModal } from '@/pages-layer/family/ui/modal/ChangeFamilyRoleModal';
 import { DeleteFamilyMemberModal } from '@/pages-layer/family/ui/modal/DeleteFamilyMemberModal';
