@@ -1,7 +1,5 @@
 import type { FamilyPriority } from '@entities/policy';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { useEffect } from 'react';
-import { usePriorityOrder } from '../model/usePriorityOrder';
 import { OrderItem } from './OrderItem';
 
 interface PolicyPriorityListProps {
@@ -9,23 +7,29 @@ interface PolicyPriorityListProps {
   isEditing: boolean;
 }
 
-export const PolicyPriorityList = ({ data, isEditing }: PolicyPriorityListProps) => {
-  const { members, handleDragEnd, moveStep, updatePriority } = usePriorityOrder(data);
+interface PolicyPriorityListProps {
+  isEditing: boolean;
+  members: any[];
+  onDragEnd: any;
+  onMove: any;
+}
 
-  useEffect(() => {
-    if (!isEditing) {
-      updatePriority.mutate();
-    }
-  }, [isEditing, updatePriority]);
-
+export const PolicyPriorityList = ({
+  isEditing,
+  members,
+  onDragEnd,
+  onMove,
+}: PolicyPriorityListProps) => {
   return (
-    <div className="w-full mx-auto bg-white">
-      <h3 className="text-base font-bold mb-3">우선순위 설정</h3>
-
-      <DragDropContext onDragEnd={(result) => handleDragEnd(result, isEditing)}>
+    <div className="w-full mx-auto">
+      <DragDropContext onDragEnd={(result) => onDragEnd(result, isEditing)}>
         <Droppable droppableId="member-list">
           {(provided) => (
-            <div {...provided.droppableProps} className="space-y-2" ref={provided.innerRef}>
+            <div
+              className="flex flex-col gap-2"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {members.map((member, index) => (
                 <OrderItem
                   index={index}
@@ -33,7 +37,7 @@ export const PolicyPriorityList = ({ data, isEditing }: PolicyPriorityListProps)
                   isLast={index === members.length - 1}
                   key={member.subId}
                   member={member}
-                  onMove={moveStep}
+                  onMove={onMove}
                 />
               ))}
               {provided.placeholder}

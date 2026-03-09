@@ -2,6 +2,7 @@ import type { FamilyPriority } from '@entities/policy';
 import { PolicyOrderSelector, PolicyPriorityList, useFifoOrder } from '@features/policy-order';
 import { Button } from '@hotspot/ui';
 import { useState } from 'react';
+import { usePriorityOrder } from '@/features/policy-order/model/usePriorityOrder';
 
 interface OrderSectionProps {
   data: FamilyPriority;
@@ -12,10 +13,13 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const { updateFifo } = useFifoOrder();
+  const { members, handleDragEnd, moveStep, updatePriority } = usePriorityOrder(data);
 
   const handleSave = () => {
     if (policy === 'FIFO') {
       updateFifo.mutate(data.familyId);
+    } else {
+      updatePriority.mutate();
     }
     setIsEditing(false);
   };
@@ -57,7 +61,7 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
 
       <PolicyOrderSelector
         isEditing={isEditing}
-        policy={policy} // 편집 모드일 때만 변경 가능하도록
+        policy={policy}
         setPolicy={(type) => isEditing && setPolicy(type)}
       />
 
@@ -69,7 +73,13 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
             </p>
           </div>
         ) : (
-          <PolicyPriorityList data={data} isEditing={isEditing} />
+          <PolicyPriorityList
+            data={data}
+            isEditing={isEditing}
+            members={members}
+            onDragEnd={handleDragEnd}
+            onMove={moveStep}
+          />
         )}
       </div>
     </div>
