@@ -17,7 +17,8 @@ export const transformMonthlyData = (
 
   return totalData.dataUsageMonths.map((item, index) => {
     const totalUsage = item.usageAmount;
-    const personalUsage = personalData?.dataUsageMonths[index]?.usageAmount ?? 0;
+    const personalUsage =
+      personalData?.dataUsageMonths.find((p) => p.usageMonth === item.usageMonth)?.usageAmount ?? 0;
 
     return {
       date: Number(item.usageMonth.split('-')[1]), // "2026-03" -> 3
@@ -45,9 +46,10 @@ export const transformDailyData = (
 
   if (!totalData) return [];
 
-  return totalData.dataUsageDays.map((item, index) => {
+  return totalData.dataUsageDays.map((item) => {
     const totalUsage = item.usageDayAmount;
-    const personalUsage = personalData?.dataUsageDays[index]?.usageDayAmount ?? 0;
+    const personalUsage =
+      personalData?.dataUsageDays.find((p) => p.usageDate === item.usageDate)?.usageDayAmount ?? 0;
 
     return {
       date: Number(item.usageDate.split('-')[2]),

@@ -19,13 +19,20 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
     unit,
   };
 
-  const { data, isLoading } = useAppUsageData({
+  const { data, isLoading, isError } = useAppUsageData({
     range,
     userId: user.subId,
     userName: user.name ?? undefined,
   });
 
   if (isLoading) return <div className="mt-8 p-10 text-center text-gray-400">Loading...</div>;
+  if (isError) {
+    return (
+      <div className="mt-8 p-10 bg-gray-50 rounded-2xl text-center text-gray-400">
+        앱 사용량을 불러오지 못했습니다.
+      </div>
+    );
+  }
 
   const usageList = data?.usage ?? [];
   const sortedData = [...usageList].sort((a, b) => b.usage - a.usage);
@@ -73,7 +80,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
                 <ProgressBar
                   color={index === 0 ? COLORS.TEXT_SECONDARY : COLORS.TEXT_SECONDARY}
                   label={`ServiceUsage-${item.appName}`}
-                  total={data?.total ?? 1} // 0으로 나누기 방지
+                  total={data?.total ?? 1}
                   value={item.usage}
                 />
               </div>

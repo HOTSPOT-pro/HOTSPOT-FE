@@ -1,7 +1,7 @@
 import type { FamilyPriority } from '@entities/policy';
 import { PolicyOrderSelector, PolicyPriorityList, useFifoOrder } from '@features/policy-order';
 import { Button } from '@hotspot/ui';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePriorityOrder } from '@/features/policy-order/model/usePriorityOrder';
 
 interface OrderSectionProps {
@@ -11,6 +11,12 @@ interface OrderSectionProps {
 export const OrderSection = ({ data }: OrderSectionProps) => {
   const [policy, setPolicy] = useState<'FIFO' | 'PRIORITY'>(data.priorityType);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setPolicy(data.priorityType);
+    }
+  }, [data.priorityType, isEditing]);
 
   const { updateFifo } = useFifoOrder();
   const { members, handleDragEnd, moveStep, updatePriority, reset } = usePriorityOrder(data);

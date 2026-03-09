@@ -3,7 +3,7 @@
 import LeftArrow from '@hotspot/ui/assets/icons/arrow-left.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { cn } from '@hotspot/ui/lib';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const MAX_MONTHS_LOOKBACK = 6;
 const FIRST_DAY_OF_MONTH = 1;
@@ -19,6 +19,10 @@ export const DayPicker = ({ selectedDate, onSelect }: DayPickerProps) => {
   const [viewDate, setViewDate] = useState(new Date(selectedDate));
   const viewYear = viewDate.getFullYear();
   const viewMonth = viewDate.getMonth();
+
+  useEffect(() => {
+    setViewDate(new Date(selectedDate));
+  }, [selectedDate]);
 
   const today = new Date();
   today.setHours(RESET_TIME, RESET_TIME, RESET_TIME, RESET_TIME);

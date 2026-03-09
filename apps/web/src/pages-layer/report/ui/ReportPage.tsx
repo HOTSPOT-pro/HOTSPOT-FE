@@ -15,7 +15,7 @@ export const ReportPage = () => {
     subId: null,
   });
 
-  const { data: users = [] } = useReportUsers();
+  const { data: users = [], isLoading: isUsersLoading, isError: isUsersError } = useReportUsers();
 
   useEffect(() => {
     const firstUser = users[0];
@@ -23,6 +23,22 @@ export const ReportPage = () => {
       setSelectedUser(firstUser);
     }
   }, [users, selectedUser.subId]);
+
+  if (isUsersLoading || selectedUser.subId === null) {
+    return (
+      <div className="flex h-full items-center justify-center text-gray-400">
+        구성원을 불러오는 중...
+      </div>
+    );
+  }
+
+  if (isUsersError) {
+    return (
+      <div className="flex h-full items-center justify-center text-gray-400">
+        구성원 정보를 불러오지 못했습니다.
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full h-full pb-8 px-2 gap-2">

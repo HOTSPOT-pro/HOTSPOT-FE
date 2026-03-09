@@ -21,11 +21,11 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
 
   const today = new Date();
   const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth() + 1;
+  const currentMonthIndex = today.getMonth();
 
   const minLimitDate = new Date(
     currentYear,
-    currentMonth - MAX_MONTHS_LOOKBACK,
+    currentMonthIndex - MAX_MONTHS_LOOKBACK,
     FIRST_DAY_OF_MONTH,
   );
   const minLimitYear = minLimitDate.getFullYear();
@@ -60,10 +60,10 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
           const isSelected = year === viewYear && month === m;
 
           const targetDate = new Date(viewYear, m - 1, FIRST_DAY_OF_MONTH);
-          const maxDate = new Date(currentYear, currentMonth - 1, FIRST_DAY_OF_MONTH);
+          const maxDate = new Date(currentYear, currentMonthIndex, FIRST_DAY_OF_MONTH);
           const minDate = new Date(
             currentYear,
-            currentMonth - MAX_MONTHS_LOOKBACK,
+            currentMonthIndex - MAX_MONTHS_LOOKBACK,
             FIRST_DAY_OF_MONTH,
           );
 

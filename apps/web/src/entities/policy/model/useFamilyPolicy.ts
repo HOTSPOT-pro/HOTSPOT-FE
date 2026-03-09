@@ -22,10 +22,8 @@ export const useFamilyPolicy = () => {
         memberPolicies: serverData.memberPolicies.map((member) => ({
           appBlockedServiceResponseList: member.appBlockedServiceResponseList,
           blockPolicyResponseList: member.blockPolicyResponseList,
-          dataLimit: member.dataLimit,
-
-          familyDataSubLimit: member.dataLimit,
-          familyDataUsage: 0,
+          familyDataSubLimit: member.familyDataSubLimit,
+          familyDataUsage: member.familyDataUsage,
           isBlocked: member.isBlocked,
           memberId: member.memberId,
           memberName: member.memberName,
@@ -39,7 +37,7 @@ export const useFamilyPolicy = () => {
       const priorityPerFamily: FamilyPriority = {
         familyId: serverData.familyId,
         memberPriorities: serverData.memberPolicies.map((member) => ({
-          limit: member.dataLimit,
+          limit: member.familyDataSubLimit,
           name: member.memberName,
           priority: member.priority,
           role: member.role,

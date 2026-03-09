@@ -21,7 +21,8 @@ export interface PolicyPerUser {
   memberId: number;
   memberName: string;
   subId: number;
-  dataLimit: number;
+  familyDataSubLimit: number;
+  familyDataUsage: number;
   priority: number;
   role: UserRole;
   isBlocked: boolean;
