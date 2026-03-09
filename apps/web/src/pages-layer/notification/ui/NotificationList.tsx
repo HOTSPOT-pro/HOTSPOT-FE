@@ -23,7 +23,7 @@ export const NotificationList = () => {
       </div>
     );
 
-  const list = notifications.data?.pages || [];
+  const list = notifications.data?.pages.flatMap((page) => page.notifications) || [];
 
   return (
     <div className="flex flex-col h-full mb-23">

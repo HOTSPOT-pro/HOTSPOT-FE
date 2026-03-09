@@ -8,10 +8,7 @@ import {
 import type { Notification } from '@/entities/notification';
 import { getNotificationClientApi } from '@/entities/notification/api/getNotificationClientApi';
 import { getUnreadCountClientApi } from '@/entities/notification/api/getUnreadCountClientApi';
-import type {
-  GetNofiticationRequest,
-  GetNotificationResponse,
-} from '@/entities/notification/api/types';
+import type { GetNotificationResponse } from '@/entities/notification/api/types';
 import {
   readAllNotificationClientApi,
   readNotificationClientApi,
@@ -35,8 +32,9 @@ export const useNotification = () => {
     queryKey: ['notifications'],
     select: (data) => ({
       pageParams: data.pageParams,
-      pages: data.pages.flatMap((page) =>
-        page.notifications.map(
+      pages: data.pages.map((page) => ({
+        ...page,
+        notifications: page.notifications.map(
           (item): Notification => ({
             createdAt: item.createdTime,
             eventId: item.eventId,
@@ -47,7 +45,7 @@ export const useNotification = () => {
             type: item.notificationType,
           }),
         ),
-      ),
+      })),
     }),
     staleTime: STALE_TIME,
   });

@@ -2,6 +2,10 @@
  * Date 객체나 ISO 문자열을 'YYYY-MM-DD' 형식으로 변환합니다.
  */
 export const formatDate = (date: Date | string | number): string => {
+  if (typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return date;
+  }
+
   const d = new Date(date);
 
   // 유효하지 않은 날짜인 경우 빈 문자열 반환
