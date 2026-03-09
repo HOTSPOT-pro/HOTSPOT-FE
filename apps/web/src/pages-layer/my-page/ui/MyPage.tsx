@@ -14,7 +14,7 @@ export const MyPage = ({ userInfo }: { userInfo: MyPageUserInfo | null }) => {
     <section className="flex flex-col h-full w-full bg-white px-4 pt-4 pb-8">
       <div className="flex w-full items-center gap-4 pb-4">
         <div className="flex h-[4rem] w-[4rem] overflow-hidden rounded-xl bg-purple-100 items-center justify-center">
-          <ViewRight className="w-10 h-10 text-purple-600" />
+          <ViewRight />
         </div>
         <div className="space-y-0.5">
           <p className="text-[1rem] font-semibold leading-tight text-gray-900">
