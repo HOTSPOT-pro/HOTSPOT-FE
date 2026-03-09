@@ -49,7 +49,10 @@ export const PresentTab = () => {
         <PresentAmount handleSelect={handlePresentAmount} presentAmount={presentAmount} />
       </Card>
 
-      <Button disabled={selectedFamily === null} onClick={handleOpenModal}>
+      <Button
+        disabled={selectedFamily === null || familyData.data.dataRemainAmount < presentAmount}
+        onClick={handleOpenModal}
+      >
         선물하기
       </Button>
     </div>
