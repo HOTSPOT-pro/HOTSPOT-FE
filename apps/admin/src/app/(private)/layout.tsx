@@ -11,7 +11,7 @@ export default function PrivateLayout({
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
 
   return (
-    <div className="flex min-h-dvh max-w-dvw">
+    <div className="flex min-h-dvh max-w-full">
       {isSideBarOpen && <AppSideBar onClose={() => setIsSideBarOpen(false)} />}
       <main className="flex min-w-0 flex-1 flex-col bg-[#F8F8FA]">
         <AppHeader isSideBarOpen={isSideBarOpen} onOpenSideBar={() => setIsSideBarOpen(true)} />
