@@ -29,14 +29,12 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
   const { data: chartData = [], isLoading: isChartLoading } = useQuery<LineChartDataProps[]>({
     queryFn: async () => {
       const targetId = userId === null || userId === -1 ? null : userId;
-
+      // 월간 데이터 호출
       if (range.unit === 'MONTH') {
-        // 월간 데이터 처리
-        const res = (await getFamilyMonthlyUsage(targetId)) as MonthlyUsageResponse;
+        const res = await getFamilyMonthlyUsage(targetId);
         const { subUsages } = res;
         const totalData = subUsages.find((s) => s.subId === -1);
-        const personalData =
-          userId !== null && userId !== -1 ? subUsages.find((s) => s.subId === userId) : null;
+        const personalData = targetId ? subUsages.find((s) => s.subId === targetId) : null;
 
         if (!totalData) return [];
 
@@ -54,12 +52,14 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
           };
         });
       } else {
-        // 일간 데이터 처리
-        const res = (await getFamilyDailyUsage(targetId)) as DailyUsageResponse;
+        // 일간 데이터 호출
+        const res = await getFamilyDailyUsage({
+          month: `${range.year}-${String(range.month).padStart(2, '0')}`,
+          targetSubId: targetId ?? undefined,
+        });
         const { subUsages } = res;
         const totalData = subUsages.find((s) => s.subId === -1);
-        const personalData =
-          userId !== null && userId !== -1 ? subUsages.find((s) => s.subId === userId) : null;
+        const personalData = targetId ? subUsages.find((s) => s.subId === targetId) : null;
 
         if (!totalData) return [];
 
@@ -78,7 +78,7 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
         });
       }
     },
-    queryKey: ['familyUsage', range.unit, userId],
+    queryKey: ['familyUsage', range.unit, range.year, range.month, userId],
   });
 
   // 앱 사용량 데이터
