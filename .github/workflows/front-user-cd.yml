@@ -90,7 +90,6 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster $CLUSTER \
-            --service $SERVICE
             --service $SERVICE \
             --task-definition $TASK_DEF_ARN \
             --force-new-deployment
