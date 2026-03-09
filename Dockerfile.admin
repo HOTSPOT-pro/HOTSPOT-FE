@@ -10,7 +10,8 @@ COPY pnpm-lock.yaml package.json pnpm-workspace.yaml turbo.json ./
 COPY apps/admin/package.json apps/admin/
 COPY packages/ui/package.json packages/ui/
 
-RUN pnpm install --frozen-lockfile
+# admin + workspace deps만 설치
+RUN pnpm install --frozen-lockfile --filter @hotspot/admin...
 
 COPY . .
 
@@ -21,17 +22,23 @@ RUN pnpm --filter @hotspot/admin build
 FROM node:20-alpine AS runner
 
 WORKDIR /app
+
 ENV NODE_ENV=production
 ENV PORT=3001
 
+# non-root user 생성
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+
 # standalone server
-COPY --from=builder /app/apps/admin/.next/standalone ./
+COPY --chown=nextjs:nodejs --from=builder /app/apps/admin/.next/standalone ./
 
-# ⭐ static 위치 수정
-COPY --from=builder /app/apps/admin/.next/static ./apps/admin/.next/static
+# static assets
+COPY --chown=nextjs:nodejs --from=builder /app/apps/admin/.next/static ./apps/admin/.next/static
 
-# ⭐ public 위치 수정
-COPY --from=builder /app/apps/admin/public ./apps/admin/public
+# public assets
+COPY --chown=nextjs:nodejs --from=builder /app/apps/admin/public ./apps/admin/public
+
+USER nextjs
 
 EXPOSE 3001
 
