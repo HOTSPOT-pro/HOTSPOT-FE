@@ -173,8 +173,8 @@ export const DonutChart = memo(
           </span>
           <div className="flex items-baseline my-[1%] text-[13cqi]">{displayContent.percent}</div>
           <span className="font-medium text-gray-400 leading-none text-[6cqi] transition-colors text-gray-400">
-            <span className="font-bold  ">{displayContent.value}</span>
-            <span className="font-semibold  text-[6cqi]">GB / {displayContent.totalValue}GB</span>
+            <span className="font-bold">{displayContent.value}</span>
+            <span className="font-semibold text-[6cqi]">GB / {displayContent.totalValue}GB</span>
           </span>
         </div>
       </div>
