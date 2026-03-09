@@ -1,8 +1,8 @@
 import type { LineChartDataProps } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
+import { formatYearMonth } from '@/shared/lib';
 import { getFamilyDailyUsage } from '../api/getFamilyDailyUsage';
 import { getFamilyMonthlyUsage } from '../api/getFamilyMonthlyUsage';
-import { formatYearMonth } from '../lib/dateFormatter';
 import { transformDailyData, transformMonthlyData } from '../lib/transformReportData';
 import type { ReportRange } from './type';
 
