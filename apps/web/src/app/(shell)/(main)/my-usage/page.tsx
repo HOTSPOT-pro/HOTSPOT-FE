@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import type { UserRole } from '@/entities/user/model/types';
 import { setUser } from '@/entities/user/store/userSlice';
 import { api } from '@/shared/api/client';
@@ -16,33 +18,46 @@ interface AuthInfoResponse {
   familyRole: UserRole;
 }
 
-const Page = () => {
+const getAuthInfo = async () => {
+  const { data } = await api.get<ApiResponse<AuthInfoResponse>>('/api/v1/auth/info');
+  return data.data;
+};
+
+const AuthInfoSync = () => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const fetchAuthInfo = async () => {
-      try {
-        const { data } = await api.get<ApiResponse<AuthInfoResponse>>('/api/v1/auth/info');
+  useSuspenseQuery({
+    queryFn: async () => {
+      const authInfo = await getAuthInfo();
 
-        dispatch(
-          setUser({
-            email: data.data.email,
-            familyId: data.data.familyId,
-            familyRole: data.data.familyRole,
-            name: data.data.name,
-            phone: data.data.phone,
-            subId: data.data.subId,
-          }),
-        );
-      } catch {
-        // no-op
-      }
-    };
+      dispatch(
+        setUser({
+          email: authInfo.email,
+          familyId: authInfo.familyId,
+          familyRole: authInfo.familyRole,
+          name: authInfo.name,
+          phone: authInfo.phone,
+          subId: authInfo.subId,
+        }),
+      );
 
-    void fetchAuthInfo();
-  }, [dispatch]);
+      return authInfo;
+    },
+    queryKey: ['authInfo'],
+    staleTime: Infinity,
+  });
 
   return null;
+};
+
+const Page = () => {
+  return (
+    <ErrorBoundary fallback={null}>
+      <Suspense fallback={null}>
+        <AuthInfoSync />
+      </Suspense>
+    </ErrorBoundary>
+  );
 };
 
 export default Page;
