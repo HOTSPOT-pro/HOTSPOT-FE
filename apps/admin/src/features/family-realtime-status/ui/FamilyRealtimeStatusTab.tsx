@@ -1,0 +1,263 @@
+'use client';
+
+import { DonutChart, ProgressBar } from '@hotspot/ui';
+import { useParams } from 'next/navigation';
+import { useMemo } from 'react';
+import { BlockedStateChip, RoleChip } from '@/domains/family';
+import { useFamilyRealtimeStatus } from '@/domains/member-state';
+
+const START_COLOR = '#4F46E5';
+const END_COLOR = '#D9C9FF';
+const PERCENT_MAX = 100;
+
+const clampPercent = (percent: number) => {
+  return Math.max(0, Math.min(PERCENT_MAX, percent));
+};
+
+const interpolateColor = (factor: number) => {
+  const clamped = Math.min(1, Math.max(0, factor));
+  const start = Number.parseInt(START_COLOR.slice(1), 16);
+  const end = Number.parseInt(END_COLOR.slice(1), 16);
+
+  const sr = (start >> 16) & 255;
+  const sg = (start >> 8) & 255;
+  const sb = start & 255;
+  const er = (end >> 16) & 255;
+  const eg = (end >> 8) & 255;
+  const eb = end & 255;
+
+  const r = Math.round(sr + (er - sr) * clamped);
+  const g = Math.round(sg + (eg - sg) * clamped);
+  const b = Math.round(sb + (eb - sb) * clamped);
+
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
+const formatData = (value: number) => `${value.toFixed(1)} GB`;
+
+const formatDataOrUnlimited = (value: number) => {
+  if (value < 0) {
+    return '무제한';
+  }
+  return formatData(value);
+};
+
+const formatCurrentTime = (value?: string) => {
+  if (!value) {
+    return '-';
+  }
+
+  const parsedDate = new Date(value);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return '-';
+  }
+
+  return new Intl.DateTimeFormat('ko-KR', {
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+    .format(parsedDate)
+    .replace(/\.\s?/g, '.')
+    .replace(',', '');
+};
+
+export const FamilyRealtimeStatusTab = () => {
+  const params = useParams();
+  const familyId = Number(params.familyId);
+  const { isError, isLoading, realtimeStatus, refetch } = useFamilyRealtimeStatus(familyId);
+
+  const familyUsage = realtimeStatus?.familyUsage;
+  const members = realtimeStatus?.members ?? [];
+
+  const sortedSubUsages = useMemo(
+    () =>
+      [...(familyUsage?.subUsages ?? [])].sort((a, b) => {
+        return b.dataUsageAmount - a.dataUsageAmount;
+      }),
+    [familyUsage?.subUsages],
+  );
+
+  const coloredSubUsages = useMemo(
+    () =>
+      sortedSubUsages.map((subUsage, index, list) => ({
+        ...subUsage,
+        color: interpolateColor(list.length > 1 ? index / (list.length - 1) : 0),
+      })),
+    [sortedSubUsages],
+  );
+
+  const usageBySubId = useMemo(() => {
+    return new Map(coloredSubUsages.map((usage) => [usage.subId, usage]));
+  }, [coloredSubUsages]);
+
+  const donutData = useMemo(
+    () =>
+      coloredSubUsages.map((usage) => ({
+        fill: usage.color,
+        name: usage.subName,
+        value: usage.dataUsageAmount,
+      })),
+    [coloredSubUsages],
+  );
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4">
+        <p className="text-sm text-gray-500">실시간 상태를 불러오는 중입니다.</p>
+      </div>
+    );
+  }
+
+  if (isError || !familyUsage) {
+    return (
+      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4 flex flex-col gap-3">
+        <p className="text-sm text-red-500">실시간 상태를 불러오지 못했습니다.</p>
+        <button
+          className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
+          onClick={async () => {
+            await refetch();
+          }}
+          type="button"
+        >
+          다시 시도
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-5">
+      <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 bg-white shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+        <h3 className="text-[14px] font-bold">가족 전체 데이터 사용량</h3>
+        <div className="flex w-full justify-center items-center">
+          <div className="flex w-full max-w-70">
+            <DonutChart
+              data={donutData}
+              total={familyUsage.familyDataAmount}
+              totalUsed={familyUsage.familyDataUsageAmount}
+              totalUsedLabel="사용"
+            />
+          </div>
+        </div>
+        <div className="h-px bg-gray-200" />
+
+        <div className="space-y-3">
+          {coloredSubUsages.map((subUsage) => (
+            <div className="space-y-0" key={subUsage.subId}>
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex flex-row items-center gap-2">
+                  <div
+                    className="w-2.5 h-2.5 rounded-full shrink-0"
+                    style={{ backgroundColor: subUsage.color }}
+                  />
+                  <span className="text-gray-700">{subUsage.subName}</span>
+                </div>
+                <span className="text-gray-900">
+                  {subUsage.dataUsageAmount.toFixed(1)}GB / {subUsage.dataLimit.toFixed(1)}GB (
+                  {subUsage.dataUsagePercent}
+                  %)
+                </span>
+              </div>
+              <ProgressBar
+                color={subUsage.color}
+                label={subUsage.subName}
+                total={Math.max(subUsage.dataLimit, 1)}
+                value={subUsage.dataUsageAmount}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4 flex flex-col gap-3">
+        <h3 className="text-[14px] font-bold">구성원 목록</h3>
+        <div className="flex flex-col gap-3">
+          {members.map((member, index) => {
+            const memberFamilyUsage = usageBySubId.get(member.subId);
+            const memberDataTotal =
+              member.subDataAmount < 0
+                ? Math.max(member.subDataUsageAmount, 1)
+                : Math.max(member.subDataAmount, 1);
+            const giftTotal = Math.max(member.giftDataAmount, 1);
+            const memberColor =
+              memberFamilyUsage?.color ?? interpolateColor(index / Math.max(1, members.length - 1));
+
+            return (
+              <article
+                className="border border-gray-200 rounded-xl p-4 flex flex-col gap-3"
+                key={member.subId}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-[15px] font-bold text-gray-900">{member.subName}</h4>
+                    <RoleChip role={member.familyRole} />
+                    <BlockedStateChip isBlocked={member.blocked} />
+                    <span className="text-xs text-gray-500">{member.phoneEnc}</span>
+                  </div>
+                  <span className="text-xs text-gray-500">{member.planName}</span>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-[12px] text-gray-700">
+                    <span>요금제 데이터</span>
+                    <span className="font-medium">
+                      {formatData(member.subDataUsageAmount)} /{' '}
+                      {formatDataOrUnlimited(member.subDataAmount)}
+                    </span>
+                  </div>
+                  <ProgressBar
+                    color={memberColor}
+                    label={`${member.subName}-plan`}
+                    total={memberDataTotal}
+                    value={member.subDataUsageAmount}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-[12px] text-gray-700">
+                    <span>선물 데이터</span>
+                    <span className="font-medium">
+                      {formatData(member.giftDataUsageAmount)} / {formatData(member.giftDataAmount)}
+                    </span>
+                  </div>
+                  <ProgressBar
+                    color="#22C55E"
+                    label={`${member.subName}-gift`}
+                    total={giftTotal}
+                    value={member.giftDataUsageAmount}
+                  />
+                </div>
+
+                {memberFamilyUsage && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[12px] text-gray-700">
+                      <span>가족 한도</span>
+                      <span className="font-medium">
+                        {formatData(memberFamilyUsage.dataUsageAmount)} /{' '}
+                        {formatData(memberFamilyUsage.dataLimit)}
+                        {'  '}({clampPercent(memberFamilyUsage.dataUsagePercent)}%)
+                      </span>
+                    </div>
+                    <ProgressBar
+                      color="#6366F1"
+                      label={`${member.subName}-family`}
+                      total={Math.max(memberFamilyUsage.dataLimit, 1)}
+                      value={memberFamilyUsage.dataUsageAmount}
+                    />
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+
+        <div className="pt-1 text-xs text-gray-500 text-right">
+          {formatCurrentTime(familyUsage.currentTime)} 기준
+        </div>
+      </section>
+    </div>
+  );
+};

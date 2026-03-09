@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useFamilyDetail } from '@/domains/family';
 import { FamilyDetailControlTab } from '@/features/family-control';
 import { FamilyDetailPolicyTab } from '@/features/family-policy/member-info';
+import { FamilyRealtimeStatusTab } from '@/features/family-realtime-status';
 
 type FamilyDetailTabValue = 'STATE' | 'POLICY' | 'CONTROL';
 const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [
@@ -41,7 +42,7 @@ export const FamiliesDetailPage = () => {
         />
       </nav>
       <main className="w-full">
-        {activeTab === 'STATE' && <div>실시간 상태</div>}
+        {activeTab === 'STATE' && <FamilyRealtimeStatusTab />}
         {activeTab === 'POLICY' && <FamilyDetailPolicyTab />}
         {activeTab === 'CONTROL' && <FamilyDetailControlTab />}
       </main>
