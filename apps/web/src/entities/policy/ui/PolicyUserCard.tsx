@@ -51,7 +51,7 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
               <UserBlockLabel isBlocked={data.isBlocked} />
               <UserMeLabel isMe={isMe} />
             </p>
-            <p className="text-xs text-gray-600">한도 {data.dataLimit}GB</p>
+            <p className="text-xs text-gray-600">한도 {data.familyDataSubLimit}GB</p>
             <div className="text-xs text-gray-600 flex items-center gap-1">
               <span>
                 정책{' '}
