@@ -43,6 +43,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64 \
             -f Dockerfile.web \
+            --build-arg NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} \
             -t 121834501390.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:$IMAGE_TAG \
             --push .
 
