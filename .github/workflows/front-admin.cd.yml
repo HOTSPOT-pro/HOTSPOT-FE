@@ -20,7 +20,7 @@ jobs:
       AWS_REGION: ap-northeast-2
       CLUSTER: hotspot-cluster
       SERVICE: FrontAdminServiceStack-FrontAdminService
-      TASK_DEF_NAME: FrontAdminServiceStackFrontAdminTaskDef
+      TASK_DEF_NAME: FrontAdminServiceStackFrontAdminTaskDefEB916BBE
       ECR_REPO: hotspot-front-admin
       CONTAINER_NAME: FrontAdminContainer
 
