@@ -1,3 +1,6 @@
+//fmaily data
+export type FAMILY_ROLE = 'OWNER' | 'PARENT' | 'CHILD';
+
 //family list
 export interface FamilyListRequest {
   page: number;
@@ -34,7 +37,7 @@ export interface FamilyPolicy {
   subId: number;
   memberName: string;
   phoneNumber: string;
-  familyRole: string;
+  familyRole: FAMILY_ROLE;
   blocked: boolean;
   appliedTimePolicies: string[];
   appliedBlockedServicePolicies: string[];

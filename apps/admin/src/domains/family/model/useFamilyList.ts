@@ -9,6 +9,13 @@ export const useFamilyList = (params: FamilyListRequest) => {
     placeholderData: (previousData) => previousData,
     queryFn: () => getFamilyListClient(params),
     queryKey: ['adminFamilyList', params.page, params.size],
+    select: (data) => ({
+      ...data,
+      familyList: data.familyList.map((item) => ({
+        ...item,
+        id: `${item.familyId}`,
+      })),
+    }),
     staleTime: STALE_TIME,
   });
 

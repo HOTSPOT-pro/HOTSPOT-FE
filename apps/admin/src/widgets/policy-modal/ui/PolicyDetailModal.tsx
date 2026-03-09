@@ -1,6 +1,6 @@
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
 import { useState } from 'react';
-import type { FamilyPolicy } from '@/features/families/model/types';
+import type { FamilyPolicy } from '@/domains/family';
 import {
   BlockAddList,
   PolicyAddList,
@@ -8,7 +8,7 @@ import {
   useApplyBlock,
   useApplyPolicy,
 } from '@/features/family-policy/policy-apply';
-import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
+import { UserProfileIcon } from '@/shared/ui';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
 const TABS: TabItem<PolicyModalTabValue>[] = [
@@ -70,7 +70,10 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
           <Modal.Title>
             <div className="flex items-center gap-1">
               <UserProfileIcon type={'MAIN'} />
-              {props.member.memberName}
+              <div className="flex flex-col">
+                {props.member.memberName}
+                <p className="text-gray-600 text-[12px] font-normal">{props.member.phoneNumber}</p>
+              </div>
             </div>
           </Modal.Title>
         </Modal.Header>

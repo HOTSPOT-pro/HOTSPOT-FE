@@ -1,4 +1,4 @@
-import { useMemberBlock } from '../../member-info/model/useMemberPolicy';
+import { useMemberBlock } from '@/domains/member-policy';
 import type { PolicyApply } from '../model/types';
 import { BlockAddItem } from './BlockAddItem';
 
