@@ -6,7 +6,7 @@ interface UserRoleLabelProps {
 }
 
 const OWNER_STYLE = 'border-sky-300 text-sky-600';
-const PARENT_STYLE = 'border-purple-300 text-purple-600';
+const PARENT_STYLE = 'border-pink-300 text-pink-600';
 const CHILD_STYLE = 'border-lime-300 text-lime-600';
 
 export const UserRoleLabel = ({ role }: UserRoleLabelProps) => {

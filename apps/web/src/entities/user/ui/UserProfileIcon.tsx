@@ -1,7 +1,7 @@
 import { cn } from '@hotspot/ui';
-import ParentIcon from '@hotspot/ui/assets/images/character/main.svg';
-import ChildIcon from '@hotspot/ui/assets/images/character/ViewDownColor.svg';
-import OwnerIcon from '@hotspot/ui/assets/images/character/ViewRightColor.svg';
+import ChildIcon from '@hotspot/ui/assets/images/character/child.svg';
+import OwnerIcon from '@hotspot/ui/assets/images/character/owner.svg';
+import ParentIcon from '@hotspot/ui/assets/images/character/parent.svg';
 import type { ReactElement } from 'react';
 import type { UserRole } from '../model/types';
 

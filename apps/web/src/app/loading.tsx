@@ -1,4 +1,4 @@
-import ViewRight from '@hotspot/ui/assets/images/character/ViewRight.svg';
+import ViewRight from '@hotspot/ui/assets/images/character/view-right-animated.svg';
 
 const Loading = () => {
   return (

@@ -41,7 +41,7 @@ export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderIte
             <UserProfileIcon type={member.role} />
             <div>
               <p className="font-medium text-gray-900">{member.name}</p>
-              <p className="text-xs text-gray-500">한도 {member.limit.toFixed(1)}GB</p>
+              <p className="text-xs text-gray-500">한도 {member.limit}GB</p>
             </div>
           </div>
 

@@ -44,6 +44,5 @@ export interface AppUsageResponse {
 
 export interface ReportRange {
   unit: 'MONTH' | 'DAY';
-  month: number;
-  year: number;
+  date: Date;
 }
