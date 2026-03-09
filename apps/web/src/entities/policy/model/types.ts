@@ -22,7 +22,8 @@ export interface PolicyPerUser {
   subId: number;
   role: UserRole;
   isBlocked: boolean;
-  dataLimit: number;
+  familyDataSubLimit: number;
+  familyDataUsage: number;
   priority: number;
   blockPolicyResponseList: Policy[];
   appBlockedServiceResponseList: BlockPolicy[];

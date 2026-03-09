@@ -3,11 +3,12 @@ import type { Datalimit, UpdateDatalimit } from '../model/types';
 
 interface DataLimitSectionProps {
   datalimit?: Datalimit;
+  minNum?: number;
   draft: Partial<UpdateDatalimit>;
   onUpdate: (updates: Partial<UpdateDatalimit>) => void;
 }
 
-export const DataLimitSection = ({ datalimit, draft, onUpdate }: DataLimitSectionProps) => {
+export const DataLimitSection = ({ datalimit, minNum, draft, onUpdate }: DataLimitSectionProps) => {
   const displayLocked = draft.isLocked ?? datalimit?.isLocked ?? false;
   const displayLimit = draft.dataLimit ?? datalimit?.dataLimit ?? 0;
 
@@ -29,7 +30,7 @@ export const DataLimitSection = ({ datalimit, draft, onUpdate }: DataLimitSectio
         <Slider
           initialValue={displayLimit}
           maxNum={datalimit?.familyDataAmount ?? 0}
-          minNum={0}
+          minNum={minNum ?? 0}
           onChange={handleSliderChange}
           step={1}
         />
