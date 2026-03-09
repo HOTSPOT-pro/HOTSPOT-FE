@@ -40,8 +40,7 @@ const DAY_LABEL: Record<string, string> = {
   TUESDAY: '화',
   WEDNESDAY: '수',
 };
-const BYTES_PER_KILOBYTE = 1024;
-const BYTES_PER_GIGABYTE = BYTES_PER_KILOBYTE * BYTES_PER_KILOBYTE * BYTES_PER_KILOBYTE;
+const BYTES_PER_GIGABYTE = 1_000_000_000;
 
 const getAppliedRestrictions = async () => {
   const { data } = await api.get<ApiResponse<AppliedRestrictions>>('/api/v1/policies/applied', {
