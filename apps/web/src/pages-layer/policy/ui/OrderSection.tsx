@@ -21,11 +21,14 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
 
   const handleSave = () => {
     if (policy === 'FIFO') {
-      updateFifo.mutate(data.familyId);
+      updateFifo.mutate(data.familyId, {
+        onSuccess: () => setIsEditing(false),
+      });
     } else {
-      updatePriority.mutate();
+      updatePriority.mutate(undefined, {
+        onSuccess: () => setIsEditing(false),
+      });
     }
-    setIsEditing(false);
   };
 
   const handleCancel = () => {
