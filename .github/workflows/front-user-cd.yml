@@ -90,5 +90,4 @@ jobs:
           aws ecs update-service \
             --cluster $CLUSTER \
             --service $SERVICE \
-            --task-definition $TASK_DEF_ARN \
-            --force-new-deployment
+            --task-definition $TASK_DEF_ARN
