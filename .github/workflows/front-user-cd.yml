@@ -89,5 +89,4 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster $CLUSTER \
-            --service $SERVICE \
-            --task-definition $TASK_DEF_ARN
+            --service $SERVICE
