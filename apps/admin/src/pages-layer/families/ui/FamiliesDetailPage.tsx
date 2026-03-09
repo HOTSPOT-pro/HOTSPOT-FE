@@ -1,5 +1,6 @@
 'use client';
 import { Tab, type TabItem } from '@hotspot/ui';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { Component, type ReactNode, Suspense, useState } from 'react';
 import { useFamilyDetail } from '@/domains/family';
@@ -16,6 +17,7 @@ const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [
 
 interface StateTabErrorBoundaryProps {
   children: ReactNode;
+  onRetry: () => void;
 }
 
 interface StateTabErrorBoundaryState {
@@ -44,6 +46,7 @@ class StateTabErrorBoundary extends Component<
           <button
             className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
             onClick={() => {
+              this.props.onRetry();
               this.setState({ hasError: false });
             }}
             type="button"
@@ -95,11 +98,15 @@ export const FamiliesDetailPage = () => {
       </nav>
       <main className="w-full">
         {activeTab === 'STATE' && (
-          <StateTabErrorBoundary key={`state-${familyId}`}>
-            <Suspense fallback={<StateTabSkeleton />}>
-              <FamilyRealtimeStatusTab />
-            </Suspense>
-          </StateTabErrorBoundary>
+          <QueryErrorResetBoundary>
+            {({ reset }) => (
+              <StateTabErrorBoundary key={`state-${familyId}`} onRetry={reset}>
+                <Suspense fallback={<StateTabSkeleton />}>
+                  <FamilyRealtimeStatusTab />
+                </Suspense>
+              </StateTabErrorBoundary>
+            )}
+          </QueryErrorResetBoundary>
         )}
         {activeTab === 'POLICY' && <FamilyDetailPolicyTab />}
         {activeTab === 'CONTROL' && <FamilyDetailControlTab />}
