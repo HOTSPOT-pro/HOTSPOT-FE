@@ -72,7 +72,7 @@ const LineChartTooltipContent = ({
                 percent: personalRatio ?? 0,
                 title: '개별 사용량',
                 unit,
-                value: personal?.toFixed(2) ?? 0,
+                value: (personal ?? 0).toFixed(2),
               },
             ]
           : []),

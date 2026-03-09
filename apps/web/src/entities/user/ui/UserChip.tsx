@@ -16,7 +16,7 @@ export const UserChip = memo(
       isSelected={isSelected}
       label={user.name || '전체'}
       onClick={() => {
-        user.name === '전체' ? onSelect({ name: null, subId: null }) : onSelect(user);
+        user.subId === null ? onSelect({ name: null, subId: null }) : onSelect(user);
       }}
     />
   ),

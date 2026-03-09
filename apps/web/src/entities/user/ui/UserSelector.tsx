@@ -1,6 +1,4 @@
-import LeftArrowIcon from '@hotspot/ui/assets/icons/arrow-left.svg';
-import RightArrowIcon from '@hotspot/ui/assets/icons/arrow-right.svg';
-import { useRef } from 'react';
+import ScrollContainer from 'react-indiana-drag-scroll';
 import type { ReportUser } from '@/entities/report';
 import { UserChip } from './UserChip';
 
@@ -15,39 +13,16 @@ export const UserSelector = <T extends ReportUser>({
   selectedUser,
   onSelect,
 }: UserSelectorProps<T>) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  // 이동 함수: 방향에 따라 200px씩 이동
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = 200;
-      const target =
-        direction === 'left'
-          ? scrollRef.current.scrollLeft - scrollAmount
-          : scrollRef.current.scrollLeft + scrollAmount;
-
-      scrollRef.current.scrollTo({
-        behavior: 'smooth',
-        left: target,
-      });
-    }
-  };
-
   return (
-    <div className="relative flex items-center group w-full">
-      {/* 왼쪽 버튼 */}
-      <button
-        className="absolute left-0 z-10 p-1 bg-white/80 rounded-full shadow-md hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
-        onClick={() => scroll('left')}
-        type="button"
-      >
-        <LeftArrowIcon size={20} />
-      </button>
-
-      {/* 칩 리스트 컨테이너 */}
-      <div
-        className="flex gap-2 overflow-x-auto scrollbar-hide py-2 px-9 select-none scroll-smooth w-full"
-        ref={scrollRef}
+    <div className="w-full">
+      {/* ScrollContainer가 기존의 scrollRef와 overflow 로직을 대체합니다.
+        nativeMobileScroll: 모바일에서의 네이티브 스크롤 감도를 유지합니다.
+        hideScrollbars: 라이브러리 차원에서 스크롤바를 숨길 수 있습니다.
+      */}
+      <ScrollContainer
+        className="flex gap-2 py-2 px-4 select-none cursor-grab active:cursor-grabbing"
+        hideScrollbars={true}
+        nativeMobileScroll={true}
       >
         {users.map((user, index) => (
           <div className="shrink-0" key={user.subId ?? index}>
@@ -58,16 +33,7 @@ export const UserSelector = <T extends ReportUser>({
             />
           </div>
         ))}
-      </div>
-
-      {/* 오른쪽 버튼 */}
-      <button
-        className="absolute right-0 z-10 p-1 bg-white/80 rounded-full shadow-md hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
-        onClick={() => scroll('right')}
-        type="button"
-      >
-        <RightArrowIcon size={20} />
-      </button>
+      </ScrollContainer>
     </div>
   );
 };
