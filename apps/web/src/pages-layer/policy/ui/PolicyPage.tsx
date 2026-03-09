@@ -1,7 +1,6 @@
 'use client';
 import { useFamilyPolicy } from '@entities/policy';
-import { Tab, type TabItem, useModal } from '@hotspot/ui/components';
-import { useRouter } from 'next/navigation';
+import { Tab, type TabItem } from '@hotspot/ui/components';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/entities/user';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
