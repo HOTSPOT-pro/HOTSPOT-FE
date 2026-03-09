@@ -7,4 +7,3 @@ export { MonthDaySelector } from './date/MonthDaySelector';
 export { ErrorModal } from './error-modal/ErrorModal';
 export { Header } from './header/Header';
 export { Logo } from './logo/Logo';
-export { UserProfileIcon } from './user-profile-icon/UserProfileIcon';

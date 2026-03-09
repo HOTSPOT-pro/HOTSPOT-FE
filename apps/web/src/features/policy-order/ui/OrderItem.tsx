@@ -1,9 +1,8 @@
-import { useUserStore } from '@entities/user';
 import { Draggable } from '@hello-pangea/dnd';
 import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
 import { cn } from '@hotspot/ui/lib';
 import type { MemberPriority } from '@/entities/policy';
-import { UserProfileIcon } from '@/shared/ui/user-profile-icon/UserProfileIcon';
+import { UserProfileIcon } from '@/entities/user';
 import { OrderButton } from './OrderButton';
 
 interface OrderItemProps {
@@ -15,8 +14,6 @@ interface OrderItemProps {
 }
 
 export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderItemProps) => {
-  const myId = useUserStore().subId;
-
   return (
     <Draggable draggableId={`item${member.subId}`} index={index} isDragDisabled={!isEditing}>
       {(provided, snapshot) => (
@@ -28,8 +25,10 @@ export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderIte
             'flex items-center justify-between p-3.5 gap-3 rounded-2xl border transition-all',
             snapshot.isDragging
               ? 'shadow-lg border-purple-500 bg-purple-100'
-              : 'bg-gray-100 border-transparent',
-            !isEditing ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
+              : 'bg-gray-50 border-gray-200',
+            !isEditing
+              ? 'cursor-default bg-gray-100 border-gray-200'
+              : 'cursor-grab active:cursor-grabbing',
           )}
         >
           <div className="flex items-center gap-4">
@@ -39,7 +38,7 @@ export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderIte
             <span className="text-sm font-bold text-purple-500 rounded-2xl bg-purple-100 w-7 h-7 flex items-center justify-center">
               {index + 1}
             </span>
-            <UserProfileIcon type={myId === member.subId ? 'MAIN' : 'OTHER'} />
+            <UserProfileIcon type={member.role} />
             <div>
               <p className="font-medium text-gray-900">{member.name}</p>
               <p className="text-xs text-gray-500">한도 {member.limit.toFixed(1)}GB</p>

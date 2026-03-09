@@ -1,5 +1,6 @@
-import type { FamilyPriority, PolicyOrderType } from '@entities/policy';
+import type { FamilyPriority } from '@entities/policy';
 import { PolicyOrderSelector, PolicyPriorityList, useFifoOrder } from '@features/policy-order';
+import { Button } from '@hotspot/ui';
 import { useState } from 'react';
 
 interface OrderSectionProps {
@@ -8,21 +9,59 @@ interface OrderSectionProps {
 
 export const OrderSection = ({ data }: OrderSectionProps) => {
   const [policy, setPolicy] = useState<'FIFO' | 'PRIORITY'>(data.priorityType);
+  const [isEditing, setIsEditing] = useState(false);
+
   const { updateFifo } = useFifoOrder();
 
-  const handleType = (type: PolicyOrderType) => {
-    updateFifo.mutate(data.familyId);
-    setPolicy(type);
+  const handleSave = () => {
+    if (policy === 'FIFO') {
+      updateFifo.mutate(data.familyId);
+    }
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setPolicy(data.priorityType);
+    setIsEditing(false);
   };
 
   return (
     <div className="p-5 flex flex-col gap-1">
-      <p className="text-base font-bold">데이터 우선순위</p>
-      <p className="text-sm font-normal text-gray-600">데이터 할당 방식을 선택하세요</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <p className="text-base font-bold">데이터 우선순위</p>
+          <p className="text-sm font-normal text-gray-600">데이터 할당 방식을 선택하세요</p>
+        </div>
 
-      <PolicyOrderSelector policy={policy} setPolicy={handleType} />
+        <div className="flex gap-2">
+          {!isEditing ? (
+            <Button
+              className="w-fit h-fit px-2 py-1"
+              onClick={() => setIsEditing(true)}
+              variant="outline"
+            >
+              편집
+            </Button>
+          ) : (
+            <>
+              <Button className="w-fit h-fit px-2 py-1" onClick={handleCancel} variant="ghost">
+                취소
+              </Button>
+              <Button className="w-fit h-fit px-2 py-1" onClick={handleSave} variant="solid">
+                저장
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
 
-      <div className="flex flex-col justify-center">
+      <PolicyOrderSelector
+        isEditing={isEditing}
+        policy={policy} // 편집 모드일 때만 변경 가능하도록
+        setPolicy={(type) => isEditing && setPolicy(type)}
+      />
+
+      <div className="flex flex-col justify-center mt-4">
         {policy === 'FIFO' ? (
           <div className="bg-gray-100 p-4 rounded-2xl">
             <p className="text-sm text-gray-500 leading-relaxed">
@@ -30,7 +69,7 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
             </p>
           </div>
         ) : (
-          <PolicyPriorityList data={data} />
+          <PolicyPriorityList data={data} isEditing={isEditing} />
         )}
       </div>
     </div>

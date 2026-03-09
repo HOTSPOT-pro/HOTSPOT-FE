@@ -21,6 +21,7 @@ export const useFamilyPolicy = () => {
           limit: member.dataLimit,
           name: member.memberName,
           priority: member.priority,
+          role: member.role,
           subId: member.subId,
         })),
         priorityType: serverData.priorityType as PolicyOrderType,

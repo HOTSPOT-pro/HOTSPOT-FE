@@ -1,3 +1,5 @@
+import type { UserRole } from '@/entities/user/model/types';
+
 export interface Policy {
   id: number;
   name: string;
@@ -18,6 +20,8 @@ export interface PolicyPerUser {
   memberId: number;
   memberName: string;
   subId: number;
+  role: UserRole;
+  isBlocked: boolean;
   dataLimit: number;
   priority: number;
   blockPolicyResponseList: Policy[];
@@ -36,6 +40,7 @@ export interface MemberPriority {
   priority: number;
   name: string;
   limit: number;
+  role: UserRole;
 }
 export interface FamilyPriority {
   familyId: number;
