@@ -1,0 +1,38 @@
+# ---------- Builder ----------
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+RUN corepack enable
+ENV CI=true
+
+COPY pnpm-lock.yaml package.json pnpm-workspace.yaml turbo.json ./
+COPY apps/admin/package.json apps/admin/
+COPY packages/ui/package.json packages/ui/
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+
+RUN pnpm --filter @hotspot/admin build
+
+
+# ---------- Runner ----------
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3001
+
+# standalone server
+COPY --from=builder /app/apps/admin/.next/standalone ./
+
+# ⭐ static 위치 수정
+COPY --from=builder /app/apps/admin/.next/static ./apps/admin/.next/static
+
+# ⭐ public 위치 수정
+COPY --from=builder /app/apps/admin/public ./apps/admin/public
+
+EXPOSE 3001
+
+CMD ["node", "apps/admin/server.js"]
