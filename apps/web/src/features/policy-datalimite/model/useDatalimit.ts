@@ -38,6 +38,10 @@ export const useDatalimit = ({ subId, familyId }: useDatalimitParams) => {
       queryClient.invalidateQueries({
         queryKey: ['datalimit', subId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['policyPerFamily'],
+        refetchType: 'active',
+      });
     },
   });
 
