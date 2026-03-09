@@ -59,9 +59,9 @@ export const useOnboarding = () => {
         email: response.email,
         familyId: response.familyId,
         familyRole: response.familyRole,
-        id: response.subId,
         name: response.name,
         phone: response.phone,
+        subId: response.subId,
       });
 
       if (process.env.NODE_ENV !== 'production') {

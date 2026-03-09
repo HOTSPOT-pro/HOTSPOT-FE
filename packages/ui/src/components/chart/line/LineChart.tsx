@@ -123,6 +123,7 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
               />
             }
             cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
+            wrapperStyle={{ zIndex: 'var(--z-dropdown)' }}
           />
 
           <Legend content={<LineChartLegend />} verticalAlign="bottom" />
