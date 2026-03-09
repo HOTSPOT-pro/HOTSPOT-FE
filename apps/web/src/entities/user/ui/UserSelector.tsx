@@ -1,10 +1,11 @@
+import ScrollContainer from 'react-indiana-drag-scroll';
 import type { ReportUser } from '@/entities/report';
 import { UserChip } from './UserChip';
 
 interface UserSelectorProps<T extends ReportUser> {
   users: T[];
   selectedUser: T;
-  onSelect: (user: T) => void;
+  onSelect: (user: ReportUser) => void;
 }
 
 export const UserSelector = <T extends ReportUser>({
@@ -13,15 +14,22 @@ export const UserSelector = <T extends ReportUser>({
   onSelect,
 }: UserSelectorProps<T>) => {
   return (
-    <div className="flex gap-2">
-      {users.map((user, index) => (
-        <UserChip
-          isSelected={selectedUser.subId === user.subId}
-          key={user.subId ?? index}
-          onSelect={() => onSelect(user)}
-          user={user}
-        />
-      ))}
+    <div className="w-full">
+      <ScrollContainer
+        className="flex gap-2 py-2 px-4 select-none cursor-grab active:cursor-grabbing"
+        hideScrollbars={true}
+        nativeMobileScroll={true}
+      >
+        {users.map((user, index) => (
+          <div className="shrink-0" key={user.subId ?? index}>
+            <UserChip
+              isSelected={selectedUser.subId === user.subId}
+              onSelect={onSelect}
+              user={user}
+            />
+          </div>
+        ))}
+      </ScrollContainer>
     </div>
   );
 };

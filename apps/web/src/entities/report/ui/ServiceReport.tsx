@@ -51,7 +51,7 @@ export const ServiceReport = ({ data, isTotal }: ServiceReportProps) => {
                   </div>
 
                   <ProgressBar
-                    color={index === 0 ? COLORS.START : COLORS.SECONDARY}
+                    color={COLORS.TEXT_SECONDARY}
                     label={`ServiceUsage-${item.appName}`}
                     total={data.total}
                     value={item.usage}

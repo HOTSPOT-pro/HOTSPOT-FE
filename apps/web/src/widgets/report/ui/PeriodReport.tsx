@@ -4,7 +4,7 @@ import { type ReportUser, ServiceReport, useUsageReport } from '@entities/report
 import type { ReportRange } from '@entities/report/model/type';
 import { UserSelector } from '@entities/user';
 import { LineChart } from '@hotspot/ui/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 export const PeriodReport = (range: ReportRange) => {
@@ -18,10 +18,17 @@ export const PeriodReport = (range: ReportRange) => {
     userId: selectedUser.subId,
   });
 
+  useEffect(() => {
+    const firstUser = users?.[0];
+    if (firstUser && selectedUser.subId === null) {
+      setSelectedUser(firstUser);
+    }
+  }, [users, selectedUser.subId]);
+
   if (!users) return <div>Loading...</div>;
 
   return (
-    <div className="mt-4">
+    <>
       {/* 구성원 선택 */}
       <UserSelector onSelect={setSelectedUser} selectedUser={selectedUser} users={users} />
 
@@ -65,6 +72,6 @@ export const PeriodReport = (range: ReportRange) => {
       ) : (
         <ServiceReport data={appUsageData} isTotal={selectedUser.subId === null} />
       )}
-    </div>
+    </>
   );
 };
