@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html className="h-full" lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh min-w-dvw bg-gray-200`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh min-w-full bg-gray-200`}
       >
         <StoreProvider>
           <QueryProvider>
