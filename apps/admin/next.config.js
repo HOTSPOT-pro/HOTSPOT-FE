@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
+
   transpilePackages: ['@hotspot/ui'],
+
   turbopack: {
     rules: {
       '*.svg': {
@@ -11,5 +14,4 @@ const nextConfig = {
   },
 };
 
-// biome-ignore lint/style/noDefaultExport: <기본 세팅>
 export default nextConfig;
