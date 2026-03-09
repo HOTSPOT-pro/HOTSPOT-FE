@@ -1,8 +1,9 @@
 'use client';
 
 import { memo, useCallback, useMemo, useState } from 'react';
-import { Pie, PieChart, type PieProps, ResponsiveContainer, Sector } from 'recharts';
+import { Pie, PieChart, type PieProps, ResponsiveContainer, Sector, Tooltip } from 'recharts';
 import { COLORS } from '../../../lib/interpolateColor';
+import { ChartTooltip } from '../tooltip/ChartTooltip';
 
 export interface DonutChartDataProps {
   name: string;
@@ -31,6 +32,32 @@ interface SectorProps {
   fill?: string;
   index?: number;
 }
+
+interface DonutTooltipPayload {
+  name: string;
+  value: number;
+}
+
+interface DonutChartTooltipContentProps {
+  active?: boolean;
+  payload?: Array<{ payload: DonutTooltipPayload }>;
+  total: number;
+}
+
+const DonutChartTooltipContent = ({ active, payload, total }: DonutChartTooltipContentProps) => {
+  if (!(active && payload?.length)) return null;
+  const firstPayload = payload[0]?.payload;
+  if (!firstPayload) return null;
+
+  const percent = total > 0 ? Number(((firstPayload.value / total) * 100).toFixed(1)) : 0;
+
+  return (
+    <ChartTooltip
+      header={firstPayload.name}
+      sections={[{ percent, unit: 'GB', value: firstPayload.value.toFixed(1) }]}
+    />
+  );
+};
 
 export const DonutChart = memo(
   ({
@@ -71,17 +98,6 @@ export const DonutChart = memo(
         value: valueFormatter(totalUsed),
       };
     }, [percentFormatter, total, totalUsed, totalUsedLabel, valueFormatter]);
-
-    const tooltipData = useMemo(() => {
-      const index = activeIndex ?? selectedIndex;
-      if (index === null || !data[index]) return null;
-      const current = data[index];
-      return {
-        name: current.name,
-        percent: percentFormatter(current.value, total, 'active'),
-        value: valueFormatter(current.value),
-      };
-    }, [activeIndex, data, percentFormatter, selectedIndex, total, valueFormatter]);
 
     const highlightedIndex = activeIndex ?? selectedIndex;
 
@@ -130,14 +146,13 @@ export const DonutChart = memo(
               startAngle={-270}
               stroke="none"
             />
+            <Tooltip
+              content={<DonutChartTooltipContent total={total} />}
+              cursor={false}
+              wrapperStyle={{ outline: 'none', zIndex: 'var(--z-dropdown)' }}
+            />
           </PieChart>
         </ResponsiveContainer>
-
-        {tooltipData ? (
-          <div className="absolute left-1/2 top-3 -translate-x-1/2 rounded-md bg-black px-2 py-1 text-xs text-white pointer-events-none">
-            {tooltipData.name} {tooltipData.value}GB ({tooltipData.percent})
-          </div>
-        ) : null}
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
           <span className="text-gray-400 font-medium leading-none text-[6cqi]">

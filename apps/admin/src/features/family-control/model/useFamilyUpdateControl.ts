@@ -1,19 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '@/shared/api/client';
+import { patchFamilyControlClientApi } from '../api/patchFamilyControlClient';
+import type { PatchControlRequest } from './types';
 
-// useUpdateMemberControl.ts
 export const useFamilyUpdateControl = ({ familyId }: { familyId: number }) => {
   const queryClient = useQueryClient();
   const updateMember = useMutation({
-    mutationFn: ({
-      subId,
-      data,
-    }: {
-      subId: number;
-      data: { dataLimitGb: number; isBlocked: boolean; isParent?: boolean };
-    }) => {
-      return api.patch(`/api/v1/admin/families/${familyId}/members/${subId}/control-status`, data);
-    },
+    mutationFn: ({ subId, body }: PatchControlRequest) =>
+      patchFamilyControlClientApi({ body, familyId, subId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminFamilyDatailControl', familyId] });
     },

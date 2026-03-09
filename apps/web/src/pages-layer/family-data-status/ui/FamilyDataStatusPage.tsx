@@ -27,7 +27,6 @@ interface FamilyUsage {
 
 const START_COLOR = '#4F46E5';
 const END_COLOR = '#D9C9FF';
-const REMAINING_COLOR = '#E5E7EB';
 
 const interpolateColor = (factor: number) => {
   const clamped = Math.min(1, Math.max(0, factor));
@@ -74,29 +73,31 @@ export const FamilyDataStatusPage = () => {
     queryKey: ['familyUsage'],
   });
 
-  const coloredSubUsages = useMemo(
+  const sortedSubUsages = useMemo(
     () =>
-      data?.subUsages.map((subUsage, index, list) => ({
-        ...subUsage,
-        color: interpolateColor(list.length > 1 ? index / (list.length - 1) : 0),
-      })) ?? [],
+      [...(data?.subUsages ?? [])].sort((a, b) => {
+        return b.dataUsageRemainAmount - a.dataUsageRemainAmount;
+      }),
     [data],
   );
 
+  const coloredSubUsages = useMemo(
+    () =>
+      sortedSubUsages.map((subUsage, index, list) => ({
+        ...subUsage,
+        color: interpolateColor(list.length > 1 ? index / (list.length - 1) : 0),
+      })),
+    [sortedSubUsages],
+  );
+
   const donutData = useMemo(
-    () => [
-      {
-        fill: REMAINING_COLOR,
-        name: '잔여량',
-        value: Math.max(0, (data?.familyDataAmount ?? 0) - (data?.familyDataUsageAmount ?? 0)),
-      },
-      ...coloredSubUsages.map((subUsage) => ({
+    () =>
+      coloredSubUsages.map((subUsage) => ({
         fill: subUsage.color,
         name: subUsage.subName,
-        value: subUsage.dataUsageAmount,
+        value: subUsage.dataUsageRemainAmount,
       })),
-    ],
-    [coloredSubUsages, data?.familyDataAmount, data?.familyDataUsageAmount],
+    [coloredSubUsages],
   );
 
   if (isPending) {
@@ -134,8 +135,8 @@ export const FamilyDataStatusPage = () => {
           <DonutChart
             data={donutData}
             total={data.familyDataAmount}
-            totalUsed={data.familyDataUsageAmount}
-            totalUsedLabel="총 사용"
+            totalUsed={data.familyDataRemainAmount}
+            totalUsedLabel="잔여"
           />
         </div>
       </div>
@@ -158,9 +159,10 @@ export const FamilyDataStatusPage = () => {
               </span>
             </div>
             <ProgressBar
+              color={subUsage.color}
               label={subUsage.subName}
               total={Math.max(subUsage.dataLimit, 1)}
-              value={subUsage.dataUsageAmount}
+              value={subUsage.dataUsageRemainAmount}
             />
           </div>
         ))}
