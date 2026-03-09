@@ -16,7 +16,7 @@ interface PolicyUserCardProps {
 export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
   const [isAccordianOpen, setIsAccordianOpen] = useState(false);
   const { open } = useModal();
-  const isMe = data.memberId === useUserStore().subId;
+  const isMe = data.subId === useUserStore().subId;
 
   const handleOpenModal = useCallback(() => {
     open('policyDetailModal', {
