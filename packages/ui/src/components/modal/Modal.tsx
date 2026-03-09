@@ -13,7 +13,7 @@ interface ModalProps extends HTMLAttributes<HTMLDivElement> {
 
 const sizeClasses: Record<ModalSize, string> = {
   custom: '',
-  default: 'w-[18.375rem] md:w-[60dvw]',
+  default: 'min-w-[18.75rem]',
 };
 
 const btnLayoutClasses: Record<BtnLayout, string> = {

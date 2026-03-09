@@ -4,9 +4,10 @@ import DownIcon from '@hotspot/ui/assets/icons/arrow-down.svg';
 import UpIcon from '@hotspot/ui/assets/icons/arrow-up.svg';
 import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
 import { useEffect, useState } from 'react';
-import { Dropdown } from '@/shared/ui/dropdown/Dropdown';
-import type { MemberControl, MemberControlItem } from '../model/types';
+import type { MemberControl, MemberControlItem } from '@/domains/member-control';
+import { CategorySelect } from '@/shared';
 import { useFamilyOrder } from '../model/useFamilyOrder';
+import { moveListStep, refreshPriorityOrder, reorderList } from '../util/OrderFunctions';
 
 interface FamilyOrderSectionProps {
   familyId: number;
@@ -36,37 +37,21 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
 
   const typeName = selectedType === 'FIFO' ? '선착순' : '우선순위순';
 
-  const reorderAndSet = (newList: MemberControlItem[]) => {
-    const updated = newList.map((item, index) => ({
-      ...item,
-      priorityOrder: index + 1,
-    }));
+  const onDragEnd = (result: DropResult) => {
+    if (!(result.destination && isEditing)) return;
+    const updated = reorderList(members, result.source.index, result.destination.index);
     setMembers(updated);
   };
 
-  const onDragEnd = (result: DropResult) => {
-    if (!(result.destination && isEditing)) return;
-    const items = Array.from(members);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    if (reorderedItem) {
-      items.splice(result.destination.index, 0, reorderedItem);
-      reorderAndSet(items);
-    }
+  const moveStep = (index: number, direction: 'UP' | 'DOWN') => {
+    const updated = moveListStep(members, index, direction);
+    setMembers(updated);
   };
 
-  const moveStep = (index: number, direction: 'UP' | 'DOWN') => {
-    const newIndex = direction === 'UP' ? index - 1 : index + 1;
-
-    if (newIndex < 0 || newIndex >= members.length) return;
-
-    const items = Array.from(members);
-    const currentItem = items[index];
-    const targetItem = items[newIndex];
-
-    if (currentItem && targetItem) {
-      items[index] = targetItem;
-      items[newIndex] = currentItem;
-      reorderAndSet(items);
+  const handleTypeChange = (value: 'FIFO' | 'PRIORITY') => {
+    setSelectedType(value);
+    if (value === 'PRIORITY' && members.some((m) => m.priorityOrder <= 0)) {
+      setMembers(refreshPriorityOrder(members));
     }
   };
 
@@ -83,41 +68,65 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
       });
 
       setIsEditing(false);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h3 className="text-lg font-bold text-gray-900 mb-1">데이터 사용 우선순위</h3>
-          <p className="text-sm text-gray-500 leading-relaxed">
+      <div className="flex justify-between items-center">
+        <div className="w-full">
+          <h3 className="text-[14px] font-bold text-black mb-1">데이터 사용 우선순위</h3>
+          <p className="text-[11px] text-gray-600">
             낮은 숫자가 높은 우선순위입니다. 데이터 부족 시 우선순위가 먼저 할당됩니다.
           </p>
         </div>
 
-        <Button
-          onClick={isEditing ? handleSave : () => setIsEditing(true)}
-          variant={isEditing ? 'solid' : 'outline'}
-        >
-          {isEditing ? '저장' : '편집'}
-        </Button>
-      </div>
+        <div className="flex flex-row gap-2">
+          {isEditing ? (
+            <div className="border border-gray-300 rounded-sm flex items-center justify-center">
+              <CategorySelect
+                className="w-30"
+                onChange={(value: 'FIFO' | 'PRIORITY') => handleTypeChange(value)}
+                options={[
+                  { label: '선착순', value: 'FIFO' },
+                  { label: '우선순위순', value: 'PRIORITY' },
+                ]}
+                value={selectedType}
+              />
+            </div>
+          ) : (
+            <div className="bg-gray-100 flex w-30 items-center gap-2 rounded-md p-2 text-[0.8rem] font-semibold text-black">
+              {typeName}
+            </div>
+          )}
 
-      <div className="w-35 mb-6">
-        {isEditing ? (
-          <Dropdown
-            items={[
-              { label: '선착순', onClick: () => setSelectedType('FIFO') },
-              { label: '우선순위순', onClick: () => setSelectedType('PRIORITY') },
-            ]}
-            label={typeName}
-          />
-        ) : (
-          <div className="px-3 py-2 border border-gray-200 rounded-md bg-gray-50 text-[12px] text-gray-500 w-fit">
-            {typeName}
-          </div>
-        )}
+          <Button
+            className="w-fit px-6"
+            onClick={isEditing ? handleSave : () => setIsEditing(true)}
+            variant={isEditing ? 'solid' : 'outline'}
+          >
+            {isEditing ? '저장' : '편집'}
+          </Button>
+          {isEditing && (
+            <Button
+              className="w-fit px-6"
+              onClick={() => {
+                setSelectedType(familyControlData?.priorityType ?? 'FIFO');
+                setMembers(
+                  [...(familyControlData?.members ?? [])].sort(
+                    (a, b) => a.priorityOrder - b.priorityOrder,
+                  ),
+                );
+                setIsEditing(false);
+              }}
+              variant="outline"
+            >
+              취소
+            </Button>
+          )}
+        </div>
       </div>
 
       {selectedType === 'PRIORITY' && (
@@ -148,6 +157,7 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
                         } ${!isEditing && 'opacity-90'}`}
                         style={provided.draggableProps.style}
                       >
+                        <MoreIcon className="w-6 h-6 text-gray-300 cursor-grab" />
                         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-purple-600 font-bold text-sm">
                           {index + 1}
                         </div>
@@ -159,25 +169,24 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
 
                         {isEditing && (
                           <div className="flex items-center gap-2">
-                            <div className="flex flex-col border-r border-gray-100 pr-2 mr-2">
-                              <button
-                                className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
-                                disabled={index === 0}
-                                onClick={() => moveStep(index, 'UP')}
-                                type="button"
-                              >
-                                <UpIcon className="w-4 h-4 text-gray-600" />
-                              </button>
-                              <button
-                                className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
-                                disabled={index === members.length - 1}
-                                onClick={() => moveStep(index, 'DOWN')}
-                                type="button"
-                              >
-                                <DownIcon className="w-4 h-4 text-gray-600" />
-                              </button>
-                            </div>
-                            <MoreIcon className="w-6 h-6 text-gray-300 cursor-grab" />
+                            <button
+                              aria-label={`${member.memberName} 우선순위를 위로 이동`}
+                              className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
+                              disabled={index === 0}
+                              onClick={() => moveStep(index, 'UP')}
+                              type="button"
+                            >
+                              <UpIcon aria-hidden="true" className="w-4 h-4 text-gray-600" />
+                            </button>
+                            <button
+                              aria-label={`${member.memberName} 우선순위를 아래로 이동`}
+                              className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"
+                              disabled={index === members.length - 1}
+                              onClick={() => moveStep(index, 'DOWN')}
+                              type="button"
+                            >
+                              <DownIcon aria-hidden="true" className="w-4 h-4 text-gray-600" />
+                            </button>
                           </div>
                         )}
                       </div>

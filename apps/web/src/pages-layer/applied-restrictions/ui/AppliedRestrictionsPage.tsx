@@ -40,7 +40,7 @@ const DAY_LABEL: Record<string, string> = {
   TUESDAY: '화',
   WEDNESDAY: '수',
 };
-const BYTES_PER_KILOBYTE = 1024;
+const BYTES_PER_GIGABYTE = 1_000_000_000;
 
 const getAppliedRestrictions = async () => {
   const { data } = await api.get<ApiResponse<AppliedRestrictions>>('/api/v1/policies/applied', {
@@ -50,9 +50,9 @@ const getAppliedRestrictions = async () => {
   return data.data;
 };
 
-const formatMegaBytes = (bytes: number) => {
-  const megaBytes = bytes / (BYTES_PER_KILOBYTE * BYTES_PER_KILOBYTE);
-  return `${megaBytes.toFixed(1)}MB`;
+const formatGigaBytes = (bytes: number) => {
+  const gigaBytes = bytes / BYTES_PER_GIGABYTE;
+  return `${gigaBytes.toFixed(1)}GB`;
 };
 
 const formatSchedule = (snapshot: AppliedPolicy['policySnapshot']) => {
@@ -103,7 +103,7 @@ export const AppliedRestrictionsPage = () => {
         <div>
           <h2 className="text-lg font-semibold">나에게 적용된 제한 정책</h2>
           <p className="text-sm text-gray-600">
-            {data.memberName} | 데이터 한도 {formatMegaBytes(data.dataLimit)}
+            {data.memberName} | 데이터 한도 {formatGigaBytes(data.dataLimit)}
           </p>
         </div>
       </div>

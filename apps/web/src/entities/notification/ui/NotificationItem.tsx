@@ -1,5 +1,6 @@
 import WarningIcon from '@hotspot/ui/assets/icons/warning.svg';
 import { cn } from '@hotspot/ui/lib';
+import { formatDate } from '@/shared/lib';
 import type { Notification } from '../model/type';
 
 interface NotificationItemProps {
@@ -14,7 +15,7 @@ export const NotificationItem = ({ notification, onClick, className }: Notificat
   return (
     <button
       className={cn(
-        'flex flex-row gap-4 p-4 transition-colors cursor-pointer',
+        'flex flex-row gap-4 p-4 transition-colors cursor-pointer items-center',
         isRead ? 'bg-white' : 'bg-purple-100',
         className,
       )}
@@ -25,7 +26,7 @@ export const NotificationItem = ({ notification, onClick, className }: Notificat
       <div className="w-full flex flex-col gap-1 items-start">
         <p className={cn('text-sm font-medium text-black')}>{title}</p>
         <p className="text-gray-600 font-normal text-xs">{message}</p>
-        <span className="text-[10px] text-gray-500 mt-1">{createdAt}</span>
+        <span className="text-[10px] text-gray-500 mt-1">{formatDate(createdAt)}</span>
       </div>
     </button>
   );

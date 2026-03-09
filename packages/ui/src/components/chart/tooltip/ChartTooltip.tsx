@@ -15,7 +15,7 @@ interface ChartTooltipProps {
 
 export const ChartTooltip = ({ header, sections }: ChartTooltipProps) => {
   return (
-    <div className="rounded-xl border border-gray-100 bg-white p-3 shadow-lg">
+    <div className="z-dropdown rounded-xl border border-gray-100 bg-white p-3 shadow-lg">
       <div className="flex flex-col gap-1">
         {header ? <span className="text-xs font-medium text-gray-500">{header}</span> : null}
 

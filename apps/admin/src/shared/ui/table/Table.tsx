@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 export interface Column<T> {
   header: string; // 칼럼 이름
-  accessor: keyof T | 'actions'; // 데이터의 키 값 또는 버튼 등 커스텀 액션용
+  accessor: keyof T | (string & {}); // 데이터의 키 값 또는 버튼 등 커스텀 액션용
   render?: (value: any, row: T) => ReactNode; // 커스텀 렌더링 함수
 }
 
@@ -46,15 +46,18 @@ export const Table = <T extends { id: string }>({
     return data.map((row) => (
       <tr className="hover:bg-gray-50/50 transition-colors group" key={row.id}>
         {columns.map((col, index) => {
-          const cellValue =
-            col.accessor !== 'actions' ? (row[col.accessor as keyof T] as React.ReactNode) : null;
+          const value = (row as any)[col.accessor];
+
+          const content = col.render // render 함수가 있으면 최우선
+            ? col.render(value, row)
+            : (value as React.ReactNode);
 
           return (
             <td
               className="p-4 whitespace-nowrap text-black text-[14px] font-normal"
-              key={`cell-${row.id}-${index}`}
+              key={`${String(row.id)}-${String(col.accessor)}-${index}`}
             >
-              {col.render ? col.render(cellValue, row) : cellValue}
+              {content}
             </td>
           );
         })}
@@ -63,7 +66,7 @@ export const Table = <T extends { id: string }>({
   };
 
   return (
-    <div className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0">
+    <div className="overflow-x-auto">
       <table className="w-full text-sm text-left border-collapse">
         {/* Header */}
         <thead className="text-xs text-gray-700 uppercase border-b border-gray-200">

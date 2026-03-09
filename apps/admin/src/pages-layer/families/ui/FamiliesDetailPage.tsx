@@ -2,11 +2,9 @@
 import { Tab, type TabItem } from '@hotspot/ui';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import {
-  FamilyDetailControlTab,
-  FamilyDetailPolicyTab,
-  useFamilyDetail,
-} from '@/features/families';
+import { useFamilyDetail } from '@/domains/family';
+import { FamilyDetailControlTab } from '@/features/family-control';
+import { FamilyDetailPolicyTab } from '@/features/family-policy/member-info';
 
 type FamilyDetailTabValue = 'STATE' | 'POLICY' | 'CONTROL';
 const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [

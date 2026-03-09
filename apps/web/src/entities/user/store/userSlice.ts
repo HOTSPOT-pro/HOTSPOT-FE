@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction, type Reducer } from '@reduxjs/toolkit'
 import type { UserInfo, UserRole } from '@/entities/user/model/types';
 
 export interface UserState {
-  id: number | null;
+  subId: number | null;
   familyId: number | null;
   name: string | null;
   email: string | null;
@@ -14,9 +14,9 @@ const initialState: UserState = {
   email: null,
   familyId: null,
   familyRole: null,
-  id: null,
   name: null,
   phone: null,
+  subId: null,
 };
 
 const userSlice = createSlice({
@@ -24,7 +24,7 @@ const userSlice = createSlice({
   name: 'user',
   reducers: {
     clearUser: (state) => {
-      state.id = null;
+      state.subId = null;
       state.familyId = null;
       state.name = null;
       state.email = null;
@@ -32,7 +32,7 @@ const userSlice = createSlice({
       state.familyRole = null;
     },
     setUser: (state, action: PayloadAction<UserInfo>) => {
-      state.id = action.payload.id;
+      state.subId = action.payload.subId;
       state.familyId = action.payload.familyId;
       state.name = action.payload.name;
       state.email = action.payload.email;
