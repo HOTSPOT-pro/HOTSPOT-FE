@@ -18,6 +18,14 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth() + 1;
 
+  const isWithinRange = (year: number, month: number) => {
+    const targetDate = new Date(year, month - 1, 1);
+    const maxDate = new Date(currentYear, currentMonth - 1, 1);
+    const earliestDate = new Date(currentYear, currentMonth - 6, 1);
+
+    return targetDate >= earliestDate && targetDate <= maxDate;
+  };
+
   const moveMonth = (step: number) => {
     let newMonth = date.month + step;
     let newYear = date.year;
@@ -30,18 +38,27 @@ export const DateNavigation = ({ date, onChange }: DateNavigationProps) => {
       newYear -= 1;
     }
 
-    const isFuture = newYear > currentYear || (newYear === currentYear && newMonth > currentMonth);
-    if (!isFuture) onChange(newYear, newMonth);
+    if (isWithinRange(newYear, newMonth)) {
+      onChange(newYear, newMonth);
+    }
   };
 
-  const isNextDisabled =
-    date.year > currentYear || (date.year === currentYear && date.month >= currentMonth);
+  const isPrevDisabled = !isWithinRange(
+    date.month === 1 ? date.year - 1 : date.year,
+    date.month === 1 ? 12 : date.month - 1,
+  );
+
+  const isNextDisabled = !isWithinRange(
+    date.month === 12 ? date.year + 1 : date.year,
+    date.month === 12 ? 1 : date.month + 1,
+  );
 
   return (
     <div className="relative flex w-full items-center gap-2 ">
       <button
         aria-label="이전 달"
-        className="p-2 rounded-md hover:bg-gray-50"
+        className="p-2 rounded-md hover:bg-gray-50 disabled:opacity-30"
+        disabled={isPrevDisabled}
         onClick={() => moveMonth(-1)}
         type="button"
       >

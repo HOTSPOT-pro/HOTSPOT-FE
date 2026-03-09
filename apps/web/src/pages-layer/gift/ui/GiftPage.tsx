@@ -2,8 +2,8 @@
 
 import { Tab, type TabItem } from '@hotspot/ui';
 import { useEffect, useState } from 'react';
-import { PresentTab } from '@/features/gift/presentData';
-import { PresentLogList } from '@/features/gift/presentLog';
+import { PresentTab } from '@/features/gift/present-data';
+import { PresentLogList } from '@/features/gift/present-log';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
 

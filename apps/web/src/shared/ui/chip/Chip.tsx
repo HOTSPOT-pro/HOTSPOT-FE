@@ -12,7 +12,7 @@ export const Chip = ({
   return (
     <button
       className={cn(
-        'px-4 py-1.5 rounded-full text-sm transition-all',
+        'px-4 py-1.5 rounded-full text-sm transition-all whitespace-nowrap',
         isSelected
           ? 'bg-purple-600 text-white font-bold'
           : 'bg-gray-100 text-gray-600 hover:bg-gray-200',

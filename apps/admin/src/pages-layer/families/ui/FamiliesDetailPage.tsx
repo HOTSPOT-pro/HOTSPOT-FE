@@ -1,12 +1,12 @@
 'use client';
 import { Tab, type TabItem } from '@hotspot/ui';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import {
-  FamilyDetailControlTab,
-  FamilyDetailPolicyTab,
-  useFamilyDetail,
-} from '@/features/families';
+import { Component, type ReactNode, Suspense, useState } from 'react';
+import { useFamilyDetail } from '@/domains/family';
+import { FamilyDetailControlTab } from '@/features/family-control';
+import { FamilyDetailPolicyTab } from '@/features/family-policy/member-info';
+import { FamilyRealtimeStatusTab } from '@/features/family-realtime-status';
 
 type FamilyDetailTabValue = 'STATE' | 'POLICY' | 'CONTROL';
 const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [
@@ -14,6 +14,60 @@ const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [
   { label: '정책 적용 현황', value: 'POLICY' },
   { label: '제어 기능', value: 'CONTROL' },
 ];
+
+interface StateTabErrorBoundaryProps {
+  children: ReactNode;
+  onRetry: () => void;
+}
+
+interface StateTabErrorBoundaryState {
+  hasError: boolean;
+}
+
+class StateTabErrorBoundary extends Component<
+  StateTabErrorBoundaryProps,
+  StateTabErrorBoundaryState
+> {
+  public state: StateTabErrorBoundaryState = {
+    hasError: false,
+  };
+
+  public static getDerivedStateFromError() {
+    return {
+      hasError: true,
+    };
+  }
+
+  public render() {
+    if (this.state.hasError) {
+      return (
+        <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4 flex flex-col gap-3">
+          <p className="text-sm text-red-500">실시간 상태를 불러오지 못했습니다.</p>
+          <button
+            className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
+            onClick={() => {
+              this.props.onRetry();
+              this.setState({ hasError: false });
+            }}
+            type="button"
+          >
+            다시 시도
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const StateTabSkeleton = () => {
+  return (
+    <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4">
+      <p className="text-sm text-gray-500">실시간 상태를 불러오는 중입니다.</p>
+    </div>
+  );
+};
 
 export const FamiliesDetailPage = () => {
   const params = useParams();
@@ -43,7 +97,17 @@ export const FamiliesDetailPage = () => {
         />
       </nav>
       <main className="w-full">
-        {activeTab === 'STATE' && <div>실시간 상태</div>}
+        {activeTab === 'STATE' && (
+          <QueryErrorResetBoundary>
+            {({ reset }) => (
+              <StateTabErrorBoundary key={`state-${familyId}`} onRetry={reset}>
+                <Suspense fallback={<StateTabSkeleton />}>
+                  <FamilyRealtimeStatusTab />
+                </Suspense>
+              </StateTabErrorBoundary>
+            )}
+          </QueryErrorResetBoundary>
+        )}
         {activeTab === 'POLICY' && <FamilyDetailPolicyTab />}
         {activeTab === 'CONTROL' && <FamilyDetailControlTab />}
       </main>

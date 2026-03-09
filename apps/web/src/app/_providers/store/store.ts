@@ -28,15 +28,15 @@ const rootReducer = combineReducers({
 
 type ReducerState = ReturnType<typeof rootReducer>;
 type PersistedState = ReducerState & { _persist: PersistState };
+type PersistedUserState = {
+  subId: UserState['subId'];
+  familyRole: UserState['familyRole'];
+};
 
-const userTransform = createTransform<
-  UserState,
-  Pick<UserState, 'id' | 'familyRole'>,
-  ReducerState
->(
+const userTransform = createTransform<UserState, PersistedUserState, ReducerState>(
   (inboundState) => ({
     familyRole: inboundState.familyRole,
-    id: inboundState.id,
+    subId: inboundState.subId,
   }),
   (outboundState, key) => {
     if (key !== 'user') return outboundState as UserState;
@@ -45,9 +45,9 @@ const userTransform = createTransform<
       email: null,
       familyId: null,
       familyRole: outboundState.familyRole ?? null,
-      id: outboundState.id ?? null,
       name: null,
       phone: null,
+      subId: outboundState.subId ?? null,
     } as UserState;
   },
   { whitelist: ['user'] },

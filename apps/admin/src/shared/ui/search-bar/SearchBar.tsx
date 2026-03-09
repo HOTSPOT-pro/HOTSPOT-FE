@@ -1,5 +1,4 @@
 'use client';
-
 import CloseCircleFillIcon from '@hotspot/ui/assets/icons/close-circle-fill.svg';
 import SearchIcon from '@hotspot/ui/assets/icons/search.svg';
 import { type ChangeEvent, type FormEvent, useCallback, useState } from 'react';

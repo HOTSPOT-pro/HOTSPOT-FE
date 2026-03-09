@@ -64,7 +64,7 @@ const LineChartTooltipContent = ({
     <ChartTooltip
       header={`${date}${dateUnit} 전체 사용량`}
       sections={[
-        { percent: totalRatio, unit, value: total },
+        { percent: totalRatio, unit, value: total.toFixed(2) },
         ...(hasPersonalData
           ? [
               {
@@ -72,7 +72,7 @@ const LineChartTooltipContent = ({
                 percent: personalRatio ?? 0,
                 title: '개별 사용량',
                 unit,
-                value: personal ?? 0,
+                value: (personal ?? 0).toFixed(2),
               },
             ]
           : []),
@@ -123,6 +123,7 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
               />
             }
             cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
+            wrapperStyle={{ zIndex: 'var(--z-dropdown)' }}
           />
 
           <Legend content={<LineChartLegend />} verticalAlign="bottom" />
