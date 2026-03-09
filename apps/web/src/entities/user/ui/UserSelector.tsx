@@ -15,10 +15,6 @@ export const UserSelector = <T extends ReportUser>({
 }: UserSelectorProps<T>) => {
   return (
     <div className="w-full">
-      {/* ScrollContainer가 기존의 scrollRef와 overflow 로직을 대체합니다.
-        nativeMobileScroll: 모바일에서의 네이티브 스크롤 감도를 유지합니다.
-        hideScrollbars: 라이브러리 차원에서 스크롤바를 숨길 수 있습니다.
-      */}
       <ScrollContainer
         className="flex gap-2 py-2 px-4 select-none cursor-grab active:cursor-grabbing"
         hideScrollbars={true}

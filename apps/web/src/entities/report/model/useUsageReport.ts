@@ -1,12 +1,11 @@
 'use client';
 import type { LineChartDataProps } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
-import { getFamilyDailyUsage } from '../api/getFamilyDailyUsage'; // 추가 가정
+import { getFamilyDailyUsage } from '../api/getFamilyDailyUsage';
 import { getFamilyMonthlyUsage } from '../api/getFamilyMonthlyUsage';
-import { getServiceDailyUsage } from '../api/getServiceDailyUsage'; // 추가 가정
+import { getServiceDailyUsage } from '../api/getServiceDailyUsage';
 import { getServiceMonthlyUsage } from '../api/getServiceMonthlyUsage';
 import { getUserData } from '../api/getUserData';
-import type { DailyUsageResponse, MonthlyUsageResponse } from '../api/types';
 import type { MemberAppUsage, ReportRange } from './type';
 
 interface UseUsageReportProps {
@@ -14,15 +13,15 @@ interface UseUsageReportProps {
   range: ReportRange;
 }
 
+const MAX_RATIO = 100;
+const DATA_SCALE_FACTOR = 10;
+
 export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
   // 유저 목록
   const users = useQuery({
     queryFn: getUserData,
     queryKey: ['reportUsers'],
-    select: (data) => [
-      { name: '전체', subId: null },
-      ...data.map((u) => ({ name: u.subName, subId: u.subId })),
-    ],
+    select: (data) => [...data.map((u) => ({ name: u.subName, subId: u.subId }))],
   });
 
   // 차트 데이터
@@ -44,10 +43,16 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
           return {
             date: Number(item.usageMonth.split('-')[1]),
             total: totalUsage,
-            totalRatio: Math.min(Math.ceil((totalUsage / 10) * 100), 100),
+            totalRatio: Math.min(
+              Math.ceil((totalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+              MAX_RATIO,
+            ),
             ...(personalData && {
               personal: personalUsage,
-              personalRatio: Math.min(Math.ceil((personalUsage / 10) * 100), 100),
+              personalRatio: Math.min(
+                Math.ceil((personalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+                MAX_RATIO,
+              ),
             }),
           };
         });
@@ -69,10 +74,16 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
           return {
             date: Number(item.usageDate.split('-')[2]),
             total: totalUsage,
-            totalRatio: Math.min(Math.ceil((totalUsage / 10) * 100), 100),
+            totalRatio: Math.min(
+              Math.ceil((totalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+              MAX_RATIO,
+            ),
             ...(personalData && {
               personal: personalUsage,
-              personalRatio: Math.min(Math.ceil((personalUsage / 10) * 100), 100),
+              personalRatio: Math.min(
+                Math.ceil((personalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+                MAX_RATIO,
+              ),
             }),
           };
         });
