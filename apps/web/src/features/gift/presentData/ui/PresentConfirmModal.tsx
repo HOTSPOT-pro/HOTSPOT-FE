@@ -15,7 +15,7 @@ export const PresentConfirmModal = ({ close }: { close: () => void }) => {
   const { presentData } = useGift();
 
   const handleSendPresent = () => {
-    if (props?.selectedFamily && props?.presentAmount)
+    if (props?.selectedFamily !== null && props?.presentAmount)
       presentData.mutate({ dataAmount: props.presentAmount, targetSubId: props.selectedFamily });
   };
 

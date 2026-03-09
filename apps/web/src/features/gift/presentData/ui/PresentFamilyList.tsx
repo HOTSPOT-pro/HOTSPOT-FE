@@ -14,7 +14,12 @@ export const PresentFamilyList = ({ data, handleSelect, selected }: PresentFamil
       <p className="text-gray-500 text-[11px]">데이터를 선물할 가족 구성원을 선택하세요.</p>
       <div className="flex flex-col gap-2 pt-3">
         {data.map((i, index) => (
-          <button key={index} onClick={() => handleSelect(i.subId)} type="button">
+          <button
+            aria-pressed={selected === i.subId}
+            key={index}
+            onClick={() => handleSelect(i.subId)}
+            type="button"
+          >
             <PresentFamilyItem isSelected={selected === i.subId} user={i} />
           </button>
         ))}

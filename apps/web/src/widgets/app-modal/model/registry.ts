@@ -18,7 +18,7 @@ export const modalRegistry: Record<string, AppModalComponent> = {
   deleteFamilyMemberModal: DeleteFamilyMemberModal,
   errorModal: ErrorModal,
   logoutConfirmModal: LogoutConfirmModal,
-  PresentConfirmModal: PresentConfirmModal,
   policyDetailModal: PolicyDetailModal,
+  presentConfirmModal: PresentConfirmModal,
   testmodal: TestAlertModal,
 } as const;

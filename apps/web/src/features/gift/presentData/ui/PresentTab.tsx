@@ -18,7 +18,7 @@ export const PresentTab = () => {
 
   const { open } = useModal();
   const handleOpenModal = useCallback(() => {
-    open('PresentConfirmModal', {
+    open('presentConfirmModal', {
       props: {
         presentAmount: presentAmount,
         selectedFamily: selectedFamily,
@@ -49,7 +49,9 @@ export const PresentTab = () => {
         <PresentAmount handleSelect={handlePresentAmount} presentAmount={presentAmount} />
       </Card>
 
-      <Button onClick={handleOpenModal}>선물하기</Button>
+      <Button disabled={selectedFamily === null} onClick={handleOpenModal}>
+        선물하기
+      </Button>
     </div>
   );
 };

@@ -38,7 +38,7 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
       </div>
       <div className="flex flex-col gap-2 py-3">
         {data.items.map((i, index) => (
-          <PresentLogItem key={index} type={type} user={i} />
+          <PresentLogItem key={i.subId} type={type} user={i} />
         ))}
       </div>
     </div>
