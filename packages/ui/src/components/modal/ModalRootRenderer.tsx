@@ -99,11 +99,9 @@ export function ModalRootRenderer({ registry }: { registry: Registry }) {
       ) : (
         <div aria-hidden="true" className="absolute inset-0 bg-black/40" />
       )}
-      <div className="absolute inset-0 flex justify-center">
-        <div className="flex min-h-dvh w-full max-w-[500px] items-center justify-center">
-          <div aria-modal="true" ref={dialogRef} role="dialog" tabIndex={-1}>
-            <Comp close={close} props={state.props} />
-          </div>
+      <div className="absolute inset-0 flex justify-center items-center">
+        <div aria-modal="true" ref={dialogRef} role="dialog" tabIndex={-1}>
+          <Comp close={close} props={state.props} />
         </div>
       </div>
     </div>,
