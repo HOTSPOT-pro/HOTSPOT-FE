@@ -3,11 +3,6 @@ import { DragDropContext, Droppable, type DropResult } from '@hello-pangea/dnd';
 import { OrderItem } from './OrderItem';
 
 interface PolicyPriorityListProps {
-  data: FamilyPriority;
-  isEditing: boolean;
-}
-
-interface PolicyPriorityListProps {
   isEditing: boolean;
   members: MemberPriority[];
   onDragEnd: (result: DropResult, isEditing: boolean) => void;

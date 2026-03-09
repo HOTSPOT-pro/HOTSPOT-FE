@@ -1,7 +1,7 @@
 import type { FamilyPriority } from '@entities/policy';
 import { PolicyOrderSelector, PolicyPriorityList, useFifoOrder } from '@features/policy-order';
 import { Button } from '@hotspot/ui';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { usePriorityOrder } from '@/features/policy-order/model/usePriorityOrder';
 
 interface OrderSectionProps {
@@ -13,7 +13,11 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const { updateFifo } = useFifoOrder();
-  const { members, handleDragEnd, moveStep, updatePriority } = usePriorityOrder(data);
+  const { members, handleDragEnd, moveStep, updatePriority, reset } = usePriorityOrder(data);
+
+  const handleEditClick = useCallback(() => {
+    setIsEditing(true);
+  }, []);
 
   const handleSave = () => {
     if (policy === 'FIFO') {
@@ -25,6 +29,7 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
   };
 
   const handleCancel = () => {
+    reset();
     setPolicy(data.priorityType);
     setIsEditing(false);
   };
@@ -39,11 +44,7 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
 
         <div className="flex gap-2">
           {!isEditing ? (
-            <Button
-              className="w-fit h-fit px-2 py-1"
-              onClick={() => setIsEditing(true)}
-              variant="outline"
-            >
+            <Button className="w-fit h-fit px-2 py-1" onClick={handleEditClick} variant="outline">
               편집
             </Button>
           ) : (
@@ -74,7 +75,6 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
           </div>
         ) : (
           <PolicyPriorityList
-            data={data}
             isEditing={isEditing}
             members={members}
             onDragEnd={handleDragEnd}
