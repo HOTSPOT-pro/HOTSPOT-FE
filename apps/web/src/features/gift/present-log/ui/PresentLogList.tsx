@@ -23,14 +23,9 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
       <p className="text-[11px] text-gray-500">
         총 {data.items.length}건의 선물을 {isSend ? '보냈습니다.' : '받았습니다.'}
       </p>
-      <div className="flex flex-col gap-2 py-3">
-        {data.items.map((i, index) => (
-          <PresentLogItem key={index} type={type} user={i} />
-        ))}
-      </div>
       <div
         className={cn(
-          'flex flex-row justify-between px-4 py-3 rounded-2xl items-center',
+          'flex flex-row justify-between px-4 py-3 rounded-2xl items-center mt-2',
           themeBgColor,
         )}
       >
@@ -40,6 +35,11 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
         <span className={cn('font-bold text-[14px]', themeTextColor)}>
           {data.total.toFixed(1)}GB
         </span>
+      </div>
+      <div className="flex flex-col gap-2 py-3">
+        {data.items.map((i, index) => (
+          <PresentLogItem key={`${i.subId}-${i.date}-${i.amount}`} type={type} user={i} />
+        ))}
       </div>
     </div>
   );
@@ -59,12 +59,12 @@ const PresentLogItem = ({ user, type }: PresentLogItemProps) => {
       <div>
         <div>
           <span className="text-[14px] font-bold">{user.name}</span>
-          <span className="text-[11px] text-gray-500">{isSend ? '에게' : '님이 선물'}</span>
+          <span className="text-[11px] text-gray-500">{isSend ? '님에게' : '님이 선물'}</span>
         </div>
         <p className="text-[11px] text-gray-500">{formatDate(user.date)}</p>
       </div>
       <p className={cn('text-[13px] font-bold', amountColor)}>
-        {isSend ? '-' : '+'}
+        {!isSend && '+'}
         {user.amount.toFixed(1)}GB
       </p>
     </div>
