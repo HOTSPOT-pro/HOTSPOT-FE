@@ -1,4 +1,5 @@
 export const TERMS = {
-  privacy: 'https://www.naver.com',
-  term: 'https://www.notion.so/Hotspot-1b8c9e5a0c7b4e7d9f1a2b3c4d5e6f7',
+  privacy:
+    'https://handsome-snowflake-872.notion.site/31d88bf3dec28027a051f8d632679241?source=copy_link',
+  term: 'https://handsome-snowflake-872.notion.site/31d88bf3dec280858abcfd8154056b39?source=copy_link',
 };

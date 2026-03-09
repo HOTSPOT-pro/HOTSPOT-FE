@@ -1,12 +1,11 @@
 'use client';
 import type { LineChartDataProps } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
-import { getFamilyDailyUsage } from '../api/getFamilyDailyUsage'; // 추가 가정
+import { getFamilyDailyUsage } from '../api/getFamilyDailyUsage';
 import { getFamilyMonthlyUsage } from '../api/getFamilyMonthlyUsage';
-import { getServiceDailyUsage } from '../api/getServiceDailyUsage'; // 추가 가정
+import { getServiceDailyUsage } from '../api/getServiceDailyUsage';
 import { getServiceMonthlyUsage } from '../api/getServiceMonthlyUsage';
 import { getUserData } from '../api/getUserData';
-import type { DailyUsageResponse, MonthlyUsageResponse } from '../api/types';
 import type { MemberAppUsage, ReportRange } from './type';
 
 interface UseUsageReportProps {
@@ -14,29 +13,27 @@ interface UseUsageReportProps {
   range: ReportRange;
 }
 
+const MAX_RATIO = 100;
+const DATA_SCALE_FACTOR = 10;
+
 export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
   // 유저 목록
   const users = useQuery({
     queryFn: getUserData,
     queryKey: ['reportUsers'],
-    select: (data) => [
-      { name: '전체', subId: null },
-      ...data.map((u) => ({ name: u.subName, subId: u.subId })),
-    ],
+    select: (data) => [...data.map((u) => ({ name: u.subName, subId: u.subId }))],
   });
 
   // 차트 데이터
   const { data: chartData = [], isLoading: isChartLoading } = useQuery<LineChartDataProps[]>({
     queryFn: async () => {
       const targetId = userId === null || userId === -1 ? null : userId;
-
+      // 월간 데이터 호출
       if (range.unit === 'MONTH') {
-        // 월간 데이터 처리
-        const res = (await getFamilyMonthlyUsage(targetId)) as MonthlyUsageResponse;
+        const res = await getFamilyMonthlyUsage(targetId);
         const { subUsages } = res;
         const totalData = subUsages.find((s) => s.subId === -1);
-        const personalData =
-          userId !== null && userId !== -1 ? subUsages.find((s) => s.subId === userId) : null;
+        const personalData = targetId ? subUsages.find((s) => s.subId === targetId) : null;
 
         if (!totalData) return [];
 
@@ -46,20 +43,28 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
           return {
             date: Number(item.usageMonth.split('-')[1]),
             total: totalUsage,
-            totalRatio: Math.min(Math.ceil((totalUsage / 10) * 100), 100),
+            totalRatio: Math.min(
+              Math.ceil((totalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+              MAX_RATIO,
+            ),
             ...(personalData && {
               personal: personalUsage,
-              personalRatio: Math.min(Math.ceil((personalUsage / 10) * 100), 100),
+              personalRatio: Math.min(
+                Math.ceil((personalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+                MAX_RATIO,
+              ),
             }),
           };
         });
       } else {
-        // 일간 데이터 처리
-        const res = (await getFamilyDailyUsage(targetId)) as DailyUsageResponse;
+        // 일간 데이터 호출
+        const res = await getFamilyDailyUsage({
+          month: `${range.year}-${String(range.month).padStart(2, '0')}`,
+          targetSubId: targetId ?? undefined,
+        });
         const { subUsages } = res;
         const totalData = subUsages.find((s) => s.subId === -1);
-        const personalData =
-          userId !== null && userId !== -1 ? subUsages.find((s) => s.subId === userId) : null;
+        const personalData = targetId ? subUsages.find((s) => s.subId === targetId) : null;
 
         if (!totalData) return [];
 
@@ -69,16 +74,22 @@ export const useUsageReport = ({ userId, range }: UseUsageReportProps) => {
           return {
             date: Number(item.usageDate.split('-')[2]),
             total: totalUsage,
-            totalRatio: Math.min(Math.ceil((totalUsage / 10) * 100), 100),
+            totalRatio: Math.min(
+              Math.ceil((totalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+              MAX_RATIO,
+            ),
             ...(personalData && {
               personal: personalUsage,
-              personalRatio: Math.min(Math.ceil((personalUsage / 10) * 100), 100),
+              personalRatio: Math.min(
+                Math.ceil((personalUsage / DATA_SCALE_FACTOR) * MAX_RATIO),
+                MAX_RATIO,
+              ),
             }),
           };
         });
       }
     },
-    queryKey: ['familyUsage', range.unit, userId],
+    queryKey: ['familyUsage', range.unit, range.year, range.month, userId],
   });
 
   // 앱 사용량 데이터

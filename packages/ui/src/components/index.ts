@@ -1,4 +1,4 @@
-export { Button } from './button/Button';
+export { Button, buttonVariants } from './button/Button';
 export {
   Card,
   CardContent,

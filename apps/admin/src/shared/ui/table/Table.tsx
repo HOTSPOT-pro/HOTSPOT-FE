@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 export interface Column<T> {
   header: string; // 칼럼 이름
-  accessor: keyof T | 'actions'; // 데이터의 키 값 또는 버튼 등 커스텀 액션용
+  accessor: keyof T | (string & {}); // 데이터의 키 값 또는 버튼 등 커스텀 액션용
   render?: (value: any, row: T) => ReactNode; // 커스텀 렌더링 함수
 }
 
@@ -20,10 +20,10 @@ export const Table = <T extends { id: string }>({
   const renderBodyContent = () => {
     // 로딩 중일 때
     if (isLoading) {
-      return [...Array(10)].map((_, rowIndex) => (
+      return [...Array(5)].map((_, rowIndex) => (
         <tr className="border-b border-gray-50" key={`skeleton-row-${rowIndex}`}>
           {columns.map((_, colIndex) => (
-            <td className="px-6 py-5" key={`skeleton-col-${colIndex}`}>
+            <td className="p-4" key={`skeleton-col-${colIndex}`}>
               <div className="h-7 bg-gray-100 rounded-md animate-pulse w-full" />
             </td>
           ))}
@@ -46,15 +46,18 @@ export const Table = <T extends { id: string }>({
     return data.map((row) => (
       <tr className="hover:bg-gray-50/50 transition-colors group" key={row.id}>
         {columns.map((col, index) => {
-          const cellValue =
-            col.accessor !== 'actions' ? (row[col.accessor as keyof T] as React.ReactNode) : null;
+          const value = (row as any)[col.accessor];
+
+          const content = col.render // render 함수가 있으면 최우선
+            ? col.render(value, row)
+            : (value as React.ReactNode);
 
           return (
             <td
-              className="px-6 py-4 whitespace-nowrap text-black text-[14px] font-normal"
-              key={`cell-${row.id}-${index}`}
+              className="p-4 whitespace-nowrap text-black text-[14px] font-normal"
+              key={`${String(row.id)}-${String(col.accessor)}-${index}`}
             >
-              {col.render ? col.render(cellValue, row) : cellValue}
+              {content}
             </td>
           );
         })}
@@ -70,7 +73,7 @@ export const Table = <T extends { id: string }>({
           <tr>
             {columns.map((col, index) => (
               <th
-                className={`p-5 tracking-wider font-medium text-[15px] whitespace-nowrap`}
+                className={`p-4 tracking-wider font-medium text-[15px] whitespace-nowrap`}
                 key={`head-${index}`}
                 scope="col"
               >

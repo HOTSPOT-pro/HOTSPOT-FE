@@ -16,20 +16,23 @@ export const ReportPage = () => {
 
   return (
     <div className="flex flex-col w-full h-full pb-8">
+      {/* 날짜 선택 바*/}
+      <div className="py-2">
+        <MonthDaySelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />
+      </div>
+
       {/* 월일별 탭 버튼 */}
+      <div className="px-5">
+        {selectedTab === 'DAY' && (
+          <DateNavigation
+            date={{ month: selectedDate.month, year: selectedDate.year }}
+            onChange={handleDateChange}
+          />
+        )}
+      </div>
 
+      {/* 기간별 리포트 */}
       <div className="px-5 py-4">
-        {/* 날짜 선택 바*/}
-        <DateNavigation
-          date={{ month: selectedDate.month, year: selectedDate.year }}
-          onChange={handleDateChange}
-        />
-
-        <div className="py-2">
-          <MonthDaySelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />
-        </div>
-
-        {/* 기간별 리포트 */}
         <PeriodReport month={selectedDate.month} unit={selectedTab} year={selectedDate.year} />
       </div>
     </div>

@@ -1,7 +1,7 @@
 export type UserRole = 'OWNER' | 'PARENT' | 'CHILD';
 
 export interface UserInfo {
-  id: number;
+  subId: number;
   familyId: number;
   name: string;
   email: string;
