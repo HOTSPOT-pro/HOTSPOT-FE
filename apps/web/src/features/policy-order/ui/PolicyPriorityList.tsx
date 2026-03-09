@@ -1,5 +1,5 @@
-import type { FamilyPriority } from '@entities/policy';
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import type { FamilyPriority, MemberPriority } from '@entities/policy';
+import { DragDropContext, Droppable, type DropResult } from '@hello-pangea/dnd';
 import { OrderItem } from './OrderItem';
 
 interface PolicyPriorityListProps {
@@ -9,9 +9,9 @@ interface PolicyPriorityListProps {
 
 interface PolicyPriorityListProps {
   isEditing: boolean;
-  members: any[];
-  onDragEnd: any;
-  onMove: any;
+  members: MemberPriority[];
+  onDragEnd: (result: DropResult, isEditing: boolean) => void;
+  onMove: (index: number, direction: 'up' | 'down') => void;
 }
 
 export const PolicyPriorityList = ({
