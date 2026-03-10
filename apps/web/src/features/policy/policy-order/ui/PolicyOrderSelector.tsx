@@ -1,5 +1,5 @@
 import { POLICY_ORDER_TYPE, type PolicyOrderType } from '@domains/policy';
-import More2Icon from '@hotspot/ui/assets/icons/more-2.svg';
+import More2Icon from '@hotspot/ui/assets/icons/more-vertical.svg';
 import UserIcon from '@hotspot/ui/assets/icons/user.svg';
 import { cn } from '@hotspot/ui/lib';
 

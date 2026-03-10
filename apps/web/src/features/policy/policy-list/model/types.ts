@@ -35,3 +35,8 @@ export interface PostFamilyCustomPolicy {
   };
   isActive: boolean;
 }
+
+export interface PatchFamilyPolicyActive {
+  familyId: number;
+  blockPolicyIdList: number[];
+}

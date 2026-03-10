@@ -2,7 +2,7 @@ import { DragDropContext, Draggable, Droppable, type DropResult } from '@hello-p
 import { Button } from '@hotspot/ui';
 import DownIcon from '@hotspot/ui/assets/icons/arrow-down.svg';
 import UpIcon from '@hotspot/ui/assets/icons/arrow-up.svg';
-import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
+import MoreIcon from '@hotspot/ui/assets/icons/more-vertical.svg';
 import { useEffect, useState } from 'react';
 import type { MemberControl, MemberControlItem } from '@/domains/member-control';
 import { CategorySelect } from '@/shared';

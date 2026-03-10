@@ -16,6 +16,7 @@ export const useEditFamilyPolicy = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['familyPolicy'] });
+      queryClient.invalidateQueries({ queryKey: ['policyPerFamily'] });
     },
   });
 };

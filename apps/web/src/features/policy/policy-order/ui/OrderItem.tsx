@@ -1,5 +1,5 @@
 import { Draggable } from '@hello-pangea/dnd';
-import MoreIcon from '@hotspot/ui/assets/icons/more-2.svg';
+import MoreIcon from '@hotspot/ui/assets/icons/more-vertical.svg';
 import { cn } from '@hotspot/ui/lib';
 import type { MemberPriority } from '@/domains/policy';
 import { UserProfileIcon } from '@/domains/user';

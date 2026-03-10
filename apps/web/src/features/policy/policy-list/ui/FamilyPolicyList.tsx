@@ -2,6 +2,7 @@ import { Button, Card, useModal } from '@hotspot/ui';
 import { useCallback } from 'react';
 import type { GetFamilyCustomPolicy } from '../model/types';
 import { useFamilyCustomPolicy } from '../model/useFamilyCustomPolicy';
+import { useUpdatePolicyActive } from '../model/useUpdatePolicyActive';
 import { FamilyPolicyItem } from './FamilyPolicyItem';
 
 export const FamilyPolicyList = () => {
@@ -15,6 +16,23 @@ export const FamilyPolicyList = () => {
   const handleEdit = (policy: GetFamilyCustomPolicy) => {
     open('addFamilyPolicyModal', {
       props: { initialData: policy },
+    });
+  };
+
+  const { mutate } = useUpdatePolicyActive();
+  const handleTogglePolicy = (targetId: number) => {
+    if (!data || data.length === 0 || data[0] === undefined) return;
+    const nextActiveIdList = data.reduce<number[]>((acc, policy) => {
+      const isTarget = policy.id === targetId;
+      const willBeActive = isTarget ? !policy.isActive : policy.isActive;
+      if (willBeActive) {
+        acc.push(policy.id);
+      }
+      return acc;
+    }, []);
+    mutate({
+      blockPolicyIdList: nextActiveIdList,
+      familyId: data[0].familyId,
     });
   };
 
@@ -39,7 +57,11 @@ export const FamilyPolicyList = () => {
       <div className="flex flex-col gap-2">
         {data.map((policy) => (
           <div key={policy.id}>
-            <FamilyPolicyItem data={policy} onEdit={() => handleEdit(policy)} />
+            <FamilyPolicyItem
+              data={policy}
+              onActiving={() => handleTogglePolicy(policy.id)}
+              onEdit={() => handleEdit(policy)}
+            />
           </div>
         ))}
       </div>
