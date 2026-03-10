@@ -1,5 +1,5 @@
-import { useFamilyAppliedPolicy } from '@/entities/policy';
-import { useUserStore } from '@/entities/user';
+import { useFamilyAppliedPolicy } from '@/domains/policy';
+import { useUserStore } from '@/domains/user';
 import { FamilyPolicyList } from '@/features/policy/policy-list/ui/FamilyPolicyList';
 import { OrderSection } from '@/features/policy/policy-order';
 

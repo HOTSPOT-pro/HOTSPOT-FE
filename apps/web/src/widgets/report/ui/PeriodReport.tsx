@@ -1,10 +1,10 @@
 'use client';
 
-import type { ReportUser } from '@entities/report';
+import type { ReportUser } from '@domains/report';
 import { LineChart } from '@hotspot/ui/components';
 import { useMemo, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useFamilyChartData } from '@/entities/report/model/useFamilyChartData';
+import { useFamilyChartData } from '@/domains/report/model/useFamilyChartData';
 import { MonthNavigation } from '@/shared/ui';
 
 interface PeriodReportProps {

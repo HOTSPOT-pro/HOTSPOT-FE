@@ -3,7 +3,7 @@
 import { Button, Modal, useModal } from '@hotspot/ui';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { type Policy, usePolicy } from '@/entities/policy';
+import { type Policy, usePolicy } from '@/domains/policy';
 import type { DAYS, GetFamilyCustomPolicy, PolicySnapshot } from '../model/types';
 import { useAddFamilyPolicy } from '../model/useAddFamilyPolicy';
 import { useEditFamilyPolicy } from '../model/useEditFamilyPolicy';

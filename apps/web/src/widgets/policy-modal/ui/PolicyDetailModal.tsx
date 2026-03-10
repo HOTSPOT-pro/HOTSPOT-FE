@@ -1,4 +1,4 @@
-import type { PolicyPerUser } from '@entities/policy';
+import type { PolicyPerUser } from '@domains/policy';
 import type { PolicyApply } from '@features/policy/policy-apply';
 import { PolicyAddList, useApplyPolicy } from '@features/policy/policy-apply';
 import type { BlockApply } from '@features/policy/policy-blockapply';

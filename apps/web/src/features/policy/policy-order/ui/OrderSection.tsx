@@ -1,4 +1,4 @@
-import type { FamilyPriority } from '@entities/policy';
+import type { FamilyPriority } from '@domains/policy';
 import { Button, Card } from '@hotspot/ui';
 import { useCallback, useEffect, useState } from 'react';
 import { useFifoOrder } from '../model/useFifoOrder';

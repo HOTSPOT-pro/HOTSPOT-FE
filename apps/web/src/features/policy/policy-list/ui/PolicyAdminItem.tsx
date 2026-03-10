@@ -1,4 +1,4 @@
-import type { Policy } from '@/entities/policy';
+import type { Policy } from '@/domains/policy';
 import type { DAYS } from '../model/types';
 
 interface PolicyAdminItemProps {

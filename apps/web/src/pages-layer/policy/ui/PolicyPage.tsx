@@ -1,8 +1,8 @@
 'use client';
-import { useFamilyAppliedPolicy } from '@entities/policy';
+import { useFamilyAppliedPolicy } from '@domains/policy';
 import { Tab, type TabItem } from '@hotspot/ui/components';
 import { useEffect, useState } from 'react';
-import { useUserStore } from '@/entities/user';
+import { useUserStore } from '@/domains/user';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
 import { PolicyManageSection } from './PolicyManageSection';

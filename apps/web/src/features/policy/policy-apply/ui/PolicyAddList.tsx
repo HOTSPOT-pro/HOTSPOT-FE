@@ -1,5 +1,5 @@
-import type { Policy } from '@entities/policy';
-import { policyDescriptionFormatter, usePolicy } from '@entities/policy';
+import type { Policy } from '@domains/policy';
+import { policyDescriptionFormatter, usePolicy } from '@domains/policy';
 import { useFamilyCustomPolicy } from '../../policy-list/model/useFamilyCustomPolicy';
 import type { PolicyApply } from '../model/types';
 import { PolicyAddItem } from './PolicyAddItem';
