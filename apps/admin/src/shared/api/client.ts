@@ -6,7 +6,7 @@ const LOGIN_PATH = '/api/v1/admin/auth/login';
 
 export const createClientApi = (): AxiosInstance =>
   axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_ADMIN_BASE_URL,
     headers: {
       'Content-Type': 'application/json',
     },
