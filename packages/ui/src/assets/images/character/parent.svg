@@ -1,0 +1,26 @@
+<svg width="60" height="63" viewBox="0 0 60 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="29.882" cy="32.67" r="23.2132" transform="rotate(20.5398 29.882 32.67)" fill="#FF86B9"/>
+<ellipse cx="36.4732" cy="28.5833" rx="1.36548" ry="2.04822" transform="rotate(-14.105 36.4732 28.5833)" fill="white"/>
+<ellipse cx="45.0813" cy="26.4202" rx="1.36548" ry="2.04822" transform="rotate(-14.105 45.0813 26.4202)" fill="white"/>
+<mask id="mask0_5764_11002" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="9" width="48" height="47">
+<circle cx="29.882" cy="32.632" r="23.2132" transform="rotate(20.5398 29.882 32.632)" fill="#FF86B9"/>
+</mask>
+<g mask="url(#mask0_5764_11002)">
+<g filter="url(#filter0_g_5764_11002)">
+<path d="M18.4462 46.6477C8.6131 40.1893 6.6812 29.6525 8.3024 21.0722L-3.15381 33.5924C-3.53568 34.0097 5.26241 54.0728 9.70919 64.0521L37.3849 58.3205L46.9761 48.8861C38.1043 53.3473 27.7255 52.7423 18.4462 46.6477Z" fill="#E465BE" style="mix-blend-mode:darken"/>
+</g>
+</g>
+<ellipse cx="15.5294" cy="10.9892" rx="3.42432" ry="7.83298" transform="rotate(115.878 15.5294 10.9892)" fill="#FF86B9"/>
+<ellipse cx="13.2329" cy="17.0291" rx="4.86629" ry="9.94428" transform="rotate(79.6027 13.2329 17.0291)" fill="#FF86B9"/>
+<defs>
+<filter id="filter0_g_5764_11002" x="-12.1658" y="12.0722" width="68.1419" height="60.9799" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="1022" />
+<feDisplacementMap in="shape" scale="18" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_5764_11002">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+</defs>
+</svg>

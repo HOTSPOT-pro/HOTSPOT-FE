@@ -2,9 +2,9 @@
 import { useModal } from '@hotspot/ui';
 import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
-import { UserProfileIcon } from '@shared/ui';
 import { useCallback, useState } from 'react';
-import { useUserStore } from '../../user';
+import { UserMeLabel } from '@/entities/user';
+import { UserBlockLabel, UserProfileIcon, UserRoleLabel, useUserStore } from '../../user';
 import type { PolicyPerUser } from '../model/types';
 import { AccordionContainer } from './AccordionContainer';
 
@@ -22,18 +22,18 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
     open('policyDetailModal', {
       props: {
         familyId: familyId,
-        icon: <UserProfileIcon type={isMe ? 'MAIN' : 'OTHER'} />,
+        icon: <UserProfileIcon type={data.role} />,
         user: data,
       },
     });
-  }, [open, isMe, data, familyId]);
+  }, [open, data, familyId]);
 
   const handleToggle = useCallback(() => {
     setIsAccordianOpen((prev) => !prev);
   }, []);
 
   return (
-    <div className="w-full px-5 py-4 bg-white rounded-3xl">
+    <div className="w-full py-4 bg-white rounded-3xl">
       <div className="flex items-center rounded-lg overflow-hidden bg-white">
         <button
           className="flex-1 flex flex-row p-4 items-center text-left"
@@ -41,12 +41,17 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
           type="button"
         >
           <div>
-            <UserProfileIcon type={isMe ? 'MAIN' : 'OTHER'} />
+            <UserProfileIcon type={data.role} />
           </div>
 
           <div className="flex-1 flex flex-col gap-0.5">
-            <p className="font-bold text-sm">{data.memberName}</p>
-            <p className="text-xs text-gray-600">한도 {data.dataLimit}GB</p>
+            <p className="font-bold text-sm pb-1 flex items-center gap-1">
+              {data.memberName}
+              <UserRoleLabel role={data.role} />
+              <UserBlockLabel isBlocked={data.isBlocked} />
+              <UserMeLabel isMe={isMe} />
+            </p>
+            <p className="text-xs text-gray-600">한도 {data.familyDataSubLimit}GB</p>
             <div className="text-xs text-gray-600 flex items-center gap-1">
               <span>
                 정책{' '}
@@ -66,7 +71,7 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
           onClick={handleOpenModal}
           type="button"
         >
-          <RightArrow />
+          <RightArrow className="w-4 h-4" />
         </button>
       </div>
 

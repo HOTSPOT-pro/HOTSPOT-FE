@@ -112,7 +112,12 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
             variant="underline"
           />
           {activeTab === 'DATA' && (
-            <DataLimitSection datalimit={datalimit} draft={draft} onUpdate={handleUpdate} />
+            <DataLimitSection
+              datalimit={datalimit}
+              draft={draft}
+              minNum={props.user.familyDataUsage}
+              onUpdate={handleUpdate}
+            />
           )}
           {activeTab === 'POLICY' && (
             <PolicyAddList

@@ -1,77 +1,83 @@
 'use client';
 
-import { type ReportUser, ServiceReport, useUsageReport } from '@entities/report';
-import type { ReportRange } from '@entities/report/model/type';
-import { UserSelector } from '@entities/user';
+import type { ReportUser } from '@entities/report';
 import { LineChart } from '@hotspot/ui/components';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useFamilyChartData } from '@/entities/report/model/useFamilyChartData';
+import { MonthNavigation } from '@/shared/ui';
 
-export const PeriodReport = (range: ReportRange) => {
-  const [selectedUser, setSelectedUser] = useState<ReportUser>({
-    name: null,
-    subId: null,
-  });
+interface PeriodReportProps {
+  user: ReportUser;
+  unit: 'MONTH' | 'DAY';
+}
 
-  const { users, chartData, appUsageData, isAppLoading, isChartLoading } = useUsageReport({
+export const PeriodReport = ({ user, unit }: PeriodReportProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const range = { date: selectedDate, unit };
+
+  const {
+    data: chartData = [],
+    isLoading,
+    isError,
+  } = useFamilyChartData({
     range,
-    userId: selectedUser.subId,
+    userId: user.subId,
   });
 
-  useEffect(() => {
-    const firstUser = users?.[0];
-    if (firstUser && selectedUser.subId === null) {
-      setSelectedUser(firstUser);
-    }
-  }, [users, selectedUser.subId]);
+  const handleDateChange = (newDate: Date) => {
+    setSelectedDate(newDate);
+  };
 
-  if (!users) return <div>Loading...</div>;
+  // 1. 차트 컨텐츠를 렌더링하는 로직을 변수로 추출 (추천)
+  const renderChartContent = useMemo(() => {
+    if (isLoading) {
+      return (
+        <div className="flex h-full items-center justify-center text-gray-400">
+          데이터를 불러오는 중...
+        </div>
+      );
+    }
+
+    if (isError) {
+      return (
+        <div className="flex h-full items-center justify-center text-gray-400 text-center">
+          데이터를 불러오지 못했습니다.
+        </div>
+      );
+    }
+
+    if (chartData.length === 0) {
+      return (
+        <div className="flex h-full items-center justify-center text-gray-400">
+          데이터가 없습니다.
+        </div>
+      );
+    }
+
+    return <LineChart data={chartData} personalName={user.name} type={unit} unit="GB" />;
+  }, [isLoading, isError, chartData, user.name, unit]);
 
   return (
-    <>
-      {/* 구성원 선택 */}
-      <UserSelector onSelect={setSelectedUser} selectedUser={selectedUser} users={users} />
+    <div className="p-5 bg-white rounded-3xl flex flex-col gap-1">
+      <p className="text-base font-bold leading-relaxed text-gray-900">사용량 추이</p>
 
-      <div className="p-5 bg-white rounded-3xl flex flex-col gap-1">
-        <p className="text-base font-bold leading-relaxed text-gray-900">사용량 추이</p>
-
-        {/* 사용량 그래프 */}
-        <div className="w-full h-96 min-w-0 min-h-0 pt-3">
-          {isChartLoading ? (
-            <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">
-              Loading...
-            </div>
-          ) : (
-            <ErrorBoundary
-              fallback={
-                <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">
-                  데이터를 불러오는 중 오류가 발생했습니다.
-                </div>
-              }
-            >
-              {chartData.data.length === 0 ? (
-                <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">
-                  데이터가 없습니다.
-                </div>
-              ) : (
-                <LineChart
-                  data={chartData.data}
-                  personalName={selectedUser.name}
-                  type={range.unit}
-                  unit="GB"
-                />
-              )}
-            </ErrorBoundary>
-          )}
-        </div>
+      <div className="py-2">
+        {unit === 'DAY' && <MonthNavigation date={selectedDate} onChange={handleDateChange} />}
       </div>
 
-      {/* 앱별 사용량 */}
-      {isAppLoading ? (
-        <div className="mt-8 p-10 bg-white rounded-3xl text-center text-gray-400">Loading...</div>
-      ) : (
-        <ServiceReport data={appUsageData} isTotal={selectedUser.subId === null} />
-      )}
-    </>
+      <div className="w-full h-96 min-w-0 min-h-0 pt-3">
+        <ErrorBoundary
+          fallback={
+            <div className="flex h-full items-center justify-center text-gray-400 text-center">
+              데이터를 불러오는 중 오류가 발생했습니다.
+            </div>
+          }
+        >
+          {/* 복잡한 삼항 연산자 대신 변수만 배치 */}
+          {renderChartContent}
+        </ErrorBoundary>
+      </div>
+    </div>
   );
 };

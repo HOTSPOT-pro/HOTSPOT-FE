@@ -11,6 +11,7 @@ interface NotificationItemProps {
 
 export const NotificationItem = ({ notification, onClick, className }: NotificationItemProps) => {
   const { title, message, createdAt, isRead } = notification;
+  const dateObject = new Date(createdAt);
 
   return (
     <button
@@ -26,7 +27,7 @@ export const NotificationItem = ({ notification, onClick, className }: Notificat
       <div className="w-full flex flex-col gap-1 items-start">
         <p className={cn('text-sm font-medium text-black')}>{title}</p>
         <p className="text-gray-600 font-normal text-xs">{message}</p>
-        <span className="text-[10px] text-gray-500 mt-1">{formatDate(createdAt)}</span>
+        <span className="text-[10px] text-gray-500 mt-1">{formatDate(dateObject)}</span>
       </div>
     </button>
   );

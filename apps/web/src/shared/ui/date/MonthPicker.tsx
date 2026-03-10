@@ -5,6 +5,10 @@ import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { cn } from '@hotspot/ui/lib';
 import { useState } from 'react';
 
+const MAX_MONTHS_LOOKBACK = 6;
+const MONTHS_IN_YEAR = 12;
+const FIRST_DAY_OF_MONTH = 1;
+
 interface MonthPickerProps {
   year: number;
   month: number;
@@ -13,13 +17,17 @@ interface MonthPickerProps {
 
 export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
   const [viewYear, setViewYear] = useState(year);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  const months = Array.from({ length: MONTHS_IN_YEAR }, (_, i) => i + 1);
 
   const today = new Date();
   const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth() + 1;
+  const currentMonthIndex = today.getMonth();
 
-  const minLimitDate = new Date(currentYear, currentMonth - 6, 1);
+  const minLimitDate = new Date(
+    currentYear,
+    currentMonthIndex - MAX_MONTHS_LOOKBACK,
+    FIRST_DAY_OF_MONTH,
+  );
   const minLimitYear = minLimitDate.getFullYear();
 
   const handlePrevYear = () => setViewYear((prev) => prev - 1);
@@ -34,7 +42,7 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
           onClick={handlePrevYear}
           type="button"
         >
-          <LeftArrow className="text-gray-500" />
+          <LeftArrow className="text-gray-500 w-4 h-4" />
         </button>
         <span className="font-bold text-lg text-black">{viewYear}년</span>
         <button
@@ -43,7 +51,7 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
           onClick={handleNextYear}
           type="button"
         >
-          <RightArrow className="text-gray-500" />
+          <RightArrow className="text-gray-500 w-4 h-4 " />
         </button>
       </div>
 
@@ -51,9 +59,13 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
         {months.map((m) => {
           const isSelected = year === viewYear && month === m;
 
-          const targetDate = new Date(viewYear, m - 1, 1);
-          const maxDate = new Date(currentYear, currentMonth - 1, 1);
-          const minDate = new Date(currentYear, currentMonth - 6, 1);
+          const targetDate = new Date(viewYear, m - 1, FIRST_DAY_OF_MONTH);
+          const maxDate = new Date(currentYear, currentMonthIndex, FIRST_DAY_OF_MONTH);
+          const minDate = new Date(
+            currentYear,
+            currentMonthIndex - MAX_MONTHS_LOOKBACK,
+            FIRST_DAY_OF_MONTH,
+          );
 
           const isOutOfRange = targetDate < minDate || targetDate > maxDate;
 
