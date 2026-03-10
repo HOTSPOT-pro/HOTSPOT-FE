@@ -19,7 +19,7 @@ export const NotificationSettingItem = ({
 }: NotificationSettingItemProps) => {
   return (
     <div className="flex flex-row items-center gap-4 py-3 justify-between">
-      <Icon className="shrink-0" />
+      <Icon className="shrink-0 w-5 h-5" />
       <div className="w-full text-left">
         <p className=" text-gray-700">{label}</p>
         <p className="text-[12px] text-gray-600">{description}</p>
