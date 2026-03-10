@@ -34,4 +34,5 @@ export { ModalRootRenderer } from './modal/ModalRootRenderer';
 export { Overlay } from './overlay/Overlay';
 export { Slider } from './slider/Slider';
 export { Tab, type TabItem } from './tab/Tab';
+export { Textarea } from './textarea/Textarea';
 export { Toggle } from './toggle/Toggle';

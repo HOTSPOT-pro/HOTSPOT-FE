@@ -33,7 +33,7 @@
     "check-types": "turbo run check-types",
     "dev": "turbo run dev",
     "dev:admin": "turbo run dev --filter=@hotspot/admin",
-    "dev:admin:https": "turbo run dev --filter=@hotspot/admin -- --experimental-https --experimental-https-cert ../../hotspot.pics.pem --experimental-https-key ../../hotspot.pics-key.pem -H hotspot.pics",
+    "dev:admin:https": "turbo run dev --filter=@hotspot/admin -- --experimental-https --experimental-https-cert ../../hotspot.pics.pem --experimental-https-key ../../hotspot.pics-key.pem -H backoffice.hotspot.pics",
     "dev:web": "turbo run dev --filter=@hotspot/web",
     "dev:web:https": "turbo run dev --filter=@hotspot/web -- --experimental-https --experimental-https-cert ../../hotspot.pics.pem --experimental-https-key ../../hotspot.pics-key.pem",
     "format": "biome format --write .",

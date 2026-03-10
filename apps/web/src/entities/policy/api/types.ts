@@ -8,9 +8,14 @@ export interface Policy {
   id: number;
   name: string;
   policyType: string;
-  policySnapshot: { days?: string[]; durationMinutes?: number };
-  startTime: string;
-  endTime: string;
+  policySnapshot: {
+    days?: string[];
+    durationMinutes?: number;
+    startTime?: string;
+    endTime?: string;
+  };
+  policyDescription: string;
+  isActive: boolean;
 }
 export interface Block {
   id: number;

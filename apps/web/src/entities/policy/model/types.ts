@@ -10,6 +10,8 @@ export interface Policy {
     startTime?: string;
     endTime?: string;
   };
+  policyDescription: string;
+  isActive: boolean;
 }
 export interface BlockPolicy {
   id: number;

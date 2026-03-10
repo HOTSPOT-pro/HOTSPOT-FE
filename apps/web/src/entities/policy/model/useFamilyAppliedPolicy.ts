@@ -3,7 +3,7 @@ import { getAppliedPolicyClientApi } from '../api/getAppliedPolicyClientApi';
 import type { GetAppliedPolicyResponse } from '../api/types';
 import type { FamilyPriority, PolicyOrderType, PolicyPerFamily } from './types';
 
-export const useFamilyPolicy = () => {
+export const useFamilyAppliedPolicy = () => {
   const { data, isPending } = useQuery<
     GetAppliedPolicyResponse,
     Error,

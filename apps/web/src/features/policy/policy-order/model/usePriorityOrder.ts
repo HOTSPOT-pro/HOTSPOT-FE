@@ -33,8 +33,13 @@ export const usePriorityOrder = (initial: FamilyPriority) => {
     const nextIndex = direction === 'up' ? index - 1 : index + 1;
     if (nextIndex < 0 || nextIndex >= members.length) return;
     const items = [...members];
-    [items[index], items[nextIndex]] = [items[nextIndex]!, items[index]!];
-    setMembers(items);
+    const targetItem = items[index];
+    const nextItem = items[nextIndex];
+    if (targetItem !== undefined && nextItem !== undefined) {
+      items[index] = nextItem;
+      items[nextIndex] = targetItem;
+      setMembers(items);
+    }
   };
 
   const queryClient = useQueryClient();

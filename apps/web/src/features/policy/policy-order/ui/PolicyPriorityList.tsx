@@ -1,4 +1,4 @@
-import type { FamilyPriority, MemberPriority } from '@entities/policy';
+import type { MemberPriority } from '@entities/policy';
 import { DragDropContext, Droppable, type DropResult } from '@hello-pangea/dnd';
 import { OrderItem } from './OrderItem';
 
