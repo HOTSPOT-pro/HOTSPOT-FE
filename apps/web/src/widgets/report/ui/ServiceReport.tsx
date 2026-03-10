@@ -3,7 +3,7 @@
 import { ProgressBar } from '@hotspot/ui/components';
 import { COLORS, cn } from '@hotspot/ui/lib';
 import { useState } from 'react';
-import { type ReportUser, useAppUsageData } from '@/entities/report'; // 경로에 맞춰 수정
+import { type ReportUser, useAppUsageData } from '@/domains/report'; // 경로에 맞춰 수정
 import { DayNavigation } from '@/shared/ui';
 
 interface ServiceReportProps {

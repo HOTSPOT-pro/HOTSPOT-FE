@@ -3,7 +3,7 @@ import { useModal } from '@hotspot/ui';
 import DownArrow from '@hotspot/ui/assets/icons/arrow-down.svg';
 import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
 import { useCallback, useState } from 'react';
-import { UserMeLabel } from '@/entities/user';
+import { UserMeLabel } from '@/domains/user';
 import { UserBlockLabel, UserProfileIcon, UserRoleLabel, useUserStore } from '../../user';
 import type { PolicyPerUser } from '../model/types';
 import { AccordionContainer } from './AccordionContainer';

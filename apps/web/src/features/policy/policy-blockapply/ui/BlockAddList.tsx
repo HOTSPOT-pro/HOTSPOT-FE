@@ -1,4 +1,4 @@
-import { type BlockPolicy, useBlock } from '@entities/policy';
+import { type BlockPolicy, useBlock } from '@domains/policy';
 import type { BlockApply } from '../model/types';
 import { BlockAddItem } from './BlockAddItem';
 

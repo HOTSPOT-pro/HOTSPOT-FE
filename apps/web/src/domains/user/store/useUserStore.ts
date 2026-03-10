@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
-import type { UserInfo } from '@/entities/user/model/types';
-import type { UserState } from '@/entities/user/store/userSlice';
-import { clearUser, setUser } from '@/entities/user/store/userSlice';
+import type { UserInfo } from '@/domains/user/model/types';
+import type { UserState } from '@/domains/user/store/userSlice';
+import { clearUser, setUser } from '@/domains/user/store/userSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 
 export const useUserStore = (): UserState & {
