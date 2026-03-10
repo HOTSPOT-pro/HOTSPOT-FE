@@ -116,6 +116,9 @@ export const PolicyActionMenu = ({
   return (
     <div className="relative" ref={menuRef}>
       <button
+        aria-expanded={isOpen}
+        aria-haspopup="menu"
+        aria-label="정책 더보기"
         className="p-1 hover:bg-gray-200 rounded-full transition-colors"
         onClick={() => setIsOpen(!isOpen)}
         type="button"

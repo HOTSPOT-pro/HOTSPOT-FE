@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { patchFamilyCustomPolicyClinet } from '../api/patchFamilyPolicyClient';
+import { patchFamilyCustomPolicyClient } from '../api/patchFamilyPolicyClient';
 import type { PostFamilyCustomPolicy } from '../model/types';
 
 interface UpdateProps {
@@ -12,7 +12,7 @@ export const useEditFamilyPolicy = () => {
 
   return useMutation({
     mutationFn: ({ blockPolicyId, request }: UpdateProps) =>
-      patchFamilyCustomPolicyClinet({ blockPolicyId, request }),
+      patchFamilyCustomPolicyClient({ blockPolicyId, request }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['familyPolicy'] });

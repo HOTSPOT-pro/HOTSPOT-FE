@@ -19,9 +19,10 @@ export const FamilyPolicyList = () => {
     });
   };
 
-  const { mutate } = useUpdatePolicyActive();
+  const { mutate, isPending } = useUpdatePolicyActive();
   const handleTogglePolicy = (targetId: number) => {
-    if (!data || data.length === 0 || data[0] === undefined) return;
+    if (isPending) return;
+    if (!data || data[0] === undefined) return;
     const nextActiveIdList = data.reduce<number[]>((acc, policy) => {
       const isTarget = policy.id === targetId;
       const willBeActive = isTarget ? !policy.isActive : policy.isActive;

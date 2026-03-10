@@ -63,9 +63,11 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
       : {
           description: '',
           duration: '',
+          endTime: '',
           isActive: true,
           name: '',
           selectedDays: [],
+          startTime: '',
           type: 'SCHEDULED',
         },
     mode: 'onChange',
@@ -109,7 +111,7 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
     const values = watch();
     if (!(values.name && values.description)) return false;
     if (values.type === 'SCHEDULED') {
-      return values.startTime.length > 0 && Boolean(values.startTime) && Boolean(values.endTime);
+      return Boolean(values.startTime) && Boolean(values.endTime);
     }
     const hasDuration = Number(values.duration) > 0;
     const hasTimeRange = Boolean(values.startTime) && Boolean(values.endTime);
