@@ -1,5 +1,6 @@
 import type { Policy } from '@entities/policy';
 import { policyDescriptionFormatter, usePolicy } from '@entities/policy';
+import { useFamilyCustomPolicy } from '../../policy-list/model/useFamilyCustomPolicy';
 import type { PolicyApply } from '../model/types';
 import { PolicyAddItem } from './PolicyAddItem';
 
@@ -10,7 +11,7 @@ interface PolicyAddListProps {
 }
 
 export const PolicyAddList = ({ data, draft, onUpdate }: PolicyAddListProps) => {
-  const { policyList } = usePolicy();
+  const { data: policyList } = useFamilyCustomPolicy();
 
   const currentSelectedIds = draft.blockPolicyIdList ?? data.map((p) => p.id);
 
@@ -23,6 +24,8 @@ export const PolicyAddList = ({ data, draft, onUpdate }: PolicyAddListProps) => 
     }
     onUpdate(nextIds);
   };
+
+  if (!policyList) return <div>정책이 없습니다.</div>;
 
   return (
     <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">

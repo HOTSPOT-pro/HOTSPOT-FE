@@ -1,7 +1,7 @@
 import { Button, Card, useModal } from '@hotspot/ui';
 import { useCallback } from 'react';
 import type { GetFamilyCustomPolicy } from '../model/types';
-import { useFamilyCustomPolicy } from '../model/useFamilyPolicy';
+import { useFamilyCustomPolicy } from '../model/useFamilyCustomPolicy';
 import { FamilyPolicyItem } from './FamilyPolicyItem';
 
 export const FamilyPolicyList = () => {
