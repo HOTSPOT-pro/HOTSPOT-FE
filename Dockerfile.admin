@@ -6,6 +6,9 @@ WORKDIR /app
 RUN corepack enable
 ENV CI=true
 
+ARG NEXT_PUBLIC_ADMIN_BASE_URL
+ENV NEXT_PUBLIC_ADMIN_BASE_URL=$NEXT_PUBLIC_ADMIN_BASE_URL
+
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml turbo.json ./
 COPY apps/admin/package.json apps/admin/
 COPY packages/ui/package.json packages/ui/
