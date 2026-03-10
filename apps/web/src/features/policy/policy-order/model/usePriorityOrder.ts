@@ -1,4 +1,4 @@
-import type { FamilyPriority, MemberPriority } from '@entities/policy';
+import type { FamilyPriority, MemberPriority } from '@domains/policy';
 import type { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';

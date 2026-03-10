@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction, type Reducer } from '@reduxjs/toolkit';
-import type { UserInfo, UserRole } from '@/entities/user/model/types';
+import type { UserInfo, UserRole } from '@/domains/user/model/types';
 
 export interface UserState {
   subId: number | null;

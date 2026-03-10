@@ -1,4 +1,4 @@
-import type { UserRole } from '@/entities/user/model/types';
+import type { UserRole } from '@/domains/user/model/types';
 
 export interface Policy {
   id: number;

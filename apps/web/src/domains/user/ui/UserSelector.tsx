@@ -1,5 +1,5 @@
 import ScrollContainer from 'react-indiana-drag-scroll';
-import type { ReportUser } from '@/entities/report';
+import type { ReportUser } from '@/domains/report';
 import { UserChip } from './UserChip';
 
 interface UserSelectorProps<T extends ReportUser> {

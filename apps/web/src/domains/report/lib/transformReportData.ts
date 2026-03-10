@@ -1,5 +1,3 @@
-// src/features/report/lib/transformData.ts (추천 위치)
-
 import type { LineChartDataProps } from '@hotspot/ui';
 import type { MonthlyUsageResponse } from '../api/types';
 

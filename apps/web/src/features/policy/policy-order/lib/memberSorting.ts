@@ -1,4 +1,4 @@
-import type { MemberPriority } from '@/entities/policy';
+import type { MemberPriority } from '@/domains/policy';
 
 export const getSortedMembers = (data: MemberPriority[]) => {
   return [...data].sort((a, b) => {

@@ -2,7 +2,7 @@
 
 import { useModal } from '@hotspot/ui';
 import { useCallback } from 'react';
-import type { UserRole } from '@/entities/user/model/types';
+import type { UserRole } from '@/domains/user/model/types';
 import { MY_PAGE_MENU_SECTIONS } from '../model/constants';
 import { MyPageRow } from './MyPageRow';
 

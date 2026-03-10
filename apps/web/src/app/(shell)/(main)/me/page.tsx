@@ -1,4 +1,4 @@
-import type { UserRole } from '@/entities/user/model/types';
+import type { UserRole } from '@/domains/user/model/types';
 import { MyPage } from '@/pages-layer/my-page/ui/MyPage';
 import { createServerApi } from '@/shared/api/server';
 import type { ApiResponse } from '@/shared/api/types';

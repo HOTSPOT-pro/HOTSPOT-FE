@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { ReportUser } from '@/entities/report';
+import type { ReportUser } from '@/domains/report';
 import { Chip } from '@/shared/ui';
 
 export const UserChip = memo(
