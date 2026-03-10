@@ -5,7 +5,7 @@ on:
     branches:
       - develop
     paths:
-      - '.github/**'
+      - '.github/workflows/front-user-cd.yml'
       - 'apps/web/**'
       - 'packages/**'
       - 'pnpm-lock.yaml'
