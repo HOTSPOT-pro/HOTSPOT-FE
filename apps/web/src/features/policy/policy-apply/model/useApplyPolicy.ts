@@ -24,6 +24,10 @@ export const useApplyPolicy = ({ subId, familyId }: useApplyPolicyParams) => {
         queryKey: ['policyPerFamily'],
         refetchType: 'all',
       });
+      queryClient.invalidateQueries({
+        queryKey: ['currentBlockedPoliciesStatus'],
+        refetchType: 'all',
+      });
     },
   });
 

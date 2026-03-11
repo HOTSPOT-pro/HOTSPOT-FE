@@ -9,6 +9,7 @@ export const useUpdatePolicyActive = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['familyPolicy'] });
       queryClient.invalidateQueries({ queryKey: ['policyPerFamily'] });
+      queryClient.invalidateQueries({ queryKey: ['currentBlockedPoliciesStatus'] });
     },
   });
 };

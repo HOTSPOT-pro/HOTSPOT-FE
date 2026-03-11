@@ -42,6 +42,10 @@ export const useDatalimit = ({ subId, familyId }: useDatalimitParams) => {
         queryKey: ['policyPerFamily'],
         refetchType: 'active',
       });
+      queryClient.invalidateQueries({
+        queryKey: ['currentBlockedPoliciesStatus'],
+        refetchType: 'all',
+      });
     },
   });
 
