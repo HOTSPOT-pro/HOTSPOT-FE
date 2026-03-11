@@ -1,3 +1,5 @@
+export type { BannerAction, BannerMeta, BannerProps } from './banner/Banner';
+export { Banner } from './banner/Banner';
 export type { BottomNavItem } from './bottom-navigation/BottomNavigation';
 export { BottomNavigation } from './bottom-navigation/BottomNavigation';
 export { BottomSheet } from './bottom-sheet/BottomSheet';
