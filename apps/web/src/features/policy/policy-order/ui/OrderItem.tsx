@@ -14,8 +14,6 @@ interface OrderItemProps {
 }
 
 export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderItemProps) => {
-  const myId = useUserStore().subId;
-
   return (
     <Draggable draggableId={`item${member.subId}`} index={index} isDragDisabled={!isEditing}>
       {(provided, snapshot) => (
