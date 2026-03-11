@@ -36,7 +36,7 @@ export const MY_PAGE_MENU_SECTIONS: MyPageMenuSection[] = [
     id: 'general',
     items: [
       {
-        href: ROUTES.NOTIFICATION_SETTINGS,
+        href: ROUTES.NOTIFICATION.SETTINGS,
         icon: NotificationIcon,
         id: 'notification',
         label: '알림 설정',
