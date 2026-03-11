@@ -3,7 +3,7 @@
 import { Button, Modal } from '@hotspot/ui';
 import NextImage from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { type UseFormRegisterReturn, useForm } from 'react-hook-form';
+import { type UseFormRegisterReturn, useFieldArray, useForm } from 'react-hook-form';
 import { ONBOARDING_RULES } from '@/features/onboarding/model/formatRule';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
@@ -13,6 +13,8 @@ const BYTES_PER_KILOBYTE = 1024;
 const MAX_UPLOAD_BYTES = 10 * BYTES_PER_KILOBYTE * BYTES_PER_KILOBYTE;
 const WEBP_CONTENT_TYPE = 'image/png';
 const WEBP_QUALITY = 0.92;
+
+type FamilyRole = 'PARENT' | 'CHILD';
 
 interface PresignedUrlData {
   objectKey?: string;
@@ -28,9 +30,17 @@ interface FamilyAddRequest {
   familyMemberList: Array<{
     name: string;
     phone: string;
-    targetFamilyRole: 'PARENT' | 'CHILD';
+    targetFamilyRole: FamilyRole;
   }>;
   s3TempKey: string;
+}
+
+interface AddFamilyFormValues {
+  familyMemberList: Array<{
+    name: string;
+    phone: string;
+    targetFamilyRole: FamilyRole;
+  }>;
 }
 
 const ParentRoleIcon = () => (
@@ -106,13 +116,18 @@ const InputField = ({
   );
 };
 
+const createEmptyMember = (): AddFamilyFormValues['familyMemberList'][number] => ({
+  name: '',
+  phone: '',
+  targetFamilyRole: 'PARENT',
+});
+
 export const AddFamilyMemberModal = ({
   close,
 }: {
   close: () => void;
   props?: Record<string, unknown>;
 }) => {
-  const [selectedRole, setSelectedRole] = useState<'PARENT' | 'CHILD'>('PARENT');
   const [isGeneratingUrl, setIsGeneratingUrl] = useState(false);
   const [uploadErrorMessage, setUploadErrorMessage] = useState<string | null>(null);
   const [submitErrorMessage, setSubmitErrorMessage] = useState<string | null>(null);
@@ -124,37 +139,59 @@ export const AddFamilyMemberModal = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const {
+    control,
     formState: { errors, isValid },
     handleSubmit,
     register,
     setValue,
-  } = useForm<{
-    familyRole: 'PARENT' | 'CHILD';
-    name: string;
-    tel: string;
-  }>({
+    watch,
+  } = useForm<AddFamilyFormValues>({
     defaultValues: {
-      familyRole: 'PARENT',
-      name: '',
-      tel: '',
+      familyMemberList: [createEmptyMember()],
     },
     mode: 'onChange',
   });
 
+  const { append, fields, remove } = useFieldArray({
+    control,
+    name: 'familyMemberList',
+  });
+
+  const members = watch('familyMemberList');
+
   const handleTelChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const formatted = formatTel(e.target.value);
-      setValue('tel', formatted, { shouldValidate: true });
+      setValue(`familyMemberList.${index}.phone`, formatted, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
     },
     [setValue],
   );
 
   const handleSelectRole = useCallback(
-    (role: 'PARENT' | 'CHILD') => {
-      setSelectedRole(role);
-      setValue('familyRole', role, { shouldValidate: true });
+    (index: number, role: FamilyRole) => {
+      setValue(`familyMemberList.${index}.targetFamilyRole`, role, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
     },
     [setValue],
+  );
+
+  const handleAddMember = useCallback(() => {
+    append(createEmptyMember());
+  }, [append]);
+
+  const handleRemoveMember = useCallback(
+    (index: number) => {
+      if (fields.length === 1) {
+        return;
+      }
+      remove(index);
+    },
+    [fields.length, remove],
   );
 
   const convertImageToWebp = useCallback((file: File): Promise<Blob> => {
@@ -289,13 +326,11 @@ export const AddFamilyMemberModal = ({
     try {
       const payload: FamilyAddRequest = {
         applyType: 'ADD',
-        familyMemberList: [
-          {
-            name: formValues.name,
-            phone: toPureDigits(formValues.tel),
-            targetFamilyRole: formValues.familyRole,
-          },
-        ],
+        familyMemberList: formValues.familyMemberList.map((member) => ({
+          name: member.name,
+          phone: toPureDigits(member.phone),
+          targetFamilyRole: member.targetFamilyRole,
+        })),
         s3TempKey: uploadedTempKey,
       };
 
@@ -332,62 +367,87 @@ export const AddFamilyMemberModal = ({
           가족 구성원 추가 신청
         </Modal.Title>
         <Modal.Description className="text-[0.875rem] text-gray-500">
-          신청 후 검토를 거쳐 구성원이 추가됩니다
+          여러 명의 구성원을 한 번에 신청할 수 있습니다.
         </Modal.Description>
       </Modal.Header>
 
       <Modal.Content className="mt-2 gap-6">
-        <input {...register('familyRole', { required: '필수 입력 항목입니다.' })} type="hidden" />
+        <div className="space-y-4">
+          {fields.map((field, index) => {
+            const memberRole = members?.[index]?.targetFamilyRole ?? 'PARENT';
 
-        <InputField
-          errorMessage={errors.name?.message}
-          helpText="가족 구성원 이름을 입력해주세요."
-          inputProps={register('name', {
-            minLength: { message: '2자 이상 입력해주세요.', value: 2 },
-            required: '필수 입력 항목입니다.',
-          })}
-          label="이름"
-          placeholder="홍길동"
-        />
-        <InputField
-          errorMessage={errors.tel?.message}
-          helpText="가족 구성원 전화번호를 입력해주세요."
-          inputProps={register('tel', {
-            ...ONBOARDING_RULES.tel,
-            onChange: handleTelChange,
-          })}
-          label="전화번호"
-          placeholder="010-0000-0000"
-        />
+            return (
+              <div className="space-y-4 rounded-2xl border border-gray-200 p-4" key={field.id}>
+                <div className="flex items-center justify-between">
+                  <p className="text-[0.9375rem] font-semibold text-black">구성원 {index + 1}</p>
+                  <button
+                    className="text-[0.75rem] font-medium text-gray-500 disabled:text-gray-300"
+                    disabled={fields.length === 1}
+                    onClick={() => handleRemoveMember(index)}
+                    type="button"
+                  >
+                    삭제
+                  </button>
+                </div>
 
-        <div className="space-y-3">
-          <p className="text-[1rem] font-semibold leading-none text-black">권한</p>
-          <div className="flex gap-2">
-            <button
-              className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
-                selectedRole === 'PARENT'
-                  ? 'border-purple-500 bg-purple-50 text-purple-700'
-                  : 'border-gray-200 bg-white text-gray-500'
-              }`}
-              onClick={() => handleSelectRole('PARENT')}
-              type="button"
-            >
-              <ParentRoleIcon />
-              부모
-            </button>
-            <button
-              className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
-                selectedRole === 'CHILD'
-                  ? 'border-green-500 bg-green-50 text-green-700'
-                  : 'border-gray-200 bg-white text-gray-500'
-              }`}
-              onClick={() => handleSelectRole('CHILD')}
-              type="button"
-            >
-              <ChildRoleIcon />
-              자녀
-            </button>
-          </div>
+                <InputField
+                  errorMessage={errors.familyMemberList?.[index]?.name?.message}
+                  helpText="가족 구성원 이름을 입력해주세요."
+                  inputProps={register(`familyMemberList.${index}.name`, {
+                    minLength: { message: '2자 이상 입력해주세요.', value: 2 },
+                    required: '필수 입력 항목입니다.',
+                  })}
+                  label="이름"
+                  placeholder="홍길동"
+                />
+
+                <InputField
+                  errorMessage={errors.familyMemberList?.[index]?.phone?.message}
+                  helpText="가족 구성원 전화번호를 입력해주세요."
+                  inputProps={register(`familyMemberList.${index}.phone`, {
+                    ...ONBOARDING_RULES.tel,
+                    onChange: handleTelChange(index),
+                  })}
+                  label="전화번호"
+                  placeholder="010-0000-0000"
+                />
+
+                <div className="space-y-3">
+                  <p className="text-[1rem] font-semibold leading-none text-black">권한</p>
+                  <div className="flex gap-2">
+                    <button
+                      className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
+                        memberRole === 'PARENT'
+                          ? 'border-purple-500 bg-purple-50 text-purple-700'
+                          : 'border-gray-200 bg-white text-gray-500'
+                      }`}
+                      onClick={() => handleSelectRole(index, 'PARENT')}
+                      type="button"
+                    >
+                      <ParentRoleIcon />
+                      부모
+                    </button>
+                    <button
+                      className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
+                        memberRole === 'CHILD'
+                          ? 'border-green-500 bg-green-50 text-green-700'
+                          : 'border-gray-200 bg-white text-gray-500'
+                      }`}
+                      onClick={() => handleSelectRole(index, 'CHILD')}
+                      type="button"
+                    >
+                      <ChildRoleIcon />
+                      자녀
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          <Button onClick={handleAddMember} type="button" variant="outline">
+            구성원 추가
+          </Button>
         </div>
 
         <div className="space-y-3">
@@ -454,7 +514,7 @@ export const AddFamilyMemberModal = ({
           }}
           type="button"
         >
-          추가 신청
+          신청하기
         </Button>
       </Modal.Footer>
     </Modal>
