@@ -3,6 +3,8 @@
 import { ErrorModal } from '@shared/ui';
 import type { ComponentType } from 'react';
 import { PresentConfirmModal } from '@/features/gift/present-data/ui/PresentConfirmModal';
+import { AddPolicyModal } from '@/features/policy/policy-list/ui/AddPolicyModal';
+import { DeleteFamilyPolicyModal } from '@/features/policy/policy-list/ui/DeleteFamilyPolicyModal';
 import { AddFamilyMemberModal } from '@/pages-layer/family/ui/modal/AddFamilyMemberModal';
 import { ChangeFamilyRoleModal } from '@/pages-layer/family/ui/modal/ChangeFamilyRoleModal';
 import { DeleteFamilyMemberModal } from '@/pages-layer/family/ui/modal/DeleteFamilyMemberModal';
@@ -14,8 +16,10 @@ type AppModalComponent = ComponentType<{ close: () => void; props?: Record<strin
 
 export const modalRegistry: Record<string, AppModalComponent> = {
   addFamilyMemberModal: AddFamilyMemberModal,
+  addFamilyPolicyModal: AddPolicyModal,
   changeFamilyRoleModal: ChangeFamilyRoleModal,
   deleteFamilyMemberModal: DeleteFamilyMemberModal,
+  deleteFamilyPolicyModal: DeleteFamilyPolicyModal,
   errorModal: ErrorModal,
   logoutConfirmModal: LogoutConfirmModal,
   policyDetailModal: PolicyDetailModal,

@@ -1,5 +1,5 @@
 import ViewRight from '@hotspot/ui/assets/images/character/view-right.svg';
-import type { UserRole } from '@/entities/user/model/types';
+import type { UserRole } from '@/domains/user/model/types';
 import { MyPageMenu } from './MyPageMenu';
 
 interface MyPageUserInfo {

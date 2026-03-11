@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 'use client';
 
-import { useUserStore } from '@entities/user';
+import { useUserStore } from '@domains/user';
 import type { PostOnboardingResponse } from '@features/onboarding/api/types';
 import { toPureDigits } from '@shared/lib';
 import { useMutation } from '@tanstack/react-query';

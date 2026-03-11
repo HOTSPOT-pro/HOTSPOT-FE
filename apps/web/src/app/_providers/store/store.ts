@@ -20,7 +20,7 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import storageSession from 'redux-persist/lib/storage/session';
-import { type UserState, userReducer } from '@/entities/user/store/userSlice';
+import { type UserState, userReducer } from '@/domains/user/store/userSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
