@@ -1,3 +1,5 @@
+import { BlockedPolicyBanner } from '@/widgets/blocked-policy-banner';
+
 export default function MyUsageLayout({
   children,
   giftedDataStatus,
@@ -11,6 +13,7 @@ export default function MyUsageLayout({
 }) {
   return (
     <div className="flex flex-col w-full h-full px-4 pt-4 pb-8 gap-4">
+      <BlockedPolicyBanner />
       {myTotalData}
       {myDataStatus}
       {giftedDataStatus}
