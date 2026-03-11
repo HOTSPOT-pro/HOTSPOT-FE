@@ -8,9 +8,14 @@ import { AgreementRow } from './AgreementRow';
 interface AgreementSectionProps {
   onValidSubmit: () => void;
   isPending: boolean;
+  errorMessage?: string | null;
 }
 
-export const AgreementSection = ({ onValidSubmit, isPending }: AgreementSectionProps) => {
+export const AgreementSection = ({
+  onValidSubmit,
+  isPending,
+  errorMessage,
+}: AgreementSectionProps) => {
   const [agreements, setAgreements] = useState({
     privacy: false,
     terms: false,
@@ -38,6 +43,8 @@ export const AgreementSection = ({ onValidSubmit, isPending }: AgreementSectionP
           onCheck={() => handleCheck('privacy')}
         />
       </div>
+
+      {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
 
       <Button
         className="mt-4"

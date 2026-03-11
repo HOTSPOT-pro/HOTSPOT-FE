@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useNotification } from '@/features/notification';
+import { ROUTES } from '@/shared/constants/routes';
 
 interface SettingDropDownProps {
   handleDropDown: () => void;
@@ -24,7 +25,7 @@ export const SettingDropDown = ({ handleDropDown }: SettingDropDownProps) => {
         <button
           className="px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100 border-t border-gray-50"
           onClick={() => {
-            router.push('/notification/settings');
+            router.push(ROUTES.NOTIFICATION.SETTINGS);
             handleDropDown();
           }}
           type="button"

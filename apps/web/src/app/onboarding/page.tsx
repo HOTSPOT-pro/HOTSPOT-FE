@@ -1,7 +1,7 @@
 import { OnBoardingPage } from '@pages-layer/onboarding';
 
-const page = () => {
+const Page = () => {
   return <OnBoardingPage />;
 };
 
-export default page;
+export default Page;

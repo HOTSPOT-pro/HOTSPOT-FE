@@ -24,8 +24,8 @@ interface PresignedUrlData {
   url?: string;
 }
 
-interface FamilyAddRequest {
-  applyType: 'ADD';
+interface FamilyCreateRequest {
+  applyType: 'CREATE';
   familyMemberList: Array<{
     name: string;
     phone: string;
@@ -34,7 +34,7 @@ interface FamilyAddRequest {
   s3TempKey: string;
 }
 
-interface AddFamilyFormValues {
+interface CreateFamilyFormValues {
   familyMemberList: Array<{
     name: string;
     phone: string;
@@ -115,13 +115,13 @@ const InputField = ({
   );
 };
 
-const createEmptyMember = (): AddFamilyFormValues['familyMemberList'][number] => ({
+const createEmptyMember = (): CreateFamilyFormValues['familyMemberList'][number] => ({
   name: '',
   phone: '',
   targetFamilyRole: 'PARENT',
 });
 
-export const AddFamilyMemberModal = ({
+export const CreateFamilyModal = ({
   close,
 }: {
   close: () => void;
@@ -144,7 +144,7 @@ export const AddFamilyMemberModal = ({
     register,
     setValue,
     watch,
-  } = useForm<AddFamilyFormValues>({
+  } = useForm<CreateFamilyFormValues>({
     defaultValues: {
       familyMemberList: [createEmptyMember()],
     },
@@ -316,9 +316,10 @@ export const AddFamilyMemberModal = ({
 
     setIsSubmitting(true);
     setSubmitErrorMessage(null);
+
     try {
-      const payload: FamilyAddRequest = {
-        applyType: 'ADD',
+      const payload: FamilyCreateRequest = {
+        applyType: 'CREATE',
         familyMemberList: formValues.familyMemberList.map((member) => ({
           name: member.name.trim(),
           phone: toPureDigits(member.phone),
@@ -327,7 +328,7 @@ export const AddFamilyMemberModal = ({
         s3TempKey: uploadedTempKey,
       };
 
-      await api.post('/api/v1/families/add', payload);
+      await api.post('/api/v1/families/create', payload);
       close();
     } catch (error) {
       const serverMessage =
@@ -342,7 +343,7 @@ export const AddFamilyMemberModal = ({
           }
         )?.response?.data?.message;
 
-      setSubmitErrorMessage(serverMessage ?? '가족 구성원 추가 신청에 실패했습니다.');
+      setSubmitErrorMessage(serverMessage ?? '가족 생성 신청에 실패했습니다.');
     } finally {
       setIsSubmitting(false);
     }
@@ -358,15 +359,15 @@ export const AddFamilyMemberModal = ({
 
   return (
     <Modal
-      className="w-[30.5rem] max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-[1.5rem] p-6"
+      className="w-[30.5rem] max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-[1.5rem] bg-white p-6"
       size="custom"
     >
       <Modal.Header className="gap-2">
         <Modal.Title className="text-[1rem] font-bold leading-tight text-black">
-          가족 구성원 추가 신청
+          가족 생성 신청
         </Modal.Title>
         <Modal.Description className="text-[0.875rem] text-gray-500">
-          여러 명의 구성원을 한 번에 신청할 수 있습니다.
+          가족 구성원을 여러 명 등록할 수 있습니다.
         </Modal.Description>
       </Modal.Header>
 
@@ -449,7 +450,7 @@ export const AddFamilyMemberModal = ({
           </Button>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           <p className="text-[1rem] font-semibold leading-none text-black">가족관계증명서</p>
           <label className="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-gray-300 bg-gray-50/40 p-2">
             {!isUploadComplete ? (

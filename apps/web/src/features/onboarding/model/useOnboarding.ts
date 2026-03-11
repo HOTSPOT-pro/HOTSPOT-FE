@@ -1,12 +1,10 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 'use client';
 
-import { useUserStore } from '@domains/user';
-import type { PostOnboardingResponse } from '@features/onboarding/api/types';
 import { toPureDigits } from '@shared/lib';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
+import type { PostOnboardingResponse } from '@/features/onboarding/api/types';
 import type { ApiErrorResponse } from '@/shared/api/types';
 import { postOnboarding } from '../api/postOnboarding';
 import type { OnboardingInfo } from './types';
@@ -33,9 +31,6 @@ const getOnboardingErrorMessage = (error: unknown) => {
 };
 
 export const useOnboarding = () => {
-  const router = useRouter();
-  const { setUser } = useUserStore();
-
   const { mutateAsync, isPending, error } = useMutation<
     PostOnboardingResponse,
     unknown,
@@ -54,21 +49,6 @@ export const useOnboarding = () => {
       if (process.env.NODE_ENV !== 'production') {
         console.debug('[onboarding] success response', response);
       }
-
-      setUser({
-        email: response.email,
-        familyId: response.familyId,
-        familyRole: response.familyRole,
-        name: response.name,
-        phone: response.phone,
-        subId: response.subId,
-      });
-
-      if (process.env.NODE_ENV !== 'production') {
-        console.debug('[onboarding] setUser dispatched');
-      }
-
-      router.replace('/');
     },
   });
 
