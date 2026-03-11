@@ -72,7 +72,7 @@ export const FamilyControlSection = ({
               }`}
               key={member.subId}
             >
-              {/* 상단: 정보 및 액션 버튼 */}
+              {/* 정보 및 편집 버튼 */}
               <div className="flex flex-row justify-between items-center">
                 <div className="flex items-center gap-2.5">
                   <span className="text-[14px] font-bold text-black">{member.memberName}</span>
@@ -98,7 +98,7 @@ export const FamilyControlSection = ({
                     <Button
                       className="w-fit h-8 px-4 text-xs"
                       disabled={editingId !== null}
-                      onClick={() => handleEdit(member.subId)} // 다른 멤버 편집 중엔 비활성화 (선택 사항)
+                      onClick={() => handleEdit(member.subId)}
                       variant="outline"
                     >
                       편집
@@ -107,7 +107,7 @@ export const FamilyControlSection = ({
                 </div>
               </div>
 
-              {/* 제어 영역: 편집 모드일 때만 활성화 */}
+              {/* 제어 영역 */}
               <div
                 className={`flex flex-col gap-4 ${!isCurrentEditing && 'opacity-60 pointer-events-none'}`}
               >
