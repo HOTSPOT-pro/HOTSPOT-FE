@@ -10,6 +10,8 @@ export interface MemberControlItem {
   familyRole: FAMILY_ROLE;
   isParent?: boolean;
   isBlocked: boolean;
-  dataLimitGb: number;
+  familyDataLimit: number;
+  familyDataUsage: number;
+  familyDataSubLimit: number;
   priorityOrder: number;
 }

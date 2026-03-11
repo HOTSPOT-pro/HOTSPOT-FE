@@ -14,7 +14,7 @@ export const FamilyControlSection = ({
   familyControlData,
 }: FamilyControlSectionProps) => {
   const [memberStates, setMemberStates] = useState<MemberControlItem[]>([]);
-  const [editingId, setEditingId] = useState<number | null>(null); // 현재 편집 중인 멤버 ID
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   const { updateMember } = useFamilyUpdateControl({ familyId });
 
@@ -40,19 +40,18 @@ export const FamilyControlSection = ({
     setEditingId(null);
   };
 
-  // [저장] 버튼 클릭
   const handleSave = async (member: MemberControlItem) => {
     try {
       await updateMember.mutateAsync({
         body: {
-          dataLimitGb: member.dataLimitGb,
+          dataLimitGb: member.familyDataSubLimit,
           isBlocked: member.isBlocked,
           isParent: member.isParent,
         },
         familyId,
         subId: member.subId,
       });
-      setEditingId(null); // 저장 성공 시 편집 모드 종료
+      setEditingId(null);
     } catch (error) {
       console.error(error);
     }
@@ -139,16 +138,16 @@ export const FamilyControlSection = ({
                   <div className="flex justify-between items-end">
                     <span className="text-[13px] text-gray-600">데이터 한도</span>
                     <span className="text-purple-600 font-bold text-[13px]">
-                      {member.dataLimitGb}GB
+                      {member.familyDataSubLimit}GB
                     </span>
                   </div>
                   <div className="flex flex-row gap-6 items-center">
                     <Slider
-                      maxNum={100}
-                      minNum={0}
-                      onChange={(val) => handleUpdateField(member.subId, 'dataLimitGb', val)}
+                      maxNum={member.familyDataLimit}
+                      minNum={member.familyDataUsage}
+                      onChange={(val) => handleUpdateField(member.subId, 'familyDataSubLimit', val)}
                       step={1}
-                      value={member.dataLimitGb}
+                      value={member.familyDataSubLimit}
                     />
                     <Input
                       className="w-25"
@@ -160,12 +159,12 @@ export const FamilyControlSection = ({
                         if (Number.isNaN(next)) return;
                         handleUpdateField(
                           member.subId,
-                          'dataLimitGb',
+                          'familyDataSubLimit',
                           Math.min(100, Math.max(0, next)),
                         );
                       }}
                       type="number"
-                      value={member.dataLimitGb}
+                      value={member.familyDataSubLimit}
                     />
                   </div>
                 </div>

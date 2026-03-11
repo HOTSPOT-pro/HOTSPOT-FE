@@ -3,8 +3,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import type { UserRole } from '@/entities/user/model/types';
-import { setUser } from '@/entities/user/store/userSlice';
+import type { UserRole } from '@/domains/user/model/types';
+import { setUser } from '@/domains/user/store/userSlice';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
 import { useAppDispatch } from '@/shared/store/hooks';

@@ -5,10 +5,10 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import type { Notification } from '@/entities/notification';
-import { getNotificationClientApi } from '@/entities/notification/api/getNotificationClientApi';
-import { getUnreadCountClientApi } from '@/entities/notification/api/getUnreadCountClientApi';
-import type { GetNotificationResponse } from '@/entities/notification/api/types';
+import type { Notification } from '@/domains/notification';
+import { getNotificationClientApi } from '@/domains/notification/api/getNotificationClientApi';
+import { getUnreadCountClientApi } from '@/domains/notification/api/getUnreadCountClientApi';
+import type { GetNotificationResponse } from '@/domains/notification/api/types';
 import {
   readAllNotificationClientApi,
   readNotificationClientApi,

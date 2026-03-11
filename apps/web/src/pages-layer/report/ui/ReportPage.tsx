@@ -4,8 +4,8 @@ import { Card } from '@hotspot/ui';
 import { MonthDaySelector } from '@shared/ui';
 import { PeriodReport } from '@widgets/report';
 import { useEffect, useState } from 'react';
-import { type ReportUser, useReportUsers } from '@/entities/report';
-import { UserSelector } from '@/entities/user';
+import { type ReportUser, useReportUsers } from '@/domains/report';
+import { UserSelector } from '@/domains/user';
 import { ServiceReport } from '@/widgets/report/ui/ServiceReport';
 
 export const ReportPage = () => {
