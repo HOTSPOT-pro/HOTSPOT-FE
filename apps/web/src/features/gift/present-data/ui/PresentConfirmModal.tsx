@@ -16,7 +16,10 @@ export const PresentConfirmModal = ({ close }: { close: () => void }) => {
 
   const handleSendPresent = () => {
     if (props?.selectedFamily !== null && props?.presentAmount)
-      presentData.mutate({ dataAmount: props.presentAmount, targetSubId: props.selectedFamily });
+      presentData.mutate(
+        { dataAmount: props.presentAmount, targetSubId: props.selectedFamily },
+        { onSuccess: close },
+      );
   };
 
   return (
