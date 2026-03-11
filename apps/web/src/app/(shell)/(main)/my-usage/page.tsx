@@ -1,7 +1,7 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import type { UserRole } from '@/entities/user/model/types';
 import { setUser } from '@/entities/user/store/userSlice';
@@ -26,26 +26,24 @@ const getAuthInfo = async () => {
 const AuthInfoSync = () => {
   const dispatch = useAppDispatch();
 
-  useSuspenseQuery({
-    queryFn: async () => {
-      const authInfo = await getAuthInfo();
-
-      dispatch(
-        setUser({
-          email: authInfo.email,
-          familyId: authInfo.familyId,
-          familyRole: authInfo.familyRole,
-          name: authInfo.name,
-          phone: authInfo.phone,
-          subId: authInfo.subId,
-        }),
-      );
-
-      return authInfo;
-    },
+  const { data: authInfo } = useSuspenseQuery({
+    queryFn: getAuthInfo,
     queryKey: ['authInfo'],
     staleTime: Infinity,
   });
+
+  useEffect(() => {
+    dispatch(
+      setUser({
+        email: authInfo.email,
+        familyId: authInfo.familyId,
+        familyRole: authInfo.familyRole,
+        name: authInfo.name,
+        phone: authInfo.phone,
+        subId: authInfo.subId,
+      }),
+    );
+  }, [authInfo, dispatch]);
 
   return null;
 };
