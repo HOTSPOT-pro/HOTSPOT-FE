@@ -2,6 +2,7 @@
 
 import { ErrorModal } from '@shared/ui';
 import type { ComponentType } from 'react';
+import { PresentConfirmModal } from '@/features/gift/present-data/ui/PresentConfirmModal';
 import { AddFamilyMemberModal } from '@/pages-layer/family/ui/modal/AddFamilyMemberModal';
 import { ChangeFamilyRoleModal } from '@/pages-layer/family/ui/modal/ChangeFamilyRoleModal';
 import { DeleteFamilyMemberModal } from '@/pages-layer/family/ui/modal/DeleteFamilyMemberModal';
@@ -18,5 +19,6 @@ export const modalRegistry: Record<string, AppModalComponent> = {
   errorModal: ErrorModal,
   logoutConfirmModal: LogoutConfirmModal,
   policyDetailModal: PolicyDetailModal,
+  presentConfirmModal: PresentConfirmModal,
   testmodal: TestAlertModal,
 } as const;

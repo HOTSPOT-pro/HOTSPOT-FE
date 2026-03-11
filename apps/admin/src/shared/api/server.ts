@@ -3,7 +3,7 @@ import 'server-only';
 import axios, { type AxiosInstance } from 'axios';
 import { cookies } from 'next/headers';
 
-const SERVER_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const SERVER_BASE_URL = process.env.NEXT_PUBLIC_ADMIN_BASE_URL;
 
 export const createServerApi = async (): Promise<AxiosInstance> => {
   const cookieStore = await cookies();

@@ -14,6 +14,10 @@ export const usePriorityOrder = (initial: FamilyPriority) => {
     setMembers(getSortedMembers(initial.memberPriorities));
   }, [initial]);
 
+  const reset = () => {
+    setMembers(getSortedMembers(initial.memberPriorities));
+  };
+
   const handleDragEnd = (result: DropResult, isEditing: boolean) => {
     if (!(result.destination && isEditing)) return;
     if (result.destination.index === result.source.index) return;
@@ -49,5 +53,5 @@ export const usePriorityOrder = (initial: FamilyPriority) => {
     },
   });
 
-  return { handleDragEnd, members, moveStep, updatePriority };
+  return { handleDragEnd, members, moveStep, reset, updatePriority };
 };

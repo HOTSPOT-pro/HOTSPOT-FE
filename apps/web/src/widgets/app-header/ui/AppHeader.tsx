@@ -47,7 +47,7 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
 
   const handleBackDefault = () => router.back();
   const handleNotificationDefault = () => router.push(ROUTES.NOTIFICATION);
-  const handleSettingsDefault = () => setIsSettingsOpen(true); // 임시, 현재는 알림에서만 사용
+  const handleSettingsDefault = () => setIsSettingsOpen(!isSettingsOpen); // 임시, 현재는 알림에서만 사용
 
   const renderLeft = (action?: HeaderAction) => {
     if (!isRenderableAction(action)) return null;

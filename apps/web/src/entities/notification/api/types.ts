@@ -1,3 +1,7 @@
+export interface GetNofiticationRequest {
+  page: number;
+  size: number;
+}
 export interface GetNotificationResponse {
   notifications: Notification[];
   page: number;

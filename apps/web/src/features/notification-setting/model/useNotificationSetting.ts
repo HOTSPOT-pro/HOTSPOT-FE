@@ -4,7 +4,9 @@ import { patchNotificationAllow } from '../api/patchNotificationAllow';
 import type { NotificationAllowResponse } from '../api/type';
 import { NOTIFICATION_SETTINGS } from '../constants/notificationSettingList';
 
-export type NotificationSettings = Record<string, boolean>;
+interface MutationContext {
+  previousData?: NotificationAllowResponse;
+}
 
 export const useNotificationSettings = () => {
   const queryClient = useQueryClient();
@@ -24,15 +26,49 @@ export const useNotificationSettings = () => {
     },
   });
 
-  const updateSetting = useMutation({
-    mutationFn: ({ category, isAllowed }: { category: string; isAllowed: boolean }) =>
-      patchNotificationAllow(category, isAllowed),
-    onSuccess: () => {
+  const updateSetting = useMutation<
+    any,
+    Error,
+    { category: string; isAllowed: boolean },
+    MutationContext
+  >({
+    mutationFn: ({ category, isAllowed }) => patchNotificationAllow(category, isAllowed),
+
+    onError: (err, newSetting, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['notificationsSettings'], context.previousData);
+      }
+    },
+
+    onMutate: async (newSetting): Promise<MutationContext> => {
+      await queryClient.cancelQueries({ queryKey: ['notificationsSettings'] });
+
+      const previousData = queryClient.getQueryData<NotificationAllowResponse>([
+        'notificationsSettings',
+      ]);
+
+      queryClient.setQueryData<NotificationAllowResponse>(['notificationsSettings'], (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          notificationAllows: old.notificationAllows.map((item) =>
+            item.notificationCategory === newSetting.category
+              ? { ...item, notificationAllow: newSetting.isAllowed }
+              : item,
+          ),
+        };
+      });
+
+      return { previousData };
+    },
+
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['notificationsSettings'] });
     },
   });
 
   return {
+    isUpdating: updateSetting.isPending,
     settings: notiSettingList.data,
     updateSetting: updateSetting.mutate,
   };

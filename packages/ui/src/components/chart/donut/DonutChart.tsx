@@ -95,6 +95,7 @@ export const DonutChart = memo(
       return {
         label: totalUsedLabel,
         percent: percentFormatter(totalUsed, total, 'total'),
+        totalValue: valueFormatter(total),
         value: valueFormatter(totalUsed),
       };
     }, [percentFormatter, total, totalUsed, totalUsedLabel, valueFormatter]);
@@ -133,6 +134,18 @@ export const DonutChart = memo(
             <Pie
               cx="50%"
               cy="50%"
+              data={[{ fill: COLORS.REMAINING, name: 'base', value: 1 }]}
+              dataKey="value"
+              endAngle={90}
+              innerRadius="90%"
+              isAnimationActive={false}
+              outerRadius="100%"
+              startAngle={-270}
+              stroke="none"
+            />
+            <Pie
+              cx="50%"
+              cy="50%"
               data={data}
               dataKey="value"
               endAngle={90}
@@ -160,8 +173,8 @@ export const DonutChart = memo(
           </span>
           <div className="flex items-baseline my-[1%] text-[13cqi]">{displayContent.percent}</div>
           <span className="font-medium text-gray-400 leading-none text-[6cqi] transition-colors text-gray-400">
-            <span className="font-bold  ">{displayContent.value}</span>
-            <span className="font-semibold  text-[6cqi]">GB / {displayContent.value}GB</span>
+            <span className="font-bold">{displayContent.value}</span>
+            <span className="font-semibold text-[6cqi]">GB / {displayContent.totalValue}GB</span>
           </span>
         </div>
       </div>

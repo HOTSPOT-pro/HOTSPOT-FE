@@ -16,6 +16,10 @@ export interface MonthlyUsage {
   usageAmount: number;
 }
 
+export interface DailyUsageRequest {
+  targetSubId?: number;
+  month: string;
+}
 export interface DailyUsageResponse {
   currentDateTime: string;
   subUsages: DailySubUsage[];
@@ -30,6 +34,10 @@ export interface DailyUsage {
   usageDayAmount: number;
 }
 
+export interface ServiceUsageRequest {
+  targetSubId: number;
+  date: string;
+}
 export interface ServiceUsageResponse {
   currentDateTime: string;
   appUsages: AppUsage[];

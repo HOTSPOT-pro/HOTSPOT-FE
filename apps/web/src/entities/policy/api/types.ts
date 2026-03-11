@@ -1,3 +1,5 @@
+import type { UserRole } from '@/entities/user/model/types';
+
 export interface GetAppliedPolicyRequest {
   isFamily: boolean;
 }
@@ -19,8 +21,11 @@ export interface PolicyPerUser {
   memberId: number;
   memberName: string;
   subId: number;
-  dataLimit: number;
+  familyDataSubLimit: number;
+  familyDataUsage: number;
   priority: number;
+  role: UserRole;
+  isBlocked: boolean;
   blockPolicyResponseList: Policy[];
   appBlockedServiceResponseList: Block[];
 }

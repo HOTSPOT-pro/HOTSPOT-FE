@@ -1,34 +1,30 @@
-import type { FamilyPriority } from '@entities/policy';
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { Button } from '@hotspot/ui/components';
-import { useCallback, useState } from 'react';
-import { usePriorityOrder } from '../model/usePriorityOrder';
+import type { FamilyPriority, MemberPriority } from '@entities/policy';
+import { DragDropContext, Droppable, type DropResult } from '@hello-pangea/dnd';
 import { OrderItem } from './OrderItem';
 
 interface PolicyPriorityListProps {
-  data: FamilyPriority;
+  isEditing: boolean;
+  members: MemberPriority[];
+  onDragEnd: (result: DropResult, isEditing: boolean) => void;
+  onMove: (index: number, direction: 'up' | 'down') => void;
 }
 
-export const PolicyPriorityList = ({ data }: PolicyPriorityListProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-
-  const { members, handleDragEnd, moveStep, updatePriority } = usePriorityOrder(data);
-
-  const toggleEditing = useCallback(() => {
-    isEditing && updatePriority.mutate();
-    setIsEditing((prev) => !prev);
-  }, [updatePriority, isEditing]);
-
+export const PolicyPriorityList = ({
+  isEditing,
+  members,
+  onDragEnd,
+  onMove,
+}: PolicyPriorityListProps) => {
   return (
-    <div className="w-full mx-auto bg-white">
-      <header className="flex justify-between items-center mb-3">
-        <h3 className="text-base font-bold">우선순위 설정</h3>
-      </header>
-
-      <DragDropContext onDragEnd={(result) => handleDragEnd(result, isEditing)}>
+    <div className="w-full mx-auto">
+      <DragDropContext onDragEnd={(result) => onDragEnd(result, isEditing)}>
         <Droppable droppableId="member-list">
           {(provided) => (
-            <div {...provided.droppableProps} className="space-y-2" ref={provided.innerRef}>
+            <div
+              className="flex flex-col gap-2"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {members.map((member, index) => (
                 <OrderItem
                   index={index}
@@ -36,7 +32,7 @@ export const PolicyPriorityList = ({ data }: PolicyPriorityListProps) => {
                   isLast={index === members.length - 1}
                   key={member.subId}
                   member={member}
-                  onMove={moveStep}
+                  onMove={onMove}
                 />
               ))}
               {provided.placeholder}
@@ -44,12 +40,6 @@ export const PolicyPriorityList = ({ data }: PolicyPriorityListProps) => {
           )}
         </Droppable>
       </DragDropContext>
-
-      <footer className="mt-4">
-        <Button onClick={toggleEditing} variant={isEditing ? 'solid' : 'outline'}>
-          {isEditing ? '저장' : '편집'}
-        </Button>
-      </footer>
     </div>
   );
 };
