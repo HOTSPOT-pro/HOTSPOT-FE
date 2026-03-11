@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import type {
   GiftUsageItem as GiftUsageItemResponse,
   GiftUsage as GiftUsageResponse,
-} from '@/entities/usage/api/types';
+} from '@/domains/usage/api/types';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';

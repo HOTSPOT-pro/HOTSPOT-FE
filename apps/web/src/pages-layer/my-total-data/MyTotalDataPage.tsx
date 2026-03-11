@@ -2,7 +2,7 @@
 
 import { DonutChart } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
-import type { TotalUsage } from '@/entities/usage';
+import type { TotalUsage } from '@/domains/usage';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
