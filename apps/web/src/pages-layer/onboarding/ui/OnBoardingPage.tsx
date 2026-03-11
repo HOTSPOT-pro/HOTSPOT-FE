@@ -58,7 +58,7 @@ export const OnBoardingPage = () => {
 
     await submitOnboarding(pendingData);
     closeSheet();
-    router.replace(ROUTES.ONBOARING.FAMILY);
+    router.replace(ROUTES.ONBOARDING.FAMILY);
   }, [closeSheet, pendingData, router, submitOnboarding]);
 
   return (

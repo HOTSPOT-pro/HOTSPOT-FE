@@ -11,7 +11,7 @@ export const ROUTES = {
     ROOT: '/notification',
     SETTINGS: '/notification/settings',
   },
-  ONBOARING: {
+  ONBOARDING: {
     FAMILY: '/onboarding/family',
     ROOT: '/onboarding',
   },
