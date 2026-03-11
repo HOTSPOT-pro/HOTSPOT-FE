@@ -1,3 +1,5 @@
+import { BlockedPolicyBanner } from '@/widgets/blocked-policy-banner';
+
 export default function FamilyUsageLayout({
   children,
   appliedRestrictions,
@@ -9,6 +11,7 @@ export default function FamilyUsageLayout({
 }) {
   return (
     <div className="flex flex-col w-full h-full px-4 pt-4 pb-8 gap-4">
+      <BlockedPolicyBanner />
       {familyDataStatus}
       {appliedRestrictions}
       {children}

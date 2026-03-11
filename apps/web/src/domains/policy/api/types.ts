@@ -41,3 +41,14 @@ export interface GetAppliedPolicyResponse {
   priorityType: string;
   memberPolicies: PolicyPerUser[];
 }
+
+export interface CurrentBlockedPolicy {
+  id: number;
+  name: string;
+}
+
+export interface CurrentBlockedPoliciesStatus {
+  isImmediateBlocked: boolean;
+  isCurrentlyBlocked: boolean;
+  blockedPolicies: CurrentBlockedPolicy[];
+}
