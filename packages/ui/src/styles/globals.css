@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./elevation.css";
+@import "./animation.css";
 @source "../components/**/*.{ts,tsx}";
 
 @theme {

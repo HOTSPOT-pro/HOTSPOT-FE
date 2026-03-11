@@ -1,10 +1,15 @@
-import ViewRight from '@hotspot/ui/assets/images/character/view-right-animated.svg';
+import ViewRight from '@hotspot/ui/assets/images/character/ViewRight.svg';
 
 const Loading = () => {
   return (
     <div className="w-full h-dvh flex flex-col items-center justify-center gap-4">
-      <ViewRight className="w-20 h-20" />
-      <span className="text-gray-500">이동하는 중입니다...</span>
+      <ViewRight className="animate-bounce" />
+      <p className="text-gray-500 items-center justify-center">
+        <span>이동하는 중입니다</span>
+        <span className="animate-dot-appear-1 inline-block">.</span>
+        <span className="animate-dot-appear-2 inline-block">.</span>
+        <span className="animate-dot-appear-3 inline-block">.</span>
+      </p>
     </div>
   );
 };
