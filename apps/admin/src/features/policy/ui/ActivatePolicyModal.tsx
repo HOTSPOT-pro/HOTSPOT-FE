@@ -15,7 +15,7 @@ export const ActivatePolicyModal = ({ close }: { close: () => void }) => {
 
   const { updatePolicyActive } = useUpdatePolicyActive();
 
-  const handleDelete = () => {
+  const handleActivate = () => {
     if (!(policyId && policyType)) return;
 
     updatePolicyActive.mutate(
@@ -43,7 +43,7 @@ export const ActivatePolicyModal = ({ close }: { close: () => void }) => {
         <Button disabled={updatePolicyActive.isPending} onClick={close} variant="ghost">
           취소
         </Button>
-        <Button isLoading={updatePolicyActive.isPending} onClick={handleDelete} variant="solid">
+        <Button isLoading={updatePolicyActive.isPending} onClick={handleActivate} variant="solid">
           변경하기
         </Button>
       </Modal.Footer>
