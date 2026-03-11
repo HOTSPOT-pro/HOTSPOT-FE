@@ -32,6 +32,7 @@ export {
 } from './modal/ModalContext';
 export { ModalRootRenderer } from './modal/ModalRootRenderer';
 export { Overlay } from './overlay/Overlay';
+export { SelectField } from './select-field/SelectField';
 export { Slider } from './slider/Slider';
 export { Tab, type TabItem } from './tab/Tab';
 export { Toggle } from './toggle/Toggle';
