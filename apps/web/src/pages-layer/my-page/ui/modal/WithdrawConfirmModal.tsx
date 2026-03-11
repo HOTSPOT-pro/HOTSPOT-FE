@@ -1,8 +1,8 @@
 'use client';
 
 import { Button, Modal, useModal } from '@hotspot/ui';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useUserStore } from '@/domains/user/store/useUserStore';
 import { api } from '@/shared/api/client';
 import { ROUTES } from '@/shared/constants/routes';
@@ -11,17 +11,10 @@ export const WithdrawConfirmModal = ({ close }: { close: () => void }) => {
   const router = useRouter();
   const { open } = useModal();
   const { clearUser } = useUserStore();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleWithdraw = async () => {
-    setIsLoading(true);
-
-    try {
-      await api.post('/api/v1/auth/withdraw');
-      clearUser();
-      close();
-      router.replace(ROUTES.LOGIN);
-    } catch {
+  const withdrawMutation = useMutation({
+    mutationFn: () => api.post('/api/v1/auth/withdraw'),
+    onError: () => {
       close();
       open('errorModal', {
         props: {
@@ -30,10 +23,13 @@ export const WithdrawConfirmModal = ({ close }: { close: () => void }) => {
           title: '오류',
         },
       });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    onSuccess: () => {
+      clearUser();
+      close();
+      router.replace(ROUTES.LOGIN);
+    },
+  });
 
   return (
     <Modal>
@@ -44,10 +40,14 @@ export const WithdrawConfirmModal = ({ close }: { close: () => void }) => {
         </Modal.Description>
       </Modal.Header>
       <Modal.Footer btnLayout="horizontal">
-        <Button disabled={isLoading} onClick={close} variant="ghost">
+        <Button disabled={withdrawMutation.isPending} onClick={close} variant="ghost">
           취소
         </Button>
-        <Button isLoading={isLoading} onClick={() => void handleWithdraw()} variant="destructive">
+        <Button
+          isLoading={withdrawMutation.isPending}
+          onClick={() => withdrawMutation.mutate()}
+          variant="destructive"
+        >
           탈퇴하기
         </Button>
       </Modal.Footer>
