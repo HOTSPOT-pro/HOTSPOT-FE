@@ -56,9 +56,13 @@ export const OnBoardingPage = () => {
       return;
     }
 
-    await submitOnboarding(pendingData);
-    closeSheet();
-    router.replace(ROUTES.ONBOARDING.FAMILY);
+    try {
+      await submitOnboarding(pendingData);
+      closeSheet();
+      router.replace(ROUTES.ONBOARDING.FAMILY);
+    } catch {
+      // Keep the sheet open so the user can see the error and retry.
+    }
   }, [closeSheet, pendingData, router, submitOnboarding]);
 
   return (
@@ -81,8 +85,6 @@ export const OnBoardingPage = () => {
         />
 
         <div className="w-full">
-          {/* 임시 */}
-          {errorMessage && <p className="mb-3 text-sm text-red-500">{errorMessage}</p>}
           <Button disabled={!isValid} onClick={handleSubmit(handleRequestSubmit)} type="button">
             완료
           </Button>
@@ -91,7 +93,11 @@ export const OnBoardingPage = () => {
 
       {isOpen && (
         <BottomSheet isOpen={isOpen} onClose={closeSheet}>
-          <AgreementSection isPending={isPending} onValidSubmit={handleConfirmSubmit} />
+          <AgreementSection
+            errorMessage={errorMessage}
+            isPending={isPending}
+            onValidSubmit={handleConfirmSubmit}
+          />
         </BottomSheet>
       )}
     </div>
