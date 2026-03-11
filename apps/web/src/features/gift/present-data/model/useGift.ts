@@ -30,15 +30,20 @@ export const useGift = () => {
 
   const queryClient = useQueryClient();
 
-  //낙관적 업데이트 x
   const presentData = useMutation({
     mutationFn: ({ targetSubId, dataAmount }: { targetSubId: number; dataAmount: number }) =>
       postPresentDataClient({ dataAmount, targetSubId }),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['presentFamilyData'] });
     },
-    onSuccess: () => {
-      console.log('선물하기 완료!');
+    onSuccess: (responseData) => {
+      queryClient.setQueryData(['presentFamilyData'], (oldData: PresentFamilyData) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          dataRemainAmount: oldData.dataRemainAmount - responseData.data.dataAmount,
+        };
+      });
     },
   });
 
