@@ -1,17 +1,17 @@
 'use client';
-import { useFamilyPolicy } from '@entities/policy';
+import { useFamilyAppliedPolicy } from '@domains/policy';
 import { Tab, type TabItem } from '@hotspot/ui/components';
 import { useEffect, useState } from 'react';
-import { useUserStore } from '@/entities/user';
+import { useUserStore } from '@/domains/user';
 import type { HeaderConfig } from '@/widgets/app-header/model/types';
 import { useSubHeaderStore } from '@/widgets/app-header/ui/SubHeaderProvider';
-import { OrderSection } from './OrderSection';
+import { PolicyManageSection } from './PolicyManageSection';
 import { PolicyUserSection } from './PolicyUserSection';
 
-type PolicyTabValue = 'FAMILY' | 'ORDER';
+type PolicyTabValue = 'FAMILY' | 'MANAGE';
 const POLICY_TABS: TabItem<PolicyTabValue>[] = [
   { label: '가족 정책', value: 'FAMILY' },
-  { label: '우선순위 정책', value: 'ORDER' },
+  { label: '정책 관리', value: 'MANAGE' },
 ];
 
 const HEADER_CONFIG: HeaderConfig = {
@@ -22,7 +22,7 @@ const HEADER_CONFIG: HeaderConfig = {
 };
 
 export const PolicyPage = () => {
-  const { policyPerFamily, priorityPerFamily } = useFamilyPolicy();
+  const { policyPerFamily } = useFamilyAppliedPolicy();
   const [activeTab, setActiveTab] = useState<PolicyTabValue>('FAMILY');
   const user = useUserStore();
 
@@ -31,7 +31,7 @@ export const PolicyPage = () => {
     setHeader(HEADER_CONFIG);
   }, [setHeader]);
 
-  if (!(policyPerFamily && priorityPerFamily) || user.familyRole === 'CHILD') {
+  if (!policyPerFamily || user.familyRole === 'CHILD') {
     return null;
   }
 
@@ -49,9 +49,9 @@ export const PolicyPage = () => {
       <main className="w-full px-4 py-4">
         <div className="rounded-3xl bg-white">
           {activeTab === 'FAMILY' && <PolicyUserSection data={policyPerFamily} />}
-          {activeTab === 'ORDER' && (
+          {activeTab === 'MANAGE' && (
             <div className="px-5 py-4">
-              <OrderSection data={priorityPerFamily} />
+              <PolicyManageSection />
             </div>
           )}
         </div>

@@ -35,4 +35,5 @@ export { Overlay } from './overlay/Overlay';
 export { SelectField } from './select-field/SelectField';
 export { Slider } from './slider/Slider';
 export { Tab, type TabItem } from './tab/Tab';
+export { Textarea } from './textarea/Textarea';
 export { Toggle } from './toggle/Toggle';

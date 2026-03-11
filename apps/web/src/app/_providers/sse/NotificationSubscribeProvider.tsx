@@ -2,7 +2,7 @@
 'use client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import type { GetNotificationResponse } from '@/entities/notification/api/types';
+import type { GetNotificationResponse } from '@/domains/notification/api/types';
 
 export const NotificationSubscribeProvider = () => {
   const queryClient = useQueryClient();

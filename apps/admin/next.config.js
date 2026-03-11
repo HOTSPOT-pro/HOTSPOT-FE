@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+/** biome-ignore-all lint/style/noDefaultExport: <explanation> */
 const nextConfig = {
   output: 'standalone',
 

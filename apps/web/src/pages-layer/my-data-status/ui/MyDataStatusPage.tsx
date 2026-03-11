@@ -7,12 +7,14 @@ import type { ApiResponse } from '@/shared/api/types';
 
 interface SubscriptionUsage {
   currentTime: string;
+  planName: string;
   subDataAmount: number;
   subDataUsageAmount: number;
   subDataRemainAmount: number;
-  dataUsagePercent: number;
+  dataRemainPercent: number;
 }
 const PERCENT_MAX = 100;
+const UNLIMITED_DATA_AMOUNT = -1;
 
 const getSubscriptionUsage = async () => {
   const { data } = await api.get<ApiResponse<SubscriptionUsage>>('/api/v1/subscriptionUsage');
@@ -73,19 +75,27 @@ export const MyDataStatusPage = () => {
     );
   }
 
+  const isUnlimitedPlan = data.subDataAmount === UNLIMITED_DATA_AMOUNT;
+  const remainPercent = isUnlimitedPlan ? PERCENT_MAX : data.dataRemainPercent;
+  const remainAmountLabel = isUnlimitedPlan ? '무제한' : formatData(data.subDataRemainAmount);
+  const totalAmountLabel = isUnlimitedPlan ? '무제한' : formatData(data.subDataAmount);
+
   return (
     <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-      <h2 className="text-[1rem] font-semibold">내 요금제 데이터</h2>
+      <div className="space-y-1">
+        <h2 className="text-[1rem] font-semibold">내 요금제 데이터</h2>
+        <p className="text-sm text-gray-500">{data.planName}</p>
+      </div>
 
       <div className="flex items-center gap-8">
         <div
           className="relative h-28 w-28 shrink-0 rounded-full"
           style={{
-            background: `conic-gradient(#7C4DFF ${Math.max(0, Math.min(PERCENT_MAX, data.dataUsagePercent))}%, #E5E7EB 0)`,
+            background: `conic-gradient(#7C4DFF ${Math.max(0, Math.min(PERCENT_MAX, remainPercent))}%, #E5E7EB 0)`,
           }}
         >
           <div className="absolute inset-[10px] flex items-center justify-center rounded-full bg-white">
-            <span className="text-[1.5rem] font-bold text-gray-900">{data.dataUsagePercent}%</span>
+            <span className="text-[1.5rem] font-bold text-gray-900">{remainPercent}%</span>
           </div>
         </div>
 
@@ -93,6 +103,14 @@ export const MyDataStatusPage = () => {
           <div className="flex items-center justify-between text-gray-600">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-purple-500" />
+              <span className="text-[1rem] font-semibold">잔여량</span>
+            </div>
+            <span className="text-[1rem] font-bold text-gray-900">{remainAmountLabel}</span>
+          </div>
+
+          <div className="flex items-center justify-between text-gray-500">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-gray-300" />
               <span className="text-[1rem] font-semibold">사용량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">
@@ -100,23 +118,11 @@ export const MyDataStatusPage = () => {
             </span>
           </div>
 
-          <div className="flex items-center justify-between text-gray-500">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-gray-300" />
-              <span className="text-[1rem] font-semibold">잔여량</span>
-            </div>
-            <span className="text-[1rem] font-bold text-gray-900">
-              {formatData(data.subDataRemainAmount)}
-            </span>
-          </div>
-
           <div className="h-px bg-gray-200" />
 
           <div className="flex items-center justify-between">
             <span className="text-[1rem] font-semibold text-gray-600">전체</span>
-            <span className="text-[1rem] font-bold text-gray-900">
-              {formatData(data.subDataAmount)}
-            </span>
+            <span className="text-[1rem] font-bold text-gray-900">{totalAmountLabel}</span>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import type { UserRole } from '@/entities/user/model/types';
+import type { UserRole } from '@/domains/user/model/types';
 import { type FamilyInfoResponse, OwnerFamilyPage } from '@/pages-layer/family/ui/OwnerFamilyPage';
 import { ParentFamilyPage } from '@/pages-layer/family/ui/ParentFamilyPage';
 import { createServerApi } from '@/shared/api/server';

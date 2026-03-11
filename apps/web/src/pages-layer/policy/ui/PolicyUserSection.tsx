@@ -1,4 +1,4 @@
-import { type PolicyPerFamily, PolicyUserCard } from '@/entities/policy';
+import { type PolicyPerFamily, PolicyUserCard } from '@/domains/policy';
 
 interface PolicyUserSectionProps {
   data: PolicyPerFamily;

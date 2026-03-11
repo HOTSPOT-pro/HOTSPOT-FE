@@ -1,10 +1,10 @@
-import type { PolicyPerUser } from '@entities/policy';
-import type { PolicyApply } from '@features/policy-apply';
-import { PolicyAddList, useApplyPolicy } from '@features/policy-apply';
-import type { BlockApply } from '@features/policy-blockapply';
-import { BlockAddList, useApplyBlock } from '@features/policy-blockapply';
-import type { UpdateDatalimit } from '@features/policy-datalimite';
-import { DataLimitSection, useDatalimit } from '@features/policy-datalimite';
+import type { PolicyPerUser } from '@domains/policy';
+import type { PolicyApply } from '@features/policy/policy-apply';
+import { PolicyAddList, useApplyPolicy } from '@features/policy/policy-apply';
+import type { BlockApply } from '@features/policy/policy-blockapply';
+import { BlockAddList, useApplyBlock } from '@features/policy/policy-blockapply';
+import type { UpdateDatalimit } from '@features/policy/policy-datalimite';
+import { DataLimitSection, useDatalimit } from '@features/policy/policy-datalimite';
 import { Button, Modal, Tab, type TabItem, useModal } from '@hotspot/ui';
 import { type ReactNode, useState } from 'react';
 

@@ -12,8 +12,8 @@ interface SubUsage {
   subName: string;
   dataLimit: number;
   dataUsageAmount: number;
-  dataUsageRemainAmount: number;
-  dataUsagePercent: number;
+  dataRemainAmount: number;
+  remainDataPercent: number;
 }
 
 interface FamilyUsage {
@@ -21,7 +21,7 @@ interface FamilyUsage {
   familyDataAmount: number;
   familyDataUsageAmount: number;
   familyDataRemainAmount: number;
-  dataUsagePercent: number;
+  remainDataPercent: number;
   subUsages: SubUsage[];
 }
 
@@ -76,7 +76,7 @@ export const FamilyDataStatusPage = () => {
   const sortedSubUsages = useMemo(
     () =>
       [...(data?.subUsages ?? [])].sort((a, b) => {
-        return b.dataUsageRemainAmount - a.dataUsageRemainAmount;
+        return b.dataRemainAmount - a.dataRemainAmount;
       }),
     [data],
   );
@@ -95,8 +95,13 @@ export const FamilyDataStatusPage = () => {
       coloredSubUsages.map((subUsage) => ({
         fill: subUsage.color,
         name: subUsage.subName,
-        value: subUsage.dataUsageRemainAmount,
+        value: subUsage.dataUsageAmount,
       })),
+    [coloredSubUsages],
+  );
+
+  const totalFamilyUsageAmount = useMemo(
+    () => coloredSubUsages.reduce((sum, subUsage) => sum + subUsage.dataUsageAmount, 0),
     [coloredSubUsages],
   );
 
@@ -135,8 +140,8 @@ export const FamilyDataStatusPage = () => {
           <DonutChart
             data={donutData}
             total={data.familyDataAmount}
-            totalUsed={data.familyDataRemainAmount}
-            totalUsedLabel="잔여"
+            totalUsed={totalFamilyUsageAmount}
+            totalUsedLabel="사용"
           />
         </div>
       </div>
@@ -154,15 +159,15 @@ export const FamilyDataStatusPage = () => {
                 <span className="text-gray-700">{subUsage.subName}</span>
               </div>
               <span className="text-gray-900">
-                {subUsage.dataUsageAmount.toFixed(1)}GB / {subUsage.dataLimit.toFixed(1)}GB (
-                {subUsage.dataUsagePercent}%)
+                {subUsage.dataRemainAmount.toFixed(1)}GB / {subUsage.dataLimit.toFixed(1)}GB (
+                {subUsage.remainDataPercent}% 잔여)
               </span>
             </div>
             <ProgressBar
               color={subUsage.color}
               label={subUsage.subName}
               total={Math.max(subUsage.dataLimit, 1)}
-              value={subUsage.dataUsageRemainAmount}
+              value={subUsage.dataRemainAmount}
             />
           </div>
         ))}

@@ -3,7 +3,7 @@
 import { Button, Modal } from '@hotspot/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useUserStore } from '@/entities/user/store/useUserStore';
+import { useUserStore } from '@/domains/user/store/useUserStore';
 import { api } from '@/shared/api/client';
 import { ROUTES } from '@/shared/constants/routes';
 

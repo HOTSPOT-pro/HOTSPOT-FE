@@ -1,4 +1,4 @@
-import { NotificationItem } from '@entities/notification';
+import { NotificationItem } from '@domains/notification';
 import { useNotification } from '@features/notification';
 import { Loading } from '@hotspot/ui';
 import { useEffect } from 'react';
