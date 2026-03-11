@@ -13,6 +13,10 @@ export const MyPageMenu = ({ familyRole }: { familyRole: UserRole | null }) => {
     open('logoutConfirmModal');
   }, [open]);
 
+  const handleWithdrawClick = useCallback(() => {
+    open('withdrawConfirmModal');
+  }, [open]);
+
   const visibleSections = MY_PAGE_MENU_SECTIONS.filter(
     (section) => !(familyRole === 'PARENT' && section.id === 'manage'),
   );
@@ -25,15 +29,25 @@ export const MyPageMenu = ({ familyRole }: { familyRole: UserRole | null }) => {
             {section.title}
           </h2>
           <div>
-            {section.items.map((item) => (
-              <MyPageRow
-                href={item.href}
-                icon={item.icon}
-                key={item.id}
-                label={item.label}
-                onClick={item.id === 'logout' ? handleLogoutClick : undefined}
-              />
-            ))}
+            {section.items.map((item) => {
+              let onClick: (() => void) | undefined;
+
+              if (item.id === 'logout') {
+                onClick = handleLogoutClick;
+              } else if (item.id === 'withdraw') {
+                onClick = handleWithdrawClick;
+              }
+
+              return (
+                <MyPageRow
+                  href={item.href}
+                  icon={item.icon}
+                  key={item.id}
+                  label={item.label}
+                  onClick={onClick}
+                />
+              );
+            })}
           </div>
         </div>
       ))}
