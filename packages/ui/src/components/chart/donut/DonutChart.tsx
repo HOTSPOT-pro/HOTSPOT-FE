@@ -18,6 +18,7 @@ export type DonutPercentFormatter = (
 ) => string;
 
 export interface DonutChartProps {
+  centerDisplayMode?: 'default' | 'valueOnly';
   data: DonutChartDataProps[];
   total: number;
   totalUsed: number;
@@ -61,6 +62,7 @@ const DonutChartTooltipContent = ({ active, payload, total }: DonutChartTooltipC
 
 export const DonutChart = memo(
   ({
+    centerDisplayMode = 'default',
     data,
     total,
     totalUsed,
@@ -73,10 +75,8 @@ export const DonutChart = memo(
     },
   }: DonutChartProps) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     type PieMouseEnterHandler = NonNullable<PieProps['onMouseEnter']>;
-    type PieClickHandler = NonNullable<PieProps['onClick']>;
 
     const onMouseEnter = useCallback<PieMouseEnterHandler>((_, index) => {
       setActiveIndex(typeof index === 'number' ? index : null);
@@ -84,11 +84,6 @@ export const DonutChart = memo(
 
     const onMouseLeave = useCallback(() => {
       setActiveIndex(null);
-    }, []);
-
-    const onClick = useCallback<PieClickHandler>((_, index) => {
-      if (typeof index !== 'number') return;
-      setSelectedIndex((prev) => (prev === index ? null : index));
     }, []);
 
     const displayContent = useMemo(() => {
@@ -100,25 +95,19 @@ export const DonutChart = memo(
       };
     }, [percentFormatter, total, totalUsed, totalUsedLabel, valueFormatter]);
 
-    const highlightedIndex = activeIndex ?? selectedIndex;
+    const highlightedIndex = activeIndex;
 
     const renderCustomSector = useCallback(
       (props: SectorProps) => {
-        const { startAngle, endAngle, fill, index } = props;
-        const overlap = 4;
-        const angleSize = Math.abs(endAngle - startAngle);
-        const isNearFullCircle = angleSize >= 359.5;
-        const canExpand = angleSize > overlap * 2 && !isNearFullCircle;
+        const { fill, index } = props;
         const isHighlighted = index === highlightedIndex;
 
         return (
           <g className="cursor-pointer outline-none">
             <Sector
               {...props}
-              cornerRadius={canExpand ? 20 : 0}
-              endAngle={canExpand ? endAngle + overlap : endAngle}
+              cornerRadius={0}
               fill={isHighlighted ? COLORS.HOVER : fill}
-              startAngle={canExpand ? startAngle - overlap : startAngle}
               strokeWidth={2}
             />
           </g>
@@ -151,7 +140,6 @@ export const DonutChart = memo(
               endAngle={90}
               innerRadius="90%"
               isAnimationActive={true}
-              onClick={onClick}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
               outerRadius="100%"
@@ -171,11 +159,23 @@ export const DonutChart = memo(
           <span className="text-gray-400 font-medium leading-none text-[6cqi]">
             {displayContent.label}
           </span>
-          <div className="flex items-baseline my-[1%] text-[13cqi]">{displayContent.percent}</div>
-          <span className="font-medium text-gray-400 leading-none text-[6cqi] transition-colors text-gray-400">
-            <span className="font-bold">{displayContent.value}</span>
-            <span className="font-semibold text-[6cqi]">GB / {displayContent.totalValue}GB</span>
-          </span>
+          {centerDisplayMode === 'valueOnly' ? (
+            <div className="mt-[3%] text-[13cqi] font-bold leading-none">
+              {displayContent.value}GB
+            </div>
+          ) : (
+            <>
+              <div className="flex items-baseline my-[1%] text-[13cqi]">
+                {displayContent.percent}
+              </div>
+              <span className="font-medium text-gray-400 leading-none text-[6cqi] transition-colors text-gray-400">
+                <span className="font-bold">{displayContent.value}</span>
+                <span className="font-semibold text-[6cqi]">
+                  GB / {displayContent.totalValue}GB
+                </span>
+              </span>
+            </>
+          )}
         </div>
       </div>
     );

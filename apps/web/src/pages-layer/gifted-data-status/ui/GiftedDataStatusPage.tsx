@@ -3,6 +3,10 @@
 import { Button } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import type {
+  GiftUsageItem as GiftUsageItemResponse,
+  GiftUsage as GiftUsageResponse,
+} from '@/domains/usage/api/types';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
@@ -26,10 +30,37 @@ interface GiftedDataStatus {
   giftUsages: GiftUsage[];
 }
 const PERCENT_MAX = 100;
+const ZERO_PERCENT = 0;
+
+const toRemainPercent = (remainAmount: number, totalAmount: number) => {
+  if (totalAmount <= 0) return ZERO_PERCENT;
+  return Math.min(
+    PERCENT_MAX,
+    Math.max(ZERO_PERCENT, Math.round((remainAmount / totalAmount) * 100)),
+  );
+};
+
+const mapGiftUsageItem = (giftUsage: GiftUsageItemResponse): GiftUsage => ({
+  dataUsagePercent: toRemainPercent(giftUsage.giftDataUsageRemainAmount, giftUsage.giftDataLimit),
+  giftDataLimit: giftUsage.giftDataLimit,
+  giftDataUsageAmount: giftUsage.giftDataUsageAmount,
+  giftDataUsageRemainAmount: giftUsage.giftDataUsageRemainAmount,
+  giftId: giftUsage.giftId,
+  giftUserName: giftUsage.giftUserName,
+});
+
+const mapGiftedDataStatus = (data: GiftUsageResponse): GiftedDataStatus => ({
+  currentTime: data.currentTime,
+  giftDataAmount: data.giftDataAmount,
+  giftDataRemainAmount: data.giftDataRemainAmount,
+  giftDataUsageAmount: data.giftDataUsageAmount,
+  giftUsagePercent: toRemainPercent(data.giftDataRemainAmount, data.giftDataAmount),
+  giftUsages: data.giftUsages.map(mapGiftUsageItem),
+});
 
 const getGiftedDataStatus = async () => {
-  const { data } = await api.get<ApiResponse<GiftedDataStatus>>('/api/v1/subscriptionUsage');
-  return data.data;
+  const response = await api.get<ApiResponse<GiftUsageResponse>>('/api/v1/giftUsage');
+  return mapGiftedDataStatus(response.data.data);
 };
 
 const formatData = (value: number) => `${value.toFixed(1)}GB`;
@@ -110,20 +141,20 @@ export const GiftedDataStatusPage = () => {
           <div className="flex items-center justify-between text-gray-600">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-green-400" />
-              <span className="text-[1rem] font-semibold">사용량</span>
+              <span className="text-[1rem] font-semibold">잔여량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">
-              {formatData(data.giftDataUsageAmount)}
+              {formatData(data.giftDataRemainAmount)}
             </span>
           </div>
 
           <div className="flex items-center justify-between text-gray-500">
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-gray-300" />
-              <span className="text-[1rem] font-semibold">잔여</span>
+              <span className="text-[1rem] font-semibold">사용량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">
-              {formatData(data.giftDataRemainAmount)}
+              {formatData(data.giftDataUsageAmount)}
             </span>
           </div>
 
@@ -140,15 +171,15 @@ export const GiftedDataStatusPage = () => {
 
       <div className="space-y-5 pt-2">
         {data.giftUsages.map((giftUsage) => {
-          const isOver = giftUsage.dataUsagePercent >= PERCENT_MAX;
-          const barColor = isOver ? 'bg-red-500' : 'bg-green-400';
+          const isExhausted = giftUsage.dataUsagePercent <= ZERO_PERCENT;
+          const barColor = isExhausted ? 'bg-red-500' : 'bg-green-400';
 
           return (
             <div key={giftUsage.giftId}>
               <div className="mb-2 flex items-center justify-between">
                 <p className="text-[1rem] font-semibold text-gray-900">{giftUsage.giftUserName}</p>
                 <p className="text-[1rem] font-semibold text-gray-900">
-                  {giftUsage.giftDataUsageAmount.toFixed(1)}GB{' '}
+                  {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB{' '}
                   <span className="text-gray-500">/ {giftUsage.giftDataLimit.toFixed(1)}GB</span>
                 </p>
               </div>
@@ -163,11 +194,11 @@ export const GiftedDataStatusPage = () => {
               </div>
 
               <div className="mt-1 flex items-center justify-between text-sm">
-                <span className={isOver ? 'text-red-500' : 'text-gray-600'}>
-                  {giftUsage.dataUsagePercent}% 사용
+                <span className={isExhausted ? 'text-red-500' : 'text-gray-600'}>
+                  {giftUsage.dataUsagePercent}% 잔여
                 </span>
                 <span className="text-gray-500">
-                  잔여 {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB
+                  사용 {giftUsage.giftDataUsageAmount.toFixed(1)}GB
                 </span>
               </div>
             </div>
