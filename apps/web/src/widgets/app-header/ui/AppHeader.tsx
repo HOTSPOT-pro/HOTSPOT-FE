@@ -46,7 +46,7 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
   const { unReadCount } = useNotification();
 
   const handleBackDefault = () => router.back();
-  const handleNotificationDefault = () => router.push(ROUTES.NOTIFICATION);
+  const handleNotificationDefault = () => router.push(ROUTES.NOTIFICATION.ROOT);
   const handleSettingsDefault = () => setIsSettingsOpen(!isSettingsOpen); // 임시, 현재는 알림에서만 사용
 
   const renderLeft = (action?: HeaderAction) => {
