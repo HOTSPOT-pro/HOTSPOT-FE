@@ -11,7 +11,6 @@ import { formatTel, toPureDigits } from '@/shared/lib';
 
 const BYTES_PER_KILOBYTE = 1024;
 const MAX_UPLOAD_BYTES = 10 * BYTES_PER_KILOBYTE * BYTES_PER_KILOBYTE;
-const WEBP_CONTENT_TYPE = 'image/png';
 const WEBP_QUALITY = 0.92;
 
 type FamilyRole = 'PARENT' | 'CHILD';
@@ -221,7 +220,7 @@ export const AddFamilyMemberModal = ({
             }
             resolve(blob);
           },
-          WEBP_CONTENT_TYPE,
+          'image/webp',
           WEBP_QUALITY,
         );
       };
@@ -272,12 +271,6 @@ export const AddFamilyMemberModal = ({
 
         const { data } = await api.post<ApiResponse<PresignedUrlData> | PresignedUrlData>(
           '/api/v1/image/presigned-url',
-          undefined,
-          {
-            params: {
-              contentType: WEBP_CONTENT_TYPE,
-            },
-          },
         );
 
         const normalized =
@@ -295,7 +288,7 @@ export const AddFamilyMemberModal = ({
         const uploadResponse = await fetch(presignedUrl, {
           body: convertedWebpBlob,
           headers: {
-            'Content-Type': WEBP_CONTENT_TYPE,
+            'Content-Type': 'image/webp',
           },
           method: 'PUT',
         });
@@ -327,7 +320,7 @@ export const AddFamilyMemberModal = ({
       const payload: FamilyAddRequest = {
         applyType: 'ADD',
         familyMemberList: formValues.familyMemberList.map((member) => ({
-          name: member.name,
+          name: member.name.trim(),
           phone: toPureDigits(member.phone),
           targetFamilyRole: member.targetFamilyRole,
         })),
@@ -338,10 +331,16 @@ export const AddFamilyMemberModal = ({
       close();
     } catch (error) {
       const serverMessage =
-        (error as { response?: { data?: { detail?: string; message?: string } } })?.response?.data
-          ?.detail ??
-        (error as { response?: { data?: { detail?: string; message?: string } } })?.response?.data
-          ?.message;
+        (
+          error as {
+            response?: { data?: { detail?: string; message?: string } };
+          }
+        )?.response?.data?.detail ??
+        (
+          error as {
+            response?: { data?: { detail?: string; message?: string } };
+          }
+        )?.response?.data?.message;
 
       setSubmitErrorMessage(serverMessage ?? '가족 구성원 추가 신청에 실패했습니다.');
     } finally {
@@ -394,8 +393,8 @@ export const AddFamilyMemberModal = ({
                   errorMessage={errors.familyMemberList?.[index]?.name?.message}
                   helpText="가족 구성원 이름을 입력해주세요."
                   inputProps={register(`familyMemberList.${index}.name`, {
-                    minLength: { message: '2자 이상 입력해주세요.', value: 2 },
                     required: '필수 입력 항목입니다.',
+                    validate: (value) => value.trim().length >= 2 || '2자 이상 입력해주세요.',
                   })}
                   label="이름"
                   placeholder="홍길동"
