@@ -33,9 +33,6 @@ export const useGift = () => {
   const presentData = useMutation({
     mutationFn: ({ targetSubId, dataAmount }: { targetSubId: number; dataAmount: number }) =>
       postPresentDataClient({ dataAmount, targetSubId }),
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['presentFamilyData'] });
-    },
     onSuccess: (responseData) => {
       queryClient.setQueryData(['presentFamilyData'], (oldData: PresentFamilyData) => {
         if (!oldData) return oldData;
