@@ -1,0 +1,264 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 76 76" fill="none">
+  <defs>
+    <filter id="recieve-gift-animated_svg__b" x="42.7395" y="18.0627" width="32.2039" height="38.6284" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.999 0.999" numOctaves="3" seed="7049"/>
+      <feDisplacementMap in="shape" scale="7.96" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%"/>
+      <feMerge result="effect1_texture_5815_11100">
+        <feMergeNode in="displacedImage"/>
+      </feMerge>
+    </filter>
+
+    <linearGradient id="recieve-gift-animated_svg__c" x1="27.5328" x2="27.5328" y1="37.6773" y2="55.9597" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4C576"/>
+      <stop offset="1" stop-color="#EFBF72"/>
+    </linearGradient>
+    <linearGradient id="recieve-gift-animated_svg__d" x1="27.6336" x2="27.6336" y1="30.1301" y2="55.9597" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F77777"/>
+      <stop offset="1" stop-color="#F36F6F"/>
+    </linearGradient>
+    <linearGradient id="recieve-gift-animated_svg__e" x1="27.6336" x2="27.6336" y1="17.5067" y2="43.3363" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F77777"/>
+      <stop offset="1" stop-color="#F36F6F"/>
+    </linearGradient>
+    <linearGradient id="recieve-gift-animated_svg__f" x1="27.4554" x2="27.4554" y1="30.1301" y2="55.9597" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F77777"/>
+      <stop offset="1" stop-color="#F36F6F"/>
+    </linearGradient>
+    <linearGradient id="recieve-gift-animated_svg__g" x1="27.4553" x2="27.4553" y1="30.1301" y2="55.9597" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F77777"/>
+      <stop offset="1" stop-color="#F36F6F"/>
+    </linearGradient>
+    <linearGradient id="recieve-gift-animated_svg__h" x1="27.5885" x2="27.5885" y1="30.1041" y2="55.9337" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F77777"/>
+      <stop offset="1" stop-color="#F36F6F"/>
+    </linearGradient>
+
+    <mask id="recieve-gift-animated_svg__a" maskUnits="userSpaceOnUse" x="37" y="20" width="28" height="29" style="mask-type:alpha">
+      <circle cx="50.7981" cy="34.5978" r="13.5981" fill="#9051FE"/>
+    </mask>
+  </defs>
+
+  <g>
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      values="0 0;0 0;4 -4;5 -1;0 0;0 0"
+      keyTimes="0;0.14;0.28;0.5;0.72;1"
+      dur="2.8s"
+      repeatCount="indefinite"
+      calcMode="spline"
+      keySplines="0.42 0 1 1; 0 0 0.58 1; 0.42 0 0.58 1; 0.42 0 0.58 1; 0.42 0 1 1"
+    />
+    <animateTransform
+      attributeName="transform"
+      additive="sum"
+      type="rotate"
+      values="0 50.7981 34.5978;0 50.7981 34.5978;12 50.7981 34.5978;4 50.7981 34.5978;0 50.7981 34.5978;0 50.7981 34.5978"
+      keyTimes="0;0.14;0.28;0.5;0.72;1"
+      dur="2.8s"
+      repeatCount="indefinite"
+    />
+    <animateTransform
+      attributeName="transform"
+      additive="sum"
+      type="scale"
+      values="1 1;1 1;1 1;1.04 0.96;1 1;1 1"
+      keyTimes="0;0.14;0.28;0.5;0.72;1"
+      dur="2.8s"
+      repeatCount="indefinite"
+    />
+
+    <circle cx="50.7981" cy="34.5978" r="13.5981" fill="#9051FE"/>
+    <ellipse cx="45.1988" cy="34.5978" rx="0.799891" ry="1.19984" fill="white"/>
+    <ellipse cx="50.398" cy="34.5978" rx="0.799891" ry="1.19984" fill="white"/>
+    <path d="M46.3987 37.7974C46.5587 38.0641 47.1026 38.5973 47.9985 38.5973C48.8943 38.5973 49.4383 38.0641 49.5982 37.7974" stroke="white" stroke-width="0.72" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <g mask="url(#recieve-gift-animated_svg__a)">
+      <g opacity="0.83" filter="url(#recieve-gift-animated_svg__b)">
+        <path d="M59.8319 38.5824C57.5478 45.0843 51.8299 47.6698 46.7228 47.959L55.4579 52.7053C55.749 52.8635 65.914 45 70.96 41.0934L63.7955 26.1675L57.078 22.0461C60.8665 26.4604 61.9873 32.4466 59.8319 38.5824Z" fill="#7A21E6" style="mix-blend-mode:darken"/>
+      </g>
+    </g>
+
+    <ellipse cx="45.0629" cy="21.6084" rx="2.00594" ry="4.58852" transform="rotate(125.819 45.0629 21.6084)" fill="#9051FE"/>
+    <ellipse cx="42.908" cy="24.1309" rx="2.85064" ry="5.8253" transform="rotate(89.5436 42.908 24.1309)" fill="#9051FE"/>
+  </g>
+
+  <g>
+    <path fill="url(#recieve-gift-animated_svg__c)" d="M15.5779 43.2781H39.422L38.3701 55.9015H16.6298L15.5779 43.2781Z"/>
+    <path fill="#EDAF5B" d="M39.422 43.2781H15.5779L15.7683 45.5574H39.2323L39.422 43.2781Z"/>
+    <path fill="url(#recieve-gift-animated_svg__d)" d="M29.4286 43.2781H25.7468V55.9015H29.4286V43.2781Z"/>
+  </g>
+
+  <g opacity="0">
+    <animate
+      attributeName="opacity"
+      values="0;0;1;1;0;0"
+      keyTimes="0;0.14;0.18;0.48;0.58;1"
+      dur="2.8s"
+      repeatCount="indefinite"
+    />
+
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="28.5 43;32.5 43;34.5 36;36.5 32;36.5 35;36.5 39"
+        keyTimes="0;0.14;0.32;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="rotate"
+        values="0;0;-10;10;0;0"
+        keyTimes="0;0.14;0.32;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="scale"
+        values="0;0;0.22;0.18;0;0"
+        keyTimes="0;0.14;0.32;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <g transform="translate(-38 -38)">
+        <path d="M49.3895 14.5424C57.1145 14.5424 63.3748 20.8994 63.3748 29.7992C63.3748 47.5987 44.3039 57.7698 37.9469 61.584C31.59 57.7698 12.519 47.5987 12.519 29.7992C12.519 20.8994 18.876 14.5424 26.5044 14.5424C31.234 14.5424 35.4041 17.0852 37.9469 19.628C40.4897 17.0852 44.6599 14.5424 49.3895 14.5424Z" fill="#FF5CA8"/>
+      </g>
+    </g>
+
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="27.5 43;27.5 43;19 26;13 31;27.5 43;27.5 43"
+        keyTimes="0;0.14;0.28;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="rotate"
+        values="0;0;180;300;0;0"
+        keyTimes="0;0.14;0.28;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="scale"
+        values="0;0;1;0.55;0;0"
+        keyTimes="0;0.14;0.28;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <path d="M0 -2.5L0.7 -0.7L2.5 -0.7L1 0.5L1.6 2.5L0 1.3L-1.6 2.5L-1 0.5L-2.5 -0.7L-0.7 -0.7Z" fill="#9051FE"/>
+    </g>
+
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="27.5 43;27.5 43;39 25;46 33;27.5 43;27.5 43"
+        keyTimes="0;0.14;0.28;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="rotate"
+        values="0;0;90;220;0;0"
+        keyTimes="0;0.14;0.28;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="scale"
+        values="0;0;1;0.35;0;0"
+        keyTimes="0;0.14;0.28;0.5;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <rect x="-1.5" y="-2.5" width="3" height="4" fill="#FF8A00"/>
+    </g>
+
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="27.5 43;27.5 43;27.5 19;25 22;27.5 43;27.5 43"
+        keyTimes="0;0.14;0.26;0.48;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="scale"
+        values="0;0;0.95;0.2;0;0"
+        keyTimes="0;0.14;0.26;0.48;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <path d="M0 -2L0.5 -0.5L2 -0.5L0.8 0.4L1.3 2L0 1.1L-1.3 2L-0.8 0.4L-2 -0.5L-0.5 -0.5Z" fill="#F36F6F"/>
+    </g>
+
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="27.5 43;27.5 43;14 38;10 44;27.5 43;27.5 43"
+        keyTimes="0;0.14;0.3;0.54;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="rotate"
+        values="45;45;200;360;45;45"
+        keyTimes="0;0.14;0.3;0.54;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <animateTransform
+        attributeName="transform"
+        additive="sum"
+        type="scale"
+        values="0;0;1.05;0.2;0;0"
+        keyTimes="0;0.14;0.3;0.54;0.72;1"
+        dur="2.8s"
+        repeatCount="indefinite"
+      />
+      <rect x="-1" y="-2" width="2.5" height="3" fill="#5B6CFF"/>
+    </g>
+  </g>
+
+  <g>
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      values="0 14 43;0 14 43;-45 14 43;-45 14 43;0 14 43;0 14 43"
+      keyTimes="0;0.14;0.28;0.5;0.72;1"
+      dur="2.8s"
+      repeatCount="indefinite"
+    />
+
+    <rect x="14" y="37.6677" width="27" height="5.6104" rx="1.6" fill="#F3C577"/>
+    <rect x="25.7468" y="37.6677" width="3.6818" height="5.6104" fill="url(#recieve-gift-animated_svg__e)"/>
+
+    <path fill="url(#recieve-gift-animated_svg__f)" fill-rule="evenodd" d="M27.4554 37.6773C27.4554 37.6773 25.7638 30 19.9083 30C16.0045 30 16.0045 36.5062 19.9083 38.458C22.5107 39.7593 27.4554 37.6773 27.4554 37.6773ZM25.6145 36.5281C23.6627 36.8534 20.7931 36.5281 19.9083 35.1255C19.2576 33.8243 19.9083 32.6025 21.8601 33.2531C23.812 33.9037 25.6145 36.5281 25.6145 36.5281Z" clip-rule="evenodd"/>
+    <path fill="url(#recieve-gift-animated_svg__g)" fill-rule="evenodd" d="M27.4553 37.6773C27.4553 37.6773 29.1469 30 35.0025 30C38.9062 30 38.9062 36.5062 35.0025 38.458C32.4 39.7593 27.4553 37.6773 27.4553 37.6773ZM29.1209 36.6158C31.0728 36.9411 33.4164 36.7911 35.0025 35.3008C36.2722 33.7311 35.0025 32.6025 33.0506 33.2531C31.0988 33.9037 29.1209 36.6158 29.1209 36.6158Z" clip-rule="evenodd"/>
+    <path fill="url(#recieve-gift-animated_svg__h)" d="M27.5885 39.2128C28.7024 39.2128 29.6054 38.5137 29.6054 37.6513C29.6054 36.7889 28.7024 36.0898 27.5885 36.0898C26.4745 36.0898 25.5715 36.7889 25.5715 37.6513C25.5715 38.5137 26.4745 39.2128 27.5885 39.2128Z"/>
+  </g>
+</svg>
