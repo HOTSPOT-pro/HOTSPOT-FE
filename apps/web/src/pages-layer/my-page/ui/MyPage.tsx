@@ -1,5 +1,8 @@
+'use client';
+
 import ViewRight from '@hotspot/ui/assets/images/character/view-right.svg';
 import type { UserRole } from '@/domains/user/model/types';
+import { AppliedRestrictionsPage } from '@/pages-layer/applied-restrictions/ui/AppliedRestrictionsPage';
 import { MyPageMenu } from './MyPageMenu';
 
 interface MyPageUserInfo {
@@ -16,15 +19,18 @@ export const MyPage = ({ userInfo }: { userInfo: MyPageUserInfo | null }) => {
         <div className="flex h-[4rem] w-[4rem] overflow-hidden rounded-xl bg-purple-100 items-center justify-center">
           <ViewRight />
         </div>
-        <div className="space-y-0.5">
-          <p className="text-[1rem] font-semibold leading-tight text-gray-900">
+        <p className="flex flex-col space-y-0.5">
+          <span className="text-[1rem] font-semibold leading-tight text-gray-900">
             {userInfo?.name ?? '-'}
-          </p>
-          <p className="text-[0.75rem] leading-tight text-gray-600">{userInfo?.email ?? '-'}</p>
-          <p className="text-[0.75rem] leading-tight text-gray-600">{userInfo?.phone ?? '-'}</p>
-        </div>
+          </span>
+          <span className="text-[0.75rem] leading-tight text-gray-600">
+            {userInfo?.email ?? '-'}
+          </span>
+          <span className="text-[0.75rem] leading-tight text-gray-600">
+            {userInfo?.phone ?? '-'}
+          </span>
+        </p>
       </div>
-
       <MyPageMenu familyRole={userInfo?.familyRole ?? null} />
     </section>
   );
