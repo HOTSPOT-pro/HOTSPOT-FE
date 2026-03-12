@@ -2,53 +2,37 @@
 
 import { Card } from '@hotspot/ui';
 import { MonthDaySelector } from '@shared/ui';
-import { PeriodReport } from '@widgets/report';
-import { useEffect, useState } from 'react';
+import { PeriodReport, ServiceReport } from '@widgets/report';
+import { useMemo, useState } from 'react';
 import { type ReportUser, useReportUsers } from '@/domains/report';
-import { UserSelector } from '@/domains/user';
-import { ServiceReport } from '@/widgets/report/ui/ServiceReport';
+import { UserSelector, useUserStore } from '@/domains/user';
 
 export const ReportPage = () => {
   const [selectedTab, setSelectedTab] = useState<'MONTH' | 'DAY'>('MONTH');
-  const [selectedUser, setSelectedUser] = useState<ReportUser>({
-    name: null,
-    subId: null,
-  });
+  const [clickedUser, setClickedUser] = useState<ReportUser | null>(null);
 
-  const { data: users = [], isLoading: isUsersLoading, isError: isUsersError } = useReportUsers();
+  const loginUserId = useUserStore().subId;
+  const { data: users = [], isLoading, isError } = useReportUsers();
 
-  useEffect(() => {
-    const firstUser = users[0];
-    if (firstUser && selectedUser.subId === null) {
-      setSelectedUser(firstUser);
-    }
-  }, [users, selectedUser.subId]);
+  const sortedUsers = useMemo(() => {
+    if (!loginUserId || users.length === 0) return users;
+    return [...users].sort((a) => (a.subId === loginUserId ? -1 : 1));
+  }, [users, loginUserId]);
 
-  if (isUsersLoading || selectedUser.subId === null) {
-    return (
-      <div className="flex h-full items-center justify-center text-gray-400">
-        구성원을 불러오는 중...
-      </div>
-    );
-  }
+  const selectedUser = clickedUser ?? sortedUsers[0];
 
-  if (isUsersError) {
-    return (
-      <div className="flex h-full items-center justify-center text-gray-400">
-        구성원 정보를 불러오지 못했습니다.
-      </div>
-    );
-  }
+  if (isLoading) return <div className="flex-center text-gray-400">구성원을 불러오는 중...</div>;
+  if (isError) return <div className="flex-center text-gray-400">데이터 로드 실패</div>;
+  if (!selectedUser) return null;
 
   return (
     <div className="flex flex-col w-full h-full pb-8 px-2 gap-2">
-      {/* 월/일 선택 바 */}
       <div className="py-2">
-        <MonthDaySelector onChange={(unit) => setSelectedTab(unit)} unit={selectedTab} />
+        <MonthDaySelector onChange={setSelectedTab} unit={selectedTab} />
       </div>
-      {/* 구성원 선택 */}
-      <UserSelector onSelect={setSelectedUser} selectedUser={selectedUser} users={users} />
-      {/* 기간별 리포트 */}
+
+      <UserSelector onSelect={setClickedUser} selectedUser={selectedUser} users={sortedUsers} />
+
       <Card>
         <PeriodReport unit={selectedTab} user={selectedUser} />
       </Card>
