@@ -19,6 +19,7 @@ export type DonutPercentFormatter = (
 
 export interface DonutChartProps {
   centerDisplayMode?: 'default' | 'valueOnly';
+  centerValueSuffix?: string;
   data: DonutChartDataProps[];
   total: number;
   totalUsed: number;
@@ -63,6 +64,7 @@ const DonutChartTooltipContent = ({ active, payload, total }: DonutChartTooltipC
 export const DonutChart = memo(
   ({
     centerDisplayMode = 'default',
+    centerValueSuffix = 'GB',
     data,
     total,
     totalUsed,
@@ -161,7 +163,8 @@ export const DonutChart = memo(
           </span>
           {centerDisplayMode === 'valueOnly' ? (
             <div className="mt-[3%] text-[13cqi] font-bold leading-none">
-              {displayContent.value}GB
+              {displayContent.value}
+              {centerValueSuffix}
             </div>
           ) : (
             <>

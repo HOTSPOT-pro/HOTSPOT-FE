@@ -12,7 +12,30 @@ const getTotalUsage = async () => {
   return data.data;
 };
 
-const formatData = (value: number) => `${value.toFixed(1)}GB`;
+const PERCENT_MAX = 100;
+const UNLIMITED_DATA_AMOUNT = -1;
+
+const isUnlimitedValue = (value: number) => value === UNLIMITED_DATA_AMOUNT;
+
+const formatData = (value: number) =>
+  isUnlimitedValue(value) ? '무제한' : `${value.toFixed(1)}GB`;
+
+const normalizeUnlimitedSegments = (values: number[]) => {
+  const finiteSum = values.reduce(
+    (sum, value) => (isUnlimitedValue(value) ? sum : sum + Math.max(0, value)),
+    0,
+  );
+  const unlimitedIndexes = values.flatMap((value, index) =>
+    isUnlimitedValue(value) ? [index] : [],
+  );
+  const remaining = Math.max(0, PERCENT_MAX - finiteSum);
+  const sharedUnlimitedValue =
+    unlimitedIndexes.length > 0 ? remaining / unlimitedIndexes.length : 0;
+
+  return values.map((value) =>
+    isUnlimitedValue(value) ? sharedUnlimitedValue : Math.max(0, value),
+  );
+};
 
 const formatCurrentTime = (currentTime: string) => {
   const parsedDate = new Date(currentTime);
@@ -34,7 +57,7 @@ const formatCurrentTime = (currentTime: string) => {
 };
 
 const SEGMENTS = [
-  { color: '#7C4DFF', key: 'subDataRemainAmount', label: '내 데이터' },
+  { color: '#7C4DFF', key: 'subDataRemainAmount', label: 'planName' },
   { color: '#7BD67A', key: 'giftDataRemainAmount', label: '선물 데이터' },
   { color: '#4F46E5', key: 'familyDataRemainAmount', label: '가족 데이터' },
 ] as const satisfies ReadonlyArray<{
@@ -79,10 +102,18 @@ export const MyTotalDataPage = () => {
     );
   }
 
-  const donutData = SEGMENTS.map((segment) => ({
+  const isUnlimitedTotal =
+    isUnlimitedValue(data.totalDataAmount) || isUnlimitedValue(data.totalDataRemainAmount);
+
+  const segmentValues = SEGMENTS.map((segment) => data[segment.key]);
+  const normalizedSegmentValues = isUnlimitedTotal
+    ? normalizeUnlimitedSegments(segmentValues)
+    : segmentValues.map((value) => Math.max(0, value));
+
+  const donutData = SEGMENTS.map((segment, index) => ({
     fill: segment.color,
-    name: segment.label,
-    value: data[segment.key],
+    name: segment.label === 'planName' ? data.planName : segment.label,
+    value: normalizedSegmentValues[index] ?? 0,
   }));
 
   return (
@@ -93,10 +124,18 @@ export const MyTotalDataPage = () => {
         <div className="flex w-full max-w-72">
           <DonutChart
             centerDisplayMode="valueOnly"
+            centerValueSuffix={isUnlimitedTotal ? '' : 'GB'}
             data={donutData}
-            total={data.totalDataAmount}
-            totalUsed={data.totalDataRemainAmount}
+            total={isUnlimitedTotal ? PERCENT_MAX : data.totalDataAmount}
+            totalUsed={isUnlimitedTotal ? PERCENT_MAX : data.totalDataRemainAmount}
             totalUsedLabel="총 잔여"
+            valueFormatter={(value) => {
+              if (isUnlimitedTotal && value === PERCENT_MAX) {
+                return '무제한';
+              }
+
+              return value.toFixed(1);
+            }}
           />
         </div>
       </div>
@@ -108,7 +147,9 @@ export const MyTotalDataPage = () => {
           <div className="flex items-center justify-between text-md font-bold" key={segment.key}>
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full" style={{ backgroundColor: segment.color }} />
-              <span className="text-gray-700">{segment.label}</span>
+              <span className="text-gray-700">
+                {segment.label === 'planName' ? data.planName : segment.label}
+              </span>
             </div>
             <span className="font-semibold text-gray-900">{formatData(data[segment.key])}</span>
           </div>
