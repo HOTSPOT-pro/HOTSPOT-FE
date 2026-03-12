@@ -20,8 +20,6 @@ export interface LineChartDataProps {
   date: number;
   total: number;
   personal?: number;
-  totalRatio: number;
-  personalRatio?: number;
 }
 
 export interface UsageLineChartProps {
@@ -34,9 +32,7 @@ export interface UsageLineChartProps {
 interface LineTooltipPayload {
   date: number;
   personal?: number;
-  personalRatio?: number;
   total: number;
-  totalRatio: number;
 }
 
 interface LineChartTooltipContentProps {
@@ -58,18 +54,17 @@ const LineChartTooltipContent = ({
   const firstPayload = payload[0]?.payload;
   if (!firstPayload) return null;
 
-  const { date, total, totalRatio, personal, personalRatio } = firstPayload;
+  const { date, total, personal } = firstPayload;
 
   return (
     <ChartTooltip
       header={`${date}${dateUnit} 전체 사용량`}
       sections={[
-        { percent: totalRatio, unit, value: total.toFixed(2) },
+        { unit, value: total.toFixed(2) },
         ...(hasPersonalData
           ? [
               {
                 dividerTop: true,
-                percent: personalRatio ?? 0,
                 title: '개별 사용량',
                 unit,
                 value: (personal ?? 0).toFixed(2),
