@@ -4,6 +4,8 @@ import '@hotspot/ui/globals.css';
 import { ModalProvider } from '@hotspot/ui';
 import { StoreProvider } from '@/app/_providers';
 import { AppModal } from '@/widgets/app-modal/ui/AppModal';
+import { PopUpProvider } from '@/widgets/app-popup/model/PopUpContext';
+import { AppPopUp } from '@/widgets/app-popup/ui/AppPopUp';
 import { QueryProvider } from './_providers/query/QueryProvider';
 
 const geistSans = localFont({
@@ -33,12 +35,15 @@ export default function RootLayout({
         <StoreProvider>
           <QueryProvider>
             <ModalProvider>
-              <div className="mx-auto flex min-h-dvh w-full justify-center">
-                <main className="flex min-h-dvh w-full max-w-[500px] flex-col bg-white shadow-[0_0_8px_rgba(0,0,0,0.16)]">
-                  {children}
-                </main>
-              </div>
-              <AppModal />
+              <PopUpProvider>
+                <div className="mx-auto flex min-h-dvh w-full justify-center">
+                  <main className="flex min-h-dvh w-full max-w-[500px] flex-col bg-white shadow-[0_0_8px_rgba(0,0,0,0.16)]">
+                    {children}
+                  </main>
+                </div>
+                <AppModal />
+                <AppPopUp />
+              </PopUpProvider>
             </ModalProvider>
           </QueryProvider>
         </StoreProvider>
