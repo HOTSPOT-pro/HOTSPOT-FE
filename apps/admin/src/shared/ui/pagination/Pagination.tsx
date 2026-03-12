@@ -21,23 +21,24 @@ export const Pagination = ({
 
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
-  const canMovePrev = currentGroup > 0;
-  const canMoveNext = endPage < normalizedTotal;
+  const canMovePrev = normalizedCurrent > 1;
+  const canMoveNext = normalizedCurrent < normalizedTotal;
 
   const NEXT_MOVE_STYLE =
-    'p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row items-center gap-1 text-black text-[14px]';
+    'w-fit shrink-0 whitespace-nowrap p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row items-center gap-1 text-black text-[14px]';
 
   return (
-    <div className="flex items-center justify-center gap-2 py-4 border-t border-gray-100">
+    <div className="flex w-full items-center justify-center gap-2 py-4 border-t border-gray-100">
       <button
         className={NEXT_MOVE_STYLE}
         disabled={!canMovePrev}
         onClick={() => {
-          if (canMovePrev) onMove(startPage - 1);
+          if (canMovePrev) onMove(normalizedCurrent - 1);
         }}
         type="button"
       >
-        <LeftArrow /> 이전
+        <LeftArrow className="h-4 w-4 shrink-0 text-current" />
+        이전
       </button>
 
       {pages.map((p) => (
@@ -61,11 +62,11 @@ export const Pagination = ({
         className={NEXT_MOVE_STYLE}
         disabled={!canMoveNext}
         onClick={() => {
-          if (canMoveNext) onMove(endPage + 1);
+          if (canMoveNext) onMove(normalizedCurrent + 1);
         }}
         type="button"
       >
-        다음 <RightArrow />
+        다음 <RightArrow className="h-4 w-4 shrink-0 text-current" />
       </button>
     </div>
   );

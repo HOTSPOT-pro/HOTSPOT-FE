@@ -1,14 +1,12 @@
 'use client';
 
-import { Button, Toggle, useModal } from '@hotspot/ui';
-import ArrowIcon from '@hotspot/ui/assets/icons/arrow-bar.svg';
+import { Button, useModal } from '@hotspot/ui';
+import DeleteIcon from '@hotspot/ui/assets/icons/delete.svg';
 import PlusIcon from '@hotspot/ui/assets/icons/plus.svg';
 import TimeIcon from '@hotspot/ui/assets/icons/time.svg';
 import { useCallback, useState } from 'react';
 import { usePolicy } from '@/domains/policy';
 import { CategorySelect, type Column, Pagination, Table } from '@/shared';
-import { useUpdatePolicyActive } from '../model/useActivePolicy';
-import { useDeletePolicy } from '../model/useDeletePolicy';
 import { dateFormatter } from '../util/dateFormatter';
 
 const PAGE_SIZE_OPTIONS = [
@@ -31,9 +29,31 @@ export const TimePolicyTable = () => {
   const handleOpenModal = useCallback(() => {
     open('addTimePolicyModal');
   }, [open]);
-
-  const { updatePolicyActive } = useUpdatePolicyActive();
-  const { deletePolicy } = useDeletePolicy();
+  const handleDeleteModal = useCallback(
+    ({ id, name }: { id: number; name: string }) => {
+      open('deletePolicyModal', {
+        props: {
+          policyId: id,
+          policyName: name,
+          policyType: 'TIME',
+        },
+      });
+    },
+    [open],
+  );
+  const handleActivateModal = useCallback(
+    ({ id, name, isActive }: { id: number; name: string; isActive: boolean }) => {
+      open('activatePolicyModal', {
+        props: {
+          isActive: isActive,
+          policyId: id,
+          policyName: name,
+          policyType: 'TIME',
+        },
+      });
+    },
+    [open],
+  );
 
   const handlePageSizeChange = (nextPageSize: (typeof PAGE_SIZE_OPTIONS)[number]['value']) => {
     setPageSize(nextPageSize);
@@ -66,17 +86,16 @@ export const TimePolicyTable = () => {
       accessor: 'active_actions',
       header: '활성',
       render: (_val, row) => (
-        <Toggle
-          checked={row.is_active}
-          id={`정책 활성 ${row.policyId}`}
-          onChange={() => {
-            updatePolicyActive.mutate({
-              isActive: !row.is_active,
-              policyId: row.policyId,
-              policyType: 'TIME',
-            });
-          }}
-        />
+        <Button
+          className={`h-8 w-auto rounded-md px-3 text-xs ${row.is_active ? 'bg-lime-500 hover:bg-lime-600' : 'bg-gray-400 hover:bg-gray-500'}`}
+          onClick={() =>
+            handleActivateModal({ id: row.policyId, isActive: row.is_active, name: row.policyName })
+          }
+          title={row.is_active ? '눌러서 비활성화합니다.' : '눌러서 활성화합니다.'}
+          variant="solid"
+        >
+          {row.is_active ? '활성' : '비활성'}
+        </Button>
       ),
     },
     { accessor: 'createdTime', header: '생성일', render: (val) => dateFormatter(val) },
@@ -86,11 +105,11 @@ export const TimePolicyTable = () => {
       render: (_val, row) => (
         <button
           aria-label={`정책 ${row.policyName} 삭제`}
-          className="flex items-center px-3 py-2 gap-2 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
-          onClick={() => deletePolicy({ policyId: row.policyId, policyType: 'TIME' })}
+          className="flex items-center p-2 gap-2 rounded-xl hover:bg-red-100"
+          onClick={() => handleDeleteModal({ id: row.policyId, name: row.policyName })}
           type="button"
         >
-          <ArrowIcon className="rotate-90 w-4 h-4" />
+          <DeleteIcon className="w-4 h-4 text-red-700" />
         </button>
       ),
     },
