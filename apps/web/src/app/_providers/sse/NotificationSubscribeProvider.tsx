@@ -1,11 +1,14 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 'use client';
+import type { InfiniteData } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import type { GetNotificationResponse } from '@/domains/notification/api/types';
+import { usePopUp } from '@/widgets/app-popup/model/PopUpContext';
 
 export const NotificationSubscribeProvider = () => {
   const queryClient = useQueryClient();
+  const { open } = usePopUp();
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -27,15 +30,49 @@ export const NotificationSubscribeProvider = () => {
           title: sseData.title,
         };
 
-        queryClient.setQueryData<GetNotificationResponse>(['notifications'], (old) => {
-          if (!old || old.notifications.some((n) => n.id === newRawNotification.id)) {
-            return old;
+        const cachedNotifications = queryClient.getQueryData<InfiniteData<GetNotificationResponse>>(
+          ['notifications'],
+        );
+        const isDuplicated = cachedNotifications?.pages.some((page) =>
+          page.notifications.some((notification) => notification.id === newRawNotification.id),
+        );
+
+        if (!isDuplicated) {
+          queryClient.setQueryData<InfiniteData<GetNotificationResponse>>(
+            ['notifications'],
+            (old) => {
+              if (!old || old.pages.length === 0) {
+                return old;
+              }
+
+              return {
+                ...old,
+                pages: old.pages.map((page, index) =>
+                  index === 0
+                    ? {
+                        ...page,
+                        notifications: [newRawNotification, ...page.notifications],
+                      }
+                    : page,
+                ),
+              };
+            },
+          );
+
+          if (newRawNotification.notificationType === 'PRESENT_DATA') {
+            open('presentDataPopUp', {
+              options: {
+                closeOnEsc: false,
+                closeOnOutsideClick: false,
+              },
+              props: {
+                content: newRawNotification.content,
+                title: newRawNotification.title,
+              },
+            });
           }
-          return {
-            ...old,
-            notifications: [newRawNotification, ...old.notifications],
-          };
-        });
+        }
+
         queryClient.setQueryData(['unreadCount'], { unreadCount: sseData.unreadCount });
       } catch (error) {
         console.error('SSE onmessage error:', error);
@@ -54,7 +91,7 @@ export const NotificationSubscribeProvider = () => {
       eventSource.removeEventListener('error', handleError);
       eventSource.close();
     };
-  }, [queryClient]);
+  }, [open, queryClient]);
 
   return null;
 };
