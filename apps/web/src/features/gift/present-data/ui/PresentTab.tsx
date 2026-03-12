@@ -39,8 +39,9 @@ export const PresentTab = () => {
           </div>
 
           <p className="text-[14px] font-bold text-black">
-            {familyData.data?.dataRemainAmount === -1 ? '무제한' : familyData.data.dataRemainAmount}
-            GB
+            {familyData.data.dataRemainAmount === -1
+              ? '무제한'
+              : `${familyData.data.dataRemainAmount}GB`}
           </p>
         </div>
       </Card>
