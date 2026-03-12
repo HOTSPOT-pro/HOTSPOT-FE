@@ -45,14 +45,14 @@ interface GiftAmountButtonsProps {
 
 export const GiftAmountButtons = ({ presentAmount, handleSelect }: GiftAmountButtonsProps) => {
   return (
-    <div className="flex w-full justify-center gap-2 pt-3">
+    <div className="flex w-full justify-center gap-2 pt-3 flex-wrap">
       {DATA_OPTIONS.map((amount) => {
         const isSelected = presentAmount === amount;
 
         return (
           <button
             className={`
-              px-4 py-2 rounded-full transition-all font-medium border
+              px-4 py-2 rounded-full transition-all font-medium border text-[14px]
               ${isSelected ? 'bg-purple-600 text-white border-purple-600' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}
             `}
             key={amount}
