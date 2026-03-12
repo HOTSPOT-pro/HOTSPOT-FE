@@ -2,11 +2,13 @@
 
 import { Button, Modal } from '@hotspot/ui';
 import NextImage from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { type UseFormRegisterReturn, useFieldArray, useForm } from 'react-hook-form';
 import { ONBOARDING_RULES } from '@/features/onboarding/model/formatRule';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
+import { ROUTES } from '@/shared/constants/routes';
 import { formatTel, toPureDigits } from '@/shared/lib';
 
 const BYTES_PER_KILOBYTE = 1024;
@@ -127,6 +129,7 @@ export const CreateFamilyModal = ({
   close: () => void;
   props?: Record<string, unknown>;
 }) => {
+  const router = useRouter();
   const [isGeneratingUrl, setIsGeneratingUrl] = useState(false);
   const [uploadErrorMessage, setUploadErrorMessage] = useState<string | null>(null);
   const [submitErrorMessage, setSubmitErrorMessage] = useState<string | null>(null);
@@ -330,6 +333,7 @@ export const CreateFamilyModal = ({
 
       await api.post('/api/v1/families/create', payload);
       close();
+      router.replace(ROUTES.LOGIN);
     } catch (error) {
       const serverMessage =
         (
