@@ -1,7 +1,7 @@
 'use client';
 
 import type { ComponentType } from 'react';
-import { PresentDataPopUp } from '@/shared/ui';
+import { PresentDataPopUp } from '@/domains/gift/ui/PresentDataPopUp';
 
 type AppPopUpComponent = ComponentType<{ close: () => void; props?: Record<string, unknown> }>;
 

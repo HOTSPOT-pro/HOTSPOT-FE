@@ -60,12 +60,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
               className="w-full flex flex-row gap-4 items-center"
               key={`${item.appName}-${index}`}
             >
-              <div
-                className={cn(
-                  'w-10 h-10 flex-none flex items-center justify-center rounded-full text-base font-bold',
-                  index === 0 ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-500',
-                )}
-              >
+              <div className="w-10 h-10 flex-none flex items-center justify-center rounded-full text-base font-bold bg-gray-100 text-gray-500">
                 {index + 1}
               </div>
 

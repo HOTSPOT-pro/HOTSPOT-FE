@@ -41,7 +41,7 @@ export const MY_PAGE_MENU_SECTIONS: MyPageMenuSection[] = [
         id: 'notification',
         label: '알림 설정',
       },
-      { href: ROUTES.MY_STATUS, icon: ShoppingBagIcon, id: 'gift-data', label: '데이터 선물하기' },
+      { href: ROUTES.GIFT, icon: ShoppingBagIcon, id: 'gift-data', label: '데이터 선물하기' },
     ],
     title: '일반',
   },

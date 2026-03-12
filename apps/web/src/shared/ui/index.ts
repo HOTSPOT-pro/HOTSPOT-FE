@@ -10,3 +10,11 @@ export { MonthNavigation } from './date/MonthNavigation';
 export { ErrorModal } from './error-modal/ErrorModal';
 export { Header } from './header/Header';
 export { Logo } from './logo/Logo';
+export {
+  PopUp,
+  PopUpContent,
+  PopUpDescription,
+  PopUpFooter,
+  PopUpHeader,
+  PopUpTitle,
+} from './pop-up/PopUp';
