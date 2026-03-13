@@ -15,13 +15,13 @@ interface PolicyFormValues {
 }
 
 const DAY_OPTIONS: { label: string; value: DAYS }[] = [
-  { label: '월', value: 'MON' },
-  { label: '화', value: 'TUE' },
-  { label: '수', value: 'WED' },
-  { label: '목', value: 'THU' },
-  { label: '금', value: 'FRI' },
-  { label: '토', value: 'SAT' },
-  { label: '일', value: 'SUN' },
+  { label: '월', value: 'MONDAY' },
+  { label: '화', value: 'TUESDAY' },
+  { label: '수', value: 'WEDNESDAY' },
+  { label: '목', value: 'THURSDAY' },
+  { label: '금', value: 'FRIDAY' },
+  { label: '토', value: 'SATURDAY' },
+  { label: '일', value: 'SUNDAY' },
 ];
 
 export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
