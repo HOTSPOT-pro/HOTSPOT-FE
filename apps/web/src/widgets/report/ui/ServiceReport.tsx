@@ -73,7 +73,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
                 <div className="flex flex-row justify-between items-center">
                   <p className="font-bold text-gray-900 truncate">{item.appName}</p>
                   <div className="text-right">
-                    <span className="font-bold text-gray-900">{item.usage.toFixed(1)} GB</span>
+                    <span className="font-bold text-gray-900">{item.usage} GB</span>
                   </div>
                 </div>
 
