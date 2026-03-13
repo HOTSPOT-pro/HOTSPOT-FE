@@ -25,8 +25,9 @@ interface FamilyUsage {
   subUsages: SubUsage[];
 }
 
-const START_COLOR = '#4F46E5';
-const END_COLOR = '#D9C9FF';
+const TOTAL_COLOR = '#4F46E5';
+const START_COLOR = '#16A34A';
+const END_COLOR = '#BBF7D0';
 
 const interpolateColor = (factor: number) => {
   const clamped = Math.min(1, Math.max(0, factor));
@@ -91,13 +92,14 @@ export const FamilyDataStatusPage = () => {
   );
 
   const donutData = useMemo(
-    () =>
-      coloredSubUsages.map((subUsage) => ({
-        fill: subUsage.color,
-        name: subUsage.subName,
-        value: subUsage.dataRemainAmount,
-      })),
-    [coloredSubUsages],
+    () => [
+      {
+        fill: TOTAL_COLOR,
+        name: '잔여 데이터',
+        value: data?.familyDataRemainAmount ?? 0,
+      },
+    ],
+    [data?.familyDataRemainAmount],
   );
 
   if (isPending) {
