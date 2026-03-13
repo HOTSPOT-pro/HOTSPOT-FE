@@ -135,11 +135,17 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
 
   // defaults
   if (config.variant === 'main') {
-    const leftAction: HeaderAction = config.leftAction ?? {
-      label: 'HOTSPOT',
-      onClick: () => router.push(ROUTES.MY_STATUS),
-      type: 'brand',
-    };
+    const leftAction: HeaderAction =
+      config.leftAction?.type === 'brand'
+        ? {
+            ...config.leftAction,
+            onClick: config.leftAction.onClick ?? (() => router.push(ROUTES.MY_STATUS)),
+          }
+        : {
+            label: 'HOTSPOT',
+            onClick: () => router.push(ROUTES.MY_STATUS),
+            type: 'brand',
+          };
     const rightAction: HeaderAction = config.rightAction ?? {
       type: 'notification',
     };
