@@ -119,7 +119,7 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
   };
 
   return (
-    <Modal className="w-100 max-h-200 overflow-auto">
+    <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-3xl p-6">
       <Modal.Header className="flex flex-row justify-between items-center">
         <Modal.Title>{step === 'form' ? '시간대별 정책 생성' : '정책 템플릿 선택'}</Modal.Title>
         <Button
