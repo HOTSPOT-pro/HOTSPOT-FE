@@ -35,7 +35,7 @@ export const useGift = () => {
       postPresentDataClient({ dataAmount, targetSubId }),
     onSuccess: (responseData) => {
       queryClient.setQueryData(['presentFamilyData'], (oldData: PresentFamilyData) => {
-        if (!oldData) return oldData;
+        if (!oldData || oldData.dataRemainAmount === -1) return oldData;
         return {
           ...oldData,
           dataRemainAmount: oldData.dataRemainAmount - responseData.data.dataAmount,
