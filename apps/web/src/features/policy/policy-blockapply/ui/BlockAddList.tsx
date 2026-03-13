@@ -28,6 +28,13 @@ export const BlockAddList = ({ data, draft, onUpdate }: PolicyAddListProps) => {
     onUpdate({ blockedServiceIdList: nextIds });
   };
 
+  if (!blockList || blockList.length === 0)
+    return (
+      <div className="px-6 pt-8 pb-4 text-center text-gray-400 font-medium">
+        차단 가능 서비스가 없습니다.
+      </div>
+    );
+
   return (
     <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">
       {blockList?.map((block) => {
