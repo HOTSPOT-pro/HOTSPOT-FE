@@ -95,20 +95,15 @@ export const FamilyDataStatusPage = () => {
       coloredSubUsages.map((subUsage) => ({
         fill: subUsage.color,
         name: subUsage.subName,
-        value: subUsage.dataUsageAmount,
+        value: subUsage.dataRemainAmount,
       })),
-    [coloredSubUsages],
-  );
-
-  const totalFamilyUsageAmount = useMemo(
-    () => coloredSubUsages.reduce((sum, subUsage) => sum + subUsage.dataUsageAmount, 0),
     [coloredSubUsages],
   );
 
   if (isPending) {
     return (
       <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-lg font-semibold">가족 데이터 현황</h2>
+        <h2 className="text-md font-semibold">가족 데이터 현황</h2>
         <p className="text-sm text-gray-500">가족 데이터 정보를 불러오는 중입니다.</p>
       </div>
     );
@@ -117,7 +112,7 @@ export const FamilyDataStatusPage = () => {
   if (isError || !data) {
     return (
       <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-lg font-semibold">가족 데이터 현황</h2>
+        <h2 className="text-md font-semibold">가족 데이터 현황</h2>
         <p className="text-sm text-red-500">가족 데이터 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
@@ -134,14 +129,14 @@ export const FamilyDataStatusPage = () => {
 
   return (
     <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-      <h2 className="text-lg font-semibold">가족 데이터 현황</h2>
+      <h2 className="text-md font-semibold">가족 데이터 현황</h2>
       <div className="flex w-full justify-center items-center">
         <div className="flex w-full max-w-70">
           <DonutChart
             data={donutData}
             total={data.familyDataAmount}
-            totalUsed={totalFamilyUsageAmount}
-            totalUsedLabel="사용"
+            totalUsed={data.familyDataRemainAmount}
+            totalUsedLabel="잔여"
           />
         </div>
       </div>

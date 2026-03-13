@@ -29,7 +29,6 @@ export const PeriodReport = ({ user, unit }: PeriodReportProps) => {
     setSelectedDate(newDate);
   };
 
-  // 1. 차트 컨텐츠를 렌더링하는 로직을 변수로 추출 (추천)
   const renderChartContent = useMemo(() => {
     if (isLoading) {
       return (
@@ -38,7 +37,6 @@ export const PeriodReport = ({ user, unit }: PeriodReportProps) => {
         </div>
       );
     }
-
     if (isError) {
       return (
         <div className="flex h-full items-center justify-center text-gray-400 text-center">
@@ -46,7 +44,6 @@ export const PeriodReport = ({ user, unit }: PeriodReportProps) => {
         </div>
       );
     }
-
     if (chartData.length === 0) {
       return (
         <div className="flex h-full items-center justify-center text-gray-400">

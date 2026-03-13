@@ -90,7 +90,7 @@ const BannerContent = ({
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 overflow-hidden rounded-[8px] bg-gradient-to-r from-[#8B5FE8] to-[#7D56E6] p-4 text-white',
+        'flex items-center justify-between gap-2 overflow-hidden rounded-[8px] bg-red-400 p-4 text-white',
         className,
       )}
     >

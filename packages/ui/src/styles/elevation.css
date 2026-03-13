@@ -5,6 +5,7 @@
   --z-sticky: 30;
   --z-overlay: 40;
   --z-modal: 50;
+  --z-popup: 80;
   --z-toast: 100;
 }
 
@@ -26,6 +27,9 @@
   }
   .z-toast {
     z-index: var(--z-toast);
+  }
+  .z-popup {
+    z-index: var(--z-popup);
   }
   .z-modal {
     z-index: var(--z-modal);

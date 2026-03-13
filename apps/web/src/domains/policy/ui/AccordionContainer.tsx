@@ -46,7 +46,7 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
           </div>
         }
       >
-        {policyList.length !== 0 ? (
+        {blockServices.length !== 0 ? (
           blockServices.map((i) => (
             <PolicyItem icon={<CloseCircle className="w-4.5 text-red-600" />} item={i} key={i.id} />
           ))

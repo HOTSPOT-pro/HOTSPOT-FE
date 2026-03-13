@@ -32,9 +32,17 @@ export const PresentTab = () => {
   return (
     <div className="flex flex-col gap-4 p-5">
       <Card>
-        <div className="flex flex-row justify-between bg-white rounded-2xl">
-          <p className="text-gray-500 text-[12px]">내 잔여 데이터</p>
-          <p className="text-[14px] font-bold text-black">{familyData.data?.dataRemainAmount}GB</p>
+        <div className="flex flex-row justify-between items-center bg-white rounded-2xl">
+          <div className="flex flex-col">
+            <p className="text-black font-bold text-[13px]">내 잔여 데이터</p>
+            <p className="text-gray-500 text-[12px]">한 달에 5GB까지 선물이 가능합니다.</p>
+          </div>
+
+          <p className="text-[14px] font-bold text-black">
+            {familyData.data.dataRemainAmount === -1
+              ? '무제한'
+              : `${familyData.data.dataRemainAmount}GB`}
+          </p>
         </div>
       </Card>
       <Card>

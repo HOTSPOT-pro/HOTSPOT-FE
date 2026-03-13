@@ -39,9 +39,14 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
 
   return (
     <div className="mt-8 p-5 bg-white rounded-3xl flex flex-col gap-1">
-      <div className="flex justify-between items-end mb-2">
+      <div className="flex justify-between items-center mb-2">
         <p className="text-md font-bold leading-relaxed text-gray-900">앱별 상세 사용량</p>
-        <p className="text-sm text-gray-500 font-medium">{`${data?.name ?? user.name} 님`}</p>
+        <div>
+          <p className="text-sm text-gray-500 font-medium text-right">
+            {unit === 'MONTH' && `${selectedDate.getMonth() + 1}월`}
+          </p>
+          <p className="text-sm text-gray-500 font-medium">{`${data?.name ?? user.name} 님`}</p>
+        </div>
       </div>
 
       {/* 날짜 네비게이션 */}
@@ -60,12 +65,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
               className="w-full flex flex-row gap-4 items-center"
               key={`${item.appName}-${index}`}
             >
-              <div
-                className={cn(
-                  'w-10 h-10 flex-none flex items-center justify-center rounded-full text-base font-bold',
-                  index === 0 ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-500',
-                )}
-              >
+              <div className="w-10 h-10 flex-none flex items-center justify-center rounded-full text-base font-bold bg-gray-100 text-gray-500">
                 {index + 1}
               </div>
 
