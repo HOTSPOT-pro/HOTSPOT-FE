@@ -26,7 +26,7 @@ export const NotificationItem = ({ notification, onClick, className }: Notificat
       <WarningIcon className="w-5 h-5 text-purple-600" />
       <div className="w-full flex flex-col gap-1 items-start">
         <p className={cn('text-sm font-medium text-black')}>{title}</p>
-        <p className="text-gray-600 font-normal text-xs">{message}</p>
+        <p className="text-gray-600 font-normal text-xs text-left break-keep">{message}</p>
         <span className="text-[10px] text-gray-500 mt-1">{formatDate(dateObject)}</span>
       </div>
     </button>
