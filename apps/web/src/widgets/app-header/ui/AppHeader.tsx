@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useState } from 'react';
 import { SettingDropDown, useNotification } from '@/features/notification';
@@ -55,14 +56,9 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
     switch (action.type) {
       case 'brand':
         return (
-          <button
-            aria-label="로고"
-            className="px-2 text-sm font-semibold"
-            onClick={action.onClick}
-            type="button"
-          >
+          <Link aria-label="로고" className="px-2 text-sm font-semibold" href={action.href}>
             {action.label}
-          </button>
+          </Link>
         );
 
       case 'back':
