@@ -20,7 +20,14 @@ export interface PostTimePolicyRequest {
     durationMinutes?: number;
   };
 }
-export type DAYS = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+export type DAYS =
+  | 'MONDAY'
+  | 'TUESDAY'
+  | 'WEDNESDAY'
+  | 'THURSDAY'
+  | 'FRIDAY'
+  | 'SATURDAY'
+  | 'SUNDAY';
 
 export interface DeletePolicyRequest {
   policyType: 'TIME' | 'APP';
