@@ -50,7 +50,9 @@ const PresentFamilyItem = ({ user, isSelected }: PresentFamilyItemProps) => {
         </p>
       </div>
 
-      <p className="text-[16px] font-normal">{user.dataUsagePercent}%</p>
+      <p className="text-[16px] font-normal">
+        {user.dataUsagePercent === -1 ? '무제한' : `${user.dataUsagePercent}%`}
+      </p>
     </div>
   );
 };
