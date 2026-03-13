@@ -38,9 +38,6 @@ export const ChartTooltip = ({ header, sections }: ChartTooltipProps) => {
                   <span className="text-xs font-semibold text-black">{section.unit}</span>
                 ) : null}
               </div>
-              {section.percent !== undefined ? (
-                <span className="ml-2 text-xs font-bold text-purple-500">{section.percent}%</span>
-              ) : null}
             </div>
           </div>
         ))}
