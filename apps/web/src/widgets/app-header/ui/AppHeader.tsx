@@ -132,7 +132,7 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
   // defaults
   if (config.variant === 'main') {
     const leftAction: HeaderAction = config.leftAction ?? {
-      href: ROUTES.HOME,
+      href: ROUTES.MY_STATUS,
       label: 'HOTSPOT',
       type: 'brand',
     };
