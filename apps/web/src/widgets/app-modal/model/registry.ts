@@ -2,6 +2,7 @@
 
 import { ErrorModal } from '@shared/ui';
 import type { ComponentType } from 'react';
+import { DaySelectorModal } from '@/features/analyze/ui/DaySelectorModal';
 import { PresentConfirmModal } from '@/features/gift/present-data/ui/PresentConfirmModal';
 import { AddPolicyModal } from '@/features/policy/policy-list/ui/AddPolicyModal';
 import { DeleteFamilyPolicyModal } from '@/features/policy/policy-list/ui/DeleteFamilyPolicyModal';
@@ -21,6 +22,7 @@ export const modalRegistry: Record<string, AppModalComponent> = {
   addFamilyPolicyModal: AddPolicyModal,
   changeFamilyRoleModal: ChangeFamilyRoleModal,
   createFamilyModal: CreateFamilyModal,
+  daySelectorModal: DaySelectorModal,
   deleteFamilyMemberModal: DeleteFamilyMemberModal,
   deleteFamilyPolicyModal: DeleteFamilyPolicyModal,
   errorModal: ErrorModal,

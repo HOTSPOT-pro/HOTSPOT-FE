@@ -19,8 +19,6 @@ export interface BarChartDataProps {
   label: string; // '월', '화' 또는 '1주', '2주'
   lastWeek: number;
   thisWeek: number;
-  lastWeekRatio?: number;
-  thisWeekRatio?: number;
 }
 
 export interface UsageBarChartProps {
@@ -28,23 +26,33 @@ export interface UsageBarChartProps {
   unit?: string;
 }
 
-const BarChartTooltipContent = ({ active, payload, unit }: any) => {
+interface DoubleBarChartTooltipPayload {
+  label: string;
+  lastWeek: number;
+  thisWeek: number;
+}
+interface DoubleBarChartTooltipContentProps {
+  active?: boolean;
+  payload?: Array<{ payload: DoubleBarChartTooltipPayload }>;
+  unit: string;
+}
+
+const BarChartTooltipContent = ({ active, payload, unit }: DoubleBarChartTooltipContentProps) => {
   if (!(active && payload?.length)) return null;
-  const data = payload[0].payload;
+  const data = payload[0]?.payload;
+  if (!data) return null;
 
   return (
     <ChartTooltip
       header={`${data.label} 사용량 비교`}
       sections={[
         {
-          percent: data.lastWeekRatio,
           title: '지난주',
           unit,
           value: data.lastWeek.toFixed(2),
         },
         {
           dividerTop: true,
-          percent: data.thisWeekRatio,
           title: '이번주',
           unit,
           value: data.thisWeek.toFixed(2),
@@ -54,21 +62,28 @@ const BarChartTooltipContent = ({ active, payload, unit }: any) => {
   );
 };
 
+//차트 레이아웃 상수
+const CHART_LAYOUT = {
+  BAR_GAP: 8, // 막대 사이 간격
+  BAR_SIZE: 20, // 막대 두께
+  RADIUS: [4, 4, 0, 0] as [number, number, number, number], // 막대 상단 라운딩
+  Y_AXIS_WIDTH: 50, // Y축 라벨 영역 넓이
+};
+
 export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) => {
   const LAST_WEEK_COLOR = COLORS.SECONDARY || '#94a3b8';
   const THIS_WEEK_COLOR = COLORS.START || '#3b82f6';
 
-  // Y축 최댓값 계산 (두 데이터 중 큰 값 기준)
   const allValues = data.flatMap((d) => [d.lastWeek, d.thisWeek]);
   const max = getRoundedMax(allValues);
 
   return (
-    <div className="w-full h-full @container [&_*:focus-visible]:outline-none">
+    <div className="w-full h-full @container">
       <ResponsiveContainer height="100%" width="100%">
         <BarChart
-          barGap={8}
+          barGap={CHART_LAYOUT.BAR_GAP}
           data={data}
-          margin={{ bottom: 10, left: 0, right: 10, top: 20 }} // 막대 사이의 간격
+          margin={{ bottom: 10, left: 0, right: 10, top: 20 }}
         >
           <CartesianGrid stroke={COLORS.CARTESIAN} strokeDasharray="3 3" vertical={false} />
 
@@ -86,7 +101,7 @@ export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) =
             tick={{ fill: COLORS.TEXT_SECONDARY, fontSize: '12px' }}
             tickFormatter={(value) => `${value}${unit}`}
             tickLine={false}
-            width={50}
+            width={CHART_LAYOUT.Y_AXIS_WIDTH}
           />
 
           <Tooltip
@@ -96,22 +111,20 @@ export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) =
 
           <Legend height={36} iconType="circle" verticalAlign="bottom" />
 
-          {/* 지난주 막대 */}
           <Bar
-            barSize={20}
+            barSize={CHART_LAYOUT.BAR_SIZE}
             dataKey="lastWeek"
             fill={LAST_WEEK_COLOR}
-            name="지난주" // 상단 모서리만 둥글게
-            radius={[4, 4, 0, 0]}
+            name="지난주"
+            radius={CHART_LAYOUT.RADIUS}
           />
 
-          {/* 이번주 막대 */}
           <Bar
-            barSize={20}
+            barSize={CHART_LAYOUT.BAR_SIZE}
             dataKey="thisWeek"
             fill={THIS_WEEK_COLOR}
             name="이번주"
-            radius={[4, 4, 0, 0]}
+            radius={CHART_LAYOUT.RADIUS}
           />
         </BarChart>
       </ResponsiveContainer>

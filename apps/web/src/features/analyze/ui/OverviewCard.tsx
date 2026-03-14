@@ -1,0 +1,54 @@
+'use client';
+
+import type { Overview, TagType } from '@/domains/analyze';
+import { TAG_LABELS } from '../lib/format';
+
+interface OverviewCardProps {
+  overview: Overview;
+}
+
+const TAG_ICON_MAP: Record<TagType, string> = {
+  ENTERTAINMENT_HEAVY: '🎮',
+  LATE_NIGHT_HIGH: '🌙',
+  STUDY_FOCUSED: '📚',
+  USAGE_SPIKE: '⚡',
+};
+
+export const OverviewCard = ({ overview }: OverviewCardProps) => {
+  const { scoreInfo, tags } = overview;
+  const isUp = scoreInfo.scoreDiff > 0;
+
+  return (
+    <div className="bg-white rounded-2xl p-4 mb-3 shadow-sm">
+      <p className="text-xs text-gray-400 font-medium mb-3">이번 주 요약</p>
+
+      <div className="flex items-center gap-3 mb-4">
+        <span className="text-4xl">🍇</span>
+        <div className="flex-1">
+          <span className="text-5xl font-black text-gray-900 leading-none">
+            {scoreInfo.totalScore}
+          </span>
+          <span className="text-base text-gray-400 font-normal"> / 100</span>
+        </div>
+        <span
+          className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
+            isUp ? 'bg-violet-100 text-violet-700' : 'bg-red-100 text-red-600'
+          }`}
+        >
+          지난 주 대비 {Math.abs(scoreInfo.scoreDiff)}점 {isUp ? '상승' : '하락'}
+        </span>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        {tags.map((tag) => (
+          <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5" key={tag}>
+            <span className="text-base">{TAG_ICON_MAP[tag]}</span>
+            <span className="text-sm font-medium text-gray-700">
+              {TAG_LABELS[tag]?.label ?? tag}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

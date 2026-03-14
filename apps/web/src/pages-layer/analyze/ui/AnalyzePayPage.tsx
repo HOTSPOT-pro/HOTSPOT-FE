@@ -1,13 +1,12 @@
 'use client';
-import { Button, Card } from '@hotspot/ui';
+import { Button, Card, useModal } from '@hotspot/ui';
 import CrownIcon from '@hotspot/ui/assets/icons/crown.svg';
-import { useRouter } from 'next/navigation';
 import { ANALYZE_ADVENTAGES } from '../constants/adventages';
 
 export const AnalyzePayPage = () => {
-  const router = useRouter();
+  const { open } = useModal();
   const handleApply = () => {
-    router.push('/analyze/select');
+    open('daySelectorModal');
   };
 
   return (

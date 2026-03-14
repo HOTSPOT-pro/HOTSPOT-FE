@@ -1,4 +1,4 @@
-import { AnalyzePayPage } from '@/pages-layer/analyze/ui/AnalyzePayPage';
+import { AnalyzePayPage } from '@/pages-layer/analyze';
 
 const page = () => {
   return <AnalyzePayPage />;

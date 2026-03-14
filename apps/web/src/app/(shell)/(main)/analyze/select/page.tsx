@@ -1,4 +1,4 @@
-import { AnalyzeSelectPage } from '@/pages-layer/analyze/ui/AnalyzeSelectPage';
+import { AnalyzeSelectPage } from '@/pages-layer/analyze';
 
 const page = () => {
   return <AnalyzeSelectPage />;
