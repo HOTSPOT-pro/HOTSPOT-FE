@@ -51,3 +51,17 @@
 .animate-dot-appear-3 {
   animation: dot-appear-3 1.2s linear infinite;
 }
+
+@keyframes gradient-diagonal {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+.animate-diagonal {
+  background: repeating-linear-gradient(135deg, #9333ea 0%, #df8eff 25%, #9333ea 50%);
+  background-size: 200% 200%;
+  animation: gradient-diagonal 15s linear infinite;
+}
