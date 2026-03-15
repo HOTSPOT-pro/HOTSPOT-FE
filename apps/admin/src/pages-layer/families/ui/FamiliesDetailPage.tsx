@@ -4,9 +4,10 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { Component, type ReactNode, Suspense, useState } from 'react';
 import { useFamilyDetail } from '@/domains/family';
-import { FamilyDetailControlTab } from '@/features/family-control';
-import { FamilyDetailPolicyTab } from '@/features/family-policy/member-info';
-import { FamilyRealtimeStatusTab } from '@/features/family-realtime-status';
+import { FamilyDetailControlTab } from '@/features/family/family-control';
+import { FamilyDetailPolicyTab } from '@/features/family/family-policy/member-info';
+import { FamilyRealtimeStatusTab } from '@/features/family/family-realtime-status';
+import { FamilyRealtimeStatusSkeleton } from '@/features/family/family-realtime-status/ui/FamilyRealtimeStatusTabSkeleton';
 
 type FamilyDetailTabValue = 'STATE' | 'POLICY' | 'CONTROL';
 const FAMILY_DETAIL_TABS: TabItem<FamilyDetailTabValue>[] = [
@@ -61,14 +62,6 @@ class StateTabErrorBoundary extends Component<
   }
 }
 
-const StateTabSkeleton = () => {
-  return (
-    <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4">
-      <p className="text-sm text-gray-500">실시간 상태를 불러오는 중입니다.</p>
-    </div>
-  );
-};
-
 export const FamiliesDetailPage = () => {
   const params = useParams();
   const familyId = Number(params.familyId);
@@ -101,7 +94,7 @@ export const FamiliesDetailPage = () => {
           <QueryErrorResetBoundary>
             {({ reset }) => (
               <StateTabErrorBoundary key={`state-${familyId}`} onRetry={reset}>
-                <Suspense fallback={<StateTabSkeleton />}>
+                <Suspense fallback={<FamilyRealtimeStatusSkeleton />}>
                   <FamilyRealtimeStatusTab />
                 </Suspense>
               </StateTabErrorBoundary>

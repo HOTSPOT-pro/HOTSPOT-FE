@@ -7,7 +7,7 @@ import {
   type PolicyApply,
   useApplyBlock,
   useApplyPolicy,
-} from '@/features/family-policy/policy-apply';
+} from '@/features/family/family-policy/policy-apply';
 import { UserProfileIcon } from '@/shared/ui';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';

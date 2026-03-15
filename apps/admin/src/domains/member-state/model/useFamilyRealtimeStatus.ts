@@ -13,6 +13,7 @@ export const useFamilyRealtimeStatus = (familyId: number) => {
   });
 
   return {
+    isLoading: query.isLoading,
     realtimeStatus: query.data,
   };
 };

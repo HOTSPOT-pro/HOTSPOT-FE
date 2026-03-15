@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useFamilies } from '@/features/families';
+import { useFamilies } from '@/features/family/families';
 import { Pagination, SearchBar, Table } from '@/shared';
 import { familyColumns } from '../constants/FamilyListColumns';
 
