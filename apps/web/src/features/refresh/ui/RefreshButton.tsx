@@ -1,6 +1,6 @@
 'use client';
 
-import RefreshIcon from '@/shared/assets/icons/refresh.svg';
+import RefreshIcon from '@hotspot/ui/assets/icons/refresh.svg';
 
 interface RefreshButtonProps {
   onRefresh?: () => void;

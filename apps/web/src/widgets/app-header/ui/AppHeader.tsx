@@ -1,13 +1,13 @@
 'use client';
 
+import ArrowLeftIcon from '@hotspot/ui/assets/icons/arrow-left.svg';
+import CloseIcon from '@hotspot/ui/assets/icons/close.svg';
+import NotificationIcon from '@hotspot/ui/assets/icons/notification.svg';
+import SettingIcon from '@hotspot/ui/assets/icons/setting.svg';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useState } from 'react';
 import { SettingDropDown, useNotification } from '@/features/notification';
-import ArrowLeftIcon from '@/shared/assets/icons/arrow-left.svg';
-import CloseIcon from '@/shared/assets/icons/close.svg';
-import NotificationIcon from '@/shared/assets/icons/notification.svg';
-import SettingIcon from '@/shared/assets/icons/setting.svg';
 import { ROUTES } from '@/shared/constants/routes';
 import { Header } from '@/shared/ui/header/Header';
 import type { HeaderConfig } from '../model/types';
@@ -138,6 +138,7 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
             onClick: config.leftAction.onClick ?? (() => router.push(ROUTES.MY_STATUS)),
           }
         : {
+            href: ROUTES.MY_STATUS,
             label: 'HOTSPOT',
             onClick: () => router.push(ROUTES.MY_STATUS),
             type: 'brand',

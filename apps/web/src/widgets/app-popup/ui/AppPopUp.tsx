@@ -1,9 +1,9 @@
 'use client';
 
 import { Overlay } from '@hotspot/ui';
+import CloseIcon from '@hotspot/ui/assets/icons/close.svg';
 import React from 'react';
 import { createPortal } from 'react-dom';
-import CloseIcon from '@/shared/assets/icons/close.svg';
 import { usePopUp } from '../model/PopUpContext';
 import { popupRegistry } from '../model/registry';
 

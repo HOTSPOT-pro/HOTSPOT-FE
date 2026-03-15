@@ -6,7 +6,7 @@ export interface ApiResponse<T> {
 }
 
 export interface ApiErrorResponse {
-  statusCode: number; // 추후 status로 변경 예정
+  status: number; // 추후 status로 변경 예정
   code: string;
   message: string;
 }

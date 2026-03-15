@@ -95,7 +95,8 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
 
   return (
     <div>
-      <Modal className="w-100">
+      {/*TODO: 모달 스타일 빼기*/}
+      <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-3xl p-6">
         <Modal.Header>
           <Modal.Title>
             <div className="flex items-center gap-1">
