@@ -1,4 +1,5 @@
 export const ROUTES = {
+  ANALYZE: '/analyze',
   FAMILY: '/family',
   FAMILY_STATUS: '/family-usage',
   GIFT: '/gift',

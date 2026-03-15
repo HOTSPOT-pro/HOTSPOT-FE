@@ -12,6 +12,7 @@ export {
   type DonutChartDataProps,
 } from './chart/donut/DonutChart';
 export { DonutChartContainer } from './chart/donut/DonutChartContainer';
+export { DoubleBarChart } from './chart/double-bar/DoubleBarChart';
 export {
   LineChart,
   type LineChartDataProps,
