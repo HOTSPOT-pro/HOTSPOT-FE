@@ -13,7 +13,7 @@ type CommonHeaderAction =
   | { type: 'custom'; ariaLabel: string; node: ReactNode; onClick?: () => void };
 
 // 메인
-type MainHeaderAction = { type: 'brand'; label: string; onClick?: () => void };
+type MainHeaderAction = { type: 'brand'; label: string; href: string };
 
 export type HeaderConfig =
   | {

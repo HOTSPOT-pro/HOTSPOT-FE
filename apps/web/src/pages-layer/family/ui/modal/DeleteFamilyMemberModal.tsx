@@ -26,6 +26,7 @@ export const DeleteFamilyMemberModal = ({ close, props }: DeleteFamilyMemberModa
     setIsLoading(true);
     try {
       await api.post('/api/v1/families/delete', {
+        applyType: 'REMOVE',
         targetSubIdList: [payload.subId],
       });
       close();
