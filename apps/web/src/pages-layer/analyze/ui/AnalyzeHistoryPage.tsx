@@ -8,7 +8,11 @@ const TempReport = [
   { date: '2026.06.01~2026.06.07', title: '2026년 6월 2주차 분석 리포트' },
 ];
 
-export const AnalyzeHistoryPage = () => {
+interface AnalyzeHistoryPageProps {
+  subId: number;
+}
+
+export const AnalyzeHistoryPage = ({ subId }: AnalyzeHistoryPageProps) => {
   const { setHeader } = useSubHeaderStore();
   useEffect(() => {
     setHeader({
@@ -27,7 +31,7 @@ export const AnalyzeHistoryPage = () => {
       </div>
       <div className="flex flex-col gap-2 cursor-pointer">
         {TempReport.map((i) => (
-          <div className="p-4 shadow-sm rounded-2xl">
+          <div className="p-4 shadow-sm rounded-2xl" key={i.date}>
             <h3 className="text-[13px] font-bold">{i.title}</h3>
             <p className="text-[12px] text-gray-600">{i.date}</p>
           </div>

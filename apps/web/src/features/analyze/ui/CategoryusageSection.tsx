@@ -16,6 +16,10 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
     categoryUsageList;
 
   const compMap = Object.fromEntries(comparison.map((c) => [c.category, c.changeRate]));
+  const thisWeekItemMap = useMemo(
+    () => Object.fromEntries(thisWeek.map((item) => [CATEGORY_LABELS[item.category], item])),
+    [thisWeek],
+  );
 
   const toChartData = useCallback((items: typeof thisWeek, total: number) => {
     const used = items.reduce((acc, cur) => acc + cur.usage, 0);
@@ -98,7 +102,7 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
           </div>
           <div className="flex flex-col gap-2 mb-3">
             {thisWeekLegendItems.map((item) => {
-              const thisItem = thisWeek.find((t) => CATEGORY_LABELS[t.category] === item.name);
+              const thisItem = thisWeekItemMap[item.name];
               const rate = thisItem ? (compMap[thisItem.category] ?? 0) : 0;
 
               return (

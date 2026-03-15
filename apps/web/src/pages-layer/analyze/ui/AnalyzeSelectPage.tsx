@@ -49,7 +49,9 @@ export const AnalyzeSelectPage = () => {
         ))}
       </div>
 
-      <span className="text-[12px] font-light text-gray-600">구독 취소하기</span>
+      <button className="text-[12px] font-light text-gray-600" type="button">
+        구독 취소하기
+      </button>
     </div>
   );
 };

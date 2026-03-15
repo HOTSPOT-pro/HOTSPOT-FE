@@ -1,21 +1,28 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
-const page = () => {
-  const router = useRouter();
-  const isSubscribe = false;
+import { useState } from 'react';
+import { AnalyzePayPage, AnalyzeSelectPage } from '@/pages-layer/analyze';
 
-  useEffect(() => {
-    if (isSubscribe === null) return;
-    if (!isSubscribe) {
-      router.push('/analyze/pay');
-    } else {
-      router.push('/analyze/select');
-    }
-  }, [router]);
+const AnalyzeSection = () => {
+  const [isSubscribe, setIsSubscribe] = useState(false);
 
-  return <div>loading...</div>;
+  if (isSubscribe === null) {
+    return (
+      <section>
+        <p>구독 정보를 확인 중입니다...</p>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      {isSubscribe ? (
+        <AnalyzeSelectPage />
+      ) : (
+        <AnalyzePayPage onPaymentSuccess={() => setIsSubscribe(true)} />
+      )}
+    </section>
+  );
 };
 
-export default page;
+export default AnalyzeSection;

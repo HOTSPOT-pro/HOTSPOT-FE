@@ -45,7 +45,6 @@ export const useGift = () => {
   >({
     mutationFn: ({ targetSubId, dataAmount }) => postPresentDataClient({ dataAmount, targetSubId }),
     onError: (error, _variables, context) => {
-      console.log(error);
       if (context?.previousData) {
         queryClient.setQueryData(['presentFamilyData'], context.previousData);
       }

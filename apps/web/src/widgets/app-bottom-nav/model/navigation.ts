@@ -1,13 +1,13 @@
-import BarChart from '@/shared/assets/icons/graph-bar.svg';
-import BarChartSolid from '@/shared/assets/icons/graph-bar-fill.svg';
-import HomeSolid from '@/shared/assets/icons/home-fill.svg';
-import Home from '@/shared/assets/icons/home-line.svg';
-import ReportSolid from '@/shared/assets/icons/report-fill.svg';
-import Report from '@/shared/assets/icons/report-line.svg';
-import SmileSolid from '@/shared/assets/icons/smile-fill.svg';
-import Smile from '@/shared/assets/icons/smile-line.svg';
-import UserSolid from '@/shared/assets/icons/user-fill.svg';
-import User from '@/shared/assets/icons/user-line.svg';
+import BarChart from '@hotspot/ui/assets/icons/graph-bar.svg';
+import BarChartSolid from '@hotspot/ui/assets/icons/graph-bar-fill.svg';
+import HomeSolid from '@hotspot/ui/assets/icons/home-fill.svg';
+import Home from '@hotspot/ui/assets/icons/home-line.svg';
+import ReportSolid from '@hotspot/ui/assets/icons/report-fill.svg';
+import Report from '@hotspot/ui/assets/icons/report-line.svg';
+import SmileSolid from '@hotspot/ui/assets/icons/smile-fill.svg';
+import Smile from '@hotspot/ui/assets/icons/smile-line.svg';
+import UserSolid from '@hotspot/ui/assets/icons/user-fill.svg';
+import User from '@hotspot/ui/assets/icons/user-line.svg';
 import { ROUTES } from '@/shared/constants/routes';
 import { NAV_LABELS } from '../constants/navLabel';
 
@@ -21,7 +21,7 @@ export const BOTTOM_NAV_ITEMS = [
   },
   {
     activeIcon: BarChartSolid,
-    href: ROUTES.ANALYZE.ROOT,
+    href: ROUTES.ANALYZE,
     icon: BarChart,
     label: NAV_LABELS.ANALYZE,
   },

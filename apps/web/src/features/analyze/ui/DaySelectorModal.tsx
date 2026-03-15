@@ -1,9 +1,8 @@
-import { Button, Modal } from '@hotspot/ui';
-import { useRouter } from 'next/navigation';
+import type { DayType } from '@domains/analyze';
+import { Button, Modal, useModal } from '@hotspot/ui';
 import { useForm } from 'react-hook-form';
-import type { DAYS } from '@/features/policy/policy-list/model/types';
 
-const DAY_OPTIONS: { label: string; value: DAYS }[] = [
+const DAY_OPTIONS: { label: string; value: DayType }[] = [
   { label: '월', value: 'MONDAY' },
   { label: '화', value: 'TUESDAY' },
   { label: '수', value: 'WEDNESDAY' },
@@ -13,13 +12,20 @@ const DAY_OPTIONS: { label: string; value: DAYS }[] = [
   { label: '일', value: 'SUNDAY' },
 ];
 
+interface DaySelectorModalProps {
+  handleSubscribe: () => void;
+  [key: string]: unknown;
+}
+
 export const DaySelectorModal = ({ close }: { close: () => void }) => {
+  const { getProps } = useModal();
+  const props = getProps<DaySelectorModalProps>();
+
   const { watch, setValue } = useForm();
   const selectedDay = watch('selectedDay');
-  const router = useRouter();
 
   const handleSave = () => {
-    router.push('/analyze/select');
+    props?.handleSubscribe();
     close();
   };
 

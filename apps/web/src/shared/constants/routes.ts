@@ -1,9 +1,5 @@
 export const ROUTES = {
-  ANALYZE: {
-    LIST: '/analyze/select',
-    PAY: '/analyze/pay',
-    ROOT: '/analyze',
-  },
+  ANALYZE: '/analyze',
   FAMILY: '/family',
   FAMILY_STATUS: '/family-usage',
   GIFT: '/gift',

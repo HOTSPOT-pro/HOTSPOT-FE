@@ -3,10 +3,14 @@ import { Button, Card, useModal } from '@hotspot/ui';
 import CrownIcon from '@hotspot/ui/assets/icons/crown.svg';
 import { ANALYZE_ADVENTAGES } from '../constants/adventages';
 
-export const AnalyzePayPage = () => {
+interface AnalyzePayPageProps {
+  onPaymentSuccess: () => void;
+}
+
+export const AnalyzePayPage = ({ onPaymentSuccess }: AnalyzePayPageProps) => {
   const { open } = useModal();
   const handleApply = () => {
-    open('daySelectorModal');
+    open('daySelectorModal', { props: { handleSubscribe: onPaymentSuccess } });
   };
 
   return (

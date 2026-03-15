@@ -1,9 +1,9 @@
 import type { CategoryType, DayType, TagType } from '@/domains/analyze';
 
 export const formatDateRange = (start: string, end: string): string => {
-  const s = new Date(start);
-  const e = new Date(end);
-  return `${s.getMonth() + 1}/${s.getDate()}~${e.getMonth() + 1}/${e.getDate()}`;
+  const [, sMonth, sDay] = start.split('-').map(Number);
+  const [, eMonth, eDay] = end.split('-').map(Number);
+  return `${sMonth}/${sDay}~${eMonth}/${eDay}`;
 };
 
 export const DAY_LABELS: Record<DayType, string> = {
