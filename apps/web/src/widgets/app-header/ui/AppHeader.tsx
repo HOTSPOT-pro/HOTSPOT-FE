@@ -138,6 +138,7 @@ export function AppHeader({ config }: { config: HeaderConfig }) {
             onClick: config.leftAction.onClick ?? (() => router.push(ROUTES.MY_STATUS)),
           }
         : {
+            href: ROUTES.MY_STATUS,
             label: 'HOTSPOT',
             onClick: () => router.push(ROUTES.MY_STATUS),
             type: 'brand',
