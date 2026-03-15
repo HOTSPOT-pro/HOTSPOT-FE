@@ -19,3 +19,4 @@ export type {
   ScoreReason,
   TagType,
 } from './model/types';
+export { useSubscribeInfo } from './model/useSubscribe';

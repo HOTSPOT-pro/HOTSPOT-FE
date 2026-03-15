@@ -10,6 +10,10 @@ export type DayType =
   | 'SUNDAY';
 export type CategoryType = 'study' | 'media' | 'sns' | 'msg' | 'game';
 
+export interface Subscribe {
+  subscribed: boolean;
+}
+
 export interface ScoreReason {
   value: number;
   exp: string;

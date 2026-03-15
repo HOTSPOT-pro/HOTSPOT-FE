@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@hotspot/ui';
 import type { Overview, TagType } from '@/domains/analyze';
 import { TAG_LABELS } from '../lib/format';
 
@@ -17,6 +18,8 @@ const TAG_ICON_MAP: Record<TagType, string> = {
 export const OverviewCard = ({ overview }: OverviewCardProps) => {
   const { scoreInfo, tags } = overview;
   const isUp = scoreInfo.scoreDiff > 0;
+  const isDown = scoreInfo.scoreDiff < 0;
+  const isNeutral = scoreInfo.scoreDiff === 0;
 
   return (
     <div className="bg-white rounded-2xl p-4 mb-3 shadow-sm">
@@ -31,11 +34,15 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
           <span className="text-base text-gray-400 font-normal"> / 100</span>
         </div>
         <span
-          className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
-            isUp ? 'bg-violet-100 text-violet-700' : 'bg-red-100 text-red-600'
-          }`}
+          className={cn(
+            'px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-gray-100 text-gray-600',
+            isUp && 'bg-violet-100 text-violet-700',
+            isDown && 'bg-red-100 text-red-600',
+          )}
         >
-          지난 주 대비 {Math.abs(scoreInfo.scoreDiff)}점 {isUp ? '상승' : '하락'}
+          {isUp && `지난 주 대비 ${Math.abs(scoreInfo.scoreDiff)}점 상승`}
+          {isDown && `지난 주 대비 ${Math.abs(scoreInfo.scoreDiff)}점 하락`}
+          {isNeutral && '점수 유지'}
         </span>
       </div>
 
