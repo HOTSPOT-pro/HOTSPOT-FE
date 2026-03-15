@@ -25,9 +25,9 @@ export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
   } = data;
 
   return (
-    <div className="mx-auto min-h-screen bg-gray-100 flex flex-col">
+    <div className="mx-auto min-h-screen flex flex-col">
       {/* title */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-white">
+      <div className="flex items-center justify-between px-5 py-2.5 bg-white">
         <span className="text-[15px] font-bold text-gray-900">
           3월 5주차 리포트 ({formatDateRange(weekStartDate, weekEndDate)})
         </span>
@@ -35,7 +35,7 @@ export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 px-3 pt-2.5 pb-24 overflow-y-auto">
+      <div className="flex-1 px-5 pt-3 overflow-y-auto">
         <OverviewCard overview={overview} />
         <DailyusageSection dailyUsage={dailyUsage} />
         <HourlyusageSection hourlyUsage={hourlyUsage} />

@@ -39,6 +39,18 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
         </span>
       </div>
 
+      <p className="text-xs text-gray-400 font-medium mb-3">점수 산정 요인</p>
+      <div className="flex flex-col gap-2 mb-4">
+        {scoreInfo.reason.map((i) => (
+          <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5">
+            <span className="text-sm font-medium text-gray-700">
+              {i.exp} {i.value}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-xs text-gray-400 font-medium mb-3">#TAGS</p>
       <div className="flex flex-col gap-2">
         {tags.map((tag) => (
           <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5" key={tag}>

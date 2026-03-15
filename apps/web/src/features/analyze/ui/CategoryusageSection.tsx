@@ -40,7 +40,9 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
     [thisWeek, totalThisWeek, toChartData],
   );
 
-  // 이번 주 legend용 (잔여량 제외)
+  // 저번 주 legend용
+  const lastWeekLegendItems = lastWeekChartData.filter((d) => d.name !== '잔여량');
+  // 이번 주 legend용
   const thisWeekLegendItems = thisWeekChartData.filter((d) => d.name !== '잔여량');
 
   return (
@@ -63,6 +65,25 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
               valueFormatter={toGBValue}
             />
           </div>
+          <div className="flex flex-col gap-2 mb-3">
+            {lastWeekLegendItems.map((item) => {
+              return (
+                <div className="flex items-center gap-2" key={item.name}>
+                  {/* 색상 dot */}
+                  <span
+                    className="w-2.5 h-2.5 rounded-full shrink-0"
+                    style={{ background: item.fill }}
+                  />
+                  {/* 카테고리명 */}
+                  <span className="text-[12px] w-12 text-gray-700">{item.name}</span>
+                  {/* GB 값 */}
+                  <span className="text-[12px] font-semibold text-gray-900">
+                    {toGBValue(item.value)}GB
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="flex flex-col items-center gap-1">
           <span className="text-[11px] text-gray-400 mb-1">이번 주</span>
@@ -75,43 +96,34 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
               valueFormatter={toGBValue}
             />
           </div>
+          <div className="flex flex-col gap-2 mb-3">
+            {thisWeekLegendItems.map((item) => {
+              const thisItem = thisWeek.find((t) => CATEGORY_LABELS[t.category] === item.name);
+              const rate = thisItem ? (compMap[thisItem.category] ?? 0) : 0;
+
+              return (
+                <div className="flex items-center gap-2" key={item.name}>
+                  {/* GB 값 */}
+                  <span className="text-[12px] font-semibold text-gray-900">
+                    {toGBValue(item.value)}GB
+                  </span>
+                  {/* 변화율 */}
+                  <span
+                    className={cn(
+                      'text-[11px] font-medium w-14 text-right text-gray-400',
+                      rate > 0 && 'text-violet-600',
+                      rate < 0 && 'text-red-500',
+                    )}
+                  >
+                    {rate === 0 && '변동 없음'}
+                    {rate > 0 && `▲ ${rate}%`}
+                    {rate < 0 && `▼ ${Math.abs(rate)}%`}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-
-      {/* Legend + 변화율 */}
-      <div className="flex flex-col gap-2 mb-3">
-        {thisWeekLegendItems.map((item) => {
-          const thisItem = thisWeek.find((t) => CATEGORY_LABELS[t.category] === item.name);
-          const rate = thisItem ? (compMap[thisItem.category] ?? 0) : 0;
-
-          return (
-            <div className="flex items-center gap-2" key={item.name}>
-              {/* 색상 dot */}
-              <span
-                className="w-2.5 h-2.5 rounded-full shrink-0"
-                style={{ background: item.fill }}
-              />
-              {/* 카테고리명 */}
-              <span className="flex-1 text-[12px] text-gray-700">{item.name}</span>
-              {/* GB 값 */}
-              <span className="text-[12px] font-semibold text-gray-900">
-                {toGBValue(item.value)}GB
-              </span>
-              {/* 변화율 */}
-              <span
-                className={cn(
-                  'text-[11px] font-medium w-14 text-right text-gray-400',
-                  rate > 0 && 'text-violet-600',
-                  rate < 0 && 'text-red-500',
-                )}
-              >
-                {rate === 0 && '변동 없음'}
-                {rate > 0 && `▲ ${rate}%`}
-                {rate < 0 && `▼ ${Math.abs(rate)}%`}
-              </span>
-            </div>
-          );
-        })}
       </div>
 
       <div className="bg-violet-50 rounded-xl px-3 py-3">
