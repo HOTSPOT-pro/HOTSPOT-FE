@@ -17,9 +17,9 @@ export const useAnalyzeData = ({ subId, reportId }: UseAnalyzeDataProps) => {
   });
 
   const getErrorMessage = () => {
-    if (!isError) return '';
     const serverMessage = (error as AxiosError<ApiErrorResponse>)?.response?.data?.message;
     if (serverMessage) return serverMessage;
+    return '오류가 발생했습니다. 나중에 다시 시도해주세요.';
   };
 
   return {

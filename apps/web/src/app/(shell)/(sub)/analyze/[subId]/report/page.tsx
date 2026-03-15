@@ -10,7 +10,6 @@ const page = () => {
     reportId: 1,
     subId: Number(subId),
   });
-  console.log(analyzeData);
 
   if (isLoading) return <div>데이터 불러오는 중</div>;
   if (isError || !analyzeData)
