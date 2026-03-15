@@ -1,3 +1,5 @@
+import BarChart from '@/shared/assets/icons/graph-bar.svg';
+import BarChartSolid from '@/shared/assets/icons/graph-bar-fill.svg';
 import HomeSolid from '@/shared/assets/icons/home-fill.svg';
 import Home from '@/shared/assets/icons/home-line.svg';
 import ReportSolid from '@/shared/assets/icons/report-fill.svg';
@@ -16,6 +18,12 @@ export const BOTTOM_NAV_ITEMS = [
     href: ROUTES.FAMILY_STATUS,
     icon: Smile,
     label: NAV_LABELS.FAMILY_STATUS,
+  },
+  {
+    activeIcon: BarChartSolid,
+    href: ROUTES.ANALYZE.ROOT,
+    icon: BarChart,
+    label: NAV_LABELS.ANALYZE,
   },
   { activeIcon: ReportSolid, href: ROUTES.REPORT, icon: Report, label: NAV_LABELS.REPORT },
   { activeIcon: UserSolid, href: ROUTES.MY_PAGE, icon: User, label: NAV_LABELS.MY_PAGE },
