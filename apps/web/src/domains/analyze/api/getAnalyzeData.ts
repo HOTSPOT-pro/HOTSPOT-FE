@@ -1,16 +1,17 @@
-import type { ReportData } from '../model/types';
+import { api } from '@/shared/api/client';
+import type { ApiResponse } from '@/shared/api/types';
+import type { AIReportData } from '../model/types';
 import { mockReportData } from './mockup';
 
-export const getAnalyzeData = {
-  getWeeklyReport: async (_subId: number): Promise<ReportData> => {
-    // TODO: 실제 API 연동 시 아래 코드로 교체
-    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/report/${_subId}`, {
-    //   cache: 'no-store',
-    // });
-    // if (!res.ok) throw new Error(`Failed to fetch report: ${res.status}`);
-    // const json: ReportResponse = await res.json();
-    // return json.data;
+interface getAnalyzeDataProps {
+  subId: number;
+  reportId: number;
+}
 
-    return mockReportData;
-  },
+export const getAnalyzeData = async ({ subId, reportId }: getAnalyzeDataProps) => {
+  // const { data } = await api.get<ApiResponse<AIReportData>>(
+  //   `/api/v1/ai-reports/families/members/${subId}/reports/${reportId}`,
+  // );
+  // return data.data;
+  return mockReportData;
 };

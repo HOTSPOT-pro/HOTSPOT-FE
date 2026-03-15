@@ -6,10 +6,10 @@ import {
   HourlyusageSection,
   OverviewCard,
 } from '@features/analyze';
-import type { ReportData } from '@/domains/analyze';
+import type { AIReportData } from '@/domains/analyze';
 
 interface ReportPageProps {
-  data: ReportData;
+  data: AIReportData;
 }
 
 export const AnalyzeReportPage = ({ data }: ReportPageProps) => {

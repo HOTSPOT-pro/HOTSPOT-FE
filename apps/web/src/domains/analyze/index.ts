@@ -1,5 +1,6 @@
 export { getAnalyzeData } from './api/getAnalyzeData';
 export type {
+  AIReportData,
   CategoryComparison,
   CategoryType,
   CategoryUsageItem,
@@ -12,8 +13,6 @@ export type {
   HourlyUsageItem,
   Overview,
   PolicyRecommend,
-  ReportData,
-  ReportResponse,
   ScoreInfo,
   ScoreLevel,
   ScoreReason,

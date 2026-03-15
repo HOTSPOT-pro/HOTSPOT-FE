@@ -62,8 +62,8 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
 
       <p className="text-xs text-gray-400 font-medium mb-3">#TAGS</p>
       <div className="flex flex-col gap-2">
-        {tags.map((tag) => (
-          <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5" key={tag}>
+        {tags.map((tag, idx) => (
+          <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5" key={idx}>
             <span className="text-base">{TAG_ICON_MAP[tag]}</span>
             <span className="text-sm font-medium text-gray-700">
               {TAG_LABELS[tag]?.label ?? tag}

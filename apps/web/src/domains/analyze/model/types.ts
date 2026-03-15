@@ -99,7 +99,7 @@ export interface FinalFeedback {
   policyRecommendList: PolicyRecommend[];
 }
 
-export interface ReportData {
+export interface AIReportData {
   subId: number;
   name: string;
   weekStartDate: string;
@@ -109,11 +109,4 @@ export interface ReportData {
   hourlyUsage: HourlyUsage;
   categoryUsageList: CategoryUsageList;
   final_feedback: FinalFeedback;
-}
-
-export interface ReportResponse {
-  status: number;
-  code: string;
-  message: string;
-  data: ReportData;
 }

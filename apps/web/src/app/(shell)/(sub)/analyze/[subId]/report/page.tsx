@@ -1,14 +1,28 @@
 'use client';
 import { useParams } from 'next/navigation';
-import { getAnalyzeData } from '@/domains/analyze';
+import { useAnalyzeData } from '@/domains/analyze/model/useAnalyzeData';
 import { AnalyzeReportPage } from '@/pages-layer/analyze';
 
-const page = async () => {
+const page = () => {
   const param = useParams();
   const subId = Number(param.subId);
-  const data = await getAnalyzeData.getWeeklyReport(subId);
+  const { analyzeData, isLoading, isError, errorMessage } = useAnalyzeData({
+    reportId: 1,
+    subId: Number(subId),
+  });
+  console.log(analyzeData);
 
-  return <AnalyzeReportPage data={data} />;
+  if (isLoading) return <div>데이터 불러오는 중</div>;
+  if (isError || !analyzeData)
+    return (
+      <div>
+        분석 리포트를 불러오지 못했습니다.
+        <br />
+        {errorMessage}
+      </div>
+    );
+
+  return <AnalyzeReportPage data={analyzeData} />;
 };
 
 export default page;

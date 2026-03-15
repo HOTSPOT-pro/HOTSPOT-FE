@@ -1,6 +1,6 @@
-import type { ReportData } from '../model/types';
+import type { AIReportData } from '../model/types';
 
-export const mockReportData: ReportData = {
+export const mockReportData: AIReportData = {
   categoryUsageList: {
     ai_feedback:
       '게임과 미디어 사용 비중이 전체의 절반 이상을 차지하고 있어요. 학습 비중을 높여봐요.',
