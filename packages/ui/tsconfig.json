@@ -3,15 +3,9 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "outDir": "dist",
-    "types": ["node"]
+    "rootDir": "."
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@hotspot/typescript-config/react-library.json",
-  "include": [
-    "src",
-    "scripts/**/*.ts",
-    ".storybook/**/*.ts",
-    ".storybook/**/*.tsx",
-    "types/image.d.ts"
-  ]
+  "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx", "types/image.d.ts"]
 }
