@@ -45,3 +45,6 @@ storybook-static
 
 **/auth.json
 auth.json
+
+**/test-results
+test-results
