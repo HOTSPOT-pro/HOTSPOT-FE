@@ -2,10 +2,10 @@ import { useModal } from '@hotspot/ui';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import type { ApiErrorResponse } from '@/shared/api/types';
+import { ERROR_DEFAULT_MESSAGE, ERROR_TITLE } from '@/shared/constants/errorCode';
 import { getPresentDataClient } from '../api/getPresentDataClient';
 import { postPresentDataClient } from '../api/postPresentDataClient';
-import type { PresentFamilyDataResponse, PresentFamilySubUsage } from '../api/types';
-import type { PresentFamilyData, PresentSubUsage } from './types';
+import type { PresentFamilyData } from './types';
 
 const STALE_TIME = 600000; //10분
 
@@ -49,12 +49,12 @@ export const useGift = () => {
         queryClient.setQueryData(['presentFamilyData'], context.previousData);
       }
       const errorData = error.response?.data;
-      const errorMessage = errorData?.message || '오류가 발생했습니다.';
-      const errorCode = errorData?.code;
+      const errorMessage = errorData?.message || ERROR_DEFAULT_MESSAGE;
+      const errorCode = String(errorData?.code);
       open('errorModal', {
         props: {
           content: errorMessage,
-          title: errorCode === 'PRESENT_004' ? '선물 한도 초과' : '오류',
+          title: ERROR_TITLE[errorCode] || ERROR_TITLE.ERROR_DEFAULT,
         },
       });
     },

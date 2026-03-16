@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { SUBSCRIBE_KEYS } from '@/shared/constants/queryKey';
 import { getSubscribeInfo } from '../api/getSubscribeInfo';
 
 const STALE_TIME = 1000 * 60 * 5;
@@ -6,7 +7,7 @@ const STALE_TIME = 1000 * 60 * 5;
 export const useSubscribeInfo = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryFn: getSubscribeInfo,
-    queryKey: ['subscribeInfo'],
+    queryKey: [SUBSCRIBE_KEYS.info],
     staleTime: STALE_TIME,
   });
 

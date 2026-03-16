@@ -9,6 +9,7 @@ export type DayType =
   | 'SATURDAY'
   | 'SUNDAY';
 export type CategoryType = 'study' | 'media' | 'sns' | 'msg' | 'game';
+export type RoleType = 'OWNER' | 'PARENT' | 'CHILD';
 
 export interface Subscribe {
   subscribed: boolean;
@@ -109,4 +110,15 @@ export interface AIReportData {
   hourlyUsage: HourlyUsage;
   categoryUsageList: CategoryUsageList;
   final_feedback: FinalFeedback;
+}
+
+export interface AnalyzeData {
+  receiveDay: DayType;
+  members: AnalyzeMember[];
+}
+export interface AnalyzeMember {
+  subId: number;
+  name: string;
+  familyRole: RoleType;
+  reportId: number | null;
 }

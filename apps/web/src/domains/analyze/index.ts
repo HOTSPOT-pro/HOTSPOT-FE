@@ -18,4 +18,5 @@ export type {
   ScoreReason,
   TagType,
 } from './model/types';
-export { useSubscribeInfo } from './model/useSubscribe';
+export { useAnalyzeMember } from './model/useAnalyzeMember';
+export { useSubscribeInfo } from './model/useSubscribeInfo';

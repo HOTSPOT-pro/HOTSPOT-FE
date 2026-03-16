@@ -6,8 +6,9 @@ import { AnalyzeReportPage } from '@/pages-layer/analyze';
 const page = () => {
   const param = useParams();
   const subId = Number(param.subId);
+  const reportId = Number(param.reportId);
   const { analyzeData, isLoading, isError, errorMessage } = useAnalyzeData({
-    reportId: 1,
+    reportId: reportId,
     subId: Number(subId),
   });
 

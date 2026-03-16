@@ -1,33 +1,30 @@
 'use client';
 
-import { useState } from 'react';
-// import { useSubscribeInfo } from '@/domains/analyze';
+import ViewRightAnimatedIcon from '@hotspot/ui/assets/images/character/view-right-animated.svg';
+import { useSubscribeInfo } from '@/domains/analyze';
 import { AnalyzePayPage, AnalyzeSelectPage } from '@/pages-layer/analyze';
 
 const AnalyzeSection = () => {
-  //화면 전환용 임시 데이터
-  const [isSubscribe, setIsSubscribe] = useState(false);
+  const { subscribeData, isLoading, isError, errorMessage } = useSubscribeInfo();
+  if (isLoading) {
+    return (
+      <div className="w-full h-dvh flex flex-col items-center justify-center gap-4">
+        <ViewRightAnimatedIcon className="animate-bounce" />
+        <p className="text-gray-500 items-center justify-center">
+          <span>결제 정보를 확인하는 중입니다</span>
+          <span className="animate-dot-appear-1 inline-block">.</span>
+          <span className="animate-dot-appear-2 inline-block">.</span>
+          <span className="animate-dot-appear-3 inline-block">.</span>
+        </p>
+      </div>
+    );
+  }
+  if (isError) {
+    return <section className="p-10 text-center text-red-400">{errorMessage}</section>;
+  }
+  const isSubscribed = subscribeData?.subscribed ?? false;
 
-  // const { subscribeData, isLoading, isError, errorMessage } = useSubscribeInfo();
-  // if (isLoading) {
-  //   return (
-  //     <section className="p-10 text-center text-gray-400">구독 정보를 확인 중입니다...</section>
-  //   );
-  // }
-  // if (isError) {
-  //   return <section className="p-10 text-center text-red-400">{errorMessage}</section>;
-  // }
-  // const isSubscribed = subscribeData?.subscribed ?? false;
-
-  return (
-    <section>
-      {isSubscribe ? (
-        <AnalyzeSelectPage />
-      ) : (
-        <AnalyzePayPage onPaymentSuccess={() => setIsSubscribe(true)} />
-      )}
-    </section>
-  );
+  return <section>{isSubscribed ? <AnalyzeSelectPage /> : <AnalyzePayPage />}</section>;
 };
 
 export default AnalyzeSection;
