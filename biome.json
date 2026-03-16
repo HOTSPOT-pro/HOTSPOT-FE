@@ -14,6 +14,9 @@
     "formatter": {
       "enabled": true,
       "quoteStyle": "double"
+    },
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "files": {
@@ -46,6 +49,9 @@
     },
     "enabled": true,
     "rules": {
+      "a11y": {
+        "useGenericFontNames": "off"
+      },
       "complexity": {
         "noForEach": "warn",
         "noImplicitCoercions": "error",
