@@ -16,7 +16,7 @@ export const Skeleton = ({ className, variant = 'rect', width, height }: Skeleto
         'animate-pulse bg-gray-200',
         variant === 'circle' && 'rounded-full',
         variant === 'rect' && 'rounded-md',
-        variant === 'text' && 'rounded h-3 w-full',
+        variant === 'text' && 'rounded h-12 w-full',
         className,
       )}
       style={{ height, width }}

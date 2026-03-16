@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input, Modal } from '@hotspot/ui';
+import { Button, Input, Modal, Textarea } from '@hotspot/ui';
 import { useForm } from 'react-hook-form';
 import { type DAYS, useCreateTimePolicy } from '@/features/policy';
 
@@ -105,12 +105,12 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
   };
 
   return (
-    <Modal>
+    <Modal className="w-122">
       <Modal.Header>
         <Modal.Title>시간대별 정책 생성</Modal.Title>
       </Modal.Header>
 
-      <Modal.Content className="flex flex-col gap-5">
+      <Modal.Content className="flex flex-col gap-20">
         <Input
           id="name"
           label="정책명"
@@ -118,7 +118,7 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
           {...register('name', { required: '정책명은 필수입니다.' })}
           error={errors.name?.message}
         />
-        <Input
+        <Textarea
           id="description"
           label="설명"
           placeholder="예: 매일 지정한 수면 시간 동안 앱 사용을 제한해 규칙적인 생활을 돕는 정책입니다."
@@ -126,9 +126,9 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
           error={errors.description?.message}
         />
 
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-bold text-gray-700">정책 유형</p>
-          <div className="flex gap-2">
+        <div className="flex flex-col gap-8">
+          <p className="font-body-body2-bold text-gray-700">정책 유형</p>
+          <div className="flex gap-8">
             <Button
               className="flex-1"
               onClick={() => {
@@ -157,15 +157,15 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
         <hr className="border-gray-100" />
 
         {currentType === 'SCHEDULED' ? (
-          <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded-xl">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-bold text-gray-500 uppercase">반복 요일 선택</p>
-              <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col gap-16 bg-gray-50 p-16 rounded-xl">
+            <div className="flex flex-col gap-12">
+              <p className="font-body-body3-bold text-gray-500 uppercase">반복 요일 선택</p>
+              <div className="flex flex-wrap gap-8">
                 {DAY_OPTIONS.map((day) => {
                   const isSelected = selectedDays.includes(day.value);
                   return (
                     <button
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-12 py-8 rounded-lg font-body-body3 transition-colors ${
                         isSelected
                           ? 'bg-purple-600 text-white shadow-md'
                           : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'
@@ -185,13 +185,13 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
                 })}
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-2">
+            <div className="grid grid-cols-2 gap-16 mt-8">
               <Input id="startTime" label="시작 시간" type="time" {...register('startTime')} />
               <Input id="endTime" label="종료 시간" type="time" {...register('endTime')} />
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded-xl">
+          <div className="flex flex-col gap-16 bg-gray-50 p-16 rounded-xl">
             <Input
               id="duration"
               label="차단 기간 (분)"
@@ -202,13 +202,13 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
               value={duration}
             />
 
-            <div className="flex items-center gap-3 py-1">
+            <div className="flex items-center gap-12 py-4">
               <div className="h-px bg-gray-200 flex-1" />
               <span className="text-[10px] text-gray-400 font-bold">OR</span>
               <div className="h-px bg-gray-200 flex-1" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-16">
               <Input
                 id="startTime"
                 label="시작 시간"
@@ -234,7 +234,7 @@ export const PolicyAddTimeModal = ({ close }: { close: () => void }) => {
         )}
       </Modal.Content>
 
-      <Modal.Footer className="flex gap-2 flex-row">
+      <Modal.Footer className="flex gap-8 flex-row">
         <Button onClick={close} variant="ghost">
           취소
         </Button>

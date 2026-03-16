@@ -85,7 +85,7 @@ export const BlockPolicyTable = () => {
       header: '활성',
       render: (_val, row) => (
         <Button
-          className={`h-8 w-auto rounded-md px-3 text-xs ${row.is_active ? 'bg-lime-500 hover:bg-lime-600' : 'bg-gray-400 hover:bg-gray-500'}`}
+          className={`h-32 w-auto rounded-md px-12 text-xs ${row.is_active ? 'bg-lime-500 hover:bg-lime-600' : 'bg-gray-400 hover:bg-gray-500'}`}
           onClick={() =>
             handleActivateModal({ id: row.policyId, isActive: row.is_active, name: row.policyName })
           }
@@ -103,11 +103,11 @@ export const BlockPolicyTable = () => {
       render: (_val, row) => (
         <button
           aria-label={`정책 ${row.policyName} 삭제`}
-          className="flex items-center p-2 gap-2 rounded-xl hover:bg-red-100"
+          className="flex items-center p-8 gap-8 rounded-xl hover:bg-red-100"
           onClick={() => handleDeleteModal({ id: row.policyId, name: row.policyName })}
           type="button"
         >
-          <DeleteIcon className="w-4 h-4 text-red-700" />
+          <DeleteIcon className="w-16 h-16 text-red-700" />
         </button>
       ),
     },
@@ -115,22 +115,22 @@ export const BlockPolicyTable = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden">
-      <div className="flex justify-between p-6 pb-4 border-b border-gray-100">
-        <p className="flex flex-row text-[16px] text-black font-semibold gap-2">
-          <BlockIcon className="w-6 h-6 text-purple-600" />
+      <div className="flex justify-between p-24 pb-16 border-b border-gray-100">
+        <p className="flex flex-row font-title-title3-semibold text-black gap-8">
+          <BlockIcon className="w-24 h-24 text-purple-600" />
           차단 서비스 정책
         </p>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-8">
           <CategorySelect
             onChange={handlePageSizeChange}
             options={[...PAGE_SIZE_OPTIONS]}
             value={pageSize}
           />
           <Button
-            className="w-fit pl-3.5 pr-5 py-2 h-fit flex flex-row gap-1"
+            className="w-fit pl-14 pr-20 py-8 h-fit flex flex-row gap-4"
             onClick={handleOpenModal}
           >
-            <PlusIcon className="w-4.5 h-4.5" />
+            <PlusIcon className="w-18 h-18 font-title-title4-semibold" />
             추가
           </Button>
         </div>
@@ -138,11 +138,9 @@ export const BlockPolicyTable = () => {
 
       <Table columns={columns} data={tableData} isLoading={loading} />
 
-      <div className="flex justify-end px-5">
-        {totalCount > 0 && (
-          <Pagination current={currentPage} onMove={(p) => setCurrentPage(p)} total={totalPages} />
-        )}
-      </div>
+      {totalCount > 0 && (
+        <Pagination current={currentPage} onMove={(p) => setCurrentPage(p)} total={totalPages} />
+      )}
     </div>
   );
 };

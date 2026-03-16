@@ -17,7 +17,7 @@ export const FamilyDetailControlTab = () => {
   }
   if (isError) {
     return (
-      <div className="bg-white rounded-xl p-10 border border-red-100 flex flex-col items-center justify-center gap-3">
+      <div className="bg-white rounded-xl p-40 border border-red-100 flex flex-col items-center justify-center gap-12">
         <p className="text-gray-500 font-medium text-center">
           제어 정보를 불러오지 못했습니다.
           <br />
@@ -32,7 +32,7 @@ export const FamilyDetailControlTab = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-20">
       <FamilyOrderSection familyControlData={familyControlData} familyId={familyId} />
       <FamilyControlSection familyControlData={familyControlData} familyId={familyId} />
     </div>

@@ -19,12 +19,12 @@ export const familyColumns = (onDetail: (id: number) => void): Column<FamilyRow>
     render: (_, row) => (
       <button
         aria-label={`${row.representativeName} 가족 상세 보기`}
-        className="flex items-center px-3 py-2 gap-2 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
+        className="flex items-center px-12 py-8 gap-8 rounded-xl bg-purple-100 text-purple-600 hover:bg-purple-200"
         onClick={() => onDetail(row.familyId)}
         type="button"
       >
         상세
-        <ArrowIcon className="rotate-90 w-4 h-4" />
+        <ArrowIcon className="rotate-90 w-16 h-16" />
       </button>
     ),
   },

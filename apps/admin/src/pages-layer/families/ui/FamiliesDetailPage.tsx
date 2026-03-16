@@ -42,10 +42,10 @@ class StateTabErrorBoundary extends Component<
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4 flex flex-col gap-3">
+        <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-12">
           <p className="text-sm text-red-500">실시간 상태를 불러오지 못했습니다.</p>
           <button
-            className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
+            className="w-fit rounded-lg border border-gray-300 px-12 py-8 text-sm text-gray-700"
             onClick={() => {
               this.props.onRetry();
               this.setState({ hasError: false });
@@ -69,15 +69,15 @@ export const FamiliesDetailPage = () => {
   const [activeTab, setActiveTab] = useState<FamilyDetailTabValue>('STATE');
 
   return (
-    <div className="p-4 flex flex-col gap-5">
-      <div className="p-4 bg-white rounded-xl shadow-xs">
-        <div className="flex flex-row gap-2.5">
-          <h1 className="text-[19px] font-bold">{familyData?.representativeName} 가족</h1>
-          <p className="rounded-full px-2 py-0.5 border border-gray-200 text-[11px] font-bold flex items-center">
+    <div className="p-16 flex flex-col gap-20">
+      <div className="p-16 bg-white rounded-xl shadow-xs">
+        <div className="flex flex-row gap-10">
+          <h1 className="font-title-title2-bold">{familyData?.representativeName} 가족</h1>
+          <p className="rounded-full px-8 py-2 border border-gray-200 font-body-body5-bold flex items-center">
             {familyData?.displayId}
           </p>
         </div>
-        <span className="text-[13px] font-normal text-gray-600">
+        <span className="font-body-body3 text-gray-600">
           {familyData?.phoneNumber} | 구성원 {familyData?.memberCount}명
         </span>
       </div>

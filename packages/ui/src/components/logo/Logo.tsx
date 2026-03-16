@@ -5,7 +5,7 @@ const SIZES = {
   lg: 'w-29 h-29 rounded-3xl',
   md: 'w-20 h-20 rounded-2xl',
   sm: 'w-13 h-13 rounded-xl',
-  xs: 'w-8 h-8 rounded-lg',
+  xs: 'w-[36px] h-[36px] rounded-lg',
 } as const;
 
 interface LogoProps {

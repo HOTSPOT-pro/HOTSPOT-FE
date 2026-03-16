@@ -7,17 +7,17 @@ interface FamilyPolicyCardProps {
   handleOpenModal: (member: FamilyPolicy) => void;
 }
 
-const POLICY_LABEL = 'text-[13px] font-normal text-black';
+const POLICY_LABEL = 'font-body-body3 text-black';
 
 export const FamilyPolicyCard = ({ member, handleOpenModal }: FamilyPolicyCardProps) => {
   return (
     <div
-      className="px-4 py-3.5 rounded-xl border border-gray-200 gap-1 flex flex-col"
+      className="px-16 py-14 rounded-xl border border-gray-200 gap-4 flex flex-col"
       key={member.subId}
     >
       <div className="flex flex-row justify-between">
-        <div className="flex flex-row gap-3 items-center">
-          <span className="text-[14px] font-bold">{member.memberName}</span>
+        <div className="flex flex-row gap-8 items-center">
+          <span className="font-body-body2-bold">{member.memberName}</span>
           <RoleChip role={member.familyRole} />
           <BlockedStateChip isBlocked={member.blocked} />
         </div>
@@ -27,14 +27,14 @@ export const FamilyPolicyCard = ({ member, handleOpenModal }: FamilyPolicyCardPr
           onClick={() => handleOpenModal(member)}
           type="button"
         >
-          <RightArrowIcon className="w-6 h-6 text-black" />
+          <RightArrowIcon className="w-24 h-24 text-black" />
         </button>
       </div>
 
       {member.appliedTimePolicies.length !== 0 && (
         <>
           <p className={POLICY_LABEL}>적용된 시간대별 정책</p>
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-8">
             {member.appliedTimePolicies.map((i) => (
               <PolicyChip key={i} name={i} />
             ))}
@@ -45,7 +45,7 @@ export const FamilyPolicyCard = ({ member, handleOpenModal }: FamilyPolicyCardPr
       {member.appliedBlockedServicePolicies.length !== 0 && (
         <>
           <p className={POLICY_LABEL}>적용된 차단 서비스 정책</p>
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-8">
             {member.appliedBlockedServicePolicies.map((i) => (
               <PolicyChip key={i} name={i} />
             ))}

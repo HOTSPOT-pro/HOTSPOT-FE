@@ -9,8 +9,8 @@ import { FamilyPolicyCard } from './FamilyPolicyCard';
 import { FamilyPolicyCardSkeleton } from './FamilyPolicyCardSkeleton';
 
 const PolicyTabLayout = ({ children }: { children: ReactNode }) => (
-  <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4 flex flex-col gap-2">
-    <h3 className="text-[14px] font-bold">구성원별 정책 적용 현황</h3>
+  <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-8">
+    <h3 className="font-body-body2-bold">구성원별 정책 적용 현황</h3>
     {children}
   </div>
 );
@@ -32,7 +32,7 @@ export const FamilyDetailPolicyTab = () => {
   if (isLoading) {
     return (
       <PolicyTabLayout>
-        <div className="flex flex-col gap-3 mt-1">
+        <div className="flex flex-col gap-12 mt-4">
           <FamilyPolicyCardSkeleton />
           <FamilyPolicyCardSkeleton />
         </div>
@@ -42,11 +42,11 @@ export const FamilyDetailPolicyTab = () => {
 
   if (isError) {
     return (
-      <div className="bg-white rounded-xl p-10 border border-red-100 flex flex-col items-center justify-center gap-3">
+      <div className="bg-white rounded-xl p-40 border border-red-100 flex flex-col items-center justify-center gap-12">
         <p className="text-gray-500 font-medium text-center">
           정책 정보를 불러오지 못했습니다.
           <br />
-          <span className="text-xs text-red-400">{errorMessage}</span>
+          <span className="text-xs text-red-500">{errorMessage}</span>
         </p>
       </div>
     );
@@ -54,12 +54,12 @@ export const FamilyDetailPolicyTab = () => {
 
   return (
     <PolicyTabLayout>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-8">
         {familyPolicyData?.map((member) => (
           <FamilyPolicyCard handleOpenModal={handleOpenModal} key={member.subId} member={member} />
         ))}
         {familyPolicyData?.length === 0 && (
-          <div className="py-10 text-center text-gray-400">등록된 정책이 없습니다.</div>
+          <div className="py-40 text-center text-gray-400">등록된 정책이 없습니다.</div>
         )}
       </div>
     </PolicyTabLayout>

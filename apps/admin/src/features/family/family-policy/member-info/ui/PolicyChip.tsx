@@ -3,5 +3,7 @@ interface PolicyChipProps {
 }
 
 export const PolicyChip = ({ name }: PolicyChipProps) => {
-  return <span className="text-[14px] py-2.5 px-4 border border-gray-200 rounded-sm">{name}</span>;
+  return (
+    <span className="font-body-body2 py-8 px-12 border border-gray-200 rounded-sm">{name}</span>
+  );
 };

@@ -57,12 +57,12 @@ export const LoginPage = () => {
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-150 h-100 flex flex-col shadow-2xl p-8 rounded-2xl gap-20">
-        <div className="flex flex-col items-center text-center">
+      <div className="w-150 flex flex-col shadow-2xl py-32 px-24 rounded-2xl gap-16">
+        <div className="flex flex-col items-center text-center gap-12">
           <Logo size="sm" />
-          <h1 className="text-[30px] font-bold">Hotspot Admin</h1>
+          <h1 className="font-title-title1">Hotspot Admin</h1>
         </div>
-        <form className="flex flex-col h-full justify-between" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col justify-between gap-32" onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
             name="adminCode"

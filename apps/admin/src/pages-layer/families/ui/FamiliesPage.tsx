@@ -20,8 +20,8 @@ export const FamiliesPage = () => {
   const columns = familyColumns((id) => router.push(`families/${id}`));
 
   return (
-    <div className="p-4 w-full">
-      <div className="p-4 bg-white rounded-xl shadow-xs mb-6">
+    <div className="p-16 w-full">
+      <div className="p-16 bg-white rounded-xl shadow-xs mb-24">
         <SearchBar
           onClear={() => fetchByPhone('')}
           onSubmit={(value) => {
@@ -31,16 +31,16 @@ export const FamiliesPage = () => {
         />
       </div>
 
-      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden px-5 min-w-full">
+      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden px-20 min-w-full">
         <div className="flex justify-between items-center border-b border-gray-100">
-          <p className="py-4 text-[16px] text-gray-500 font-medium">
+          <p className="py-20 font-title-title3-semibold text-gray-500 font-medium">
             {isSearching ? `검색 결과: ${totalCount}건` : `총 ${totalCount}건`}
           </p>
         </div>
 
         <Table columns={columns} data={data} isLoading={isLoading} />
 
-        <div className="flex justify-end px-5 py-4">
+        <div className="flex justify-end px-20 py-16">
           {!isSearching && totalCount > 0 && (
             <Pagination current={currentPage} onMove={setCurrentPage} total={totalPages} />
           )}
