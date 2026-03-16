@@ -1,7 +1,82 @@
 @import "tailwindcss";
 @import "./elevation.css";
 @import "./animation.css";
+@import "./color-tokens.css";
+@import "./system-tokens.css";
+@import "./typo-tokens.css";
 @source "../components/**/*.{ts,tsx}";
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Thin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-ExtraLight.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Light.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-SemiBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-ExtraBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Black.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
 
 @theme {
   --color-kakao-container: #FEE500;
