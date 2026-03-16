@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@hotspot/ui';
+import { cn } from '../../lib';
 
 interface SkeletonProps {
   className?: string;

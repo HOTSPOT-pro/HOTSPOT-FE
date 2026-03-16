@@ -18,12 +18,5 @@
   },
   "exclude": ["node_modules"],
   "extends": "@hotspot/typescript-config/nextjs.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "next.config.js",
-    ".next/types/**/*.ts",
-    "../../packages/ui/src/components/skeleton/Skeleton.tsx"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", "next.config.js", ".next/types/**/*.ts"]
 }

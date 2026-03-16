@@ -12,7 +12,7 @@ const POLICY_LABEL = 'font-body-body3 text-black';
 export const FamilyPolicyCard = ({ member, handleOpenModal }: FamilyPolicyCardProps) => {
   return (
     <div
-      className="px-16 py-14 rounded-xl border border-gray-200 gap-4 flex flex-col"
+      className="px-16 py-14 rounded-xl border border-gray-200 gap-4 flex flex-col bg-white"
       key={member.subId}
     >
       <div className="flex flex-row justify-between">
