@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "."
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@hotspot/typescript-config/react-library.json",
