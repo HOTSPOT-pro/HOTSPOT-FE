@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --z-base: 0;
   --z-header: 10;
   --z-dropdown: 20;
@@ -34,4 +34,4 @@
   .z-modal {
     z-index: var(--z-modal);
   }
-}
+} */

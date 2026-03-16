@@ -29,17 +29,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn('flex flex-col w-full group', className)}>
-        <label className="text-sm font-medium text-gray-600 transition-colors" htmlFor={id}>
+        <label
+          className="font-title-title5-medium text-text-secondary transition-colors"
+          htmlFor={id}
+        >
           {label}
         </label>
 
-        <div className="relative w-full flex items-center border-b border-gray-200 gap-4">
+        <div className="relative w-full flex items-center border-b border-border-divider gap-4">
           <input
             {...props}
             className={cn(
-              'peer w-full bg-transparent py-2 text-gray-900 outline-none transition-all leading-none',
-              'placeholder:text-gray-400',
-              error ? 'border-red-500' : 'focus:border-transparent',
+              'peer w-full bg-transparent py-8 text-gray-900 font-body-body1 outline-none transition-all leading-none',
+              'placeholder:text-text-placeholder',
             )}
             id={id}
             ref={ref}
@@ -70,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               <button
                 aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
                 aria-pressed={showPassword}
-                className="w-5.5 h-5.5 font-normal text-base line text-gray-400 hover:text-gray-600 transition-colors flex justify-center items-center"
+                className="w-5.5 h-5.5 line text-gray-400 hover:text-gray-600 transition-colors flex justify-center items-center"
                 onClick={() => setShowPassword(!showPassword)}
                 type="button"
               >
@@ -84,9 +86,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </div>
         </div>
 
-        {error ? <p className="mt-1.5 text-xs text-red-500">{error}</p> : null}
+        {error ? <span className="mt-8 font-body-body3 text-text-error">{error}</span> : null}
         {description ? (
-          <p className="pt-2 text-xs font-normal text-gray-500">{description}</p>
+          <span className="mt-8 font-body-body3 text-text-tertiary">{description}</span>
         ) : null}
       </div>
     );

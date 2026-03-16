@@ -41,7 +41,7 @@ export const Tab = <T extends string>({
       className={cn(
         'flex w-full',
         variant === 'underline' && 'shadow-[inset_0_-1px_0_0_#EFEFEF]',
-        variant === 'segment' && 'rounded-[8px] gap-2 px-4 py-2',
+        variant === 'segment' && 'gap-8 px-16 py-8',
         className,
       )}
       role="tablist"
@@ -53,16 +53,16 @@ export const Tab = <T extends string>({
           <button
             aria-selected={isActive}
             className={cn(
-              'w-full font-bold text-sm relative whitespace-nowrap flex-1',
+              'w-full font-title-title4-semibold relative whitespace-nowrap flex-1',
 
               variant === 'underline' && [
-                'py-3.5 text-base font-semibold',
+                'pt-14 pb-12',
                 isActive
                   ? 'text-black'
                   : 'text-gray-300 hover:text-gray-600 transition-all duration-200',
               ],
               variant === 'segment' && [
-                'py-3 rounded-lg',
+                'py-14 rounded-8',
                 isActive
                   ? 'bg-purple-600 text-white shadow-sm border border-purple-600'
                   : 'border border-gray-200 text-black bg-white hover:bg-gray-100 transition-all duration-200',
@@ -75,7 +75,7 @@ export const Tab = <T extends string>({
           >
             {item.label}
             {variant === 'underline' && isActive && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600" />
+              <div className="absolute bottom-0 left-0 right-0 h-2 bg-purple-600" />
             )}
           </button>
         );

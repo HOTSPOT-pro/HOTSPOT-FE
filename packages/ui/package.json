@@ -35,6 +35,10 @@
   "scripts": {
     "build-storybook": "storybook build",
     "check-types": "tsc --noEmit",
+    "convert-color": "node ./scripts/convert-color.ts",
+    "convert-system": "node ./scripts/convert-system.ts",
+    "convert-tokens": "pnpm run convert-color && pnpm run convert-system && pnpm run convert-typo",
+    "convert-typo": "node ./scripts/convert-typo.ts",
     "generate:component": "turbo gen react-component",
     "storybook": "storybook dev -p 6006"
   },

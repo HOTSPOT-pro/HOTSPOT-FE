@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Modal, useModal } from '@hotspot/ui';
+import { AxiosError } from 'axios';
 import { useGift } from '../model/useGift';
 
 interface PresentConfirmModalProps {

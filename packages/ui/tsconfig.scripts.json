@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "extends": "./tsconfig.json",
+  "include": ["scripts/**/*.ts"]
+}
