@@ -22,9 +22,8 @@ export const usePostSubscribe = () => {
         },
       });
     },
-    onSuccess: (newData) => {
-      queryClient.setQueryData(SUBSCRIBE_KEYS.info, (old) => ({
-        ...old,
+    onSuccess: () => {
+      queryClient.setQueryData(SUBSCRIBE_KEYS.info, () => ({
         subscribed: true,
       }));
     },
