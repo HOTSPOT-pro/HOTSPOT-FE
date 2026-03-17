@@ -7,7 +7,7 @@ import {
   type PolicyApply,
   useApplyBlock,
   useApplyPolicy,
-} from '@/features/family-policy/policy-apply';
+} from '@/features/family/family-policy/policy-apply';
 import { UserProfileIcon } from '@/shared/ui';
 
 type PolicyModalTabValue = 'DATA' | 'POLICY' | 'BLOCK';
@@ -68,11 +68,11 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
       <Modal className="w-100">
         <Modal.Header>
           <Modal.Title>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-4">
               <UserProfileIcon type={'MAIN'} />
-              <div className="flex flex-col">
+              <div className="flex flex-col font-body-body1-bold">
                 {props.member.memberName}
-                <p className="text-gray-600 text-[12px] font-normal">{props.member.phoneNumber}</p>
+                <p className="text-gray-600 font-body-body4">{props.member.phoneNumber}</p>
               </div>
             </div>
           </Modal.Title>

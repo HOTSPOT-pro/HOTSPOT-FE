@@ -42,3 +42,8 @@ yarn-error.log*
 
 *storybook.log
 storybook-static
+
+**/auth.json
+auth.json
+
+test-results/

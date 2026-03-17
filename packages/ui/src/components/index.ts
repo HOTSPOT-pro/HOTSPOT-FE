@@ -34,6 +34,7 @@ export {
 export { ModalRootRenderer } from './modal/ModalRootRenderer';
 export { Overlay } from './overlay/Overlay';
 export { SelectField } from './select-field/SelectField';
+export { Skeleton } from './skeleton/Skeleton';
 export { Slider } from './slider/Slider';
 export { Tab, type TabItem } from './tab/Tab';
 export { Textarea } from './textarea/Textarea';

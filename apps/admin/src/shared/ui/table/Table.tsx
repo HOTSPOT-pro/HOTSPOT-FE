@@ -23,8 +23,8 @@ export const Table = <T extends { id: string }>({
       return [...Array(5)].map((_, rowIndex) => (
         <tr className="border-b border-gray-50" key={`skeleton-row-${rowIndex}`}>
           {columns.map((_, colIndex) => (
-            <td className="p-4" key={`skeleton-col-${colIndex}`}>
-              <div className="h-7 bg-gray-100 rounded-md animate-pulse w-full" />
+            <td className="p-16" key={`skeleton-col-${colIndex}`}>
+              <div className="h-28 bg-gray-100 rounded-md animate-pulse w-full" />
             </td>
           ))}
         </tr>
@@ -35,7 +35,10 @@ export const Table = <T extends { id: string }>({
     if (data.length === 0) {
       return (
         <tr>
-          <td className="px-6 py-20 text-center text-gray-400 font-medium" colSpan={columns.length}>
+          <td
+            className="px-24 py-50 text-center text-gray-400 font-medium"
+            colSpan={columns.length}
+          >
             데이터가 존재하지 않습니다.
           </td>
         </tr>
@@ -54,7 +57,7 @@ export const Table = <T extends { id: string }>({
 
           return (
             <td
-              className="p-4 whitespace-nowrap text-black text-[14px] font-normal"
+              className="p-16 whitespace-nowrap text-black font-body-body2"
               key={`${String(row.id)}-${String(col.accessor)}-${index}`}
             >
               {content}
@@ -67,17 +70,17 @@ export const Table = <T extends { id: string }>({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm text-left border-collapse">
+      <table className="w-full text-left border-collapse">
         {/* Header */}
-        <thead className="text-xs text-gray-700 uppercase border-b border-gray-200">
+        <thead className=" text-gray-700 uppercase border-b border-gray-200">
           <tr>
             {columns.map((col, index) => (
               <th
-                className={`p-4 tracking-wider font-medium text-[15px] whitespace-nowrap`}
+                className={`p-16 tracking-wider font-title-title4-medium whitespace-nowrap`}
                 key={`head-${index}`}
                 scope="col"
               >
-                <div className="flex items-center gap-2">{col.header}</div>
+                <div className="flex items-center">{col.header}</div>
               </th>
             ))}
           </tr>

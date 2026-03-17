@@ -60,10 +60,10 @@ export const SearchBar = ({
   }, [keyword, onSubmit]);
 
   return (
-    <div className="flex w-full items-center rounded-[4px] bg-gray-200 px-3 py-2">
-      <form className="w-full pr-2" onSubmit={handleFormSubmit}>
+    <div className="flex w-full items-center rounded-[4px] bg-gray-200 px-12 py-8">
+      <form className="w-full pr-8" onSubmit={handleFormSubmit}>
         <input
-          className="w-full text-[15px] outline-none [appearance:textfield] [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
+          className="w-full font-title-title4-medium outline-none [appearance:textfield] [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
           id="searchInput"
           onChange={handleInputChange}
           placeholder={placeholder}
@@ -71,18 +71,18 @@ export const SearchBar = ({
           value={keyword}
         />
       </form>
-      <div className="flex gap-2">
+      <div className="flex gap-8">
         {hasText && (
           <button
             className="rounded-full text-gray-500 outline-none transition-colors hover:text-gray-700"
             onClick={handleClearClick}
             type="button"
           >
-            <CloseCircleFillIcon className="h-6 w-6" />
+            <CloseCircleFillIcon className="h-24 w-24" />
           </button>
         )}
         <button className="outline-none" onClick={handleSearchClick} type="button">
-          <SearchIcon className={`h-6 w-6 ${hasText ? 'text-gray-500' : 'text-gray-100'}`} />
+          <SearchIcon className={`h-24 w-24 ${hasText ? 'text-gray-500' : 'text-gray-100'}`} />
         </button>
       </div>
     </div>

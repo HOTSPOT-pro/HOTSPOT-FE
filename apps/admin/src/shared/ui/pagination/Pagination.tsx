@@ -25,10 +25,10 @@ export const Pagination = ({
   const canMoveNext = normalizedCurrent < normalizedTotal;
 
   const NEXT_MOVE_STYLE =
-    'w-fit shrink-0 whitespace-nowrap p-2 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row items-center gap-1 text-black text-[14px]';
+    'w-fit shrink-0 whitespace-nowrap p-8 disabled:text-gray-300 hover:text-purple-600 transition-colors flex flex-row items-center gap-1 text-black font-body-body3';
 
   return (
-    <div className="flex w-full items-center justify-center gap-2 py-4 border-t border-gray-100">
+    <div className="flex w-full items-center justify-center gap-8 py-16 border-t border-gray-100">
       <button
         className={NEXT_MOVE_STYLE}
         disabled={!canMovePrev}
@@ -37,13 +37,13 @@ export const Pagination = ({
         }}
         type="button"
       >
-        <LeftArrow className="h-4 w-4 shrink-0 text-current" />
+        <LeftArrow className="h-16 w-16 shrink-0 text-current" />
         이전
       </button>
 
       {pages.map((p) => (
         <button
-          className={`w-8 h-8 rounded-md text-sm font-medium transition-colors ${
+          className={`w-32 h-32 rounded-md font-body-body3 transition-colors ${
             normalizedCurrent === p
               ? 'border-purple-600 text-purple-600 border bg-purple-50'
               : 'hover:bg-purple-50 text-black'
@@ -66,7 +66,7 @@ export const Pagination = ({
         }}
         type="button"
       >
-        다음 <RightArrow className="h-4 w-4 shrink-0 text-current" />
+        다음 <RightArrow className="h-16 w-16 shrink-0 text-current" />
       </button>
     </div>
   );
