@@ -7,7 +7,7 @@ const STALE_TIME = 1000 * 60 * 5;
 export const useSubscribeInfo = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryFn: getSubscribeInfo,
-    queryKey: [SUBSCRIBE_KEYS.info],
+    queryKey: SUBSCRIBE_KEYS.info,
     staleTime: STALE_TIME,
   });
 

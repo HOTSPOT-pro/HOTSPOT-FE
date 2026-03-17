@@ -7,7 +7,7 @@ const STALE_TIME = 1000 * 60 * 5;
 export const useAnalyzeMember = () => {
   const { data, isLoading } = useQuery({
     queryFn: getAnalyzeMember,
-    queryKey: [SUBSCRIBE_KEYS.member],
+    queryKey: SUBSCRIBE_KEYS.member,
     staleTime: STALE_TIME,
   });
 

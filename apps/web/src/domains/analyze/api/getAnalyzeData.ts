@@ -1,7 +1,8 @@
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
 import type { AIReportData } from '../model/types';
-import { mockReportData } from './mockup';
+
+// import { mockReportData } from './mockup';
 
 interface getAnalyzeDataProps {
   subId: number;
@@ -9,9 +10,9 @@ interface getAnalyzeDataProps {
 }
 
 export const getAnalyzeData = async ({ subId, reportId }: getAnalyzeDataProps) => {
-  // const { data } = await api.get<ApiResponse<AIReportData>>(
-  //   `/api/v1/ai-reports/families/members/${subId}/reports/${reportId}`,
-  // );
-  // return data.data;
-  return mockReportData;
+  const { data } = await api.get<ApiResponse<AIReportData>>(
+    `/api/v1/ai-reports/families/members/${subId}/reports/${reportId}`,
+  );
+  return data.data;
+  // return mockReportData;
 };

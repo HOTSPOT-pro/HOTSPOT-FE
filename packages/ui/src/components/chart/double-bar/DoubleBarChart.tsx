@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: legend payload용 */
 'use client';
 
 import { memo } from 'react';
@@ -11,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getRoundedMax } from '../../../lib/getRoundedMax';
+import { getResponsiveRoundedMax } from '../../../lib';
 import { COLORS } from '../../../lib/interpolateColor';
 import { ChartTooltip } from '../tooltip/ChartTooltip';
 
@@ -62,20 +63,39 @@ const BarChartTooltipContent = ({ active, payload, unit }: DoubleBarChartTooltip
   );
 };
 
+const CustomLegend = ({ payload }: any) => {
+  const sortedPayload = [...payload].sort((a, b) => {
+    if (a.dataKey === 'lastWeek') return -1;
+    if (b.dataKey === 'lastWeek') return 1;
+    return 0;
+  });
+
+  return (
+    <div className="flex justify-center gap-24 mt-16">
+      {sortedPayload.map((entry: any, index: number) => (
+        <div className="flex items-center gap-8" key={`item-${index}`}>
+          <div className="w-12 h-12 rounded-full" style={{ backgroundColor: entry.color }} />
+          <span className="text-sm font-medium text-gray-600">{entry.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 //차트 레이아웃 상수
 const CHART_LAYOUT = {
-  BAR_GAP: 8, // 막대 사이 간격
-  BAR_SIZE: 20, // 막대 두께
-  RADIUS: [4, 4, 0, 0] as [number, number, number, number], // 막대 상단 라운딩
-  Y_AXIS_WIDTH: 50, // Y축 라벨 영역 넓이
+  BAR_GAP: 2,
+  BAR_SIZE: 20,
+  RADIUS: [4, 4, 0, 0] as [number, number, number, number],
+  Y_AXIS_WIDTH: 50,
 };
 
 export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) => {
-  const LAST_WEEK_COLOR = COLORS.SECONDARY || '#94a3b8';
-  const THIS_WEEK_COLOR = COLORS.START || '#3b82f6';
+  const LAST_WEEK_COLOR = '#9DE693';
+  const THIS_WEEK_COLOR = '#8556E3';
 
   const allValues = data.flatMap((d) => [d.lastWeek, d.thisWeek]);
-  const max = getRoundedMax(allValues);
+  const max = getResponsiveRoundedMax(allValues);
 
   return (
     <div className="w-full h-full @container">
@@ -106,10 +126,10 @@ export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) =
 
           <Tooltip
             content={<BarChartTooltipContent unit={unit} />}
-            cursor={{ fill: COLORS.HOVER || '#f1f5f9', opacity: 0.4 }}
+            cursor={{ fill: COLORS.HOVER || '#f1f5f9', opacity: 0.1 }}
           />
 
-          <Legend height={36} iconType="circle" verticalAlign="bottom" />
+          <Legend content={<CustomLegend />} verticalAlign="bottom" />
 
           <Bar
             barSize={CHART_LAYOUT.BAR_SIZE}

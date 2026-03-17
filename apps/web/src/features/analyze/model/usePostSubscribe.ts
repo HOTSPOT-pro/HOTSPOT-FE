@@ -23,9 +23,10 @@ export const usePostSubscribe = () => {
       });
     },
     onSuccess: () => {
-      queryClient.setQueryData(SUBSCRIBE_KEYS.info, () => ({
-        subscribed: true,
-      }));
+      queryClient.invalidateQueries({ queryKey: SUBSCRIBE_KEYS.info });
+      // queryClient.setQueryData(SUBSCRIBE_KEYS.info, () => ({
+      //   subscribed: true,
+      // }));
     },
   });
 

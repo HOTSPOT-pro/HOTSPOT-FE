@@ -18,9 +18,9 @@ export const DailyusageSection = ({ dailyUsage }: DailyUsageSectionProps) => {
   }));
 
   return (
-    <div className="bg-white rounded-2xl p-4 mb-3 shadow-sm">
-      <h2 className="text-base font-bold text-gray-900 mb-0.5">일별 사용량</h2>
-      <p className="text-xs text-gray-400 mb-4">
+    <div className="bg-white rounded-2xl p-16 mb-12 shadow-sm">
+      <h2 className="font-body-body2-bold text-gray-900 mb-8">일별 사용량</h2>
+      <p className="text-gray-500 font-body-body3 mb-12">
         평일 평균: {formatGB(weekdayAvg)} · 주말 평균: {formatGB(weekendAvg)}
       </p>
 
@@ -28,9 +28,9 @@ export const DailyusageSection = ({ dailyUsage }: DailyUsageSectionProps) => {
         <DoubleBarChart data={chartData} unit="GB" />
       </div>
 
-      <div className="bg-violet-50 rounded-xl px-3 py-3 mt-3">
-        <span className="text-[11px] font-semibold text-violet-600 block mb-1">AI 피드백</span>
-        <p className="text-[13px] text-gray-600 leading-relaxed m-0">{ai_feedback}</p>
+      <div className="bg-violet-50 rounded-xl px-12 py-12 mt-12">
+        <span className="font-heading-heading4 text-violet-600 block mb-4">AI 피드백</span>
+        <p className="text-gray-600 leading-relaxed m-0 font-body-body4">{ai_feedback}</p>
       </div>
     </div>
   );

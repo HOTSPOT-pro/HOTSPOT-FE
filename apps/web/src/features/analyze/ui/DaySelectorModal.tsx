@@ -47,22 +47,22 @@ export const DaySelectorModal = ({ close }: { close: () => void }) => {
   return (
     <div>
       {/*TODO: 모달 스타일 빼기*/}
-      <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-3xl p-6">
+      <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-3xl p-24">
         <Modal.Header>
           <Modal.Title>
             리포트 수령일
-            <p className="text-[13px] font-normal text-gray-600">
+            <p className="font-body-body3 text-gray-600">
               수령일 전날을 기준으로 리포트를 생성합니다.
             </p>
           </Modal.Title>
         </Modal.Header>
         <Modal.Content>
-          <div className="flex flex-row gap-2 py-2 items-center justify-center w-full">
+          <div className="flex flex-row gap-8 py-8 items-center justify-center w-full">
             {DAY_OPTIONS.map((day) => {
               const isSelected = selectedDay === day.value;
               return (
                 <button
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors border ${
+                  className={`px-12 py-8 rounded-lg font-body-body2 transition-colors border ${
                     isSelected
                       ? 'bg-purple-600 border-purple-600 text-white shadow-md'
                       : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-100'

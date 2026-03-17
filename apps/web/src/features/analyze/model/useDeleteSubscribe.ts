@@ -24,7 +24,7 @@ export const useDeleteSubscribe = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [SUBSCRIBE_KEYS.info],
+        queryKey: SUBSCRIBE_KEYS.info,
         refetchType: 'all',
       });
     },

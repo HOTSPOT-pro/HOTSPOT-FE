@@ -13,9 +13,10 @@ interface MonthPickerProps {
   year: number;
   month: number;
   onChange: (year: number, month: number) => void;
+  isLimit?: boolean;
 }
 
-export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
+export const MonthPicker = ({ year, month, onChange, isLimit = true }: MonthPickerProps) => {
   const [viewYear, setViewYear] = useState(year);
   const months = Array.from({ length: MONTHS_IN_YEAR }, (_, i) => i + 1);
 
@@ -34,45 +35,52 @@ export const MonthPicker = ({ year, month, onChange }: MonthPickerProps) => {
   const handleNextYear = () => setViewYear((prev) => prev + 1);
 
   return (
-    <div className="w-100 h-full p-4 rounded-2xl ring-gray-200/50 ring-1 shadow-lg bg-white">
-      <div className="flex items-center justify-between mb-4 pb-2">
+    <div className="w-100 h-full p-16 rounded-2xl ring-gray-200/50 ring-1 shadow-lg bg-white">
+      <div className="flex items-center justify-between mb-16 pb-8">
         <button
-          className="p-1 hover:bg-gray-100 rounded disabled:opacity-30"
-          disabled={viewYear <= minLimitYear}
+          className="p-4 hover:bg-gray-100 rounded disabled:opacity-30"
+          disabled={isLimit && viewYear <= minLimitYear}
           onClick={handlePrevYear}
           type="button"
         >
-          <LeftArrow className="text-gray-500 w-4 h-4" />
+          <LeftArrow className="text-gray-500 w-16 h-16" />
         </button>
         <span className="font-bold text-lg text-black">{viewYear}년</span>
         <button
-          className="p-1 hover:bg-gray-100 rounded disabled:opacity-30"
+          className="p-4 hover:bg-gray-100 rounded disabled:opacity-30"
           disabled={viewYear >= currentYear}
           onClick={handleNextYear}
           type="button"
         >
-          <RightArrow className="text-gray-500 w-4 h-4 " />
+          <RightArrow className="text-gray-500 w-16 h-16" />
         </button>
       </div>
 
-      <div className="grid grid-cols-4 gap-1">
+      <div className="grid grid-cols-4 gap-4">
         {months.map((m) => {
           const isSelected = year === viewYear && month === m;
 
           const targetDate = new Date(viewYear, m - 1, FIRST_DAY_OF_MONTH);
           const maxDate = new Date(currentYear, currentMonthIndex, FIRST_DAY_OF_MONTH);
-          const minDate = new Date(
-            currentYear,
-            currentMonthIndex - MAX_MONTHS_LOOKBACK,
-            FIRST_DAY_OF_MONTH,
-          );
 
-          const isOutOfRange = targetDate < minDate || targetDate > maxDate;
+          const isFuture = targetDate > maxDate;
+
+          let isTooPast = false;
+          if (isLimit) {
+            const minDate = new Date(
+              currentYear,
+              currentMonthIndex - MAX_MONTHS_LOOKBACK,
+              FIRST_DAY_OF_MONTH,
+            );
+            isTooPast = targetDate < minDate;
+          }
+
+          const isOutOfRange = isFuture || isTooPast;
 
           return (
             <button
               className={cn(
-                'py-3 px-7 w-22.5 rounded-xl text-sm transition-colors',
+                'py-12 px-28 w-22.5 rounded-xl text-sm transition-colors',
                 isSelected && 'bg-purple-600 text-white font-semibold',
                 !(isSelected || isOutOfRange) && 'hover:bg-purple-50 text-gray-700',
                 isOutOfRange && 'text-gray-300 cursor-not-allowed',
