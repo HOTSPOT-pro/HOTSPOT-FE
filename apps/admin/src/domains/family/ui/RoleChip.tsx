@@ -26,7 +26,7 @@ export const RoleChip = ({ role }: RoleChipProps) => {
   return (
     <span
       className={cn(
-        'text-xs py-1 px-2 border-2 rounded-sm',
+        'font-body-body6 py-4 px-8 border-2 rounded-sm',
         role === 'OWNER' && OWNDER_STYLE,
         role === 'PARENT' && PARENT_STYLE,
         role === 'CHILD' && CHILD_STYLE,

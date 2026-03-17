@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@hotspot/ui/globals.css';
 import { ModalProvider } from '@hotspot/ui';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppModal } from '@/widgets/app-modal/ui/AppModal';
 import { QueryProvider } from './_providers/query/QueryProvider';
 
@@ -20,6 +21,7 @@ export default function RootLayout({
         <QueryProvider>
           <ModalProvider>
             {children}
+            <ReactQueryDevtools initialIsOpen={false} />
             <AppModal />
           </ModalProvider>
         </QueryProvider>

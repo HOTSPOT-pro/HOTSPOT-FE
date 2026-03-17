@@ -45,19 +45,19 @@ export const CategorySelect = <T extends string = string>({
         aria-controls="category-select-listbox"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        className="flex w-full items-center gap-2 rounded-md p-2 text-[0.8rem] font-semibold text-black"
+        className="flex w-full items-center gap-4 rounded-md p-8 text-[0.8rem] font-semibold text-black"
         onClick={() => setIsOpen((prev) => !prev)}
         type="button"
       >
         <span>{selectedLabel}</span>
         <ArrowDownIcon
-          className={`h-6 w-6 text-black transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`h-24 w-24 text-black transition-transform ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
 
       {isOpen && (
         <ul
-          className="absolute mt-[-2.9rem] z-20 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white py-2 shadow-lg"
+          className="absolute mt-[-2.9rem] z-20 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white py-8 shadow-lg"
           id="category-select-listbox"
         >
           {options.map((option) => {
@@ -67,7 +67,7 @@ export const CategorySelect = <T extends string = string>({
               <li key={option.value}>
                 <button
                   aria-pressed={isSelected}
-                  className={`w-full p-2 text-left text-[0.8rem] hover:bg-gray-50 ${
+                  className={`w-full p-8 text-left text-[0.8rem] hover:bg-gray-50 ${
                     isSelected ? 'font-semibold text-gray-900' : 'text-gray-700'
                   }`}
                   onClick={() => {

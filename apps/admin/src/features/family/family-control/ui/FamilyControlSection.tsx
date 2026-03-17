@@ -58,45 +58,48 @@ export const FamilyControlSection = ({
   };
 
   return (
-    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col gap-6">
+    <div className="bg-white rounded-xl p-20 border border-gray-100 shadow-sm flex flex-col gap-24">
       <h3 className="text-[14px] font-bold text-black">구성원별 제어</h3>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-12">
         {memberStates.map((member) => {
           const isCurrentEditing = editingId === member.subId;
 
           return (
             <div
-              className={`border rounded-xl p-4 flex flex-col gap-4 transition-colors ${
+              className={`border rounded-xl p-16 flex flex-col gap-16 transition-colors ${
                 isCurrentEditing ? 'border-purple-200 bg-purple-50/30' : 'border-gray-200'
               }`}
               key={member.subId}
             >
               {/* 정보 및 편집 버튼 */}
               <div className="flex flex-row justify-between items-center">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-[14px] font-bold text-black">{member.memberName}</span>
+                <div className="flex items-center gap-6">
+                  <span className="font-body-body3-bold text-black">{member.memberName}</span>
                   <RoleChip role={member.familyRole} />
                   <span className="text-[11px] text-gray-400">ID: {member.subId}</span>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-8">
                   {isCurrentEditing ? (
                     <>
                       <Button
-                        className="w-fit h-8 px-3 text-xs"
+                        className="w-fit h-32 px-12 font-body-body3-bold"
                         onClick={() => handleCancel(member.subId)}
                         variant="ghost"
                       >
                         취소
                       </Button>
-                      <Button className="w-fit h-8 px-4 text-xs" onClick={() => handleSave(member)}>
+                      <Button
+                        className="w-fit h-32 px-16 font-body-body3-bold"
+                        onClick={() => handleSave(member)}
+                      >
                         저장
                       </Button>
                     </>
                   ) : (
                     <Button
-                      className="w-fit h-8 px-4 text-xs"
+                      className="w-fit h-32 px-16 font-body-body3-bold"
                       disabled={editingId !== null}
                       onClick={() => handleEdit(member.subId)}
                       variant="outline"
@@ -109,11 +112,11 @@ export const FamilyControlSection = ({
 
               {/* 제어 영역 */}
               <div
-                className={`flex flex-col gap-4 ${!isCurrentEditing && 'opacity-60 pointer-events-none'}`}
+                className={`flex flex-col gap-16 ${!isCurrentEditing && 'opacity-60 pointer-events-none'}`}
               >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-16">
                   {member.familyRole !== 'OWNER' && (
-                    <div className="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg">
+                    <div className="flex items-center justify-between p-12 bg-white border border-gray-100 rounded-lg">
                       <span className="text-sm font-medium text-gray-700">부모 권한</span>
                       <Toggle
                         checked={member.isParent}
@@ -123,7 +126,7 @@ export const FamilyControlSection = ({
                       />
                     </div>
                   )}
-                  <div className="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg">
+                  <div className="flex items-center justify-between p-12 bg-white border border-gray-100 rounded-lg">
                     <span className="text-sm font-medium text-gray-700">즉시 차단</span>
                     <Toggle
                       checked={member.isBlocked}
@@ -134,14 +137,14 @@ export const FamilyControlSection = ({
                   </div>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-12">
                   <div className="flex justify-between items-end">
-                    <span className="text-[13px] text-gray-600">데이터 한도</span>
-                    <span className="text-purple-600 font-bold text-[13px]">
+                    <span className="font-body-body3 text-gray-600">데이터 한도</span>
+                    <span className="text-purple-600 font-body-body3-bold">
                       {member.familyDataSubLimit}GB
                     </span>
                   </div>
-                  <div className="flex flex-row gap-6 items-center">
+                  <div className="flex flex-row gap-24 items-center">
                     <Slider
                       maxNum={member.familyDataLimit}
                       minNum={member.familyDataUsage}
