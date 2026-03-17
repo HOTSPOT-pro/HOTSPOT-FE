@@ -5,7 +5,6 @@ import HmmIcon from '@hotspot/ui/assets/images/character/sporty-soso.svg';
 import ShockIcon from '@hotspot/ui/assets/images/character/sporty-wow.svg';
 import SmileIcon from '@hotspot/ui/assets/images/character/view-right.svg';
 import type { Overview } from '@/domains/analyze';
-import { TAG_LABELS } from '../lib/format';
 
 interface OverviewCardProps {
   overview: Overview;
@@ -73,9 +72,7 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
             className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5 w-fit"
             key={idx}
           >
-            <span className="font-body-body2-bold text-gray-700">
-              # {TAG_LABELS[tag]?.label ?? tag}
-            </span>
+            <span className="font-body-body2-bold text-gray-700"># {tag}</span>
           </div>
         ))}
       </div>
