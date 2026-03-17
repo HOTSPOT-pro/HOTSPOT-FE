@@ -1,4 +1,4 @@
-import type { CategoryType, DayType, TagType } from '@/domains/analyze';
+import type { CategoryType, DayType } from '@/domains/analyze';
 
 export const DAY_LABELS: Record<DayType, string> = {
   FRIDAY: '금',
@@ -34,13 +34,6 @@ export const CATEGORY_COLORS: Record<CategoryType, string> = {
   STUDY: '#A78BFA',
   TOON: '#A78BFF',
   WEB: '#008BFA',
-};
-
-export const TAG_LABELS: Record<TagType, { label: string; icon: string }> = {
-  ENTERTAINMENT_HEAVY: { icon: '�', label: '엔터테인먼트 집중' },
-  LATE_NIGHT_HIGH: { icon: '🌙', label: '심야 사용 높음' },
-  STUDY_FOCUSED: { icon: '📚', label: '학습 집중' },
-  USAGE_SPIKE: { icon: '⚡', label: '엔터테인먼트 집중' },
 };
 
 export const formatGB = (gb: number): string => `${gb}GB`;
