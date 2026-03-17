@@ -6,7 +6,7 @@ import {
   OverviewCard,
 } from '@features/analyze';
 import type { AIReportData } from '@/domains/analyze';
-import { formatReportTitle } from '@/features/analyze/lib/format';
+import { formatReportTitle } from '@/features/analyze';
 
 interface ReportPageProps {
   data: AIReportData;
