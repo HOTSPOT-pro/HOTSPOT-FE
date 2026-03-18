@@ -1,7 +1,7 @@
 'use client';
 import { Button, Card, useModal } from '@hotspot/ui';
 import CrownIcon from '@hotspot/ui/assets/icons/crown.svg';
-import { ANALYZE_ADVENTAGES } from '../constants/adventages';
+import { ANALYZE_ADVANTAGES } from '../constants/advantages';
 
 export const AnalyzePayPage = () => {
   const { open } = useModal();
@@ -23,7 +23,7 @@ export const AnalyzePayPage = () => {
         데이터 사용 패턴을 심층 분석하여 맞춤형 인사이트를 제공합니다.
       </p>
       <div className="text-left py-32 gap-12 flex flex-col">
-        {ANALYZE_ADVENTAGES.map((ad, idx) => (
+        {ANALYZE_ADVANTAGES.map((ad, idx) => (
           <Card className="p-16 font-body-body3 flex flex-row items-center gap-12" key={idx}>
             <div className="w-fit h-fit p-10 bg-lime-100 rounded-xl text-lime-600">
               <ad.Icon className="w-16 h-16 " />

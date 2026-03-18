@@ -63,7 +63,8 @@ const BarChartTooltipContent = ({ active, payload, unit }: DoubleBarChartTooltip
   );
 };
 
-const CustomLegend = ({ payload }: any) => {
+type LegendEntry = { dataKey?: string; color?: string; value?: string };
+const CustomLegend = ({ payload = [] }: { payload?: LegendEntry[] }) => {
   const sortedPayload = [...payload].sort((a, b) => {
     if (a.dataKey === 'lastWeek') return -1;
     if (b.dataKey === 'lastWeek') return 1;
@@ -72,7 +73,7 @@ const CustomLegend = ({ payload }: any) => {
 
   return (
     <div className="flex justify-center gap-24 mt-16">
-      {sortedPayload.map((entry: any, index: number) => (
+      {sortedPayload.map((entry, index: number) => (
         <div className="flex items-center gap-8" key={`item-${index}`}>
           <div className="w-12 h-12 rounded-full" style={{ backgroundColor: entry.color }} />
           <span className="text-sm font-medium text-gray-600">{entry.value}</span>
@@ -91,8 +92,8 @@ const CHART_LAYOUT = {
 };
 
 export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) => {
-  const LAST_WEEK_COLOR = '#9DE693';
-  const THIS_WEEK_COLOR = '#8556E3';
+  const LAST_WEEK_COLOR = COLORS.SECONDARY_PALE || '#9DE693';
+  const THIS_WEEK_COLOR = COLORS.PRIMARY || '#8556E3';
 
   const allValues = data.flatMap((d) => [d.lastWeek, d.thisWeek]);
   const max = getResponsiveRoundedMax(allValues);

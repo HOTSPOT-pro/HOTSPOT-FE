@@ -42,13 +42,16 @@ export const formatReportTitle = (startDate: string, endDate: string): string =>
   const start = new Date(startDate);
   const end = new Date(endDate);
 
+  //해당 월의 첫 번째 월요일 기준
   const date = start.getDate();
   const day = start.getDay();
-  const weekNumber = Math.ceil((date + (6 - day === 6 ? 0 : 6 - day)) / 7);
+  const adjustedDay = day === 0 ? 7 : day;
+  const weekNumber = Math.ceil((date + (7 - adjustedDay)) / 7);
 
-  const month = start.getMonth() + 1;
+  const startMonth = start.getMonth() + 1;
+  const endMonth = end.getMonth() + 1;
   const startDay = start.getDate();
   const endDay = end.getDate();
 
-  return `${start.getFullYear()}년 ${month}월 ${weekNumber}주차 리포트 (${month}/${startDay}~${month}/${endDay})`;
+  return `${start.getFullYear()}년 ${startMonth}월 ${weekNumber}주차 리포트 (${startMonth}/${startDay}~${endMonth}/${endDay})`;
 };

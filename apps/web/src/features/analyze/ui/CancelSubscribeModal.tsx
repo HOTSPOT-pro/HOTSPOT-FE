@@ -7,6 +7,7 @@ export const CancelSubscribeModal = ({ close }: { close: () => void }) => {
   const { cancelSubscribe } = useDeleteSubscribe();
   const handleCancelSubscribe = () => {
     cancelSubscribe.mutate();
+    close();
   };
 
   return (

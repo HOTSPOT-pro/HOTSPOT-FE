@@ -42,8 +42,6 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
   const lastWeekChartData = useMemo(() => toChartData(lastWeek), [lastWeek, toChartData]);
   const thisWeekChartData = useMemo(() => toChartData(thisWeek), [thisWeek, toChartData]);
 
-  console.log(lastWeekChartData);
-
   // 저번 주 legend용
   const lastWeekLegendItems = lastWeekChartData.filter((d) => d.name !== '잔여량');
   // 이번 주 legend용

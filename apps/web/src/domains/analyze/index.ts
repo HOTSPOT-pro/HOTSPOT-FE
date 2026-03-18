@@ -13,9 +13,9 @@ export type {
   HourlyUsageItem,
   Overview,
   PolicyRecommend,
+  ScoreData,
   ScoreLevel,
   ScoreReason,
-  scoreData,
 } from './model/types';
 export { useAnalyzeData } from './model/useAnalyzeData';
 export { useAnalyzeHistory } from './model/useAnalyzeHistory';

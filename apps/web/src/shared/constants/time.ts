@@ -2,10 +2,13 @@
 export const STALE_TIME = {
   INSTANT: 0,
   LONG: 1000 * 60 * 60,
-  NORMAL: 1000 * 60 * 5,
+  NORMAL: 1000 * 60 * 30,
+  SHORT: 1000 * 60 * 5,
   STATIC: Infinity,
 } as const;
 
 export const GC_TIME = {
-  NORMAL: 1000 * 60 * 30,
+  LONG: 1000 * 60 * 120,
+  NORMAL: 1000 * 60 * 60,
+  SHORT: 1000 * 60 * 10,
 };

@@ -24,8 +24,6 @@ export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
     finalFeedback,
   } = data;
 
-  console.log(finalFeedback);
-
   return (
     <div className="mx-auto min-h-screen flex flex-col">
       {/* title */}

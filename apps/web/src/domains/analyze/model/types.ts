@@ -45,7 +45,7 @@ export interface ScoreReason {
   exp: string;
 }
 
-export interface scoreData {
+export interface ScoreData {
   totalScore: number;
   scoreLevel: ScoreLevel;
   scoreDiff: number;
@@ -53,7 +53,7 @@ export interface scoreData {
 }
 
 export interface Overview {
-  scoreData: scoreData;
+  scoreData: ScoreData;
   tags: string[];
 }
 

@@ -12,7 +12,8 @@ export const getRoundedMax = (values: number[]): number => {
 };
 
 export const getResponsiveRoundedMax = (values: number[]): number => {
-  const max = Math.max(...values, 0);
+  const finiteValues = values.filter(Number.isFinite);
+  const max = Math.max(...finiteValues, 0);
   if (max === 0) return 1;
   const magnitude = 10 ** Math.floor(Math.log10(max));
   const bufferedMax = max * 1.2;

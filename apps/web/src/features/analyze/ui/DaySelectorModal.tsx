@@ -37,11 +37,14 @@ export const DaySelectorModal = ({ close }: { close: () => void }) => {
   const handleSave = () => {
     if (!selectedDay) return;
     if (props?.type === 'NEW') {
-      subscribe.mutate(selectedDay);
+      subscribe.mutate(selectedDay, {
+        onSuccess: () => close(),
+      });
     } else {
-      updateReceiveDay.mutate(selectedDay);
+      updateReceiveDay.mutate(selectedDay, {
+        onSuccess: () => close(),
+      });
     }
-    close();
   };
 
   return (
