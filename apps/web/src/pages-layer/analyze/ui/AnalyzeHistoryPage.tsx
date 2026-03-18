@@ -29,7 +29,7 @@ const HistoryList = ({ subId, date }: { subId: number; date: Date }) => {
 
   return (
     <div className="flex flex-col gap-8">
-      {history?.reports.map((i) => (
+      {history?.reports?.map((i) => (
         <button
           className="p-16 shadow-sm rounded-2xl bg-white text-left"
           key={i.reportId}
@@ -42,7 +42,7 @@ const HistoryList = ({ subId, date }: { subId: number; date: Date }) => {
           </div>
         </button>
       ))}
-      {history?.reports.length === 0 && (
+      {(!history?.reports || history.reports.length === 0) && (
         <p className="text-center py-20 text-gray-400">해당 월의 리포트가 없습니다.</p>
       )}
     </div>
