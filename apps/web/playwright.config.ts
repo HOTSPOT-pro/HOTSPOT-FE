@@ -18,10 +18,4 @@ export default defineConfig({
     storageState: 'auth.json',
     trace: 'on',
   },
-  webServer: {
-    command: 'pnpm dev', // 서버 실행 명령어
-    reuseExistingServer: true, // 이미 서버가 켜져있으면 재사용
-    timeout: 120 * 1000,
-    url: 'https://hotspot.pics:3000',
-  },
 });
