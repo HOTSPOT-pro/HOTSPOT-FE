@@ -15,13 +15,11 @@ const ICON_STYLE = {
 };
 
 const ICON_COMPONENTS: Record<UserRole, ReactElement> = {
-  CHILD: <ChildIcon className="w-10 h-10" />,
-  OWNER: <OwnerIcon className="w-10 h-10" />,
-  PARENT: <ParentIcon className="w-10 h-10" />,
+  CHILD: <ChildIcon className="w-40 h-40" />,
+  OWNER: <OwnerIcon className="w-40 h-40" />,
+  PARENT: <ParentIcon className="w-40 h-40" />,
 };
 
 export const UserProfileIcon = ({ type }: UserProfileIconProps) => {
-  return (
-    <div className={cn('p-2 rounded-2xl mr-3', ICON_STYLE[type])}>{ICON_COMPONENTS[type]}</div>
-  );
+  return <div className={cn('p-8 rounded-2xl', ICON_STYLE[type])}>{ICON_COMPONENTS[type]}</div>;
 };

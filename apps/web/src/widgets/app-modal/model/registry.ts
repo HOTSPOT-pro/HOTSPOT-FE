@@ -2,6 +2,7 @@
 
 import { ErrorModal } from '@shared/ui';
 import type { ComponentType } from 'react';
+import { CancelSubscribeModal } from '@/features/analyze/ui/CancelSubscribeModal';
 import { DaySelectorModal } from '@/features/analyze/ui/DaySelectorModal';
 import { PresentConfirmModal } from '@/features/gift/present-data/ui/PresentConfirmModal';
 import { AddPolicyModal } from '@/features/policy/policy-list/ui/AddPolicyModal';
@@ -20,6 +21,7 @@ type AppModalComponent = ComponentType<{ close: () => void; props?: Record<strin
 export const modalRegistry: Record<string, AppModalComponent> = {
   addFamilyMemberModal: AddFamilyMemberModal,
   addFamilyPolicyModal: AddPolicyModal,
+  cancelSubscribeModal: CancelSubscribeModal,
   changeFamilyRoleModal: ChangeFamilyRoleModal,
   createFamilyModal: CreateFamilyModal,
   daySelectorModal: DaySelectorModal,
