@@ -123,7 +123,7 @@ export const PolicyActionMenu = ({
         onClick={() => setIsOpen(!isOpen)}
         type="button"
       >
-        <MoreIcon className="w-5 h-5 text-gray-400" />
+        <MoreIcon className="w-20 h-20 text-gray-400" />
       </button>
 
       {isOpen && (
