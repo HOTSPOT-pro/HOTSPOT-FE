@@ -65,7 +65,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
               className="w-full flex flex-row gap-16 items-center"
               key={`${item.appName}-${index}`}
             >
-              <div className="w-10 h-10 flex-none flex items-center justify-center rounded-full text-base font-bold bg-gray-100 text-gray-500">
+              <div className="w-40 h-40 flex-none flex items-center justify-center rounded-full text-base font-bold bg-gray-100 text-gray-500">
                 {index + 1}
               </div>
 
