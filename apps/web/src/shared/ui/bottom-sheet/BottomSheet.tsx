@@ -107,7 +107,7 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
           onTouchStart={handleStart}
           type="button"
         >
-          <div className="h-1.5 w-12 rounded-full bg-gray-300" />
+          <div className="h-6 w-48 rounded-full bg-gray-300" />
         </button>
 
         <div className="max-h-[70vh] overflow-y-auto px-6 pb-10">{children}</div>

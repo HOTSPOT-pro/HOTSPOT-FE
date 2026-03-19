@@ -31,7 +31,7 @@ export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemPro
             checked ? 'border-purple-600 bg-purple-600' : 'border-gray-200 bg-white',
           )}
         >
-          <Check className="w-4 h-4 text-white" />
+          <Check className="w-20 h-20 text-white" />
         </div>
         <span className={'py-2.5 text-sm text-black'}>{label}</span>
       </div>
@@ -42,7 +42,7 @@ export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemPro
         rel="noopener noreferrer"
         target="_blank"
       >
-        <RightArrow className="w-6 h-6 text-gray-400" />
+        <RightArrow className="w-20 h-20 text-gray-400" />
       </Link>
     </label>
   );
