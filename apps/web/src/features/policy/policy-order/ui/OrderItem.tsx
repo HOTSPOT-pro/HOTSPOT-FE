@@ -33,9 +33,9 @@ export const OrderItem = ({ member, index, isEditing, onMove, isLast }: OrderIte
         >
           <div className="flex items-center gap-4">
             <div>
-              <MoreIcon className="w-4 h-4 text-gray-500" />
+              <MoreIcon className="w-20 h-20 text-gray-500" />
             </div>
-            <span className="text-sm font-bold text-purple-500 rounded-2xl bg-purple-100 w-7 h-7 flex items-center justify-center">
+            <span className="text-sm font-bold text-purple-500 rounded-2xl bg-purple-100 w-20 h-20 flex items-center justify-center">
               {index + 1}
             </span>
             <UserProfileIcon type={member.role} />

@@ -11,7 +11,7 @@ export const KakaoLogin = ({ className }: { className?: string }) => {
     <Link
       className={buttonVariants({
         className: cn(
-          'bg-kakao-container text-kakao-label hover:bg-yellow-400 flex items-center justify-center gap-2',
+          'bg-kakao-container text-kakao-label hover:bg-yellow-400 flex items-center justify-center gap-8',
           className,
         ),
         variant: 'solid',

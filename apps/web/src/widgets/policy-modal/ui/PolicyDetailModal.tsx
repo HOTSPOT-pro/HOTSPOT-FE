@@ -96,16 +96,16 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
   return (
     <div>
       {/*TODO: 모달 스타일 빼기*/}
-      <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-3xl p-6">
+      <Modal className="w-122 min-h-[400px] max-w-[calc(100dvw-1rem)] max-h-[92dvh]">
         <Modal.Header>
           <Modal.Title>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-8">
               {props?.icon}
               {props?.user.memberName}
             </div>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Content>
+        <Modal.Content className="flex flex-1">
           <Tab<PolicyModalTabValue>
             activeValue={activeTab}
             items={TABS}
@@ -135,11 +135,12 @@ export const PolicyDetailModal = ({ close }: { close: () => void }) => {
             />
           )}
         </Modal.Content>
-        <Modal.Footer>
-          <Button onClick={handleSave}>저장</Button>
+
+        <Modal.Footer btnLayout="horizontal">
           <Button onClick={close} variant="ghost">
             취소
           </Button>
+          <Button onClick={handleSave}>저장하기</Button>
         </Modal.Footer>
       </Modal>
     </div>

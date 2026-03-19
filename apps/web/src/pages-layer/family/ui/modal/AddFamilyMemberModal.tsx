@@ -1,9 +1,9 @@
 'use client';
 
-import { Button, Modal } from '@hotspot/ui';
+import { Button, Input, Modal } from '@hotspot/ui';
 import NextImage from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { type UseFormRegisterReturn, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { ONBOARDING_RULES } from '@/features/onboarding/model/formatRule';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
@@ -43,7 +43,7 @@ interface AddFamilyFormValues {
 }
 
 const ParentRoleIcon = () => (
-  <svg aria-hidden="true" className="h-6 w-6" fill="none" viewBox="0 0 24 24">
+  <svg aria-hidden="true" className="h-20 w-20" fill="none" viewBox="0 0 24 24">
     <circle cx="12" cy="12" fill="currentColor" fillOpacity="0.14" r="11" />
     <circle cx="9.2" cy="10.2" fill="currentColor" r="1.2" />
     <circle cx="14.8" cy="10.2" fill="currentColor" r="1.2" />
@@ -57,7 +57,7 @@ const ParentRoleIcon = () => (
 );
 
 const ChildRoleIcon = () => (
-  <svg aria-hidden="true" className="h-6 w-6" fill="none" viewBox="0 0 24 24">
+  <svg aria-hidden="true" className="h-20 w-20" fill="none" viewBox="0 0 24 24">
     <circle cx="12" cy="12" fill="currentColor" fillOpacity="0.1" r="11" />
     <circle cx="9.2" cy="10.2" fill="currentColor" r="1.2" />
     <circle cx="14.8" cy="10.2" fill="currentColor" r="1.2" />
@@ -81,39 +81,6 @@ const UploadIcon = () => (
     />
   </svg>
 );
-
-const InputField = ({
-  errorMessage,
-  helpText,
-  inputProps,
-  label,
-  placeholder,
-}: {
-  errorMessage?: string;
-  helpText: string;
-  inputProps: UseFormRegisterReturn;
-  label: string;
-  placeholder: string;
-}) => {
-  return (
-    <div className="space-y-1">
-      <p className="font-title-title3-semibold leading-none text-black">{label}</p>
-      <input
-        {...inputProps}
-        className="h-12 w-full border-b border-gray-200 bg-transparent text-[1rem] text-gray-900 outline-none placeholder:text-gray-400"
-        placeholder={placeholder}
-        type="text"
-      />
-      <p
-        className={`pt-2 text-[0.75rem] leading-none ${
-          errorMessage ? 'text-red-500' : 'text-gray-500'
-        }`}
-      >
-        {errorMessage ?? helpText}
-      </p>
-    </div>
-  );
-};
 
 const createEmptyMember = (): AddFamilyFormValues['familyMemberList'][number] => ({
   name: '',
@@ -357,8 +324,8 @@ export const AddFamilyMemberModal = ({
   }, [previewUrl]);
 
   return (
-    <Modal className="overflow-y-auto" size="custom">
-      <Modal.Header className="gap-2">
+    <Modal className="max-h-[650px] max-w-[355px] w-[80dvw]" size="custom">
+      <Modal.Header className="gap-4">
         <Modal.Title className="text-[1rem] font-bold leading-tight text-black">
           가족 구성원 추가 신청
         </Modal.Title>
@@ -367,17 +334,17 @@ export const AddFamilyMemberModal = ({
         </Modal.Description>
       </Modal.Header>
 
-      <Modal.Content className="mt-2 gap-6">
-        <div className="space-y-4">
+      <Modal.Content className="gap-24 overflow-auto">
+        <div className="space-y-16">
           {fields.map((field, index) => {
             const memberRole = members?.[index]?.targetFamilyRole ?? 'PARENT';
 
             return (
-              <div className="space-y-4 rounded-2xl border border-gray-200 p-4" key={field.id}>
+              <div className="space-y-16 rounded-2xl border border-gray-200 p-16" key={field.id}>
                 <div className="flex items-center justify-between">
-                  <p className="text-[0.9375rem] font-semibold text-black">구성원 {index + 1}</p>
+                  <p className="text-[0.85rem] font-semibold text-black">구성원 {index + 1}</p>
                   <button
-                    className="text-[0.75rem] font-medium text-gray-500 disabled:text-gray-300"
+                    className="text-[0.85rem] font-medium text-gray-500 disabled:text-gray-300"
                     disabled={fields.length === 1}
                     onClick={() => handleRemoveMember(index)}
                     type="button"
@@ -386,33 +353,33 @@ export const AddFamilyMemberModal = ({
                   </button>
                 </div>
 
-                <InputField
-                  errorMessage={errors.familyMemberList?.[index]?.name?.message}
-                  helpText="가족 구성원 이름을 입력해주세요."
-                  inputProps={register(`familyMemberList.${index}.name`, {
+                <Input
+                  error={errors.familyMemberList?.[index]?.name?.message}
+                  id={`family-member-name-${field.id}`}
+                  label="이름"
+                  placeholder="홍길동"
+                  {...register(`familyMemberList.${index}.name`, {
                     required: '필수 입력 항목입니다.',
                     validate: (value) => value.trim().length >= 2 || '2자 이상 입력해주세요.',
                   })}
-                  label="이름"
-                  placeholder="홍길동"
                 />
 
-                <InputField
-                  errorMessage={errors.familyMemberList?.[index]?.phone?.message}
-                  helpText="가족 구성원 전화번호를 입력해주세요."
-                  inputProps={register(`familyMemberList.${index}.phone`, {
+                <Input
+                  error={errors.familyMemberList?.[index]?.phone?.message}
+                  id={`family-member-phone-${field.id}`}
+                  label="전화번호"
+                  placeholder="010-0000-0000"
+                  {...register(`familyMemberList.${index}.phone`, {
                     ...ONBOARDING_RULES.tel,
                     onChange: handleTelChange(index),
                   })}
-                  label="전화번호"
-                  placeholder="010-0000-0000"
                 />
 
-                <div className="space-y-3">
-                  <p className="font-title-title3-semibold leading-none text-black">권한</p>
-                  <div className="flex gap-2">
+                <div className="space-y-12">
+                  <p className="text-[0.85rem] font-semibold leading-none text-black">권한</p>
+                  <div className="flex gap-8">
                     <button
-                      className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
+                      className={`flex h-40 flex-1 items-center justify-center gap-8 rounded-lg border text-[1rem] font-medium ${
                         memberRole === 'PARENT'
                           ? 'border-purple-500 bg-purple-50 text-purple-700'
                           : 'border-gray-200 bg-white text-gray-500'
@@ -424,7 +391,7 @@ export const AddFamilyMemberModal = ({
                       부모
                     </button>
                     <button
-                      className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
+                      className={`flex h-40 flex-1 items-center justify-center gap-8 rounded-lg border text-[1rem] font-medium ${
                         memberRole === 'CHILD'
                           ? 'border-green-500 bg-green-50 text-green-700'
                           : 'border-gray-200 bg-white text-gray-500'
@@ -446,9 +413,9 @@ export const AddFamilyMemberModal = ({
           </Button>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-12">
           <p className="font-title-title3-semibold leading-none text-black">가족관계증명서</p>
-          <label className="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-gray-300 bg-gray-50/40 p-2">
+          <label className="flex h-full cursor-pointer flex-col items-center justify-center gap-12 rounded-3xl border border-dashed border-gray-300 bg-gray-50/40 p-8">
             {!isUploadComplete ? (
               <>
                 <UploadIcon />
@@ -464,12 +431,12 @@ export const AddFamilyMemberModal = ({
               <p className="text-[0.625rem] text-gray-600">{uploadedFileName}</p>
             ) : null}
             {generatedPresignedUrl ? (
-              <p className="w-full truncate px-4 text-center text-[0.625rem] text-green-600">
+              <p className="w-full truncate px-16 text-center text-[0.625rem] text-green-600">
                 {isUploadComplete ? '업로드 완료' : 'Presigned URL 생성 완료'}
               </p>
             ) : null}
             {uploadErrorMessage ? (
-              <p className="w-full px-4 text-center text-[0.625rem] text-red-500">
+              <p className="w-full px-16 text-center text-[0.625rem] text-red-500">
                 {uploadErrorMessage}
               </p>
             ) : null}
@@ -493,12 +460,12 @@ export const AddFamilyMemberModal = ({
             />
           </label>
           {submitErrorMessage ? (
-            <p className="px-1 text-[0.75rem] text-red-500">{submitErrorMessage}</p>
+            <p className="px-4 text-[0.75rem] text-red-500">{submitErrorMessage}</p>
           ) : null}
         </div>
       </Modal.Content>
 
-      <Modal.Footer btnLayout="horizontal" className="mt-2 gap-2">
+      <Modal.Footer btnLayout="horizontal" className="mt-8 gap-8">
         <Button onClick={close} type="button" variant="outline">
           취소
         </Button>

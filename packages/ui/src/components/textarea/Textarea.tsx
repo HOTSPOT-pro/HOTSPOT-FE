@@ -15,7 +15,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ id, label, error, description, className, containerClassName, ...props }, ref) => {
     return (
       <div className={cn('flex flex-col w-full group', containerClassName)}>
-        <label className="text-sm font-medium text-gray-600 transition-colors" htmlFor={id}>
+        <label className="text-sm font-medium text-text-normal transition-colors" htmlFor={id}>
           {label}
         </label>
 

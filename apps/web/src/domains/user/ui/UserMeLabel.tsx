@@ -5,7 +5,7 @@ interface UserMeLabelProps {
 export const UserMeLabel = ({ isMe }: UserMeLabelProps) => {
   if (!isMe) return null;
   return (
-    <span className="text-xs py-1 px-2 border-2 border-purple-300 text-purple-600 rounded-sm">
+    <span className="inline-flex items-center rounded-lg border border-purple-500 bg-purple-500 p-4 text-[0.625rem] font-medium leading-none text-white">
       나
     </span>
   );

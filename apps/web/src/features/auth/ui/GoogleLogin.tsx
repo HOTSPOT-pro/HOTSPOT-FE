@@ -11,7 +11,7 @@ export const GoogleLogin = ({ className }: { className?: string }) => {
     <Link
       className={buttonVariants({
         className: cn(
-          'bg-google-container border border-google-border text-google-label hover:bg-gray-100 flex items-center justify-center gap-2',
+          'bg-google-container border border-google-border text-google-label hover:bg-gray-100 flex items-center justify-center gap-8',
           className,
         ),
         variant: 'solid',

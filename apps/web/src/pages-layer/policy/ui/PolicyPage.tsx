@@ -46,15 +46,9 @@ export const PolicyPage = () => {
         />
       </nav>
 
-      <main className="w-full px-4 py-4">
-        <div className="rounded-3xl bg-white">
-          {activeTab === 'FAMILY' && <PolicyUserSection data={policyPerFamily} />}
-          {activeTab === 'MANAGE' && (
-            <div className="px-5 py-4">
-              <PolicyManageSection />
-            </div>
-          )}
-        </div>
+      <main className="w-full px-16 pt-16 pb-32">
+        {activeTab === 'FAMILY' && <PolicyUserSection data={policyPerFamily} />}
+        {activeTab === 'MANAGE' && <PolicyManageSection />}
       </main>
     </>
   );

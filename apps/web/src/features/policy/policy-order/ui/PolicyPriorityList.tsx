@@ -21,7 +21,7 @@ export const PolicyPriorityList = ({
         <Droppable droppableId="member-list">
           {(provided) => (
             <div
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-8"
               {...provided.droppableProps}
               ref={provided.innerRef}
             >

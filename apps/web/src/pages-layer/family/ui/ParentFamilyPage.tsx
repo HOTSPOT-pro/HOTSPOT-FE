@@ -3,6 +3,7 @@
 import PhoneIcon from '@hotspot/ui/assets/icons/phone.svg';
 import UserIcon from '@hotspot/ui/assets/icons/user.svg';
 import { useMemo } from 'react';
+import { UserRoleLabel } from '@/domains/user/ui/UserRoleLabel';
 import { useHeader } from '@/widgets/app-header/model/useHeader';
 
 type FamilyRole = 'OWNER' | 'PARENT' | 'CHILD' | 'NONE';
@@ -59,37 +60,11 @@ const SectionIcon = ({ type }: { type: 'child' | 'parent' }) => {
   );
 };
 
-const RoleBadge = ({ role }: { role: FamilyRole }) => {
-  if (role === 'OWNER') {
-    return (
-      <span className="inline-flex items-center rounded-lg border border-blue-300 p-1 text-[0.625rem] font-medium text-blue-500">
-        대표
-      </span>
-    );
-  }
-
-  if (role === 'PARENT') {
-    return (
-      <span className="inline-flex items-center rounded-lg border border-purple-300 p-1 text-[0.625rem] font-medium text-purple-500">
-        부모
-      </span>
-    );
-  }
-
-  if (role === 'CHILD') {
-    return (
-      <span className="inline-flex items-center rounded-lg border border-green-500 p-1 text-[0.625rem] font-medium text-green-500">
-        자녀
-      </span>
-    );
-  }
-
-  return (
-    <span className="inline-flex items-center rounded-lg border border-gray-300 p-1 text-[0.625rem] font-medium text-gray-500">
-      대기
-    </span>
-  );
-};
+const PendingRoleBadge = () => (
+  <span className="inline-flex items-center rounded-lg border border-gray-100 bg-gray-100 px-4 py-1 text-[0.625rem] font-medium leading-none text-gray-500">
+    대기
+  </span>
+);
 
 const buildSections = (familyInfo: FamilyInfoResponse | null): FamilySection[] => {
   const members = familyInfo?.memberInfoList ?? [];
@@ -162,7 +137,11 @@ export const ParentFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoRespons
                         <strong className="text-[0.8125rem] font-semibold leading-none text-gray-900">
                           {member.name}
                         </strong>
-                        <RoleBadge role={member.familyRole} />
+                        {member.familyRole === 'NONE' ? (
+                          <PendingRoleBadge />
+                        ) : (
+                          <UserRoleLabel role={member.familyRole} />
+                        )}
                       </div>
 
                       <p className="flex items-center gap-8 text-[0.6875rem] leading-none text-gray-500">

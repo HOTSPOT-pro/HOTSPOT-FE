@@ -30,13 +30,11 @@ export const BlockAddList = ({ data, draft, onUpdate }: PolicyAddListProps) => {
 
   if (!blockList || blockList.length === 0)
     return (
-      <div className="px-6 pt-8 pb-4 text-center text-gray-400 font-medium">
-        차단 가능 서비스가 없습니다.
-      </div>
+      <div className="p-16 text-center text-gray-400 font-medium">차단 가능 서비스가 없습니다.</div>
     );
 
   return (
-    <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">
+    <div className="max-h-[250px] overflow-y-auto px-8 py-16 flex flex-col gap-8">
       {blockList?.map((block) => {
         const isApply = currentSelectedIds.includes(block.id);
         return (

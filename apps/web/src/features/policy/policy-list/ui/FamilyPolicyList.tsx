@@ -48,7 +48,7 @@ export const FamilyPolicyList = () => {
           <p className="text-base font-bold">우리 가족 정책</p>
           <p className="text-sm font-normal text-gray-600">{activeCount}개 정책 적용 중</p>
         </div>
-        <Button className="w-fit px-3" onClick={handleOpenModal} variant="outline">
+        <Button className="w-fit px-8 py-4" onClick={handleOpenModal} variant="outline">
           정책 만들기
         </Button>
       </div>

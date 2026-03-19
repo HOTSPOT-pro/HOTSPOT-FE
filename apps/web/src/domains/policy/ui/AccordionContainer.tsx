@@ -17,8 +17,8 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
     <div className="flex gap-1.5 flex-col">
       <Accordion
         title={
-          <div className="flex flex-row gap-2 px-3.5 py-3">
-            <Time className="w-4.5 text-purple-600" />
+          <div className="flex items-center gap-8 p-16 font-heading-heading4">
+            <Time className="w-20 text-purple-600" />
             <span>적용 정책</span>
             <span>{policyList.length}개</span>
           </div>
@@ -26,32 +26,27 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
       >
         {policyList.length !== 0 ? (
           policyList.map((i) => (
-            <PolicyItem
-              description={policyDescriptionFormatter(i)}
-              icon={<Time className="w-4.5 text-purple-600" />}
-              item={i}
-              key={i.id}
-            />
+            <PolicyItem description={policyDescriptionFormatter(i)} item={i} key={i.id} />
           ))
         ) : (
-          <div className="px-1 py-2 text-xs text-gray-600">적용된 정책이 없습니다.</div>
+          <div className="p-16 text-xs text-gray-600 font-body-body4">적용된 정책이 없습니다.</div>
         )}
       </Accordion>
       <Accordion
         title={
-          <div className="flex flex-row gap-2 px-3.5 py-3">
-            <CloseCircle className="w-4.5 text-red-600" />
+          <div className="flex items-center gap-8 p-16 font-heading-heading4">
+            <CloseCircle className="w-20 h-20 text-red-600" />
             <span>차단된 서비스</span>
             <span>{blockServices.length}개</span>
           </div>
         }
       >
         {blockServices.length !== 0 ? (
-          blockServices.map((i) => (
-            <PolicyItem icon={<CloseCircle className="w-4.5 text-red-600" />} item={i} key={i.id} />
-          ))
+          blockServices.map((i) => <PolicyItem item={i} key={i.id} />)
         ) : (
-          <div className="px-1 py-2 text-xs text-gray-600">차단된 서비스가 없습니다.</div>
+          <div className="p-16 text-xs text-gray-600 font-body-body4">
+            차단된 서비스가 없습니다.
+          </div>
         )}
       </Accordion>
     </div>

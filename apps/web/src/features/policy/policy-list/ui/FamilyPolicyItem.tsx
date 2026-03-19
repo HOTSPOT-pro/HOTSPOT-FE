@@ -38,16 +38,16 @@ export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemP
 
   return (
     <div
-      className={`flex flex-row justify-between border p-3 rounded-sm gap-4 items-start transition-colors ${
+      className={`flex flex-row justify-between border p-16 rounded-xl gap-4 items-start transition-colors ${
         data.isActive ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50'
       }`}
     >
-      <div className={`flex flex-col gap-1 ${!data.isActive && 'opacity-60'}`}>
-        <div className="flex flex-row items-center gap-2">
+      <div className={`flex flex-col gap-4 ${!data.isActive && 'opacity-60'}`}>
+        <div className="flex flex-row items-center gap-8">
           <span className={`font-bold ${!data.isActive && 'text-gray-500'}`}>{data.name}</span>
           <span
             className={cn(
-              'text-[10px] px-1.5 py-0.5 rounded-md font-bold uppercase',
+              'text-[10px] px-8 py-4 rounded-md font-bold uppercase',
               !data.isActive && 'bg-gray-200 text-gray-500',
               data.isActive && data.policyType === 'SCHEDULED' && 'bg-purple-100 text-purple-600',
               data.isActive && data.policyType !== 'SCHEDULED' && 'bg-lime-100 text-lime-600',
@@ -60,7 +60,7 @@ export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemP
 
         <span className="text-[13px] text-gray-600 break-keep">{data.policyDescription}</span>
 
-        <div className="flex items-center gap-1 bg-white/50 w-fit px-2 rounded-sm border border-gray-100">
+        <div className="flex items-center gap-1 w-fit px-4 rounded-sm bg-gray-100">
           <div className="flex items-center text-[11px] text-gray-600 py-1">
             <span>
               {data.policySnapshot.durationMinutes

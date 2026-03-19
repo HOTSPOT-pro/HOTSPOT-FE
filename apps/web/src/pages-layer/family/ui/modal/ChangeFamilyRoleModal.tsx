@@ -72,33 +72,22 @@ export const ChangeFamilyRoleModal = ({ close, props }: ChangeFamilyRoleModalPro
   }
 
   return (
-    <Modal className="w-[30.5rem] max-w-[calc(100vw-1rem)] rounded-[1.5rem] p-6" size="custom">
-      <Modal.Header className="items-center gap-2 text-center">
-        <Modal.Title className="text-[1rem] font-bold leading-tight text-black">
-          권한을 변경하시겠습니까?
-        </Modal.Title>
-        <Modal.Description className="text-[0.875rem] leading-snug text-gray-500">
+    <Modal className="w-[355px] max-w-[calc(100vw-1rem)]" size="custom">
+      <Modal.Header>
+        <Modal.Title>권한을 변경하시겠습니까?</Modal.Title>
+        <Modal.Description>
           {payload.name}님의 권한을{' '}
           <span className="font-semibold text-black">{nextRoleLabel}</span>
           (으)로 변경합니다. 권한에 따라 접근 가능한 기능이 달라질 수 있습니다.
         </Modal.Description>
       </Modal.Header>
 
-      <Modal.Footer btnLayout="horizontal" className="mt-4 gap-2">
-        <Button
-          className="h-12 font-title-title3-semibold"
-          isLoading={isLoading}
-          onClick={() => void handleConfirm()}
-        >
-          변경하기
-        </Button>
-        <Button
-          className="h-12 font-title-title3-semibold"
-          disabled={isLoading}
-          onClick={close}
-          variant="ghost"
-        >
+      <Modal.Footer btnLayout="horizontal" className="gap-8">
+        <Button disabled={isLoading} onClick={close} variant="ghost">
           취소
+        </Button>
+        <Button isLoading={isLoading} onClick={() => void handleConfirm()}>
+          변경하기
         </Button>
       </Modal.Footer>
     </Modal>
