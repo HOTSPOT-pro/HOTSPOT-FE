@@ -21,5 +21,5 @@ const ICON_COMPONENTS: Record<UserRole, ReactElement> = {
 };
 
 export const UserProfileIcon = ({ type }: UserProfileIconProps) => {
-  return <div className={cn('p-4 rounded-12', ICON_STYLE[type])}>{ICON_COMPONENTS[type]}</div>;
+  return <div className={cn('p-8 rounded-2xl', ICON_STYLE[type])}>{ICON_COMPONENTS[type]}</div>;
 };

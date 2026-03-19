@@ -19,13 +19,13 @@ export const FeedbackSection = ({ finalFeedback }: FinalFeedbackSectionProps) =>
   const { parent, child, policyRecommendList } = finalFeedback;
 
   return (
-    <div className="bg-white rounded-2xl p-4 mb-3 shadow-sm">
-      <h2 className="text-base font-bold text-gray-900 mb-3">종합 피드백</h2>
+    <div className="bg-white rounded-2xl p-16 mb-12 shadow-sm">
+      <h2 className="font-body-body2-bold text-gray-900 mb-12">종합 피드백</h2>
 
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-8 mb-12">
         {TABS.map(({ mode: m, label }) => (
           <button
-            className={`px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all ${
+            className={`px-14 py-6 rounded-full border font-body-body3 transition-all ${
               mode === m
                 ? 'bg-violet-600 border-violet-600 text-white'
                 : 'bg-white border-gray-200 text-gray-500'
@@ -39,23 +39,30 @@ export const FeedbackSection = ({ finalFeedback }: FinalFeedbackSectionProps) =>
         ))}
       </div>
 
-      <p className="text-[13px] text-gray-700 leading-relaxed bg-gray-50 rounded-xl px-3 py-2.5 mb-4">
+      <p className="font-body-body3 text-gray-700 leading-relaxed bg-gray-50 rounded-xl px-12 py-10 mb-16">
         {mode === 'child' ? child : parent}
       </p>
 
-      <div className="h-px bg-gray-100 mb-3" />
+      <div className="h-px bg-gray-100 mb-12" />
 
-      <p className="text-[13px] font-semibold text-gray-700 mb-2.5">정책 추천</p>
+      <p className="font-body-body3-bold text-gray-700 mb-10">정책 추천</p>
 
       <div className="flex flex-col gap-2.5">
+        {policyRecommendList.length === 0 && (
+          <span className="text-center font-body-body3 text-gray-700 py-8 mb-4">
+            추천 정책이 없습니다.
+          </span>
+        )}
         {policyRecommendList.map((policy, idx) => (
-          <div className="border border-violet-100 rounded-xl p-3 bg-violet-50/50" key={idx}>
-            <div className="flex items-center gap-8 mb-1.5">
+          <div className="border border-violet-100 rounded-xl p-12 bg-violet-50/50" key={idx}>
+            <div className="flex items-center gap-8 mb-6">
               <span className="text-sm">🛡️</span>
-              <span className="text-[13px] font-semibold text-violet-800">{policy.title}</span>
+              <span className="font-body-body3-bold text-violet-800">{policy.title}</span>
             </div>
-            <p className="text-[12px] text-gray-600 mb-1.5 leading-relaxed">{policy.description}</p>
-            <p className="text-[11px] text-violet-600 leading-snug">💡 {policy.reason}</p>
+            <p className="font-body-body4 text-gray-600 mb-6 leading-relaxed">
+              {policy.description}
+            </p>
+            <p className="font-body-body4 text-violet-600 leading-snug">💡 {policy.reason}</p>
           </div>
         ))}
       </div>

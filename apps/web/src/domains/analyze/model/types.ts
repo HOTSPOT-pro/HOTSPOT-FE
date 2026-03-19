@@ -1,5 +1,4 @@
 export type ScoreLevel = 'GREAT' | 'GOOD' | 'NORMAL' | 'BAD' | 'WORST';
-export type TagType = 'LATE_NIGHT_HIGH' | 'USAGE_SPIKE' | 'STUDY_FOCUSED' | 'ENTERTAINMENT_HEAVY';
 export type DayType =
   | 'MONDAY'
   | 'TUESDAY'
@@ -8,10 +7,37 @@ export type DayType =
   | 'FRIDAY'
   | 'SATURDAY'
   | 'SUNDAY';
-export type CategoryType = 'study' | 'media' | 'sns' | 'msg' | 'game';
+export type CategoryType =
+  | 'STUDY'
+  | 'MEDIA'
+  | 'SNS'
+  | 'MSG'
+  | 'GAME'
+  | 'GIFT'
+  | 'FIN'
+  | 'WEB'
+  | 'TOON'
+  | 'etc';
+export type RoleType = 'OWNER' | 'PARENT' | 'CHILD';
+export type ReportStatus = 'COMPLETED';
 
 export interface Subscribe {
   subscribed: boolean;
+}
+
+export interface History {
+  subId: number;
+  name: string;
+  yearMonth: string;
+  reports: HistoryMeta[];
+}
+export interface HistoryMeta {
+  reportId: number;
+  title: string;
+  period: string;
+  weekStartDate: string;
+  weekEndDate: string;
+  reportStatus: ReportStatus;
 }
 
 export interface ScoreReason {
@@ -19,7 +45,7 @@ export interface ScoreReason {
   exp: string;
 }
 
-export interface ScoreInfo {
+export interface ScoreData {
   totalScore: number;
   scoreLevel: ScoreLevel;
   scoreDiff: number;
@@ -27,8 +53,8 @@ export interface ScoreInfo {
 }
 
 export interface Overview {
-  scoreInfo: ScoreInfo;
-  tags: TagType[];
+  scoreData: ScoreData;
+  tags: string[];
 }
 
 export interface DailyUsageItem {
@@ -79,8 +105,6 @@ export interface CategoryComparison {
 }
 
 export interface CategoryUsageList {
-  totalThisWeek: number; // GB 단위 숫자 ex) 2.7
-  totalLastWeek: number; // GB 단위 숫자 ex) 1.7
   ai_feedback: string;
   thisWeek: CategoryUsageItem[];
   lastWeek: CategoryUsageItem[];
@@ -108,5 +132,16 @@ export interface AIReportData {
   dailyUsage: DailyUsage;
   hourlyUsage: HourlyUsage;
   categoryUsageList: CategoryUsageList;
-  final_feedback: FinalFeedback;
+  finalFeedback: FinalFeedback;
+}
+
+export interface AnalyzeData {
+  receiveDay: DayType;
+  members: AnalyzeMember[];
+}
+export interface AnalyzeMember {
+  subId: number;
+  name: string;
+  familyRole: RoleType;
+  reportId: number | null;
 }

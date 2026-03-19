@@ -13,9 +13,11 @@ export type {
   HourlyUsageItem,
   Overview,
   PolicyRecommend,
-  ScoreInfo,
+  ScoreData,
   ScoreLevel,
   ScoreReason,
-  TagType,
 } from './model/types';
-export { useSubscribeInfo } from './model/useSubscribe';
+export { useAnalyzeData } from './model/useAnalyzeData';
+export { useAnalyzeHistory } from './model/useAnalyzeHistory';
+export { useAnalyzeMember } from './model/useAnalyzeMember';
+export { useSubscribeInfo } from './model/useSubscribeInfo';
