@@ -90,6 +90,15 @@ HOTSPOT은 가족 구성원의 데이터 사용량을 실시간으로 동기화�
 - 월/일별 전체, 개인별 사용량 추이 확인
 - 월/일별 개인별 앱 상세 사용량 확인
 
+## AI 리포트 페이지
+<p align="center"><img width="300" height="1575" alt="image" src="https://github.com/user-attachments/assets/05fb5fe6-f3cb-4c19-829e-1433f4690184" /></p>
+
+- 리포트 신청 및 수령일 지정
+- 리포트 수령일 변경
+- 리포트 구독 취소
+- 서비스 신청시 구성원별 AI 리포트 조회 가능
+- 이전 리포트 조회(히스토리)
+
 ## 마이페이지
 
 <p align="center">
