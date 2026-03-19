@@ -17,9 +17,9 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
   const isNeutral = scoreData.scoreDiff === 0;
 
   const renderIcon = () => {
-    if (isUp) return <SmileIcon className=" text-violet-500" />;
-    if (isDown) return <ShockIcon className=" text-red-500" />;
-    return <HmmIcon className=" text-gray-400" />; // 유지 혹은 기본
+    if (isUp) return <SmileIcon className="w-60 h-60 text-violet-500" />;
+    if (isDown) return <ShockIcon className="w-60 h-60 text-red-500" />;
+    return <HmmIcon className="w-60 h-60 text-gray-400" />; // 유지 혹은 기본
   };
 
   return (
