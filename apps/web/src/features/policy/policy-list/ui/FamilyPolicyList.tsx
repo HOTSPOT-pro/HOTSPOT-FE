@@ -55,7 +55,7 @@ export const FamilyPolicyList = () => {
       {data.length === 0 && (
         <div className="text-sm text-gray-500 text-center">적용된 데이터가 없습니다.</div>
       )}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-8">
         {data.map((policy) => (
           <div key={policy.id}>
             <FamilyPolicyItem

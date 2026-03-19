@@ -200,7 +200,7 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
                       <button
                         aria-expanded={isMenuOpen}
                         aria-label={`${member.name} 메뉴 열기`}
-                        className="relative flex h-10 w-10 items-center justify-center text-gray-500"
+                        className="relative flex items-center justify-center text-gray-500"
                         onClick={() =>
                           setActiveMenuMemberId((prev) => (prev === member.id ? null : member.id))
                         }
@@ -211,7 +211,7 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
                     ) : null}
 
                     {canOpenMenu && isMenuOpen ? (
-                      <div className="absolute right-10 top-[2rem] z-10 w-56 overflow-hidden rounded-12 bg-white shadow-[0_4px_18px_rgba(0,0,0,0.15)]">
+                      <div className="absolute right-24 top-[2rem] z-10 w-56 overflow-hidden rounded-12 bg-white shadow-[0_4px_18px_rgba(0,0,0,0.15)]">
                         <button
                           className="flex w-full items-center gap-3 p-8 text-left text-[0.875rem] text-gray-900"
                           onClick={() =>

@@ -91,12 +91,12 @@ export const DaySelectorModal = ({ close }: { close: () => void }) => {
               *수령일 변경은 다음주부터 반영됩니다.
             </p>
           )}
-          <div className="flex flex-row">
-            <Button disabled={!watch().selectedDay} onClick={handleSave}>
-              저장
-            </Button>
+          <div className="flex flex-row gap-8">
             <Button onClick={close} variant="ghost">
               취소
+            </Button>
+            <Button disabled={!watch().selectedDay} onClick={handleSave}>
+              저장하기
             </Button>
           </div>
         </Modal.Footer>

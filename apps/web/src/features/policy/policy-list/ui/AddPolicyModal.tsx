@@ -136,7 +136,7 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
           {step === 'form' ? (
             <PolicyAddForm />
           ) : (
-            <div className="flex flex-col gap-8 h-150 overflow-auto">
+            <div className="flex flex-col gap-8 h-150 overflow-auto p-4">
               <p className="text-sm text-gray-500 pb-2">가져올 정책을 선택해 보세요.</p>
               {policyList.map((policy) => (
                 <PolicyAdminItem

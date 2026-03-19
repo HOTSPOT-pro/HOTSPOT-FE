@@ -44,7 +44,9 @@ export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemP
     >
       <div className={`flex flex-col gap-4 ${!data.isActive && 'opacity-60'}`}>
         <div className="flex flex-row items-center gap-8">
-          <span className={`font-bold ${!data.isActive && 'text-gray-500'}`}>{data.name}</span>
+          <span className={`font-title-title3-semibold ${!data.isActive && 'text-gray-500'}`}>
+            {data.name}
+          </span>
           <span
             className={cn(
               'text-[10px] px-8 py-4 rounded-md font-bold uppercase',
@@ -60,8 +62,8 @@ export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemP
 
         <span className="text-[13px] text-gray-600 break-keep">{data.policyDescription}</span>
 
-        <div className="flex items-center gap-1 w-fit px-4 rounded-sm bg-gray-100">
-          <div className="flex items-center text-[11px] text-gray-600 py-1">
+        <div className="flex items-center gap-4 w-fit px-4 rounded-sm bg-gray-100">
+          <div className="flex items-center text-[11px] text-gray-600 py-4">
             <span>
               {data.policySnapshot.durationMinutes
                 ? `${data.policySnapshot.durationMinutes}분 차단`
@@ -69,7 +71,7 @@ export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemP
             </span>
           </div>
           {sortedDays.length > 0 && (
-            <div className="flex text-[11px] text-gray-600 gap-1">
+            <div className="flex text-[11px] text-gray-600 gap-4">
               |
               {sortedDays.map((day) => (
                 <span key={day}>{DAY_LABEL_MAP[day] || day}</span>
@@ -123,13 +125,13 @@ export const PolicyActionMenu = ({
         onClick={() => setIsOpen(!isOpen)}
         type="button"
       >
-        <MoreIcon className="w-5 h-5 text-gray-400" />
+        <MoreIcon className="w-20 h-20 text-gray-400" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-xl z-20 py-1 overflow-hidden animate-in fade-in zoom-in duration-150">
+        <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-xl z-20 py-4 overflow-hidden animate-in fade-in zoom-in duration-150">
           <button
-            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            className="w-full text-left px-16 py-8 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
             onClick={() => {
               onEdit();
               setIsOpen(false);
@@ -139,7 +141,7 @@ export const PolicyActionMenu = ({
             정책 편집
           </button>
           <button
-            className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${
+            className={`w-full text-left px-16 py-8 text-sm hover:bg-gray-50 transition-colors ${
               isActive ? 'text-red-500' : 'text-lime-600'
             }`}
             onClick={() => {
@@ -152,7 +154,7 @@ export const PolicyActionMenu = ({
           </button>
           <div className="border-t border-gray-100 my-1" />
           <button
-            className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
+            className="w-full text-left px-16 py-8 text-sm text-red-500 hover:bg-red-50 transition-colors"
             onClick={() => {
               onDelete();
               setIsOpen(false);

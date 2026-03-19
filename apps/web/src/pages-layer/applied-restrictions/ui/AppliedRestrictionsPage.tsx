@@ -117,7 +117,7 @@ export const AppliedRestrictionsPage = () => {
         ) : (
           <ul className="space-y-2">
             {data.blockPolicyResponseList.map((policy) => (
-              <li className="rounded-lg border border-gray-200 p-3" key={policy.id}>
+              <li className="rounded-lg border border-gray-200 p-8" key={policy.id}>
                 <p className="text-sm font-medium text-gray-900">{policy.name}</p>
                 <p className="text-xs text-gray-600">{formatSchedule(policy.policySnapshot)}</p>
               </li>
@@ -126,15 +126,15 @@ export const AppliedRestrictionsPage = () => {
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         <h3 className="text-sm font-semibold text-gray-900">차단 앱</h3>
         {data.appBlockedServiceResponseList.length === 0 ? (
           <p className="text-sm text-gray-500">차단된 앱이 없습니다.</p>
         ) : (
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-4">
             {data.appBlockedServiceResponseList.map((service) => (
               <li
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                className="rounded-full bg-gray-100 px-8 py-4 text-sm text-gray-700"
                 key={service.id}
               >
                 {service.name}
