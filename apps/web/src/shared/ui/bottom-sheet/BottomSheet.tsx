@@ -1,7 +1,7 @@
-'use client';
-import { Overlay } from '@hotspot/ui/components';
-import { cn } from '@hotspot/ui/lib';
-import React, { type ReactNode, useEffect, useRef, useState } from 'react';
+"use client";
+import { Overlay } from "@hotspot/ui/components";
+import { cn } from "@hotspot/ui/lib";
+import React, { type ReactNode, useEffect, useRef, useState } from "react";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -10,7 +10,12 @@ interface BottomSheetProps {
   closeRange?: number;
 }
 
-export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: BottomSheetProps) => {
+export const BottomSheet = ({
+  isOpen,
+  onClose,
+  children,
+  closeRange = 100,
+}: BottomSheetProps) => {
   const [shouldRender, setShouldRender] = useState(isOpen);
   const [isAnimate, setIsAnimate] = useState(false);
 
@@ -25,9 +30,9 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setIsAnimate(true));
       });
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
       return () => {
-        document.body.style.overflow = 'unset';
+        document.body.style.overflow = "unset";
       };
     } else {
       setIsAnimate(false);
@@ -39,7 +44,7 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
   const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
     let clientY = 0;
-    if ('touches' in e) {
+    if ("touches" in e) {
       if (!e.touches[0]) return;
       clientY = e.touches[0].clientY;
     } else {
@@ -51,14 +56,14 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
   const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDragging) return;
     let clientY: number;
-    if ('touches' in e) {
+    if ("touches" in e) {
       if (!e.touches[0]) return;
       clientY = e.touches[0].clientY;
     } else {
       clientY = e.clientY;
     }
 
-    if (typeof startY.current === 'number') {
+    if (typeof startY.current === "number") {
       const currentDragY = Math.max(0, clientY - startY.current);
       setDragY(currentDragY);
     }
@@ -92,9 +97,9 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
 
       <div
         className={cn(
-          'relative w-full z-modal rounded-t-2xl bg-white shadow-xl',
-          !isDragging && 'transition-transform duration-300 ease-out',
-          !isAnimate ? 'translate-y-full' : 'translate-y-0',
+          "relative w-full z-modal rounded-t-2xl bg-white shadow-xl",
+          !isDragging && "transition-transform duration-300 ease-out",
+          !isAnimate ? "translate-y-full" : "translate-y-0",
         )}
         style={{
           transform: isDragging ? `translateY(${dragY}px)` : undefined,
@@ -110,7 +115,9 @@ export const BottomSheet = ({ isOpen, onClose, children, closeRange = 100 }: Bot
           <div className="h-6 w-48 rounded-full bg-gray-300" />
         </button>
 
-        <div className="max-h-[70vh] overflow-y-auto px-6 pb-10">{children}</div>
+        <div className="max-h-[70vh] overflow-y-auto px-8 pb-16">
+          {children}
+        </div>
 
         <div className="absolute top-full h-screen w-full bg-white" />
       </div>

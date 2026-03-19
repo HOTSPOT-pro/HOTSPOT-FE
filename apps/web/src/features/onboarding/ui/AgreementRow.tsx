@@ -1,7 +1,7 @@
-import RightArrow from '@hotspot/ui/assets/icons/arrow-right.svg';
-import Check from '@hotspot/ui/assets/icons/check.svg';
-import { cn } from '@hotspot/ui/lib';
-import Link from 'next/link';
+import RightArrow from "@hotspot/ui/assets/icons/arrow-right.svg";
+import Check from "@hotspot/ui/assets/icons/check.svg";
+import { cn } from "@hotspot/ui/lib";
+import Link from "next/link";
 
 interface AgreementItemProps {
   label: string;
@@ -10,7 +10,12 @@ interface AgreementItemProps {
   href: string;
 }
 
-export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemProps) => {
+export const AgreementRow = ({
+  label,
+  checked,
+  onCheck,
+  href,
+}: AgreementItemProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCheck(e.target.checked);
   };
@@ -27,13 +32,15 @@ export const AgreementRow = ({ label, checked, onCheck, href }: AgreementItemPro
       <div className="flex items-center gap-4">
         <div
           className={cn(
-            ' rounded-full w-fit h-fit p-1.5 border ',
-            checked ? 'border-purple-600 bg-purple-600' : 'border-gray-200 bg-white',
+            " rounded-full w-fit h-fit p-4 border ",
+            checked
+              ? "border-purple-600 bg-purple-600"
+              : "border-gray-200 bg-white",
           )}
         >
           <Check className="w-20 h-20 text-white" />
         </div>
-        <span className={'py-2.5 text-sm text-black'}>{label}</span>
+        <span className={"py-2.5 text-sm text-black"}>{label}</span>
       </div>
       <Link
         aria-label={`${label} 약관 상세 보기`}

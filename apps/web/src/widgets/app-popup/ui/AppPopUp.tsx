@@ -23,10 +23,14 @@ export const AppPopUp = () => {
   const closeOnOutside = state.options?.closeOnOutsideClick ?? true;
 
   return createPortal(
-    <div className="fixed inset-0 z-popup">
-      <Overlay isVisible onClick={closeOnOutside ? close : undefined} />
+    <div className="fixed inset-0 z-toast">
+      <Overlay
+        className="absolute inset-0 z-0 w-full max-w-[500px]"
+        isVisible
+        onClick={closeOnOutside ? close : undefined}
+      />
       <div className="absolute inset-0 flex items-center justify-center px-6">
-        <div className="z-popup flex w-full max-w-[400px] flex-col gap-1">
+        <div className="relative z-10 flex w-full max-w-[400px] flex-col gap-1">
           <button
             className="ml-auto flex items-center gap-1 text-sm font-medium text-white"
             onClick={close}
