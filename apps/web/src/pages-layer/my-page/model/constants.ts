@@ -11,10 +11,10 @@ import { ROUTES } from '@/shared/constants/routes';
 export type MenuIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 export interface MyPageMenuItem {
-  href: string;
   icon: MenuIcon;
   id: string;
   label: string;
+  path: string;
 }
 
 export interface MyPageMenuSection {
@@ -27,8 +27,8 @@ export const MY_PAGE_MENU_SECTIONS: MyPageMenuSection[] = [
   {
     id: 'manage',
     items: [
-      { href: ROUTES.FAMILY, icon: SettingsIcon, id: 'family', label: '우리 가족' },
-      { href: ROUTES.ME_POLICY, icon: ListSettingsIcon, id: 'family-policy', label: '가족 정책' },
+      { icon: SettingsIcon, id: 'family', label: '우리 가족', path: ROUTES.FAMILY },
+      { icon: ListSettingsIcon, id: 'family-policy', label: '가족 정책', path: ROUTES.ME_POLICY },
     ],
     title: '관리',
   },
@@ -36,26 +36,20 @@ export const MY_PAGE_MENU_SECTIONS: MyPageMenuSection[] = [
     id: 'general',
     items: [
       {
-        href: ROUTES.NOTIFICATION.SETTINGS,
         icon: NotificationIcon,
         id: 'notification',
         label: '알림 설정',
+        path: ROUTES.NOTIFICATION.SETTINGS,
       },
-      { href: ROUTES.GIFT, icon: ShoppingBagIcon, id: 'gift-data', label: '데이터 선물하기' },
+      { icon: ShoppingBagIcon, id: 'gift-data', label: '데이터 선물하기', path: ROUTES.GIFT },
     ],
     title: '일반',
   },
   {
     id: 'service',
     items: [
-      {
-        href: ROUTES.ME_POLICY,
-        icon: PhoneIcon,
-        id: 'service-policy',
-        label: '고객센터 / 운영정책',
-      },
-      { href: ROUTES.LOGIN, icon: ShareBoxIcon, id: 'logout', label: '로그아웃' },
-      { href: ROUTES.ME_POLICY, icon: CloseCircleIcon, id: 'withdraw', label: '회원탈퇴' },
+      { icon: ShareBoxIcon, id: 'logout', label: '로그아웃', path: ROUTES.LOGIN },
+      { icon: CloseCircleIcon, id: 'withdraw', label: '회원탈퇴', path: ROUTES.ME_POLICY },
     ],
     title: '서비스 이용',
   },

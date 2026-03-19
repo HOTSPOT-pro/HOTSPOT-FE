@@ -94,7 +94,7 @@ export const GiftedDataStatusPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
         <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
         <p className="text-sm text-gray-500">선물 데이터 정보를 불러오는 중입니다.</p>
       </div>
@@ -103,7 +103,7 @@ export const GiftedDataStatusPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
         <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
         <p className="text-sm text-red-500">선물 데이터 정보를 불러오지 못했습니다.</p>
         <button
@@ -120,14 +120,14 @@ export const GiftedDataStatusPage = () => {
   }
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
       <div className="space-y-1">
-        <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
+        <h2 className="font-title-title3-semibold">선물받은 데이터</h2>
       </div>
 
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-16">
         <div
-          className="relative h-28 w-28 shrink-0 rounded-full"
+          className="relative w-[6rem] h-[6rem] shrink-0 rounded-full"
           style={{
             background: `conic-gradient(#7BD67A ${Math.max(0, Math.min(PERCENT_MAX, data.giftUsagePercent))}%, #E5E7EB 0)`,
           }}
@@ -139,8 +139,8 @@ export const GiftedDataStatusPage = () => {
 
         <div className="w-full space-y-3">
           <div className="flex items-center justify-between text-gray-600">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-green-400" />
+            <div className="flex items-center gap-8">
+              <span className="h-10 w-10 rounded-full bg-green-400" />
               <span className="text-[1rem] font-semibold">잔여량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">
@@ -149,8 +149,8 @@ export const GiftedDataStatusPage = () => {
           </div>
 
           <div className="flex items-center justify-between text-gray-500">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-gray-300" />
+            <div className="flex items-center gap-8">
+              <span className="h-10 w-10 rounded-full bg-gray-300" />
               <span className="text-[1rem] font-semibold">사용량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">

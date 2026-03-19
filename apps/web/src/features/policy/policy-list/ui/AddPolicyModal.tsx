@@ -119,11 +119,11 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
   };
 
   return (
-    <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-3xl p-6">
+    <Modal className="w-122 max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto">
       <Modal.Header className="flex flex-row justify-between items-center">
         <Modal.Title>{step === 'form' ? '시간대별 정책 생성' : '정책 템플릿 선택'}</Modal.Title>
         <Button
-          className="w-fit h-fit px-4 py-2"
+          className="w-fit h-fit px-8 py-4"
           onClick={() => setStep(step === 'form' ? 'list' : 'form')}
           variant={step === 'list' ? 'ghost' : 'outline'}
         >
@@ -136,7 +136,7 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
           {step === 'form' ? (
             <PolicyAddForm />
           ) : (
-            <div className="flex flex-col gap-2 h-150 overflow-auto p-1">
+            <div className="flex flex-col gap-8 h-150 overflow-auto p-4">
               <p className="text-sm text-gray-500 pb-2">가져올 정책을 선택해 보세요.</p>
               {policyList.map((policy) => (
                 <PolicyAdminItem
@@ -150,7 +150,7 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
         </FormProvider>
       </Modal.Content>
 
-      <Modal.Footer className="flex gap-2 flex-row">
+      <Modal.Footer btnLayout="horizontal">
         <Button onClick={close} variant="ghost">
           취소
         </Button>
@@ -159,7 +159,7 @@ export const AddPolicyModal = ({ close }: { close: () => void }) => {
           isLoading={isPending}
           onClick={handleSubmit(onSave)}
         >
-          저장
+          저장하기
         </Button>
       </Modal.Footer>
     </Modal>

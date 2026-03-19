@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Card, CardContent } from '@hotspot/ui';
+import { Button, Card, CardContent, useModal } from '@hotspot/ui';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   useApplicationsQuery,
@@ -47,7 +47,9 @@ const buildDocumentUrl = (relationDocumentUrl: string): string => {
   return normalizedPath;
 };
 
-const baseColumns: Column<RequestRow>[] = [
+const createBaseColumns = (
+  handleOpenDocument: (relationDocumentUrl: string) => void,
+): Column<RequestRow>[] => [
   { accessor: 'requestDisplayId', header: '요청번호' },
   { accessor: 'requesterName', header: '신청자' },
   { accessor: 'requesterPhoneNumber', header: '신청자 연락처' },
@@ -77,14 +79,13 @@ const baseColumns: Column<RequestRow>[] = [
       }
 
       return (
-        <a
+        <button
           className="font-body-body2 text-blue-600 hover:underline"
-          href={buildDocumentUrl(relationDocumentUrl)}
-          rel="noreferrer"
-          target="_blank"
+          onClick={() => handleOpenDocument(buildDocumentUrl(relationDocumentUrl))}
+          type="button"
         >
           보기
-        </a>
+        </button>
       );
     },
   },
@@ -97,6 +98,7 @@ const baseColumns: Column<RequestRow>[] = [
 ];
 
 export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPageProps) => {
+  const { open } = useModal();
   const [activeStatus, setActiveStatus] = useState<ApplicationStatus>('PENDING');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState<(typeof PAGE_SIZE_OPTIONS)[number]['value']>('20');
@@ -133,6 +135,17 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
     setPageSize(nextPageSize);
     setCurrentPage(1);
   };
+
+  const handleOpenDocument = useCallback(
+    (documentUrl: string) => {
+      open('relationDocumentModal', {
+        props: {
+          documentUrl,
+        },
+      });
+    },
+    [open],
+  );
 
   const rows = useMemo<RequestRow[]>(() => {
     return (data?.requests ?? []).map((request) => ({
@@ -200,7 +213,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
 
   const columns = useMemo<Column<RequestRow>[]>(
     () =>
-      baseColumns.map((column) => {
+      createBaseColumns(handleOpenDocument).map((column) => {
         if (column.accessor !== 'actions') {
           return column;
         }
@@ -243,7 +256,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
           },
         };
       }),
-    [handleApprove, handleReject, processingAction, processingRequestId],
+    [handleApprove, handleOpenDocument, handleReject, processingAction, processingRequestId],
   );
 
   const errorMessage = useMemo(() => {

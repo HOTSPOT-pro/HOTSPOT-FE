@@ -12,7 +12,7 @@ export default function MyUsageLayout({
   myTotalData: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col w-full h-full px-4 pt-4 pb-8 gap-4">
+    <div className="flex flex-col w-full h-full px-16 pt-16 pb-32 gap-16">
       <BlockedPolicyBanner />
       {myTotalData}
       {myDataStatus}

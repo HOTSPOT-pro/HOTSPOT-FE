@@ -26,10 +26,8 @@ export const ReportPage = () => {
   if (!selectedUser) return null;
 
   return (
-    <div className="flex flex-col w-full h-full pb-8 px-2 gap-2">
-      <div className="py-2">
-        <MonthDaySelector onChange={setSelectedTab} unit={selectedTab} />
-      </div>
+    <div className="flex flex-col w-full h-full pb-32 px-16 gap-16">
+      <MonthDaySelector onChange={setSelectedTab} unit={selectedTab} />
 
       <UserSelector onSelect={setClickedUser} selectedUser={selectedUser} users={sortedUsers} />
 

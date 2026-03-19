@@ -11,10 +11,10 @@ interface PolicyAddItemProps {
 
 export const PolicyAddItem = ({ id, name, description, isApply, onToggle }: PolicyAddItemProps) => {
   return (
-    <div className="flex items-center justify-between p-4 bg-gray-100 rounded-2xl">
-      <div className="flex items-center gap-3">
+    <div className="flex items-center justify-between p-16 bg-gray-100 rounded-2xl">
+      <div className="flex items-center gap-12">
         <div className="min-w-8 min-h-8 flex items-center justify-center rounded-xl bg-purple-100">
-          <TimeIcon className="text-purple-600 w-4 h-4" />
+          <TimeIcon className="text-purple-600 w-20 h-20" />
         </div>
 
         <div>

@@ -12,7 +12,7 @@ export const LineChartLegend = (props: any) => {
   });
 
   return (
-    <div className="flex justify-center gap-5 mt-7.5">
+    <div className="flex justify-center gap-20 mt-20">
       {sortedPayload.map((entry: any, index: number) => (
         <LegendItem
           className="justify-start"

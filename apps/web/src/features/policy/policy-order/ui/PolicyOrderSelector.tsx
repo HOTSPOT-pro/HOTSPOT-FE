@@ -17,7 +17,7 @@ const DISABLED_STYLE = 'opacity-50 cursor-not-allowed hover:bg-gray-100';
 
 export const PolicyOrderSelector = ({ policy, setPolicy, isEditing }: PolicyOrderSelectorProps) => {
   return (
-    <div className="flex gap-2 py-3">
+    <div className="flex gap-8">
       {/* 선착순 버튼 */}
       <button
         className={cn(
@@ -31,13 +31,13 @@ export const PolicyOrderSelector = ({ policy, setPolicy, isEditing }: PolicyOrde
       >
         <div
           className={cn(
-            'w-8 h-8 flex justify-center items-center rounded-xl mb-1',
+            'w-24 h-24 flex justify-center items-center rounded-xl mb-1',
             policy === POLICY_ORDER_TYPE.FIFO
               ? 'text-purple-600 bg-purple-200'
               : 'bg-gray-200 text-gray-500',
           )}
         >
-          <UserIcon className="w-4 h-4" />
+          <UserIcon className="w-20 h-20" />
         </div>
         <p className="text-sm">선착순</p>
         <p className="text-[10px] opacity-70 leading-none text-gray-500">먼저 사용하는 순서대로</p>
@@ -56,13 +56,13 @@ export const PolicyOrderSelector = ({ policy, setPolicy, isEditing }: PolicyOrde
       >
         <div
           className={cn(
-            'w-8 h-8 flex justify-center items-center rounded-xl mb-1',
+            'w-24 h-24 flex justify-center items-center rounded-xl mb-1',
             policy === POLICY_ORDER_TYPE.PRIORITY
               ? 'text-purple-600 bg-purple-200'
               : 'bg-gray-200 text-gray-500',
           )}
         >
-          <More2Icon className="w-4 h-4" />
+          <More2Icon className="w-20 h-20" />
         </div>
         <p className="text-sm">우선순위</p>
         <p className="text-[10px] opacity-70 leading-none text-gray-500">구성원별 순서 지정</p>

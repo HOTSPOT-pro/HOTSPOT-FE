@@ -11,8 +11,8 @@ interface LegendItemProps {
 export const LegendItem = memo(({ className, color, name, valueText }: LegendItemProps) => {
   return (
     <div className={cn('flex items-center justify-between gap-3', className)}>
-      <div className="flex items-center gap-2">
-        <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+      <div className="flex items-center gap-8">
+        <div className="w-10 h-10 rounded-full shrink-0" style={{ backgroundColor: color }} />
         <span className="text-sm font-medium text-gray-700 whitespace-nowrap">{name}</span>
       </div>
       {valueText ? (

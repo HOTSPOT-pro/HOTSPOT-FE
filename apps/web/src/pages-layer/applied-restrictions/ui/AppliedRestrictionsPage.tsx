@@ -75,8 +75,8 @@ export const AppliedRestrictionsPage = () => {
 
   if (isPending) {
     return (
-      <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-md font-semibold">나에게 적용된 제한 정책</h2>
+      <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">나에게 적용된 제한 정책</h2>
         <p className="text-sm text-gray-500">적용된 정책을 불러오는 중입니다.</p>
       </section>
     );
@@ -84,8 +84,8 @@ export const AppliedRestrictionsPage = () => {
 
   if (isError || !data) {
     return (
-      <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-md font-semibold">나에게 적용된 제한 정책</h2>
+      <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">나에게 적용된 제한 정책</h2>
         <p className="text-sm text-red-500">정책 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
@@ -101,10 +101,10 @@ export const AppliedRestrictionsPage = () => {
   }
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-md font-semibold">나에게 적용된 제한 정책</h2>
+          <h2 className="font-title-title3-semibold">나에게 적용된 제한 정책</h2>
         </div>
       </div>
 
@@ -117,7 +117,7 @@ export const AppliedRestrictionsPage = () => {
         ) : (
           <ul className="space-y-2">
             {data.blockPolicyResponseList.map((policy) => (
-              <li className="rounded-lg border border-gray-200 p-3" key={policy.id}>
+              <li className="rounded-lg border border-gray-200 p-8" key={policy.id}>
                 <p className="text-sm font-medium text-gray-900">{policy.name}</p>
                 <p className="text-xs text-gray-600">{formatSchedule(policy.policySnapshot)}</p>
               </li>
@@ -126,15 +126,15 @@ export const AppliedRestrictionsPage = () => {
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         <h3 className="text-sm font-semibold text-gray-900">차단 앱</h3>
         {data.appBlockedServiceResponseList.length === 0 ? (
           <p className="text-sm text-gray-500">차단된 앱이 없습니다.</p>
         ) : (
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-4">
             {data.appBlockedServiceResponseList.map((service) => (
               <li
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                className="rounded-full bg-gray-100 px-8 py-4 text-sm text-gray-700"
                 key={service.id}
               >
                 {service.name}

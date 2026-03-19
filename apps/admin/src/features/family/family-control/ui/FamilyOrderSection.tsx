@@ -169,7 +169,7 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
                         </div>
 
                         {isEditing && (
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-8">
                             <button
                               aria-label={`${member.memberName} 우선순위를 위로 이동`}
                               className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"

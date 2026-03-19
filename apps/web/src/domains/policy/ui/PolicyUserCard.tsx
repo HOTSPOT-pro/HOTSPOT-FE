@@ -33,10 +33,10 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
   }, []);
 
   return (
-    <div className="w-full py-4 bg-white rounded-3xl">
+    <div className="w-full">
       <div className="flex items-center rounded-lg overflow-hidden bg-white">
         <button
-          className="flex-1 flex flex-row p-4 items-center text-left"
+          className="flex-1 flex flex-row py-8 items-center text-left gap-16"
           onClick={handleToggle}
           type="button"
         >
@@ -44,8 +44,8 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
             <UserProfileIcon type={data.role} />
           </div>
 
-          <div className="flex-1 flex flex-col gap-0.5">
-            <p className="font-bold text-sm pb-1 flex items-center gap-1">
+          <div className="flex-1 flex flex-col gap-2">
+            <p className="font-bold text-sm pb-1 flex items-center gap-4">
               {data.memberName}
               <UserRoleLabel role={data.role} />
               <UserBlockLabel isBlocked={data.isBlocked} />
@@ -60,18 +60,18 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
               <span
                 className={`text-[10px] transition-transform ${isAccordianOpen ? 'rotate-180' : ''}`}
               >
-                <DownArrow className="w-3 h-3" />
+                <DownArrow className="w-20 h-20" />
               </span>
             </div>
           </div>
         </button>
 
         <button
-          className="p-4 text-gray-400 hover:text-purple-600 transition-colors"
+          className="p-16 text-gray-400 hover:text-purple-600 transition-colors"
           onClick={handleOpenModal}
           type="button"
         >
-          <RightArrow className="w-4 h-4" />
+          <RightArrow className="w-24 h-24" />
         </button>
       </div>
 

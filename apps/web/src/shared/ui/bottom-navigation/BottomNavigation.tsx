@@ -36,7 +36,7 @@ export const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps
         style={{ transitionDuration: `${durationMs}ms` }}
       >
         <nav aria-hidden={hidden} aria-label="Bottom navigation" className={className}>
-          <div className="mx-auto w-full max-w-[500px] bg-white px-6">
+          <div className="mx-auto w-full max-w-[500px] bg-white px-16">
             <ul className="flex">
               {items.map((item) => {
                 const Icon = item.icon;
@@ -47,13 +47,13 @@ export const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps
                     <Link
                       aria-current={item.isActive ? 'page' : undefined}
                       className={cn(
-                        'group flex h-full py-2 flex-col items-center justify-center gap-0.5 text-xs transition-colors',
+                        'group flex h-full py-8 flex-col items-center justify-center gap-2 transition-colors',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                       )}
                       href={item.href}
                       tabIndex={hidden ? -1 : undefined}
                     >
-                      <div className="relative h-6 w-6">
+                      <div className="relative h-24 w-24">
                         <Icon
                           aria-hidden="true"
                           className={cn(
@@ -74,7 +74,7 @@ export const BottomNavigation = forwardRef<HTMLDivElement, BottomNavigationProps
 
                       <span
                         className={cn(
-                          'transition-colors',
+                          'transition-colors font-body-body6',
                           item.isActive
                             ? 'font-medium text-purple-800'
                             : 'text-black group-hover:text-purple-800',

@@ -45,7 +45,7 @@ export const PolicyAddForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-16">
       <Input
         id="name"
         label="정책명"
@@ -62,9 +62,9 @@ export const PolicyAddForm = () => {
         error={errors.description?.message as string}
       />
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-8">
         <p className="text-sm font-bold text-gray-700">정책 유형</p>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-8">
           <Button
             className="flex-1"
             onClick={() => {
@@ -89,18 +89,15 @@ export const PolicyAddForm = () => {
           </Button>
         </div>
       </div>
-
-      <hr className="border-gray-100" />
-
       {currentType === 'SCHEDULED' ? (
-        <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded-xl">
+        <div className="flex flex-col gap-4 bg-gray-50 p-8 rounded-xl">
           <p className="text-xs font-bold text-gray-500 uppercase">반복 요일 선택</p>
           <div className="flex flex-wrap gap-2">
             {DAY_OPTIONS.map((day) => {
               const isSelected = selectedDays.includes(day.value);
               return (
                 <button
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors border ${
+                  className={`px-8 py-4 rounded-lg text-sm font-medium transition-colors border ${
                     isSelected
                       ? 'bg-purple-600 border-purple-600 text-white shadow-md'
                       : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-100'
@@ -125,7 +122,7 @@ export const PolicyAddForm = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-4 bg-gray-50 p-4 rounded-xl">
+        <div className="flex flex-col gap-4 bg-gray-50 p-8 rounded-xl">
           <Input
             id="duration"
             label="차단 기간 (분)"
@@ -163,7 +160,7 @@ export const PolicyAddForm = () => {
       <div className="flex flex-row items-center justify-between py-2">
         <div className="flex flex-col gap-1">
           <p className="text-sm font-bold text-gray-700">정책 활성화</p>
-          <p className="text-xs text-gray-400">생성과 동시에 정책을 적용할까요?</p>
+          <p className="text-xs text-gray-400">활성화 시 정책 생성과 동시에 정책이 적용됩니다.</p>
         </div>
         <Toggle
           checked={isActive}

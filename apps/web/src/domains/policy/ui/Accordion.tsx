@@ -27,14 +27,14 @@ export const Accordion = ({ title, children, defaultOpen = false }: AccordionPro
         >
           <div className="w-full">{title}</div>
           <div
-            className={`w-4.5 h-4.5 mr-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+            className={`w-20 h-20 mr-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
           >
             <DownArrow className="text-gray-600" />
           </div>
         </button>
       </div>
 
-      {isOpen && <div className="flex flex-col gap-1.5 px-3 pb-3">{children}</div>}
+      {isOpen && <div className="flex flex-col gap-8 px-12 pb-12">{children}</div>}
     </div>
   );
 };

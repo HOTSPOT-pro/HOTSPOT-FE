@@ -3,12 +3,12 @@ import type { BlockPolicy, Policy } from '../model/types';
 
 interface PolicyItemProps {
   item: Policy | BlockPolicy;
-  icon: ReactNode;
+  icon?: ReactNode;
   description?: string;
 }
 
 export const PolicyItem = ({ item, icon, description }: PolicyItemProps) => (
-  <div className="bg-white rounded-xl px-3 py-2.5 flex-row flex items-center gap-2.5">
+  <div className="bg-white rounded-xl p-8 flex-row flex items-center gap-8">
     {icon}
     <div className="flex flex-col">
       <div className="font-normal text-sm">{item.name}</div>

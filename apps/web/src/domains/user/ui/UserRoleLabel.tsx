@@ -5,9 +5,9 @@ interface UserRoleLabelProps {
   role: UserRole;
 }
 
-const OWNER_STYLE = 'border-sky-300 text-sky-600';
-const PARENT_STYLE = 'border-pink-300 text-pink-600';
-const CHILD_STYLE = 'border-lime-300 text-lime-600';
+const OWNER_STYLE = 'border-blue-500 bg-blue-500 text-white';
+const PARENT_STYLE = 'border-pink-500 bg-pink-500 text-white';
+const CHILD_STYLE = 'border-green-500 bg-green-500 text-white';
 
 export const UserRoleLabel = ({ role }: UserRoleLabelProps) => {
   const roleName = () => {
@@ -26,7 +26,7 @@ export const UserRoleLabel = ({ role }: UserRoleLabelProps) => {
   return (
     <span
       className={cn(
-        'text-xs py-1 px-2 border-2 rounded-sm',
+        'inline-flex items-center rounded-lg border p-4 text-[0.625rem] font-medium leading-none',
         role === 'OWNER' && OWNER_STYLE,
         role === 'PARENT' && PARENT_STYLE,
         role === 'CHILD' && CHILD_STYLE,

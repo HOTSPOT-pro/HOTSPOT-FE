@@ -32,14 +32,8 @@ export const AnalyzePayPage = () => {
           </Card>
         ))}
       </div>
-      <Card className="p-20 flex flex-col gap-8 text-center text-gray-600 font-body-body3 mb-12">
-        <p>
-          <span className="font-title-title1 text-black">2,900</span>원/월
-        </p>
-        <p>한 달 무료 체험 후 자동 결제</p>
-      </Card>
       <Button onClick={handleApply}>무료로 시작하기</Button>
-      <span className="font-body-body6 mt-12 text-gray-600">언제든지 취소 가능, 부가세 포함</span>
+      <span className="font-body-body6 mt-12 text-gray-600">언제든지 취소가 가능합니다.</span>
     </div>
   );
 };

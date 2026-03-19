@@ -16,19 +16,19 @@ export const NotificationItem = ({ notification, onClick, className }: Notificat
   return (
     <button
       className={cn(
-        'flex flex-row gap-4 p-4 transition-colors cursor-pointer items-center',
+        'flex flex-row gap-16 p-16 transition-colors cursor-pointer items-center',
         isRead ? 'bg-white' : 'bg-purple-100',
         className,
       )}
       onClick={onClick}
       type="button"
     >
-      <WarningIcon className="w-5 h-5 text-purple-600" />
-      <div className="w-full flex flex-col gap-1 items-start">
-        <p className={cn('text-sm font-medium text-black')}>{title}</p>
-        <p className="text-gray-600 font-normal text-xs text-left break-keep">{message}</p>
-        <span className="text-[10px] text-gray-500 mt-1">{formatDate(dateObject)}</span>
-      </div>
+      <WarningIcon className="w-20 h-20 text-purple-600" />
+      <p className="w-full flex flex-col gap-1 items-start text-left">
+        <span className={cn('font-title-title5-medium')}>{title}</span>
+        <span className="font-body-body4 break-keep text-text-secondary">{message}</span>
+        <span className="font-body-body6 text-text-tertiary mt-4">{formatDate(dateObject)}</span>
+      </p>
     </button>
   );
 };

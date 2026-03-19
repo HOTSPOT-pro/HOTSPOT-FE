@@ -45,32 +45,24 @@ export const DeleteFamilyMemberModal = ({ close, props }: DeleteFamilyMemberModa
   };
 
   return (
-    <Modal className="w-[30.5rem] max-w-[calc(100vw-1rem)] rounded-[1.5rem] p-6" size="custom">
-      <Modal.Header className="items-center gap-2 text-center">
-        <Modal.Title className="text-[1rem] font-bold leading-tight text-black">
-          가족 삭제를 신청하시겠습니까?
-        </Modal.Title>
-        <Modal.Description className="text-[0.875rem] leading-snug text-gray-500">
+    <Modal className="w-[355px] max-w-[calc(100vw-1rem)]" size="custom">
+      <Modal.Header>
+        <Modal.Title>가족 삭제를 신청하시겠습니까?</Modal.Title>
+        <Modal.Description>
           {payload?.name ?? '구성원'}님을 가족에서 삭제 신청합니다. 삭제는 다음 달 1일에 반영됩니다.
         </Modal.Description>
       </Modal.Header>
 
-      <Modal.Footer btnLayout="horizontal" className="mt-4 gap-2">
+      <Modal.Footer btnLayout="horizontal" className="gap-8">
+        <Button disabled={isLoading} onClick={close} variant="ghost">
+          취소
+        </Button>
         <Button
-          className="h-12 text-[1rem] font-semibold"
           isLoading={isLoading}
           onClick={() => void handleDeleteRequest()}
           variant="destructive"
         >
-          삭제 신청
-        </Button>
-        <Button
-          className="h-12 text-[1rem] font-semibold"
-          disabled={isLoading}
-          onClick={close}
-          variant="ghost"
-        >
-          취소
+          삭제 신청하기
         </Button>
       </Modal.Footer>
     </Modal>

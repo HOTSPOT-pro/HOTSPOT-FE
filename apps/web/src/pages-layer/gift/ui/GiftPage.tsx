@@ -40,7 +40,7 @@ export const GiftPage = () => {
         />
       </nav>
 
-      <main className="w-full px-5 py-4">
+      <main className="w-full px-16 pt-16 pb-32">
         <div className="rounded-3xl bg-white">
           {activeTab === 'GIFT' && <PresentTab />}
           {activeTab === 'SEND_LOG' && <PresentLogList type="SEND" />}

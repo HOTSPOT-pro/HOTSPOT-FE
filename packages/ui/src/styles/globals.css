@@ -85,11 +85,15 @@
   --color-google-border: #E5E7EB;
   --color-google-label: #000000;
   --color-google-container: #ffffff;
+  --font-sans: "Pretendard", system-ui;
 }
 
 :root {
   --foreground: #171717;
   --background: #ffffff;
+  font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 @layer base {
@@ -97,6 +101,10 @@
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  body{
+    font-family: var(--font-sans);
   }
 
   a {

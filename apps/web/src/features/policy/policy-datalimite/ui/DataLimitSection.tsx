@@ -20,13 +20,13 @@ export const DataLimitSection = ({ datalimit, minNum, draft, onUpdate }: DataLim
   };
 
   return (
-    <div className="py-4 flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-2">
-        <p className="text-xs font-bold leading-4">즉시 차단</p>
+    <div className="px-8 py-16 flex flex-col gap-16">
+      <div className="flex items-center justify-between">
+        <p className="font-heading-heading3">즉시 차단</p>
         <Toggle checked={displayLocked} id={'block'} onChange={handleBlockToggle} />
       </div>
       <div>
-        <p className="text-xs font-bold leading-4">데이터 한도</p>
+        <p className="font-heading-heading3">데이터 한도</p>
         <Slider
           initialValue={displayLimit}
           maxNum={datalimit?.familyDataAmount ?? 0}

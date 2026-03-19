@@ -16,7 +16,7 @@ export const UserSelector = <T extends ReportUser>({
   return (
     <div className="w-full">
       <ScrollContainer
-        className="flex gap-2 py-2 px-4 select-none cursor-grab active:cursor-grabbing"
+        className="flex gap-4 select-none cursor-grab active:cursor-grabbing"
         hideScrollbars={true}
         nativeMobileScroll={true}
       >

@@ -2,10 +2,10 @@ import type { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import { cn } from '../../lib/cssMerge';
 
-const CARD_BASE_STYLES = 'flex flex-col w-full p-4 gap-4 bg-white rounded-lg shadow-sm';
+const CARD_BASE_STYLES = 'flex flex-col w-full p-16 gap-16 bg-white rounded-12 shadow-sm';
 const CARD_HEADER_STYLES = 'flex flex-col';
-const CARD_TITLE_STYLES = 'text-black text-lg font-semibold';
-const CARD_DESC_STYLES = 'text-gray-600 text-sm';
+const CARD_TITLE_STYLES = 'font-title-title3-semibold';
+const CARD_DESC_STYLES = 'text-gray-600 font-body-body2';
 const CARD_CONTENT_STYLES = 'flex flex-col w-full';
 const CARD_FOOTER_STYLES = 'flex flex-col w-full';
 

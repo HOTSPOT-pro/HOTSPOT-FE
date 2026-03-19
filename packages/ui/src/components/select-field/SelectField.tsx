@@ -1,32 +1,44 @@
 'use client';
 
-import { cn } from '../..';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
+import { cn } from '../../lib/cssMerge';
 
-interface SelectFieldProps {
-  onClick: () => void;
-  rightSlot?: React.ReactNode;
+interface SelectFieldProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  leftSlot?: ReactNode;
+  rightSlot?: ReactNode;
   heading: string;
   desc?: string;
-  classname?: string;
 }
 
-export const SelectField = ({ onClick, rightSlot, heading, desc, classname }: SelectFieldProps) => {
+export const SelectField = ({
+  leftSlot,
+  rightSlot,
+  heading,
+  desc,
+  className,
+  type = 'button',
+  ...props
+}: SelectFieldProps) => {
   return (
     <button
-      className={cn('flex flex-row w-full gap-3 p-3 rounded-[8px] items-center', classname)}
-      onClick={onClick}
-      type="button"
+      className={cn('flex flex-row w-full gap-16 px-16 py-8 items-center', className)}
+      type={type}
+      {...props}
     >
-      {rightSlot}
-      <p className="flex flex-col flex-1 gap-0.5 text-left">
-        <span className="text-[13px]">{heading}</span>
-        <span className="text-[11px]">{desc}</span>
+      {leftSlot}
+      <p className="flex flex-col flex-1 text-left gap-4">
+        <span className="font-title-title5-medium">{heading}</span>
+        {desc && <span className="font-body-body4">{desc}</span>}
       </p>
-      <div>
-        <div className="w-5 h-5">
-          <ArrowRightIcon />
-        </div>
+      <div className="shrink-0">
+        {rightSlot ? (
+          rightSlot
+        ) : (
+          <div className="w-24 h-24">
+            <ArrowRightIcon />
+          </div>
+        )}
       </div>
     </button>
   );

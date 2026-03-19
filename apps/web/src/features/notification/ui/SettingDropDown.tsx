@@ -10,10 +10,10 @@ export const SettingDropDown = ({ handleDropDown }: SettingDropDownProps) => {
   const { readAll } = useNotification();
   const router = useRouter();
   return (
-    <div className="absolute right-0 mt-2 w-48 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg z-50">
-      <div className="flex flex-col py-1">
+    <div className="absolute right-0 mr-8 w-[150px] overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg z-50">
+      <div className="flex flex-col py-4">
         <button
-          className="px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100"
+          className="px-8 py-4 text-left text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100"
           onClick={() => {
             readAll();
             handleDropDown();
@@ -23,7 +23,7 @@ export const SettingDropDown = ({ handleDropDown }: SettingDropDownProps) => {
           모두 읽음으로 표시
         </button>
         <button
-          className="px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100 border-t border-gray-50"
+          className="px-8 py-4 text-left text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100 border-t border-gray-50"
           onClick={() => {
             router.push(ROUTES.NOTIFICATION.SETTINGS);
             handleDropDown();

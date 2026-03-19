@@ -12,7 +12,7 @@ export const PolicyManageSection = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-16">
       <FamilyPolicyList />
       <OrderSection data={priorityPerFamily} />
     </div>

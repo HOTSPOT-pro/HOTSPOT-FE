@@ -9,10 +9,10 @@ interface PresentFamilyListProps {
 
 export const PresentFamilyList = ({ data, handleSelect, selected }: PresentFamilyListProps) => {
   return (
-    <div className="flex flex-col gap-1">
-      <p className="text-[13px] font-bold">선물 받을 구성원</p>
-      <p className="text-gray-500 text-[11px]">데이터를 선물할 가족 구성원을 선택하세요.</p>
-      <div className="flex flex-col gap-2 pt-3">
+    <div className="flex flex-col gap-4">
+      <p className="font-title-title3-semibold">선물 받을 구성원</p>
+      <p className="text-gray-500 font-body-body3">데이터를 선물할 가족 구성원을 선택하세요.</p>
+      <div className="flex flex-col gap-8 pt-12">
         {data.map((i, index) => (
           <button
             aria-pressed={selected === i.subId}
@@ -37,7 +37,7 @@ const PresentFamilyItem = ({ user, isSelected }: PresentFamilyItemProps) => {
   return (
     <div
       className={cn(
-        'border-2 px-4 py-3.5 rounded-2xl text-left flex flex-row justify-between items-center',
+        'border-2 px-16 py-3.5 rounded-2xl text-left flex flex-row justify-between items-center',
         isSelected ? 'border-purple-600 bg-purple-100' : 'bg-white border-gray-100',
       )}
     >

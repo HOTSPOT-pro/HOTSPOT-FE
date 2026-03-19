@@ -29,10 +29,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn('flex flex-col w-full group', className)}>
-        <label
-          className="font-title-title5-medium text-text-secondary transition-colors"
-          htmlFor={id}
-        >
+        <label className="font-title-title5-medium text-text-normal transition-colors" htmlFor={id}>
           {label}
         </label>
 
@@ -56,7 +53,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
           />
 
-          <div className="right-0 flex items-center gap-2">
+          <div className="right-0 flex items-center gap-8">
             {/* 삭제 */}
             <button
               aria-label="입력값 지우기"

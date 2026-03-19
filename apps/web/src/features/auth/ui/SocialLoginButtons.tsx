@@ -2,7 +2,7 @@ import { GoogleLogin } from './GoogleLogin';
 import { KakaoLogin } from './KakaoLogin';
 
 const SOCIAL_BUTTON_BASE_STYLES =
-  'flex w-full items-center justify-center gap-2 rounded-sm text-sm font-bold';
+  'flex w-full items-center justify-center gap-8 rounded-sm text-sm font-bold';
 
 export const SocialLoginButtons = () => {
   return (

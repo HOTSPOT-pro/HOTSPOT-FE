@@ -23,28 +23,28 @@ export const PolicyAdminItem = ({ policy, onSelect }: PolicyAdminItemProps) => {
 
   return (
     <button
-      className="bg-white border border-gray-100 rounded-2xl p-4 cursor-pointer 
+      className="bg-white border border-gray-100 rounded-xl p-16 cursor-pointer 
                     hover:border-purple-300 transition-all hover:ring-2 hover:ring-purple-500 "
       key={policy.id}
       onClick={() => onSelect(policy)}
       type="button"
     >
-      <div className="flex justify-between items-start mb-2">
-        <div className="flex items-center gap-2">
+      <div className="flex justify-between items-start mb-8">
+        <div className="flex items-center gap-8">
           <span className="font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
             {policy.name}
           </span>
         </div>
-        <div className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 uppercase">
+        <div className="text-[10px] font-bold px-8 py-4 rounded-full bg-gray-100 text-gray-600 uppercase">
           {policy.policyType === 'SCHEDULED' ? '반복' : '일회성'}
         </div>
       </div>
 
-      <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed">
+      <p className="text-xs text-gray-500 line-clamp-2 text-start leading-relaxed">
         {policy.policyDescription}
       </p>
 
-      <div className="flex flex-wrap gap-2 items-center text-[11px] text-gray-600 bg-gray-50 p-2 rounded-lg">
+      <div className="flex flex-wrap gap-2 items-center text-[11px] text-gray-600 rounded-lg">
         <div className="flex items-center gap-1">
           <span>
             {policy.policySnapshot.durationMinutes
@@ -56,7 +56,7 @@ export const PolicyAdminItem = ({ policy, onSelect }: PolicyAdminItemProps) => {
         {policy.policySnapshot.days && (
           <>
             <div className="w-px h-2 bg-gray-300" />
-            <div className="flex gap-1">
+            <div className="flex gap-4">
               {policy.policySnapshot.days.map((day) => (
                 <span className="text-gray-600 font-medium" key={day}>
                   {getDayLabel(day)}
