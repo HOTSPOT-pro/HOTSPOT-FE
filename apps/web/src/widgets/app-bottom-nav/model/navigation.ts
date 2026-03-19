@@ -12,19 +12,20 @@ import { ROUTES } from '@/shared/constants/routes';
 import { NAV_LABELS } from '../constants/navLabel';
 
 export const BOTTOM_NAV_ITEMS = [
-  { activeIcon: HomeSolid, href: ROUTES.MY_STATUS, icon: Home, label: NAV_LABELS.MY_STATUS },
   {
     activeIcon: SmileSolid,
     href: ROUTES.FAMILY_STATUS,
     icon: Smile,
     label: NAV_LABELS.FAMILY_STATUS,
   },
+
+  { activeIcon: ReportSolid, href: ROUTES.REPORT, icon: Report, label: NAV_LABELS.REPORT },
+  { activeIcon: HomeSolid, href: ROUTES.MY_STATUS, icon: Home, label: NAV_LABELS.MY_STATUS },
   {
     activeIcon: BarChartSolid,
     href: ROUTES.ANALYZE,
     icon: BarChart,
     label: NAV_LABELS.ANALYZE,
   },
-  { activeIcon: ReportSolid, href: ROUTES.REPORT, icon: Report, label: NAV_LABELS.REPORT },
   { activeIcon: UserSolid, href: ROUTES.MY_PAGE, icon: User, label: NAV_LABELS.MY_PAGE },
 ] as const;

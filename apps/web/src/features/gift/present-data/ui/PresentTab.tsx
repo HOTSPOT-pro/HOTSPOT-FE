@@ -30,12 +30,12 @@ export const PresentTab = () => {
   if (!familyData.data) return <div>데이터를 불러오지 못했습니다.</div>;
 
   return (
-    <div className="flex flex-col gap-4 p-5">
+    <div className="flex flex-col gap-16">
       <Card>
-        <div className="flex flex-row justify-between items-center bg-white rounded-2xl">
+        <div className="flex flex-row justify-between items-center bg-white rounded-12">
           <div className="flex flex-col">
-            <p className="text-black font-bold text-[13px]">내 잔여 데이터</p>
-            <p className="text-gray-500 text-[12px]">한 달에 5GB까지 선물이 가능합니다.</p>
+            <p className="text-black font-title-title3-semibold">내 잔여 데이터</p>
+            <p className="text-gray-500 font-body-body3">한 달에 5GB까지 선물이 가능합니다.</p>
           </div>
 
           <p className="text-[14px] font-bold text-black">

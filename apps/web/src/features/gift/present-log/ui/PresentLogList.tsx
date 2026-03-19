@@ -18,14 +18,14 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
   if (!data) return <div>데이터가 없습니다.</div>;
 
   return (
-    <div className="flex flex-col gap-1">
-      <p className="text-[13px] font-bold">{isSend ? '보낸 선물 내역' : '받은 선물 내역'}</p>
+    <div className="flex flex-col gap-4">
+      <p className="font-title-title3-semibold">{isSend ? '보낸 선물 내역' : '받은 선물 내역'}</p>
       <p className="text-[11px] text-gray-500">
         총 {data.items.length}건의 선물을 {isSend ? '보냈습니다.' : '받았습니다.'}
       </p>
       <div
         className={cn(
-          'flex flex-row justify-between px-4 py-3 rounded-2xl items-center mt-2',
+          'flex flex-row justify-between p-16 rounded-2xl items-center mt-12',
           themeBgColor,
         )}
       >
