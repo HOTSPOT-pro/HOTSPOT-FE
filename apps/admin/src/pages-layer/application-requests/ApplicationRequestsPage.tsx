@@ -57,9 +57,9 @@ const baseColumns: Column<RequestRow>[] = [
     render: (_, row) => (
       <ul className="space-y-2">
         {row.targets.map((target) => (
-          <li className="flex flex-col gap-1" key={target.id}>
-            <p className="text-sm font-medium text-gray-900">{target.name}</p>
-            <p className="text-xs text-gray-500">{target.phone}</p>
+          <li className="flex flex-col gap-4" key={target.id}>
+            <p className="font-body-body2 text-gray-900">{target.name}</p>
+            <p className="font-body-body4 text-gray-500">{target.phone}</p>
           </li>
         ))}
       </ul>
@@ -73,12 +73,12 @@ const baseColumns: Column<RequestRow>[] = [
       const relationDocumentUrl = value as string | null;
 
       if (!relationDocumentUrl) {
-        return <span className="text-sm text-gray-400">없음</span>;
+        return <span className="font-body-body2 text-gray-400">없음</span>;
       }
 
       return (
         <a
-          className="text-sm font-medium text-blue-600 hover:underline"
+          className="font-body-body2 text-blue-600 hover:underline"
           href={buildDocumentUrl(relationDocumentUrl)}
           rel="noreferrer"
           target="_blank"
@@ -213,9 +213,9 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
             }
 
             return (
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-4">
                 <Button
-                  className="h-8 w-auto rounded-md px-3 text-xs"
+                  className="h-32 w-auto rounded-md px-12 text-xs"
                   isLoading={
                     processingRequestId === row.requestId && processingAction === 'approve'
                   }
@@ -228,7 +228,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
                   승인
                 </Button>
                 <Button
-                  className="h-8 w-auto rounded-md px-3 text-xs"
+                  className="h-32 w-auto rounded-md px-12 text-xs"
                   isLoading={processingRequestId === row.requestId && processingAction === 'reject'}
                   onClick={() => {
                     if (processingRequestId !== null) return;
@@ -258,10 +258,10 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
   }, [error]);
 
   return (
-    <section className="flex h-full flex-col pb-8">
+    <section className="flex h-full flex-col pb-32">
       <StatusTab activeStatus={activeStatus} onChange={handleStatusChange} />
 
-      <div className="flex h-full flex-col px-4">
+      <div className="flex h-full flex-col px-16">
         <Card className="flex h-full flex-col">
           <CardContent className="flex h-full w-full flex-col">
             <div className="flex justify-end">
@@ -277,12 +277,12 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
             </div>
 
             {errorMessage && (
-              <p className="mb-4 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+              <p className="mb-16 rounded-md border border-rose-200 bg-rose-50 px-12 py-8 text-sm text-rose-700">
                 {errorMessage}
               </p>
             )}
             {actionErrorMessage && (
-              <p className="mb-4 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+              <p className="mb-16 rounded-md border border-rose-200 bg-rose-50 px-12 py-8 text-sm text-rose-700">
                 {actionErrorMessage}
               </p>
             )}

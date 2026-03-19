@@ -27,12 +27,12 @@ export const BlockAddList = ({ familyId, subId, draft, onUpdate }: PolicyAddList
     onUpdate(nextPayload);
   };
 
-  if (isLoading) return <div className="p-10 text-center text-gray-400">Loading...</div>;
+  if (isLoading) return <div className="p-40 text-center text-gray-400">Loading...</div>;
 
   const policies = userData?.appliedBlockedServicePolicies ?? [];
 
   return (
-    <div className="max-h-100 overflow-y-auto py-4 flex flex-col gap-2">
+    <div className="max-h-100 overflow-y-auto py-16 flex flex-col gap-8">
       {policies.map((block) => {
         return (
           <BlockAddItem

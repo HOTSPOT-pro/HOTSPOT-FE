@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Modal } from '@hotspot/ui';
+import { Button, Input, Modal } from '@hotspot/ui';
 import NextImage from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -83,39 +83,6 @@ const UploadIcon = () => (
     />
   </svg>
 );
-
-const InputField = ({
-  errorMessage,
-  helpText,
-  inputProps,
-  label,
-  placeholder,
-}: {
-  errorMessage?: string;
-  helpText: string;
-  inputProps: UseFormRegisterReturn;
-  label: string;
-  placeholder: string;
-}) => {
-  return (
-    <div className="space-y-1">
-      <p className="text-[1rem] font-semibold leading-none text-black">{label}</p>
-      <input
-        {...inputProps}
-        className="h-12 w-full border-b border-gray-200 bg-transparent text-[1rem] text-gray-900 outline-none placeholder:text-gray-400"
-        placeholder={placeholder}
-        type="text"
-      />
-      <p
-        className={`pt-2 text-[0.75rem] leading-none ${
-          errorMessage ? 'text-red-500' : 'text-gray-500'
-        }`}
-      >
-        {errorMessage ?? helpText}
-      </p>
-    </div>
-  );
-};
 
 const createEmptyMember = (): CreateFamilyFormValues['familyMemberList'][number] => ({
   name: '',
@@ -362,30 +329,23 @@ export const CreateFamilyModal = ({
   }, [previewUrl]);
 
   return (
-    <Modal
-      className="w-[30.5rem] max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-[1.5rem] bg-white p-6"
-      size="custom"
-    >
+    <Modal className="w-[30.5rem] max-w-[calc(100vw-1rem)] max-h-[92vh]" size="custom">
       <Modal.Header className="gap-2">
-        <Modal.Title className="text-[1rem] font-bold leading-tight text-black">
-          가족 생성 신청
-        </Modal.Title>
-        <Modal.Description className="text-[0.875rem] text-gray-500">
-          가족 구성원을 여러 명 등록할 수 있습니다.
-        </Modal.Description>
+        <Modal.Title>가족 생성 신청</Modal.Title>
+        <Modal.Description>가족 구성원을 여러 명 등록할 수 있습니다.</Modal.Description>
       </Modal.Header>
 
-      <Modal.Content className="mt-2 gap-6">
-        <div className="space-y-4">
+      <Modal.Content className="gap-16 overflow-y-auto">
+        <div className="space-y-16">
           {fields.map((field, index) => {
             const memberRole = members?.[index]?.targetFamilyRole ?? 'PARENT';
 
             return (
-              <div className="space-y-4 rounded-2xl border border-gray-200 p-4" key={field.id}>
+              <div className="space-y-16 rounded-8 border border-gray-200 p-16" key={field.id}>
                 <div className="flex items-center justify-between">
-                  <p className="text-[0.9375rem] font-semibold text-black">구성원 {index + 1}</p>
+                  <p className="font-heading-heading3 leading-none">구성원 {index + 1}</p>
                   <button
-                    className="text-[0.75rem] font-medium text-gray-500 disabled:text-gray-300"
+                    className="font-body-body2 text-gray-500 disabled:text-gray-300"
                     disabled={fields.length === 1}
                     onClick={() => handleRemoveMember(index)}
                     type="button"
@@ -394,55 +354,41 @@ export const CreateFamilyModal = ({
                   </button>
                 </div>
 
-                <InputField
-                  errorMessage={errors.familyMemberList?.[index]?.name?.message}
-                  helpText="가족 구성원 이름을 입력해주세요."
-                  inputProps={register(`familyMemberList.${index}.name`, {
+                <Input
+                  description="가족 구성원 이름을 입력해주세요."
+                  error={errors.familyMemberList?.[index]?.name?.message}
+                  id={`family-member-name-${field.id}`}
+                  label="이름"
+                  placeholder="홍길동"
+                  {...register(`familyMemberList.${index}.name`, {
                     required: '필수 입력 항목입니다.',
                     validate: (value) => value.trim().length >= 2 || '2자 이상 입력해주세요.',
                   })}
-                  label="이름"
-                  placeholder="홍길동"
                 />
 
-                <InputField
-                  errorMessage={errors.familyMemberList?.[index]?.phone?.message}
-                  helpText="가족 구성원 전화번호를 입력해주세요."
-                  inputProps={register(`familyMemberList.${index}.phone`, {
+                <Input
+                  description="가족 구성원 전화번호를 입력해주세요."
+                  error={errors.familyMemberList?.[index]?.phone?.message}
+                  id={`family-member-phone-${field.id}`}
+                  label="전화번호"
+                  placeholder="010-0000-0000"
+                  {...register(`familyMemberList.${index}.phone`, {
                     ...ONBOARDING_RULES.tel,
                     onChange: handleTelChange(index),
                   })}
-                  label="전화번호"
-                  placeholder="010-0000-0000"
                 />
 
-                <div className="space-y-3">
-                  <p className="text-[1rem] font-semibold leading-none text-black">권한</p>
-                  <div className="flex gap-2">
-                    <button
-                      className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
-                        memberRole === 'PARENT'
-                          ? 'border-purple-500 bg-purple-50 text-purple-700'
-                          : 'border-gray-200 bg-white text-gray-500'
-                      }`}
-                      onClick={() => handleSelectRole(index, 'PARENT')}
-                      type="button"
-                    >
+                <div className="space-y-16">
+                  <p className="font-heading-heading3 leading-none">권한</p>
+                  <div className="flex gap-8">
+                    <Button onClick={() => handleSelectRole(index, 'PARENT')}>
                       <ParentRoleIcon />
                       부모
-                    </button>
-                    <button
-                      className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
-                        memberRole === 'CHILD'
-                          ? 'border-green-500 bg-green-50 text-green-700'
-                          : 'border-gray-200 bg-white text-gray-500'
-                      }`}
-                      onClick={() => handleSelectRole(index, 'CHILD')}
-                      type="button"
-                    >
+                    </Button>
+                    <Button onClick={() => handleSelectRole(index, 'CHILD')} type="button">
                       <ChildRoleIcon />
                       자녀
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -455,8 +401,8 @@ export const CreateFamilyModal = ({
         </div>
 
         <div className="space-y-4">
-          <p className="text-[1rem] font-semibold leading-none text-black">가족관계증명서</p>
-          <label className="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-gray-300 bg-gray-50/40 p-2">
+          <p className="font-heading-heading3 leading-none">가족관계증명서</p>
+          <label className="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-8 border border-dashed border-gray-300 bg-gray-50/40 p-2">
             {!isUploadComplete ? (
               <>
                 <UploadIcon />
@@ -506,7 +452,7 @@ export const CreateFamilyModal = ({
         </div>
       </Modal.Content>
 
-      <Modal.Footer btnLayout="horizontal" className="mt-2 gap-2">
+      <Modal.Footer btnLayout="horizontal">
         <Button onClick={close} type="button" variant="outline">
           취소
         </Button>

@@ -43,8 +43,8 @@ export const Slider = ({
   const percentage = ((displayValue - minNum) / (maxNum - minNum)) * 100;
 
   return (
-    <div className={cn('w-full py-4', className)}>
-      <div className="relative w-full h-1.5 group">
+    <div className={cn('w-full py-16', className)}>
+      <div className="relative w-full h-6 group">
         <div className="absolute inset-0 w-full h-full bg-gray-200 rounded-full" />
         <div
           className="absolute inset-0 h-full bg-purple-600 rounded-full"
@@ -55,8 +55,8 @@ export const Slider = ({
         <input
           className="absolute inset-0 w-full h-full bg-transparent appearance-none cursor-pointer accent-purple-600
                      [&::-webkit-slider-thumb]:appearance-none 
-                     [&::-webkit-slider-thumb]:w-5 
-                     [&::-webkit-slider-thumb]:h-5 
+                     [&::-webkit-slider-thumb]:w-16 
+                     [&::-webkit-slider-thumb]:h-16 
                      [&::-webkit-slider-thumb]:rounded-full 
                      [&::-webkit-slider-thumb]:bg-purple-600
                      [&::-webkit-slider-thumb]:border-2 
@@ -69,8 +69,8 @@ export const Slider = ({
           value={displayValue}
         />
       </div>
-      <div className="flex justify-between mt-2 text-sm font-medium text-gray-600">
-        <span>{displayValue}GB</span>
+      <div className="flex justify-between mt-8 text-sm font-medium text-gray-600">
+        <span>{minNum}GB</span>
         <span className="text-gray-600">최대 {maxNum}GB</span>
       </div>
     </div>

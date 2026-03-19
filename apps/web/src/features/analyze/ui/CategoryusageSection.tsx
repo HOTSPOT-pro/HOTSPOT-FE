@@ -72,7 +72,7 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
           <div className="flex flex-col gap-2 mb-3">
             {lastWeekLegendItems.map((item) => {
               return (
-                <div className="flex items-center gap-2" key={item.name}>
+                <div className="flex items-center gap-8" key={item.name}>
                   {/* 색상 dot */}
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0"
@@ -106,7 +106,7 @@ export const CategoryusageSection = ({ categoryUsageList }: CategoryUsageSection
               const rate = thisItem ? (compMap[thisItem.category] ?? 0) : 0;
 
               return (
-                <div className="flex items-center gap-2" key={item.name}>
+                <div className="flex items-center gap-8" key={item.name}>
                   {/* GB 값 */}
                   <span className="text-[12px] font-semibold text-gray-900">
                     {toGBValue(item.value)}GB

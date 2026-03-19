@@ -38,7 +38,8 @@ function normalizeRefPath(refPath: string) {
 
   if (!matchedPrefix) return refPath;
 
-  return refPath.replace(matchedPrefix, refAliases[matchedPrefix]);
+  const replacement = refAliases[matchedPrefix];
+  return replacement ? refPath.replace(matchedPrefix, replacement) : refPath;
 }
 
 function resolveRef(root: any, value: unknown): unknown {
@@ -47,7 +48,7 @@ function resolveRef(root: any, value: unknown): unknown {
   const match = value.match(/^\{([^}]+)\}$/);
   if (!match) return value;
 
-  const refPath = normalizeRefPath(match[1]);
+  const refPath = normalizeRefPath(match[1] ?? '');
   const direct = get(root, refPath);
 
   if (direct && typeof direct === 'object' && '$value' in direct) {

@@ -104,8 +104,8 @@ export const FamilyDataStatusPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-md font-semibold">가족 데이터 현황</h2>
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
         <p className="text-sm text-gray-500">가족 데이터 정보를 불러오는 중입니다.</p>
       </div>
     );
@@ -113,8 +113,8 @@ export const FamilyDataStatusPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-md font-semibold">가족 데이터 현황</h2>
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
         <p className="text-sm text-red-500">가족 데이터 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
@@ -130,8 +130,8 @@ export const FamilyDataStatusPage = () => {
   }
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-      <h2 className="text-md font-semibold">가족 데이터 현황</h2>
+    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
       <div className="flex w-full justify-center items-center">
         <div className="flex w-full max-w-70">
           <DonutChart
@@ -144,20 +144,21 @@ export const FamilyDataStatusPage = () => {
       </div>
       <div className="h-px bg-gray-200" />
 
-      <div className="space-y-3">
+      <div className="space-y-12">
         {coloredSubUsages.map((subUsage) => (
           <div className="space-y-0" key={subUsage.subId}>
             <div className="flex items-center justify-between text-sm">
-              <div className="flex flex-row items-center gap-2">
+              <div className="flex flex-row items-center gap-8">
                 <div
-                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  className="w-10 h-10 rounded-full shrink-0"
                   style={{ backgroundColor: subUsage.color }}
                 />
-                <span className="text-gray-700">{subUsage.subName}</span>
+                <span className="text-text-normal">{subUsage.subName}</span>
               </div>
-              <span className="text-gray-900">
+              <span className="text-gray-600">
                 {subUsage.dataRemainAmount.toFixed(1)}GB / {subUsage.dataLimit.toFixed(1)}GB (
-                {subUsage.remainDataPercent}% 잔여)
+                {subUsage.remainDataPercent}
+                %)
               </span>
             </div>
             <ProgressBar

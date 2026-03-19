@@ -50,8 +50,8 @@ export const MyDataStatusPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-[1rem] font-semibold">내 요금제 데이터</h2>
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">내 요금제 데이터</h2>
         <p className="text-sm text-gray-500">내 요금제 데이터를 불러오는 중입니다.</p>
       </div>
     );
@@ -59,8 +59,8 @@ export const MyDataStatusPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-[1rem] font-semibold">내 요금제 데이터</h2>
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">내 요금제 데이터</h2>
         <p className="text-sm text-red-500">내 요금제 데이터를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
@@ -81,15 +81,15 @@ export const MyDataStatusPage = () => {
   const totalAmountLabel = isUnlimitedPlan ? '무제한' : formatData(data.subDataAmount);
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
       <div className="space-y-1">
-        <h2 className="text-[1rem] font-semibold">내 요금제 데이터</h2>
+        <h2 className="font-title-title3-semibold">내 요금제 데이터</h2>
         <p className="text-sm text-gray-500">{data.planName}</p>
       </div>
 
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-16">
         <div
-          className="relative h-28 w-28 shrink-0 rounded-full"
+          className="relative w-[6rem] h-[6rem] shrink-0 rounded-full"
           style={{
             background: `conic-gradient(#7C4DFF ${Math.max(0, Math.min(PERCENT_MAX, remainPercent))}%, #E5E7EB 0)`,
           }}
@@ -101,17 +101,17 @@ export const MyDataStatusPage = () => {
 
         <div className="w-full space-y-3">
           <div className="flex items-center justify-between text-gray-600">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-purple-500" />
-              <span className="text-[1rem] font-semibold">잔여량</span>
+            <div className="flex items-center gap-8">
+              <span className="h-10 w-10 rounded-full bg-purple-500" />
+              <span className="font-title-title3-semibold">잔여량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">{remainAmountLabel}</span>
           </div>
 
           <div className="flex items-center justify-between text-gray-500">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-gray-300" />
-              <span className="text-[1rem] font-semibold">사용량</span>
+            <div className="flex items-center gap-8">
+              <span className="h-10 w-10 rounded-full bg-gray-300" />
+              <span className="font-title-title3-semibold">사용량</span>
             </div>
             <span className="text-[1rem] font-bold text-gray-900">
               {formatData(data.subDataUsageAmount)}
@@ -121,7 +121,7 @@ export const MyDataStatusPage = () => {
           <div className="h-px bg-gray-200" />
 
           <div className="flex items-center justify-between">
-            <span className="text-[1rem] font-semibold text-gray-600">전체</span>
+            <span className="font-title-title3-semibold text-gray-600">전체</span>
             <span className="text-[1rem] font-bold text-gray-900">{totalAmountLabel}</span>
           </div>
         </div>

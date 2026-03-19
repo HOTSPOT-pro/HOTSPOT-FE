@@ -17,8 +17,8 @@ const sizeClasses: Record<ModalSize, string> = {
 };
 
 const btnLayoutClasses: Record<BtnLayout, string> = {
-  horizontal: 'flex flex-row items-center gap-2',
-  vertical: 'flex flex-col gap-1',
+  horizontal: 'flex flex-row items-center gap-8',
+  vertical: 'flex flex-col gap-4',
 };
 
 const ModalRoot = forwardRef<HTMLDivElement, ModalProps>(
@@ -26,7 +26,7 @@ const ModalRoot = forwardRef<HTMLDivElement, ModalProps>(
     return (
       <div
         className={cn(
-          'flex flex-col w-full h-fit bg-white rounded-[20px] pt-8 px-6 pb-4 gap-4',
+          'flex flex-col w-full h-fit bg-white rounded-[20px] pt-32 px-24 pb-16 gap-16',
           sizeClasses[size],
           className,
         )}
@@ -40,7 +40,7 @@ ModalRoot.displayName = 'Modal';
 
 const ModalHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
-    return <div className={cn('flex flex-col gap-0.5', className)} ref={ref} {...props} />;
+    return <div className={cn('flex flex-col gap-2', className)} ref={ref} {...props} />;
   },
 );
 ModalHeader.displayName = 'ModalHeader';

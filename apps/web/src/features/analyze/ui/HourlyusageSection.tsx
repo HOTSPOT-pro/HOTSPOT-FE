@@ -22,11 +22,11 @@ export const HourlyusageSection = ({ hourlyUsage }: HourlyUsageSectionProps) => 
       <h2 className="text-base font-bold text-gray-900 mb-2">시간대별 사용량</h2>
 
       <ul className="list-none p-0 mb-4 space-y-1">
-        <li className="flex items-center gap-2 text-xs text-gray-500">
+        <li className="flex items-center gap-8 text-xs text-gray-500">
           <span className="w-2 h-2 rounded-full bg-indigo-900 shrink-0" />
           심야 사용: <strong className="text-gray-700 ml-0.5">{formatGB(lateNightUsage)}</strong>
         </li>
-        <li className="flex items-center gap-2 text-xs text-gray-500">
+        <li className="flex items-center gap-8 text-xs text-gray-500">
           <span className="w-2 h-2 rounded-full bg-violet-600 shrink-0" />
           학습 집중 시간대 사용:{' '}
           <strong className="text-gray-700 ml-0.5">{formatGB(studyTimeUsage)}</strong>

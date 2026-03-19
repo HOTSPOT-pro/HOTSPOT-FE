@@ -40,7 +40,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
   return (
     <div className="mt-8 p-5 bg-white rounded-3xl flex flex-col gap-1">
       <div className="flex justify-between items-center mb-2">
-        <p className="text-md font-bold leading-relaxed text-gray-900">앱별 상세 사용량</p>
+        <p className="font-title-title3-semibold leading-relaxed text-gray-900">앱별 상세 사용량</p>
         <div>
           <p className="text-sm text-gray-500 font-medium text-right">
             {unit === 'MONTH' && `${selectedDate.getMonth() + 1}월`}
@@ -50,7 +50,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
       </div>
 
       {/* 날짜 네비게이션 */}
-      <section className="py-2">
+      <section className="py-8">
         {unit === 'MONTH' ? null : <DayNavigation date={selectedDate} onChange={setSelectedDate} />}
       </section>
 
@@ -62,14 +62,14 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
         <div className="flex flex-col gap-4 h-fit mt-2">
           {sortedData.map((item, index) => (
             <div
-              className="w-full flex flex-row gap-4 items-center"
+              className="w-full flex flex-row gap-16 items-center"
               key={`${item.appName}-${index}`}
             >
               <div className="w-10 h-10 flex-none flex items-center justify-center rounded-full text-base font-bold bg-gray-100 text-gray-500">
                 {index + 1}
               </div>
 
-              <div className="flex-1 flex flex-col gap-1.5 min-w-0">
+              <div className="flex-1 flex flex-col gap-6 min-w-0">
                 <div className="flex flex-row justify-between items-center">
                   <p className="font-bold text-gray-900 truncate">{item.appName}</p>
                   <div className="text-right">

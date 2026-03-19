@@ -33,7 +33,7 @@ function resolveRef(root: any, value: unknown): unknown {
   const match = value.match(/^\{([^}]+)\}$/);
   if (!match) return value;
 
-  const refPath = normalizeRefPath(match[1]);
+  const refPath = normalizeRefPath(match[1] ?? '');
   const direct = get(root, refPath);
 
   if (direct && typeof direct === 'object' && '$value' in direct) {

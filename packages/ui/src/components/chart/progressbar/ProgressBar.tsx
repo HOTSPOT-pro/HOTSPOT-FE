@@ -18,7 +18,7 @@ export const ProgressBar = ({ label, value, total, color = COLORS.START }: Progr
   const chartData = [{ displayValue: value, name: label }];
 
   return (
-    <div className="w-full h-3 [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
+    <div className="w-full h-8 [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
       <ResponsiveContainer className="w-full h-full">
         <BarChart
           data={chartData}
@@ -28,7 +28,10 @@ export const ProgressBar = ({ label, value, total, color = COLORS.START }: Progr
           <XAxis domain={[0, total]} hide type="number" />
           <YAxis dataKey="name" hide type="category" />
           <Bar
-            background={{ fill: COLORS.REMAINING, radius: PROGRESS_BAR_STYLE.RADIUS }}
+            background={{
+              fill: COLORS.REMAINING,
+              radius: PROGRESS_BAR_STYLE.RADIUS,
+            }}
             barSize={PROGRESS_BAR_STYLE.SIZE}
             dataKey="displayValue"
             fill={color}

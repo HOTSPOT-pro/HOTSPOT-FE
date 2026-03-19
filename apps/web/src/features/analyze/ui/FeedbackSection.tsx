@@ -50,7 +50,7 @@ export const FeedbackSection = ({ finalFeedback }: FinalFeedbackSectionProps) =>
       <div className="flex flex-col gap-2.5">
         {policyRecommendList.map((policy, idx) => (
           <div className="border border-violet-100 rounded-xl p-3 bg-violet-50/50" key={idx}>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex items-center gap-8 mb-1.5">
               <span className="text-sm">🛡️</span>
               <span className="text-[13px] font-semibold text-violet-800">{policy.title}</span>
             </div>

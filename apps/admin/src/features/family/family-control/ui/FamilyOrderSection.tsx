@@ -75,16 +75,16 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
   };
 
   return (
-    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+    <div className="bg-white rounded-xl p-20 border border-gray-100 shadow-sm">
       <div className="flex justify-between items-center">
         <div className="w-full">
-          <h3 className="text-[14px] font-bold text-black mb-1">데이터 사용 우선순위</h3>
-          <p className="text-[11px] text-gray-600">
+          <h3 className="font-body-body2-bold text-black mb-4">데이터 사용 우선순위</h3>
+          <p className="font-body-body5 text-gray-600 break-keep">
             낮은 숫자가 높은 우선순위입니다. 데이터 부족 시 우선순위가 먼저 할당됩니다.
           </p>
         </div>
 
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-8">
           {isEditing ? (
             <div className="border border-gray-300 rounded-sm flex items-center justify-center">
               <CategorySelect
@@ -98,13 +98,13 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
               />
             </div>
           ) : (
-            <div className="bg-gray-100 flex w-30 items-center gap-2 rounded-md p-2 text-[0.8rem] font-semibold text-black">
+            <div className="bg-gray-100 flex w-30 items-center gap-8 rounded-md p-8 text-[0.8rem] font-semibold text-black">
               {typeName}
             </div>
           )}
 
           <Button
-            className="w-fit px-6"
+            className="w-fit px-24"
             onClick={isEditing ? handleSave : () => setIsEditing(true)}
             variant={isEditing ? 'solid' : 'outline'}
           >
@@ -112,7 +112,7 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
           </Button>
           {isEditing && (
             <Button
-              className="w-fit px-6"
+              className="w-fit px-24"
               onClick={() => {
                 setSelectedType(familyControlData?.priorityType ?? 'FIFO');
                 setMembers(
@@ -136,7 +136,7 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
             {(provided) => (
               <div
                 {...provided.droppableProps}
-                className="flex flex-col gap-3"
+                className="flex flex-col gap-12 mt-12"
                 ref={provided.innerRef}
               >
                 {members.map((member, index) => (
@@ -151,25 +151,25 @@ export const FamilyOrderSection = ({ familyId, familyControlData }: FamilyOrderS
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                        className={`flex items-center gap-16 p-16 rounded-xl border transition-all ${
                           snapshot.isDragging
                             ? 'bg-purple-50 border-purple-300 shadow-lg scale-[1.02]'
                             : 'bg-white border-gray-100'
                         } ${!isEditing && 'opacity-90'}`}
                         style={provided.draggableProps.style}
                       >
-                        <MoreIcon className="w-6 h-6 text-gray-300 cursor-grab" />
-                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-purple-600 font-bold text-sm">
+                        <MoreIcon className="w-24 h-24 text-gray-300 cursor-grab" />
+                        <div className="flex items-center justify-center w-32 h-32 rounded-full bg-gray-50 text-purple-600 font-body-body3-bold">
                           {index + 1}
                         </div>
 
-                        <div className="flex-1 flex flex-row gap-2.5">
-                          <p className="font-semibold text-gray-800">{member.memberName}</p>
+                        <div className="flex-1 flex flex-row gap-10">
+                          <p className="font-body-body3-bold text-gray-800">{member.memberName}</p>
                           <RoleChip role={member.familyRole} />
                         </div>
 
                         {isEditing && (
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-8">
                             <button
                               aria-label={`${member.memberName} 우선순위를 위로 이동`}
                               className="p-1 hover:bg-gray-100 rounded disabled:opacity-20"

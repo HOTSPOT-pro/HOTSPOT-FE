@@ -35,12 +35,12 @@ export const PolicyAddBlockModal = ({ close }: { close: () => void }) => {
   };
 
   return (
-    <Modal>
+    <Modal className="w-122">
       <Modal.Header>
         <Modal.Title>차단 서비스 정책 생성</Modal.Title>
       </Modal.Header>
 
-      <Modal.Content className="flex flex-col gap-6 py-4">
+      <Modal.Content className="flex flex-col gap-24 py-16">
         <Input
           id="policyName"
           label="정책명"
@@ -63,7 +63,7 @@ export const PolicyAddBlockModal = ({ close }: { close: () => void }) => {
         />
       </Modal.Content>
 
-      <Modal.Footer className="flex flex-row gap-2">
+      <Modal.Footer className="flex flex-row gap-8">
         <Button onClick={close} variant="ghost">
           취소
         </Button>

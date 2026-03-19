@@ -97,7 +97,7 @@ const InputField = ({
 }) => {
   return (
     <div className="space-y-1">
-      <p className="text-[1rem] font-semibold leading-none text-black">{label}</p>
+      <p className="font-title-title3-semibold leading-none text-black">{label}</p>
       <input
         {...inputProps}
         className="h-12 w-full border-b border-gray-200 bg-transparent text-[1rem] text-gray-900 outline-none placeholder:text-gray-400"
@@ -357,10 +357,7 @@ export const AddFamilyMemberModal = ({
   }, [previewUrl]);
 
   return (
-    <Modal
-      className="w-[30.5rem] max-w-[calc(100vw-1rem)] max-h-[92vh] overflow-y-auto rounded-[1.5rem] p-6"
-      size="custom"
-    >
+    <Modal className="overflow-y-auto" size="custom">
       <Modal.Header className="gap-2">
         <Modal.Title className="text-[1rem] font-bold leading-tight text-black">
           가족 구성원 추가 신청
@@ -412,7 +409,7 @@ export const AddFamilyMemberModal = ({
                 />
 
                 <div className="space-y-3">
-                  <p className="text-[1rem] font-semibold leading-none text-black">권한</p>
+                  <p className="font-title-title3-semibold leading-none text-black">권한</p>
                   <div className="flex gap-2">
                     <button
                       className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-lg border text-[1rem] font-medium ${
@@ -450,7 +447,7 @@ export const AddFamilyMemberModal = ({
         </div>
 
         <div className="space-y-3">
-          <p className="text-[1rem] font-semibold leading-none text-black">가족관계증명서</p>
+          <p className="font-title-title3-semibold leading-none text-black">가족관계증명서</p>
           <label className="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-gray-300 bg-gray-50/40 p-2">
             {!isUploadComplete ? (
               <>

@@ -86,14 +86,14 @@ export const ChangeFamilyRoleModal = ({ close, props }: ChangeFamilyRoleModalPro
 
       <Modal.Footer btnLayout="horizontal" className="mt-4 gap-2">
         <Button
-          className="h-12 text-[1rem] font-semibold"
+          className="h-12 font-title-title3-semibold"
           isLoading={isLoading}
           onClick={() => void handleConfirm()}
         >
           변경하기
         </Button>
         <Button
-          className="h-12 text-[1rem] font-semibold"
+          className="h-12 font-title-title3-semibold"
           disabled={isLoading}
           onClick={close}
           variant="ghost"

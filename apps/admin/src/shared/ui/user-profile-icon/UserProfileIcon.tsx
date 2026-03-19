@@ -11,8 +11,8 @@ const ICON_STYLE = {
 
 export const UserProfileIcon = ({ type }: UserProfileIconProps) => {
   return (
-    <div className={cn('p-3 rounded-2xl mr-3', ICON_STYLE[type])}>
-      <Profile className="w-4.5 h-4.5" />
+    <div className={cn('p-12 rounded-2xl mr-12', ICON_STYLE[type])}>
+      <Profile className="w-18 h-18" />
     </div>
   );
 };

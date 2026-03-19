@@ -20,7 +20,7 @@ export default function TabsLayout({ children }: { children: ReactNode }) {
           />
         </div>
       </div>
-      <div className="flex-1 pt-12">{children}</div>
+      <div className="flex-1 mt-48">{children}</div>
     </div>
   );
 }

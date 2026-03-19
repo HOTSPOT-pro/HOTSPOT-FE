@@ -1,7 +1,7 @@
 import { MyDataStatusPage } from '@/pages-layer/my-data-status/ui/MyDataStatusPage';
 
-const page = () => {
+const Page = () => {
   return <MyDataStatusPage />;
 };
 
-export default page;
+export default Page;

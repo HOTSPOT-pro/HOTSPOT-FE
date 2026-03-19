@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@hotspot/ui/components';
-import { cn } from '@hotspot/ui/lib';
 
 type ViewUnit = 'MONTH' | 'DAY';
 
@@ -17,7 +16,7 @@ export const MonthDaySelector = ({ unit, onChange }: Props) => {
   };
 
   return (
-    <div className="flex w-full justify-center gap-2 py-2 px-4">
+    <div className="flex w-full justify-center gap-8">
       <Button
         data-value="MONTH"
         onClick={handleUnitClick}

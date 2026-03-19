@@ -30,7 +30,7 @@ export const PolicyAdminItem = ({ policy, onSelect }: PolicyAdminItemProps) => {
       type="button"
     >
       <div className="flex justify-between items-start mb-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-8">
           <span className="font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
             {policy.name}
           </span>

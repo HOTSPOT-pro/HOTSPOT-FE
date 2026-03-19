@@ -57,7 +57,7 @@ export const DeleteFamilyMemberModal = ({ close, props }: DeleteFamilyMemberModa
 
       <Modal.Footer btnLayout="horizontal" className="mt-4 gap-2">
         <Button
-          className="h-12 text-[1rem] font-semibold"
+          className="h-12 font-title-title3-semibold"
           isLoading={isLoading}
           onClick={() => void handleDeleteRequest()}
           variant="destructive"
@@ -65,7 +65,7 @@ export const DeleteFamilyMemberModal = ({ close, props }: DeleteFamilyMemberModa
           삭제 신청
         </Button>
         <Button
-          className="h-12 text-[1rem] font-semibold"
+          className="h-12 font-title-title3-semibold"
           disabled={isLoading}
           onClick={close}
           variant="ghost"

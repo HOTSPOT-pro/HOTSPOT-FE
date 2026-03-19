@@ -1,7 +1,7 @@
 import { GiftedDataStatusPage } from '@/pages-layer/gifted-data-status/ui/GiftedDataStatusPage';
 
-const page = () => {
+const Page = () => {
   return <GiftedDataStatusPage />;
 };
 
-export default page;
+export default Page;

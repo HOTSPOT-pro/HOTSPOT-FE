@@ -50,7 +50,7 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
       <div className="flex flex-col gap-2 mb-4">
         {scoreInfo.reason.map((i) => (
           <div
-            className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5"
+            className="flex items-center gap-8.5 bg-gray-50 rounded-xl px-3.5 py-2.5"
             key={i.exp}
           >
             <span className="text-sm font-medium text-gray-700">
@@ -63,7 +63,7 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
       <p className="text-xs text-gray-400 font-medium mb-3">#TAGS</p>
       <div className="flex flex-col gap-2">
         {tags.map((tag, idx) => (
-          <div className="flex items-center gap-2.5 bg-gray-50 rounded-xl px-3.5 py-2.5" key={idx}>
+          <div className="flex items-center gap-8.5 bg-gray-50 rounded-xl px-3.5 py-2.5" key={idx}>
             <span className="text-base">{TAG_ICON_MAP[tag]}</span>
             <span className="text-sm font-medium text-gray-700">
               {TAG_LABELS[tag]?.label ?? tag}

@@ -40,21 +40,21 @@ export const NotificationList = () => {
           ))}
 
           {/* 3. 무한 스크롤 감지 지점 */}
-          <div className="h-10 flex items-center justify-center" ref={ref}>
+          <div className="flex items-center justify-center" ref={ref}>
             {isFetchingNextPage && (
-              <div className="mx-auto text-purple-600">
+              <div className="mx-auto text-purple-600 h-40">
                 <Loading />
               </div>
             )}
           </div>
         </>
       ) : (
-        <div className="text-center py-20 text-gray-400">새로운 알림이 없습니다.</div>
+        <span className="text-center py-20 text-gray-400">새로운 알림이 없습니다.</span>
       )}
 
-      <p className="text-gray-500 text-center pt-8 text-[13px] font-normal">
+      <span className="text-text-tertiary text-center pt-8 font-body-body3">
         알림은 1달 동안 보관됩니다.
-      </p>
+      </span>
     </div>
   );
 };

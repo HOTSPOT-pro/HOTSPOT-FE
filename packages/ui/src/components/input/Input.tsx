@@ -56,7 +56,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
           />
 
-          <div className="right-0 flex items-center gap-2">
+          <div className="right-0 flex items-center gap-8">
             {/* 삭제 */}
             <button
               aria-label="입력값 지우기"

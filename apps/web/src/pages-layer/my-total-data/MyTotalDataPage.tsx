@@ -77,8 +77,8 @@ export const MyTotalDataPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-[1rem] font-semibold">전체 데이터</h2>
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">전체 데이터</h2>
         <p className="text-sm text-gray-500">전체 데이터 정보를 불러오는 중입니다.</p>
       </div>
     );
@@ -86,8 +86,8 @@ export const MyTotalDataPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-        <h2 className="text-[1rem] font-semibold">전체 데이터</h2>
+      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+        <h2 className="font-title-title3-semibold">전체 데이터</h2>
         <p className="text-sm text-red-500">전체 데이터 정보를 불러오지 못했습니다.</p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
@@ -117,8 +117,8 @@ export const MyTotalDataPage = () => {
   }));
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-      <h2 className="text-[1rem] font-semibold">전체 데이터</h2>
+    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <h2 className="font-title-title3-semibold">전체 데이터</h2>
 
       <div className="flex w-full justify-center items-center">
         <div className="flex w-full max-w-72">
@@ -145,8 +145,8 @@ export const MyTotalDataPage = () => {
       <div className="space-y-3">
         {SEGMENTS.map((segment) => (
           <div className="flex items-center justify-between text-md font-bold" key={segment.key}>
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full" style={{ backgroundColor: segment.color }} />
+            <div className="flex items-center gap-8">
+              <span className="h-10 w-10 rounded-full" style={{ backgroundColor: segment.color }} />
               <span className="text-gray-700">
                 {segment.label === 'planName' ? data.planName : segment.label}
               </span>

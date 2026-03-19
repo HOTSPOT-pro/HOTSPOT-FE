@@ -83,9 +83,9 @@ export const FamilyRealtimeStatusTab = () => {
   );
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-5">
-      <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-4 gap-4 bg-white shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-        <h3 className="text-[14px] font-bold">가족 전체 데이터 사용량</h3>
+    <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-20">
+      <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-16 gap-16 bg-white shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+        <h3 className="font-body-body2-bold">가족 전체 데이터 사용량</h3>
         <div className="flex w-full justify-center items-center">
           <div className="flex w-full max-w-70">
             <DonutChart
@@ -98,11 +98,11 @@ export const FamilyRealtimeStatusTab = () => {
         </div>
         <div className="h-px bg-gray-200" />
 
-        <div className="space-y-3">
+        <div className="space-y-12">
           {coloredSubUsages.map((subUsage) => (
             <div className="space-y-0" key={subUsage.subId}>
               <div className="flex items-center justify-between text-sm">
-                <div className="flex flex-row items-center gap-2">
+                <div className="flex flex-row items-center gap-8">
                   <div
                     className="w-2.5 h-2.5 rounded-full shrink-0"
                     style={{ backgroundColor: subUsage.color }}
@@ -126,9 +126,9 @@ export const FamilyRealtimeStatusTab = () => {
         </div>
       </section>
 
-      <section className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-5 py-4 flex flex-col gap-3">
-        <h3 className="text-[14px] font-bold">구성원 목록</h3>
-        <div className="flex flex-col gap-3">
+      <section className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-12">
+        <h3 className="font-body-body2-bold">구성원 목록</h3>
+        <div className="flex flex-col gap-12">
           {members.map((member, index) => {
             const memberFamilyUsage = usageBySubId.get(member.subId);
             const memberDataTotal =
@@ -141,12 +141,12 @@ export const FamilyRealtimeStatusTab = () => {
 
             return (
               <article
-                className="border border-gray-200 rounded-xl p-4 flex flex-col gap-3"
+                className="border border-gray-200 rounded-xl p-16 flex flex-col gap-12"
                 key={member.subId}
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h4 className="text-[15px] font-bold text-gray-900">{member.subName}</h4>
+                <div className="flex items-center justify-between gap-16">
+                  <div className="flex flex-wrap items-center gap-8">
+                    <h4 className="font-body-body2-bold text-gray-900">{member.subName}</h4>
                     <RoleChip role={member.familyRole} />
                     <BlockedStateChip isBlocked={member.blocked} />
                     <span className="text-xs text-gray-500">{member.phoneEnc}</span>
@@ -154,7 +154,7 @@ export const FamilyRealtimeStatusTab = () => {
                   <span className="text-xs text-gray-500">{member.planName}</span>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between text-[12px] text-gray-700">
                     <span>요금제 데이터</span>
                     <span className="font-medium">
@@ -170,7 +170,7 @@ export const FamilyRealtimeStatusTab = () => {
                   />
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between text-[12px] text-gray-700">
                     <span>선물 데이터</span>
                     <span className="font-medium">
@@ -186,7 +186,7 @@ export const FamilyRealtimeStatusTab = () => {
                 </div>
 
                 {memberFamilyUsage && (
-                  <div className="space-y-1">
+                  <div className="space-y-4">
                     <div className="flex items-center justify-between text-[12px] text-gray-700">
                       <span>가족 한도</span>
                       <span className="font-medium">
@@ -208,7 +208,7 @@ export const FamilyRealtimeStatusTab = () => {
           })}
         </div>
 
-        <div className="pt-1 text-xs text-gray-500 text-right">
+        <div className="pt-4 text-xs text-gray-500 text-right">
           {formatCurrentTime(familyUsage.currentTime)} 기준
         </div>
       </section>
