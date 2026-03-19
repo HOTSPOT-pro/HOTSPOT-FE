@@ -45,7 +45,7 @@ interface CreateFamilyFormValues {
 }
 
 const ParentRoleIcon = () => (
-  <svg aria-hidden="true" className="h-6 w-6" fill="none" viewBox="0 0 24 24">
+  <svg aria-hidden="true" className="h-20 w-20" fill="none" viewBox="0 0 24 24">
     <circle cx="12" cy="12" fill="currentColor" fillOpacity="0.14" r="11" />
     <circle cx="9.2" cy="10.2" fill="currentColor" r="1.2" />
     <circle cx="14.8" cy="10.2" fill="currentColor" r="1.2" />
@@ -59,7 +59,7 @@ const ParentRoleIcon = () => (
 );
 
 const ChildRoleIcon = () => (
-  <svg aria-hidden="true" className="h-6 w-6" fill="none" viewBox="0 0 24 24">
+  <svg aria-hidden="true" className="h-20 w-20" fill="none" viewBox="0 0 24 24">
     <circle cx="12" cy="12" fill="currentColor" fillOpacity="0.1" r="11" />
     <circle cx="9.2" cy="10.2" fill="currentColor" r="1.2" />
     <circle cx="14.8" cy="10.2" fill="currentColor" r="1.2" />
