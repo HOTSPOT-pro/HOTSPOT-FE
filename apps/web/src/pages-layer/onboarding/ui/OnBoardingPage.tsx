@@ -66,11 +66,11 @@ export const OnBoardingPage = () => {
   }, [closeSheet, pendingData, router, submitOnboarding]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-dvh px-4 pt-12 pb-4">
+    <div className="flex flex-col justify-center items-center w-full h-dvh px-16 pt-48 pb-16">
       <Logo size="sm" />
-      <div className="flex flex-col w-full mt-10 mb-12 gap-2">
-        <h2 className="font-bold text-2xl ">환영합니다!</h2>
-        <span className="text-gray-600 font-light text-base">
+      <div className="flex flex-col w-full mt-10 mb-12 gap-8">
+        <h2 className="font-title-title1">환영합니다!</h2>
+        <span className="text-text-secondary font-body-body2">
           서비스를 시작하기 전에 간단한 정보를 입력해 주세요.
         </span>
       </div>
