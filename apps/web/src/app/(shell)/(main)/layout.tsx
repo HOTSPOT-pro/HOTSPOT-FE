@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ROUTES } from '@/shared/constants/routes';
 import { AppHeader } from '@/widgets/app-header/ui/AppHeader';
 
-export default function TabsLayout({ children }: { children: ReactNode }) {
+export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-full flex-col">
       <div className="fixed inset-x-0 top-0 z-header">

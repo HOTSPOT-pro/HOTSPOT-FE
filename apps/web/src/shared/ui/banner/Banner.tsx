@@ -90,11 +90,11 @@ const BannerContent = ({
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 overflow-hidden rounded-[8px] bg-red-400 p-4 text-white',
+        'flex items-center justify-between gap-8 overflow-hidden rounded-[8px] bg-red-400 p-8 text-white',
         className,
       )}
     >
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-2">
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-8">
         {renderMeta(meta)}
         <div className="min-w-0">
           <h3 className="truncate text-[1rem] font-bold leading-[1.35]">{title}</h3>

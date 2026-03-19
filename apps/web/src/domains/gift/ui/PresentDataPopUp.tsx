@@ -36,11 +36,11 @@ export const PresentDataPopUp = () => {
         <RecieveGiftAnimatedImage />
         <span className="text-center text-sm text-gray-600">{props?.content}</span>
       </PopUpContent>
-      <PopUpFooter>
+      {/* <PopUpFooter>
         <a className="text-xs text-gray-500" href={ROUTES.GIFT}>
           선물 내역 보러가기
         </a>
-      </PopUpFooter>
+      </PopUpFooter> */}
     </PopUp>
   );
 };

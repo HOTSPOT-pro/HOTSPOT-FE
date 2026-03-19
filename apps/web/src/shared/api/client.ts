@@ -17,8 +17,16 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const status = error.response?.status;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (status === 403) {
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login';
+      }
+      return Promise.reject(error);
+    }
+
+    if (status === 401 && !originalRequest._retry) {
       if (originalRequest.url?.includes('/api/v1/auth/reissue')) {
         return Promise.reject(error);
       }
