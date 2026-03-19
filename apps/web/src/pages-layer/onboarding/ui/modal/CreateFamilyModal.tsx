@@ -381,14 +381,30 @@ export const CreateFamilyModal = ({
                 <div className="space-y-16">
                   <p className="font-heading-heading3 leading-none">권한</p>
                   <div className="flex gap-8">
-                    <Button onClick={() => handleSelectRole(index, 'PARENT')}>
+                    <button
+                      className={`flex h-40 flex-1 items-center justify-center gap-8 rounded-lg border text-[1rem] font-medium ${
+                        memberRole === 'PARENT'
+                          ? 'border-purple-500 bg-purple-50 text-purple-700'
+                          : 'border-gray-200 bg-white text-gray-500'
+                      }`}
+                      onClick={() => handleSelectRole(index, 'PARENT')}
+                      type="button"
+                    >
                       <ParentRoleIcon />
                       부모
-                    </Button>
-                    <Button onClick={() => handleSelectRole(index, 'CHILD')} type="button">
+                    </button>
+                    <button
+                      className={`flex h-40 flex-1 items-center justify-center gap-8 rounded-lg border text-[1rem] font-medium ${
+                        memberRole === 'CHILD'
+                          ? 'border-green-500 bg-green-50 text-green-700'
+                          : 'border-gray-200 bg-white text-gray-500'
+                      }`}
+                      onClick={() => handleSelectRole(index, 'CHILD')}
+                      type="button"
+                    >
                       <ChildRoleIcon />
                       자녀
-                    </Button>
+                    </button>
                   </div>
                 </div>
               </div>
