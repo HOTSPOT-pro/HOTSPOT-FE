@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
 'use client';
 
 import { Button, Card, CardContent, useModal } from '@hotspot/ui';
@@ -44,7 +45,19 @@ const buildDocumentUrl = (relationDocumentUrl: string): string => {
     ? relationDocumentUrl
     : `/${relationDocumentUrl}`;
 
-  return normalizedPath;
+  const documentBaseUrl =
+    process.env.NEXT_PUBLIC_S3_BUCKET_URL ??
+    (typeof window !== 'undefined' ? window.location.origin : undefined);
+
+  if (!documentBaseUrl) {
+    return normalizedPath;
+  }
+
+  try {
+    return new URL(normalizedPath, documentBaseUrl).toString();
+  } catch {
+    return normalizedPath;
+  }
 };
 
 const createBaseColumns = (
