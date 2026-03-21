@@ -1,0 +1,27 @@
+<svg viewBox="0 0 47 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="17.5367" cy="10.2679" r="5.38541" transform="rotate(30.9062 17.5367 10.2679)" fill="#05A1F5"/>
+<circle cx="23.2132" cy="32.0888" r="23.2132" fill="#05A1F5"/>
+<circle cx="26.4248" cy="10.3238" r="5.46193" transform="rotate(30.9062 26.4248 10.3238)" fill="#05A1F5"/>
+<ellipse cx="18.5154" cy="31.8802" rx="1.36548" ry="2.04822" fill="white"/>
+<ellipse cx="18.5154" cy="31.8802" rx="1.36548" ry="2.04822" fill="white"/>
+<ellipse cx="27.391" cy="31.8802" rx="1.36548" ry="2.04822" fill="white"/>
+<mask id="mask0_5874_24670" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="8" width="47" height="48">
+<circle cx="23.2132" cy="32.0888" r="23.2132" fill="#05A1F5"/>
+</mask>
+<g mask="url(#mask0_5874_24670)">
+<g filter="url(#filter0_g_5874_24670)">
+<path d="M38.7948 41.577C33.4684 52.0665 23.2114 55.1566 14.5041 54.4983L28.2191 64.4932C28.6763 64.8264 47.6381 53.8546 57.0619 48.3271L48.2922 21.4591L37.851 12.975C43.2699 21.2965 43.8212 31.6782 38.7948 41.577Z" fill="#4372F4" style="mix-blend-mode:darken"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_g_5874_24670" x="9.00409" y="7.47498" width="53.5578" height="62.5256" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="6022" />
+<feDisplacementMap in="shape" scale="11" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_5874_24670">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+</defs>
+</svg>

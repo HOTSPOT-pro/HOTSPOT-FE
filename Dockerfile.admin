@@ -1,0 +1,52 @@
+# ---------- Builder ----------
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+RUN corepack enable
+ENV CI=true
+
+ARG NEXT_PUBLIC_ADMIN_BASE_URL
+ENV NEXT_PUBLIC_ADMIN_BASE_URL=$NEXT_PUBLIC_ADMIN_BASE_URL
+
+ARG NEXT_PUBLIC_S3_BUCKET_URL
+ENV NEXT_PUBLIC_S3_BUCKET_URL=$NEXT_PUBLIC_S3_BUCKET_URL
+
+COPY pnpm-lock.yaml package.json pnpm-workspace.yaml turbo.json ./
+COPY apps/admin/package.json apps/admin/
+COPY packages/ui/package.json packages/ui/
+
+# admin + workspace deps만 설치
+RUN pnpm install --frozen-lockfile --filter @hotspot/admin...
+
+COPY . .
+
+RUN pnpm --filter @hotspot/admin build
+
+
+# ---------- Runner ----------
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3001
+ENV NEXT_PUBLIC_S3_BUCKET_URL=https://hotspot-certificate-bucket.s3.ap-northeast-2.amazonaws.com
+
+# non-root user 생성
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+
+# standalone server
+COPY --chown=nextjs:nodejs --from=builder /app/apps/admin/.next/standalone ./
+
+# static assets
+COPY --chown=nextjs:nodejs --from=builder /app/apps/admin/.next/static ./apps/admin/.next/static
+
+# public assets
+COPY --chown=nextjs:nodejs --from=builder /app/apps/admin/public ./apps/admin/public
+
+USER nextjs
+
+EXPOSE 3001
+
+CMD ["node", "apps/admin/server.js"]

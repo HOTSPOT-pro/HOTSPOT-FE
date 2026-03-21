@@ -1,3 +1,5 @@
+#!/bin/sh
+
 set -e   # 명령어 중 하나라도 실패하면 스크립트 즉시 종료 (-u는 뺌: $1 미전달 시 에러 방지)
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
@@ -15,6 +17,25 @@ TMP_FILE="$(mktemp)"                 # 임시 파일 생성
 trap 'rm -f "$TMP_FILE"' EXIT          # 스크립트 종료 시 임시 파일 자동 삭제
 tr -d '\r' < "$MSG_FILE" > "$TMP_FILE"  # \r 제거 후 TMP_FILE 에 저장
 
+# 브랜치명 가져오기
+BRANCH_NAME="$(git symbolic-ref --short HEAD 2>/dev/null || true)"
+
+# 이슈 키 추출 
+ISSUE_KEY="$(echo "$BRANCH_NAME" | grep -oE '[A-Z]+-[0-9]+' | head -n 1 || true)"
+
+# 커밋 메시지 읽기
+COMMIT_MSG="$(cat "$TMP_FILE")"
+
+# 이슈 키가 있고, 아직 메시지에 [키] 형식이 없으면 앞에 붙임
+if [ -n "$ISSUE_KEY" ]; then
+  # 이미 [HOTSPOT-22] 가 포함되어 있는지 검사 (대소문자 무시 -i)
+  if ! echo "$COMMIT_MSG" | grep -qi "^\[$ISSUE_KEY\]"; then
+    COMMIT_MSG="[$ISSUE_KEY] $COMMIT_MSG"
+    # printf를 사용해 줄바꿈 포함 안전하게 저장
+    printf "%s" "$COMMIT_MSG" > "$TMP_FILE"
+  fi
+fi
+
 # 프로젝트 로컬에 설치된 commitlint 실행 (pnpm exec 로 보장)
 # --edit 옵션: 파일 내용을 커밋 메시지로 해석해서 규칙 검사
 if ! pnpm exec commitlint --edit "$TMP_FILE"; then
@@ -24,5 +45,8 @@ if ! pnpm exec commitlint --edit "$TMP_FILE"; then
   echo "📖 허용된 타입: feat, fix, docs, style, refactor, test, chore, ci, revert, del, add"
   exit 1              # 검사 실패 → 커밋 중단
 fi
+
+# 수정된 TMP_FILE의 내용을 실제 Git 커밋 메시지 파일에 덮어씌우기
+cp "$TMP_FILE" "$MSG_FILE"
 
 echo "✅ 커밋 메시지 규칙 통과"

@@ -1,0 +1,1 @@
+export { isMenuActive } from './isMenuActive';

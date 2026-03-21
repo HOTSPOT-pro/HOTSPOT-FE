@@ -31,10 +31,10 @@
 - [SHOULD] API 에러 메시지: 백엔드 에러 메시지를 그대로 노출하기보다, 프런트엔드에서 정의한 사용자 친화적 메시지 맵핑 테이블을 사용한다.
 
 ### 6. Styling
-- [MUST] 디자인 토큰 준수: 모든 수치(색상, 간격, 폰트)는 정의된 테마 값만 사용하며 임의 값(text-[#333], w-[17px]) 사용을 금지한다.
-- [MUST] 스타일 변수 추출: 클래스 뭉치가 3개 이상의 속성을 포함하고 2번 이상 반복되면 변수(예: baseStyle) 또는 컴포넌트로 분리한다.
+- [MUST] 디자인 토큰 준수: 모든 수치(색상, 간격, 폰트)는 정의된 테마 값만 사용하며 임의 값(`text-[#333]`, `w-[17px]`) 사용을 금지한다.
+- [MUST] 스타일 변수 추출: 클래스 뭉치가 3개 이상의 속성을 포함하거나 2번 이상 반복되면 변수(예: `BUTTON_BASE_STYLES`) 또는 컴포넌트로 분리한다.
 - [MUST] twMerge & clsx 사용: 조건부 스타일링 시 클래스 충돌 방지를 위해 반드시 twMerge를 사용한다.
-- [SHOULD] Semantic Markup: div, span 남발을 지양하고 시맨틱 태그(main, section, button 등)를 사용하여 접근성을 확보한다.
+- [SHOULD] Semantic Markup: div, span 남발을 지양하고 시맨틱 태그(`main`, `section`, `button` 등)를 사용하여 접근성을 확보한다.
 
 ### 7. Clean Code
 - [MUST] Early Return: 복잡한 조건문은 중첩(if-else)하기보다 조건이 맞지 않을 때 빠르게 return 하여 가독성을 확보한다.

@@ -1,52 +1,134 @@
 @import "tailwindcss";
+@import "./elevation.css";
+@import "./animation.css";
+@import "./color-tokens.css";
+@import "./system-tokens.css";
+@import "./typo-tokens.css";
+@source "../components/**/*.{ts,tsx}";
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Thin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-ExtraLight.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Light.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-SemiBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-ExtraBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url("../font/Pretendard-Black.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@theme {
+  --color-kakao-container: #FEE500;
+  --color-kakao-label: #000000;
+  --color-kakao-symbol: rgba(0,0,0,0.85);
+  --color-google-border: #E5E7EB;
+  --color-google-label: #000000;
+  --color-google-container: #ffffff;
+  --font-sans: "Pretendard", system-ui;
+}
 
 :root {
-  --background: #ffffff;
   --foreground: #171717;
+  --background: #ffffff;
+  font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body{
+    font-family: var(--font-sans);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button,
+  a {
+    @apply cursor-pointer;
+  }
+
+  button:disabled,
+  a[aria-disabled='true'],
+  a.disabled {
+    @apply cursor-not-allowed;
   }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.imgDark {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
-
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 }

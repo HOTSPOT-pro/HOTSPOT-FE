@@ -1,0 +1,95 @@
+name: FRONT USER CD (dev)
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - '.github/workflows/front-user-cd.yml'
+      - 'apps/web/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+      - 'package.json'
+      - 'turbo.json'
+      - 'Dockerfile.web'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ap-northeast-2
+      CLUSTER: hotspot-cluster
+      SERVICE: FrontWebServiceStack-FrontWebService9DAC1E16-biwEtzTkgpML
+      TASK_DEF_NAME: FrontWebServiceStackFrontWebTaskDef503A9E92
+      ECR_REPO: hotspot-front-user
+      CONTAINER_NAME: FrontWebContainer
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build & Push Image
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+
+          docker buildx create --use
+          docker buildx build \
+            --platform linux/amd64 \
+            -f Dockerfile.web \
+            --build-arg NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} \
+            -t 121834501390.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:$IMAGE_TAG \
+            --push .
+
+      - name: Get Current Task Definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition $TASK_DEF_NAME \
+            --query taskDefinition > task-def.json
+
+      - name: Render New Task Definition
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          IMAGE_URI=121834501390.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:$IMAGE_TAG
+
+          jq --arg IMAGE "$IMAGE_URI" --arg NAME "$CONTAINER_NAME" \
+            '.containerDefinitions |= map(
+                if .name == $NAME then
+                  .image = $IMAGE
+                else
+                  .
+                end
+              )
+            | del(.taskDefinitionArn)
+            | del(.revision)
+            | del(.status)
+            | del(.requiresAttributes)
+            | del(.compatibilities)
+            | del(.registeredAt)
+            | del(.registeredBy)' \
+            task-def.json > new-task-def.json
+
+      - name: Register New Revision
+        id: register
+        run: |
+          TASK_DEF_ARN=$(aws ecs register-task-definition \
+            --cli-input-json file://new-task-def.json \
+            --query 'taskDefinition.taskDefinitionArn' \
+            --output text)
+
+          echo "TASK_DEF_ARN=$TASK_DEF_ARN" >> $GITHUB_ENV
+
+      - name: Update ECS Service
+        run: |
+          aws ecs update-service \
+            --cluster $CLUSTER \
+            --service $SERVICE \
+            --task-definition $TASK_DEF_ARN \
+            --force-new-deployment

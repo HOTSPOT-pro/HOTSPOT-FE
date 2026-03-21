@@ -2,15 +2,19 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "clsx": "^2.1.1",
+    "d3-interpolate": "^3.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
+    "recharts": "^3.7.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@hotspot/typescript-config": "workspace:*",
     "@storybook/nextjs": "^10.2.8",
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/d3-interpolate": "^3.0.4",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
@@ -20,14 +24,21 @@
     "typescript": "5.9.2"
   },
   "exports": {
-    ".": "./src/components/index.ts",
-    "./globals.css": "./src/styles/globals.css"
+    ".": "./src/index.ts",
+    "./assets/*": "./src/assets/*",
+    "./components": "./src/components/index.ts",
+    "./globals.css": "./src/styles/globals.css",
+    "./lib": "./src/lib/index.ts"
   },
   "name": "@hotspot/ui",
   "private": true,
   "scripts": {
     "build-storybook": "storybook build",
     "check-types": "tsc --noEmit",
+    "convert-color": "node ./scripts/convert-color.ts",
+    "convert-system": "node ./scripts/convert-system.ts",
+    "convert-tokens": "pnpm run convert-color && pnpm run convert-system && pnpm run convert-typo",
+    "convert-typo": "node ./scripts/convert-typo.ts",
     "generate:component": "turbo gen react-component",
     "storybook": "storybook dev -p 6006"
   },

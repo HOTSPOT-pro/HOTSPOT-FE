@@ -1,0 +1,320 @@
+/** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
+'use client';
+
+import { Button, Card, CardContent, useModal } from '@hotspot/ui';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useApplicationsQuery,
+  useApproveApplicationMutation,
+  useRejectApplicationMutation,
+} from '@/features/apply';
+import type { ApplicationStatus, ApplicationType } from '@/features/apply/api/types';
+import { CategorySelect, type Column, Pagination, Table } from '@/shared';
+import { getApiErrorMessage } from '@/shared/api/types';
+import { formatDatesTime } from '@/shared/lib/format';
+import { StatusTab } from '@/widgets';
+
+const PAGE_SIZE_OPTIONS = [
+  { label: '20개', value: '20' },
+  { label: '50개', value: '50' },
+  { label: '100개', value: '100' },
+] as const;
+
+interface ApplicationRequestsPageProps {
+  applyType: ApplicationType;
+}
+
+interface RequestRow {
+  id: string;
+  relationDocumentUrl: string | null;
+  requestDisplayId: string;
+  requestId: number;
+  requestedAt: string;
+  requesterName: string;
+  requesterPhoneNumber: string;
+  status: ApplicationStatus;
+  targets: { id: string; name: string; phone: string }[];
+}
+
+const buildDocumentUrl = (relationDocumentUrl: string): string => {
+  if (relationDocumentUrl.startsWith('http://') || relationDocumentUrl.startsWith('https://')) {
+    return relationDocumentUrl;
+  }
+
+  const normalizedPath = relationDocumentUrl.startsWith('/')
+    ? relationDocumentUrl
+    : `/${relationDocumentUrl}`;
+
+  const documentBaseUrl =
+    process.env.NEXT_PUBLIC_S3_BUCKET_URL ??
+    (typeof window !== 'undefined' ? window.location.origin : undefined);
+
+  if (!documentBaseUrl) {
+    return normalizedPath;
+  }
+
+  try {
+    return new URL(normalizedPath, documentBaseUrl).toString();
+  } catch {
+    return normalizedPath;
+  }
+};
+
+const createBaseColumns = (
+  handleOpenDocument: (relationDocumentUrl: string) => void,
+): Column<RequestRow>[] => [
+  { accessor: 'requestDisplayId', header: '요청번호' },
+  { accessor: 'requesterName', header: '신청자' },
+  { accessor: 'requesterPhoneNumber', header: '신청자 연락처' },
+  {
+    accessor: 'targets',
+    header: '대상자',
+    render: (_, row) => (
+      <ul className="space-y-2">
+        {row.targets.map((target) => (
+          <li className="flex flex-col gap-4" key={target.id}>
+            <p className="font-body-body2 text-gray-900">{target.name}</p>
+            <p className="font-body-body4 text-gray-500">{target.phone}</p>
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+  { accessor: 'requestedAt', header: '요청 시각' },
+  {
+    accessor: 'relationDocumentUrl',
+    header: '가족관계증명서',
+    render: (value) => {
+      const relationDocumentUrl = value as string | null;
+
+      if (!relationDocumentUrl) {
+        return <span className="font-body-body2 text-gray-400">없음</span>;
+      }
+
+      return (
+        <button
+          className="font-body-body2 text-blue-600 hover:underline"
+          onClick={() => handleOpenDocument(buildDocumentUrl(relationDocumentUrl))}
+          type="button"
+        >
+          보기
+        </button>
+      );
+    },
+  },
+  {
+    accessor: 'actions',
+    header: '승인',
+    render: (_, row) =>
+      row.status !== 'PENDING' ? <span className="text-xs text-gray-400">-</span> : null,
+  },
+];
+
+export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPageProps) => {
+  const { open } = useModal();
+  const [activeStatus, setActiveStatus] = useState<ApplicationStatus>('PENDING');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState<(typeof PAGE_SIZE_OPTIONS)[number]['value']>('20');
+  const [actionErrorMessage, setActionErrorMessage] = useState<string | null>(null);
+  const [processingRequestId, setProcessingRequestId] = useState<number | null>(null);
+  const [processingAction, setProcessingAction] = useState<'approve' | 'reject' | null>(null);
+
+  const actionLockRef = useRef(false);
+
+  const { data, error, isLoading, isFetching, refetch } = useApplicationsQuery({
+    applyType,
+    page: currentPage - 1,
+    size: Number(pageSize),
+    status: activeStatus,
+  });
+  const approveMutation = useApproveApplicationMutation();
+  const rejectMutation = useRejectApplicationMutation();
+
+  const totalPages = Math.max(data?.totalPages ?? 0, 1);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [currentPage, totalPages]);
+
+  const handleStatusChange = (nextStatus: ApplicationStatus) => {
+    setActiveStatus(nextStatus);
+    setCurrentPage(1);
+    setActionErrorMessage(null);
+  };
+
+  const handlePageSizeChange = (nextPageSize: (typeof PAGE_SIZE_OPTIONS)[number]['value']) => {
+    setPageSize(nextPageSize);
+    setCurrentPage(1);
+  };
+
+  const handleOpenDocument = useCallback(
+    (documentUrl: string) => {
+      open('relationDocumentModal', {
+        props: {
+          documentUrl,
+        },
+      });
+    },
+    [open],
+  );
+
+  const rows = useMemo<RequestRow[]>(() => {
+    return (data?.requests ?? []).map((request) => ({
+      id: request.requestDisplayId,
+      relationDocumentUrl: request.relationDocumentUrl,
+      requestDisplayId: request.requestDisplayId,
+      requestedAt: formatDatesTime(request.requestedAt),
+      requesterName: request.requesterName,
+      requesterPhoneNumber: request.requesterPhoneNumber,
+      requestId: request.requestId,
+      status: activeStatus,
+      targets: request.targets.map((target) => ({
+        id: `${request.requestId}-${target.targetSubId}`,
+        name: target.targetName,
+        phone: target.targetPhoneNumber,
+      })),
+    }));
+  }, [activeStatus, data?.requests]);
+
+  const handleApprove = useCallback(
+    async (requestId: number) => {
+      if (actionLockRef.current) return;
+      actionLockRef.current = true;
+      try {
+        setActionErrorMessage(null);
+        setProcessingRequestId(requestId);
+        setProcessingAction('approve');
+        await approveMutation.mutateAsync({ applyType, requestId });
+        await refetch();
+      } catch (mutationError) {
+        setActionErrorMessage(
+          getApiErrorMessage(mutationError, '요청 승인 처리 중 오류가 발생했습니다.'),
+        );
+      } finally {
+        actionLockRef.current = false;
+        setProcessingRequestId(null);
+        setProcessingAction(null);
+      }
+    },
+    [approveMutation, applyType, refetch],
+  );
+
+  const handleReject = useCallback(
+    async (requestId: number) => {
+      if (actionLockRef.current) return;
+      actionLockRef.current = true;
+      try {
+        setActionErrorMessage(null);
+        setProcessingRequestId(requestId);
+        setProcessingAction('reject');
+        await rejectMutation.mutateAsync({ applyType, requestId });
+        await refetch();
+      } catch (mutationError) {
+        setActionErrorMessage(
+          getApiErrorMessage(mutationError, '요청 거절 처리 중 오류가 발생했습니다.'),
+        );
+      } finally {
+        actionLockRef.current = false;
+        setProcessingRequestId(null);
+        setProcessingAction(null);
+      }
+    },
+    [applyType, refetch, rejectMutation],
+  );
+
+  const columns = useMemo<Column<RequestRow>[]>(
+    () =>
+      createBaseColumns(handleOpenDocument).map((column) => {
+        if (column.accessor !== 'actions') {
+          return column;
+        }
+
+        return {
+          ...column,
+          render: (_, row) => {
+            if (row.status !== 'PENDING') {
+              return <span className="text-xs text-gray-400">-</span>;
+            }
+
+            return (
+              <div className="flex items-center gap-4">
+                <Button
+                  className="h-32 w-auto rounded-md px-12 text-xs"
+                  isLoading={
+                    processingRequestId === row.requestId && processingAction === 'approve'
+                  }
+                  onClick={() => {
+                    if (processingRequestId !== null) return;
+                    void handleApprove(row.requestId);
+                  }}
+                  variant="solid"
+                >
+                  승인
+                </Button>
+                <Button
+                  className="h-32 w-auto rounded-md px-12 text-xs"
+                  isLoading={processingRequestId === row.requestId && processingAction === 'reject'}
+                  onClick={() => {
+                    if (processingRequestId !== null) return;
+                    void handleReject(row.requestId);
+                  }}
+                  variant="destructive"
+                >
+                  거절
+                </Button>
+              </div>
+            );
+          },
+        };
+      }),
+    [handleApprove, handleOpenDocument, handleReject, processingAction, processingRequestId],
+  );
+
+  const errorMessage = useMemo(() => {
+    if (!error) {
+      return null;
+    }
+
+    return getApiErrorMessage(
+      error.response?.data ?? error,
+      '요청 목록 조회 중 오류가 발생했습니다.',
+    );
+  }, [error]);
+
+  return (
+    <section className="flex h-full flex-col pb-32">
+      <StatusTab activeStatus={activeStatus} onChange={handleStatusChange} />
+
+      <div className="flex h-full flex-col px-16">
+        <Card className="flex h-full flex-col">
+          <CardContent className="flex h-full w-full flex-col">
+            <div className="flex justify-end">
+              <CategorySelect
+                onChange={handlePageSizeChange}
+                options={[...PAGE_SIZE_OPTIONS]}
+                value={pageSize}
+              />
+            </div>
+            <div className="flex h-full flex-col justify-between">
+              <Table columns={columns} data={rows} isLoading={isLoading || isFetching} />
+              <Pagination current={currentPage} onMove={setCurrentPage} total={totalPages} />
+            </div>
+
+            {errorMessage && (
+              <p className="mb-16 rounded-md border border-rose-200 bg-rose-50 px-12 py-8 text-sm text-rose-700">
+                {errorMessage}
+              </p>
+            )}
+            {actionErrorMessage && (
+              <p className="mb-16 rounded-md border border-rose-200 bg-rose-50 px-12 py-8 text-sm text-rose-700">
+                {actionErrorMessage}
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+};

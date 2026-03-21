@@ -1,0 +1,1 @@
+export const DEFAULT_BOTTOM_NAV_HEIGHT = 58;

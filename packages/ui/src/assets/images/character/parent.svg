@@ -1,0 +1,25 @@
+<svg viewBox="0 0 60 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="29.882" cy="32.67" r="23.2132" transform="rotate(20.5398 29.882 32.67)" fill="#FF86B9"/>
+<path d="M21.6498 7.101C31.0652 7.10099 40.1277 10.0321 44.2707 14.8193C44.6834 15.2962 44.9343 15.912 44.8368 16.5351C44.1339 21.0249 35.831 21.8998 35.0879 23.0761C34.3853 24.1885 22.2992 26.6984 13.3502 25.8356C11.7356 25.6799 10.9811 23.8868 11.8474 22.5154C11.9863 22.2954 12.1583 22.0945 12.3748 21.9501C14.1189 20.7867 15.1818 21.9402 12.9001 20.0378C11.4287 18.8111 9.01332 14.7404 7.39247 11.5581C6.41478 9.63857 7.7385 7.67514 9.889 7.54888L10.0654 7.53852C13.2911 7.34906 17.5143 7.101 21.6498 7.101Z" fill="#FF86B9"/>
+<ellipse cx="36.4732" cy="28.5832" rx="1.36548" ry="2.04822" transform="rotate(-14.105 36.4732 28.5832)" fill="white"/>
+<ellipse cx="45.0813" cy="26.4202" rx="1.36548" ry="2.04822" transform="rotate(-14.105 45.0813 26.4202)" fill="white"/>
+<mask id="mask0_5874_24659" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="9" width="47" height="48">
+<circle cx="29.5318" cy="32.983" r="23.2132" transform="rotate(20.5398 29.5318 32.983)" fill="#FF86B9"/>
+</mask>
+<g mask="url(#mask0_5874_24659)">
+<g filter="url(#filter0_g_5874_24659)">
+<path d="M18.4462 46.6476C8.61307 40.1893 6.68117 29.6525 8.30237 21.0722L-3.15384 33.5924C-3.53571 34.0097 5.26238 54.0727 9.70916 64.0521L37.3849 58.3205L46.9761 48.886C38.1042 53.3473 27.7255 52.7422 18.4462 46.6476Z" fill="#E465BE" style="mix-blend-mode:darken"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_g_5874_24659" x="-12.1659" y="12.0722" width="68.142" height="60.9799" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="1022" />
+<feDisplacementMap in="shape" scale="18" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_5874_24659">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+</defs>
+</svg>
