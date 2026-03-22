@@ -9,7 +9,7 @@ import { QueryProvider } from './_providers/query/QueryProvider';
 
 export const metadata: Metadata = {
   description: 'HOTSPOT',
-  title: 'HOTSPOT',
+  title: '디지털 페어런팅의 시작, HOTSPOT',
 };
 
 export default function RootLayout({
