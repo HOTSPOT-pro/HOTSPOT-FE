@@ -20,7 +20,7 @@ export const MyPageMenu = ({ familyRole }: { familyRole: UserRole | null }) => {
   }, [open]);
 
   const visibleSections = MY_PAGE_MENU_SECTIONS.filter(
-    (section) => !(familyRole === 'PARENT' && section.id === 'manage'),
+    (section) => !(familyRole === 'CHILD' && section.id === 'manage'),
   );
 
   return (
