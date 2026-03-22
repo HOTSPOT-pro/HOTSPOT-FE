@@ -37,7 +37,7 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
         </span>
       </div>
       <div className="flex flex-col gap-2 py-3">
-        {data.items.map((i, index) => (
+        {data.items.map((i) => (
           <PresentLogItem key={`${i.subId}-${i.date}-${i.amount}`} type={type} user={i} />
         ))}
       </div>
@@ -55,7 +55,7 @@ const PresentLogItem = ({ user, type }: PresentLogItemProps) => {
   const amountColor = isSend ? 'text-purple-500' : 'text-green-800';
 
   return (
-    <div className="bg-gray-100 px-4 py-3.5 flex flex-row justify-between items-center rounded-2xl">
+    <div className="bg-gray-100 px-16 py-12 flex flex-row justify-between items-center rounded-2xl">
       <div>
         <div>
           <span className="text-[14px] font-bold">{user.name}</span>
