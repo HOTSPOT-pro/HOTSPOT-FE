@@ -12,7 +12,7 @@ import { FamilyPolicyCard } from './FamilyPolicyCard';
 import { FamilyPolicyCardSkeleton } from './FamilyPolicyCardSkeleton';
 
 const PolicyTabLayout = ({ children }: { children: ReactNode }) => (
-  <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-8">
+  <div className="elevation-1 bg-white rounded-xl px-20 py-16 flex flex-col gap-8">
     <h3 className="font-body-body2-bold">구성원별 정책 적용 현황</h3>
     {children}
   </div>

@@ -57,7 +57,7 @@ export const CategorySelect = <T extends string = string>({
 
       {isOpen && (
         <ul
-          className="absolute mt-[-2.9rem] z-20 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white py-8 shadow-lg"
+          className="elevation-3 absolute mt-[-2.9rem] z-dropdown max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white py-8"
           id="category-select-listbox"
         >
           {options.map((option) => {

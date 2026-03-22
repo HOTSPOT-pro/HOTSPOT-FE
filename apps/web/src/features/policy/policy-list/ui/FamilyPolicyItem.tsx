@@ -129,7 +129,7 @@ export const PolicyActionMenu = ({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-xl z-20 py-4 overflow-hidden animate-in fade-in zoom-in duration-150">
+        <div className="elevation-4 absolute right-0 z-dropdown mt-2 w-36 bg-white border border-gray-200 rounded-lg py-4 overflow-hidden animate-in fade-in zoom-in duration-150">
           <button
             className="w-full text-left px-16 py-8 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
             onClick={() => {

@@ -10,7 +10,7 @@ export const SettingDropDown = ({ handleDropDown }: SettingDropDownProps) => {
   const { readAll } = useNotification();
   const router = useRouter();
   return (
-    <div className="absolute right-0 mr-8 w-[150px] overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg z-50">
+    <div className="absolute right-0 z-dropdown mr-8 w-[150px] overflow-hidden rounded-xl border border-gray-100 bg-white elevation-3">
       <div className="flex flex-col py-4">
         <button
           className="px-8 py-4 text-left text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100"

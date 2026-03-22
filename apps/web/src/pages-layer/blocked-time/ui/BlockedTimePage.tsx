@@ -71,7 +71,7 @@ export const BlockedTimePage = () => {
 
   if (isPending) {
     return (
-      <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">데이터 사용 불가 시간대</h2>
         <p className="text-sm text-gray-500">차단 시간대를 불러오는 중입니다.</p>
       </section>
@@ -80,7 +80,7 @@ export const BlockedTimePage = () => {
 
   if (isError || !data) {
     return (
-      <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">데이터 사용 불가 시간대</h2>
         <p className="text-sm text-red-500">차단 시간대를 불러오지 못했습니다.</p>
         <button
@@ -100,7 +100,7 @@ export const BlockedTimePage = () => {
   const hasBlockedTime = data.dayBlockedTimes.some((item) => item.ranges.length > 0);
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
       <div className="space-y-4">
         <h2 className="font-title-title3-semibold">데이터 사용 불가 시간대</h2>
       </div>

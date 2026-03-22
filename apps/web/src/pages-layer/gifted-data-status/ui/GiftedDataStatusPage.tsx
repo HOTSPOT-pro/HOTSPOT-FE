@@ -94,7 +94,7 @@ export const GiftedDataStatusPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
         <p className="text-sm text-gray-500">선물 데이터 정보를 불러오는 중입니다.</p>
       </div>
@@ -103,7 +103,7 @@ export const GiftedDataStatusPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
         <p className="text-sm text-red-500">선물 데이터 정보를 불러오지 못했습니다.</p>
         <button
@@ -120,7 +120,7 @@ export const GiftedDataStatusPage = () => {
   }
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
       <div className="space-y-1">
         <h2 className="font-title-title3-semibold">선물받은 데이터</h2>
       </div>

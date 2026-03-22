@@ -84,7 +84,7 @@ export const FamilyRealtimeStatusTab = () => {
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-20">
-      <section className="flex flex-col w-full h-fit rounded-[0.75rem] p-16 gap-16 bg-white shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+      <section className="elevation-1 flex flex-col w-full h-fit rounded-[0.75rem] p-16 gap-16 bg-white">
         <h3 className="font-body-body2-bold">가족 전체 데이터 사용량</h3>
         <div className="flex w-full justify-center items-center">
           <div className="flex w-full max-w-70">
@@ -126,7 +126,7 @@ export const FamilyRealtimeStatusTab = () => {
         </div>
       </section>
 
-      <section className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-12">
+      <section className="elevation-1 bg-white rounded-xl px-20 py-16 flex flex-col gap-12">
         <h3 className="font-body-body2-bold">구성원 목록</h3>
         <div className="flex flex-col gap-12">
           {members.map((member, index) => {

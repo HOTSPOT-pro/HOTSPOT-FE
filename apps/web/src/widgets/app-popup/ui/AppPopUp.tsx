@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Overlay } from '@hotspot/ui';
-import CloseIcon from '@hotspot/ui/assets/icons/close.svg';
-import React from 'react';
-import { createPortal } from 'react-dom';
-import { usePopUp } from '../model/PopUpContext';
-import { popupRegistry } from '../model/registry';
+import { Overlay } from "@hotspot/ui";
+import CloseIcon from "@hotspot/ui/assets/icons/close.svg";
+import React from "react";
+import { createPortal } from "react-dom";
+import { usePopUp } from "../model/PopUpContext";
+import { popupRegistry } from "../model/registry";
 
 export const AppPopUp = () => {
   const { close, state } = usePopUp();

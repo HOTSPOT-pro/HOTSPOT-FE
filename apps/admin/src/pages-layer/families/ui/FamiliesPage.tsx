@@ -21,7 +21,7 @@ export const FamiliesPage = () => {
 
   return (
     <div className="p-16 w-full">
-      <div className="p-16 bg-white rounded-xl shadow-xs mb-24">
+      <div className="elevation-1 p-16 bg-white rounded-xl mb-24">
         <SearchBar
           onClear={() => fetchByPhone('')}
           onSubmit={(value) => {
@@ -31,7 +31,7 @@ export const FamiliesPage = () => {
         />
       </div>
 
-      <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden px-20 min-w-full">
+      <div className="elevation-1 bg-white rounded-xl overflow-hidden px-20 min-w-full">
         <div className="flex justify-between items-center border-b border-gray-100">
           <p className="py-20 font-title-title3-semibold text-gray-500 font-medium">
             {isSearching ? `검색 결과: ${totalCount}건` : `총 ${totalCount}건`}
