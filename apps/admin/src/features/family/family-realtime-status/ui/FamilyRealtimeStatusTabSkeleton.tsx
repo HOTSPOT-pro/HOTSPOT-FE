@@ -5,7 +5,7 @@ import { Skeleton } from '@hotspot/ui';
 export const FamilyRealtimeStatusSkeleton = () => {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-20">
-      <section className="flex flex-col w-full h-fit rounded-xl p-16 gap-16 bg-white shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+      <section className="elevation-1 flex flex-col w-full h-fit rounded-xl p-16 gap-16 bg-white">
         <Skeleton height="20px" width="120px" />
 
         <div className="flex w-full justify-center items-center py-2">
@@ -27,7 +27,7 @@ export const FamilyRealtimeStatusSkeleton = () => {
         </div>
       </section>
 
-      <section className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-12">
+      <section className="elevation-1 bg-white rounded-xl px-20 py-16 flex flex-col gap-12">
         <Skeleton height="20px" width="80px" />
 
         <div className="flex flex-col gap-12">

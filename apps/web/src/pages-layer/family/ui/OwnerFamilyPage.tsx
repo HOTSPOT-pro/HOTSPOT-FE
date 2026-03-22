@@ -211,7 +211,7 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
                     ) : null}
 
                     {canOpenMenu && isMenuOpen ? (
-                      <div className="absolute right-24 top-[2rem] z-10 w-56 overflow-hidden rounded-12 bg-white shadow-[0_4px_18px_rgba(0,0,0,0.15)]">
+                      <div className="elevation-4 absolute right-24 top-[2rem] z-dropdown w-56 overflow-hidden rounded-12 bg-white">
                         <button
                           className="flex w-full items-center gap-3 p-8 text-left text-[0.875rem] text-gray-900"
                           onClick={() =>

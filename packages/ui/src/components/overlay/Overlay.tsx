@@ -13,7 +13,7 @@ export const Overlay = ({ isVisible, onClick, className }: OverlayProps) => {
   return (
     <button
       className={cn(
-        'fixed inset-0 max-w-[500px] mx-auto z-overlay bg-black/40 transition-opacity duration-300 ease-in-out',
+        'dim-overlay fixed inset-0 max-w-[500px] mx-auto z-overlay transition-opacity duration-300 ease-in-out',
         isVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
         className,
       )}

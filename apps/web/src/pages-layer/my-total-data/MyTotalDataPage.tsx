@@ -77,7 +77,7 @@ export const MyTotalDataPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">전체 데이터</h2>
         <p className="text-sm text-gray-500">전체 데이터 정보를 불러오는 중입니다.</p>
       </div>
@@ -86,7 +86,7 @@ export const MyTotalDataPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">전체 데이터</h2>
         <p className="text-sm text-red-500">전체 데이터 정보를 불러오지 못했습니다.</p>
         <button
@@ -117,7 +117,7 @@ export const MyTotalDataPage = () => {
   }));
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
       <h2 className="font-title-title3-semibold">전체 데이터</h2>
 
       <div className="flex w-full justify-center items-center">

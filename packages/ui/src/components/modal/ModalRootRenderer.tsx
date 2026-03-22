@@ -92,12 +92,12 @@ export function ModalRootRenderer({ registry }: { registry: Registry }) {
       {closeOnOutside ? (
         <button
           aria-label="Close modal overlay"
-          className={cn('absolute inset-0 bg-black/40 cursor-pointer')}
+          className={cn('dim-overlay absolute inset-0 cursor-pointer')}
           onClick={close}
           type="button"
         />
       ) : (
-        <div aria-hidden="true" className="absolute inset-0 bg-black/40" />
+        <div aria-hidden="true" className="dim-overlay absolute inset-0" />
       )}
       <div className="absolute inset-0 flex justify-center items-center">
         <div aria-modal="true" ref={dialogRef} role="dialog" tabIndex={-1}>

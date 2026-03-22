@@ -97,7 +97,7 @@ export const BottomSheet = ({
 
       <div
         className={cn(
-          "relative w-full z-modal rounded-t-2xl bg-white shadow-xl",
+          "elevation-4 relative w-full z-bottom-sheet rounded-t-2xl bg-white",
           !isDragging && "transition-transform duration-300 ease-out",
           !isAnimate ? "translate-y-full" : "translate-y-0",
         )}

@@ -104,7 +104,7 @@ export const FamilyDataStatusPage = () => {
 
   if (isPending) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
         <p className="text-sm text-gray-500">가족 데이터 정보를 불러오는 중입니다.</p>
       </div>
@@ -113,7 +113,7 @@ export const FamilyDataStatusPage = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
         <p className="text-sm text-red-500">가족 데이터 정보를 불러오지 못했습니다.</p>
         <button
@@ -130,7 +130,7 @@ export const FamilyDataStatusPage = () => {
   }
 
   return (
-    <section className="flex flex-col w-full h-fit rounded-12 p-16 gap-16 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
       <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
       <div className="flex w-full justify-center items-center">
         <div className="flex w-full max-w-70">

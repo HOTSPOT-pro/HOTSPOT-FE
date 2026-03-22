@@ -116,7 +116,7 @@ export const TimePolicyTable = () => {
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] overflow-hidden">
+    <div className="elevation-1 bg-white rounded-xl overflow-hidden">
       <div className="flex justify-between p-24 pb-16 border-b border-gray-100">
         <p className="flex flex-row font-title-title3-semibold text-black gap-8">
           <TimeIcon className="w-24 h-24 text-purple-600" />

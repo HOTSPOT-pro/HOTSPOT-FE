@@ -42,7 +42,7 @@ class StateTabErrorBoundary extends Component<
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] px-20 py-16 flex flex-col gap-12">
+        <div className="elevation-1 bg-white rounded-xl px-20 py-16 flex flex-col gap-12">
           <p className="text-sm text-red-500">실시간 상태를 불러오지 못했습니다.</p>
           <button
             className="w-fit rounded-lg border border-gray-300 px-12 py-8 text-sm text-gray-700"
@@ -70,7 +70,7 @@ export const FamiliesDetailPage = () => {
 
   return (
     <div className="p-16 flex flex-col gap-20">
-      <div className="p-16 bg-white rounded-xl shadow-xs">
+      <div className="elevation-1 p-16 bg-white rounded-xl">
         <div className="flex flex-row gap-10">
           <h1 className="font-title-title2-bold">{familyData?.representativeName} 가족</h1>
           <p className="rounded-full px-8 py-2 border border-gray-200 font-body-body5-bold flex items-center">
