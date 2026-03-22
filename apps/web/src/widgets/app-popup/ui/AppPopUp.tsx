@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Overlay } from '@hotspot/ui';
-import CloseIcon from '@hotspot/ui/assets/icons/close.svg';
-import React from 'react';
-import { createPortal } from 'react-dom';
-import { usePopUp } from '../model/PopUpContext';
-import { popupRegistry } from '../model/registry';
+import { Overlay } from "@hotspot/ui";
+import CloseIcon from "@hotspot/ui/assets/icons/close.svg";
+import React from "react";
+import { createPortal } from "react-dom";
+import { usePopUp } from "../model/PopUpContext";
+import { popupRegistry } from "../model/registry";
 
 export const AppPopUp = () => {
   const { close, state } = usePopUp();
@@ -30,7 +30,7 @@ export const AppPopUp = () => {
         onClick={closeOnOutside ? close : undefined}
       />
       <div className="absolute inset-0 flex items-center justify-center px-6">
-        <div className="relative z-10 flex w-full max-w-[400px] flex-col gap-1">
+        <div className="relative z-modal flex w-full max-w-[400px] flex-col gap-1">
           <button
             className="ml-auto flex items-center gap-1 text-sm font-medium text-white"
             onClick={close}
