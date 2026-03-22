@@ -14,7 +14,7 @@ export const AccordionContainer = ({ policyList, blockServices }: AccordionConta
   console.log(policyList);
 
   return (
-    <div className="flex gap-1.5 flex-col">
+    <div className="flex gap-1.5 flex-col pb-8">
       <Accordion
         title={
           <div className="flex items-center gap-8 p-16 font-heading-heading4">
