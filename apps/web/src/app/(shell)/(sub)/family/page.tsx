@@ -1,8 +1,10 @@
 import type { UserRole } from '@/domains/user/model/types';
+import { redirect } from 'next/navigation';
 import { type FamilyInfoResponse, OwnerFamilyPage } from '@/pages-layer/family/ui/OwnerFamilyPage';
 import { ParentFamilyPage } from '@/pages-layer/family/ui/ParentFamilyPage';
 import { createServerApi } from '@/shared/api/server';
 import type { ApiResponse } from '@/shared/api/types';
+import { ROUTES } from '@/shared/constants/routes';
 
 interface AuthInfoResponse {
   email: string;
@@ -35,6 +37,10 @@ const getFamilyInfo = async (): Promise<FamilyInfoResponse | null> => {
 
 const Page = async () => {
   const [authInfo, familyInfo] = await Promise.all([getAuthInfo(), getFamilyInfo()]);
+
+  if (authInfo?.familyRole === 'CHILD') {
+    redirect(ROUTES.MY_PAGE);
+  }
 
   if (authInfo?.familyRole === 'OWNER') {
     return <OwnerFamilyPage familyInfo={familyInfo} />;
