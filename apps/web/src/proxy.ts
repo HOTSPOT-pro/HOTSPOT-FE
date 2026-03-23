@@ -13,7 +13,7 @@ export function proxy(request: NextRequest) {
     // 공개 경로는 통과
     return NextResponse.next();
 
-  const accessToken = request.cookies.get('accessToken')?.value;
+  const accessToken = request.cookies.get('userAccessToken')?.value;
 
   if (!accessToken) {
     // 토큰 없으면 로그인으로
