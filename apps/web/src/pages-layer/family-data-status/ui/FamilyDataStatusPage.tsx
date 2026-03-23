@@ -161,9 +161,11 @@ export const FamilyDataStatusPage = () => {
                   className="w-10 h-10 rounded-full shrink-0"
                   style={{ backgroundColor: subUsage.color }}
                 />
-                <span className="text-text-normal">{subUsage.subName}</span>
+                <span className="font-title-title5-semibold text-text-normal">
+                  {subUsage.subName}
+                </span>
               </div>
-              <span className="text-gray-600">
+              <span className="font-body-body4 text-gray-600">
                 {subUsage.dataRemainAmount.toFixed(1)}GB /{" "}
                 {subUsage.dataLimit.toFixed(1)}GB ({subUsage.remainDataPercent}
                 %)

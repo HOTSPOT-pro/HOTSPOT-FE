@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Button } from '@hotspot/ui';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { Button, ProgressBar } from "@hotspot/ui";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import type {
   GiftUsageItem as GiftUsageItemResponse,
   GiftUsage as GiftUsageResponse,
-} from '@/domains/usage/api/types';
-import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
-import { api } from '@/shared/api/client';
-import type { ApiResponse } from '@/shared/api/types';
-import { ROUTES } from '@/shared/constants/routes';
+} from "@/domains/usage/api/types";
+import { RefreshButton } from "@/features/refresh/ui/RefreshButton";
+import { api } from "@/shared/api/client";
+import type { ApiResponse } from "@/shared/api/types";
+import { ROUTES } from "@/shared/constants/routes";
 
 interface GiftUsage {
   giftId: number;
@@ -31,6 +31,8 @@ interface GiftedDataStatus {
 }
 const PERCENT_MAX = 100;
 const ZERO_PERCENT = 0;
+const REMAINING_COLOR = "#4ADE80";
+const EXHAUSTED_COLOR = "#EF4444";
 
 const toRemainPercent = (remainAmount: number, totalAmount: number) => {
   if (totalAmount <= 0) return ZERO_PERCENT;
@@ -41,7 +43,10 @@ const toRemainPercent = (remainAmount: number, totalAmount: number) => {
 };
 
 const mapGiftUsageItem = (giftUsage: GiftUsageItemResponse): GiftUsage => ({
-  dataUsagePercent: toRemainPercent(giftUsage.giftDataUsageRemainAmount, giftUsage.giftDataLimit),
+  dataUsagePercent: toRemainPercent(
+    giftUsage.giftDataUsageRemainAmount,
+    giftUsage.giftDataLimit,
+  ),
   giftDataLimit: giftUsage.giftDataLimit,
   giftDataUsageAmount: giftUsage.giftDataUsageAmount,
   giftDataUsageRemainAmount: giftUsage.giftDataUsageRemainAmount,
@@ -54,12 +59,16 @@ const mapGiftedDataStatus = (data: GiftUsageResponse): GiftedDataStatus => ({
   giftDataAmount: data.giftDataAmount,
   giftDataRemainAmount: data.giftDataRemainAmount,
   giftDataUsageAmount: data.giftDataUsageAmount,
-  giftUsagePercent: toRemainPercent(data.giftDataRemainAmount, data.giftDataAmount),
+  giftUsagePercent: toRemainPercent(
+    data.giftDataRemainAmount,
+    data.giftDataAmount,
+  ),
   giftUsages: data.giftUsages.map(mapGiftUsageItem),
 });
 
 const getGiftedDataStatus = async () => {
-  const response = await api.get<ApiResponse<GiftUsageResponse>>('/api/v1/giftUsage');
+  const response =
+    await api.get<ApiResponse<GiftUsageResponse>>("/api/v1/giftUsage");
   return mapGiftedDataStatus(response.data.data);
 };
 
@@ -69,19 +78,19 @@ const formatCurrentTime = (currentTime: string) => {
   const parsedDate = new Date(currentTime);
 
   if (Number.isNaN(parsedDate.getTime())) {
-    return '-';
+    return "-";
   }
 
-  return new Intl.DateTimeFormat('ko-KR', {
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+  return new Intl.DateTimeFormat("ko-KR", {
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   })
     .format(parsedDate)
-    .replace(/\.\s?/g, '.')
-    .replace(',', '');
+    .replace(/\.\s?/g, ".")
+    .replace(",", "");
 };
 
 export const GiftedDataStatusPage = () => {
@@ -89,14 +98,16 @@ export const GiftedDataStatusPage = () => {
 
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getGiftedDataStatus,
-    queryKey: ['giftedDataStatus'],
+    queryKey: ["giftedDataStatus"],
   });
 
   if (isPending) {
     return (
       <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
-        <p className="text-sm text-gray-500">선물 데이터 정보를 불러오는 중입니다.</p>
+        <p className="text-sm text-gray-500">
+          선물 데이터 정보를 불러오는 중입니다.
+        </p>
       </div>
     );
   }
@@ -105,7 +116,9 @@ export const GiftedDataStatusPage = () => {
     return (
       <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
-        <p className="text-sm text-red-500">선물 데이터 정보를 불러오지 못했습니다.</p>
+        <p className="text-sm text-red-500">
+          선물 데이터 정보를 불러오지 못했습니다.
+        </p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
           onClick={async () => {
@@ -133,7 +146,9 @@ export const GiftedDataStatusPage = () => {
           }}
         >
           <div className="absolute inset-[10px] flex items-center justify-center rounded-full bg-white">
-            <span className="text-[1.5rem] font-bold text-gray-900">{data.giftUsagePercent}%</span>
+            <span className="text-[1.5rem] font-bold text-gray-900">
+              {data.giftUsagePercent}%
+            </span>
           </div>
         </div>
 
@@ -161,7 +176,9 @@ export const GiftedDataStatusPage = () => {
           <div className="h-px bg-gray-200" />
 
           <div className="flex items-center justify-between">
-            <span className="text-[1rem] font-semibold text-gray-600">총 선물</span>
+            <span className="text-[1rem] font-semibold text-gray-600">
+              총 선물
+            </span>
             <span className="text-[1rem] font-bold text-gray-900">
               {formatData(data.giftDataAmount)}
             </span>
@@ -172,35 +189,34 @@ export const GiftedDataStatusPage = () => {
       <div className="space-y-5 pt-2">
         {data.giftUsages.map((giftUsage) => {
           const isExhausted = giftUsage.dataUsagePercent <= ZERO_PERCENT;
-          const barColor = isExhausted ? 'bg-red-500' : 'bg-green-400';
+          const barColor = isExhausted ? EXHAUSTED_COLOR : REMAINING_COLOR;
 
           return (
             <div key={giftUsage.giftId}>
               <div className="mb-2 flex items-center justify-between">
-                <p className="text-[1rem] font-semibold text-gray-900">{giftUsage.giftUserName}</p>
-                <p className="text-[1rem] font-semibold text-gray-900">
-                  {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB{' '}
-                  <span className="text-gray-500">/ {giftUsage.giftDataLimit.toFixed(1)}GB</span>
+                <p className="font-title-title5-semibold text-gray-900">
+                  {giftUsage.giftUserName}
+                </p>
+                <p className="font-body-body4 text-gray-900">
+                  {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB{" "}
+                  <span className="text-gray-500">
+                    / {giftUsage.giftDataLimit.toFixed(1)}GB
+                  </span>
+                  <span
+                    className={isExhausted ? "text-red-500" : "text-gray-600"}
+                  >
+                    {" "}
+                    ({giftUsage.dataUsagePercent}%)
+                  </span>
                 </p>
               </div>
 
-              <div className="h-4 overflow-hidden rounded-full bg-gray-200">
-                <div
-                  className={`h-full rounded-full ${barColor}`}
-                  style={{
-                    width: `${Math.max(0, Math.min(giftUsage.dataUsagePercent, PERCENT_MAX))}%`,
-                  }}
-                />
-              </div>
-
-              <div className="mt-1 flex items-center justify-between text-sm">
-                <span className={isExhausted ? 'text-red-500' : 'text-gray-600'}>
-                  {giftUsage.dataUsagePercent}% 잔여
-                </span>
-                <span className="text-gray-500">
-                  사용 {giftUsage.giftDataUsageAmount.toFixed(1)}GB
-                </span>
-              </div>
+              <ProgressBar
+                color={barColor}
+                label={`gift-usage-${giftUsage.giftId}`}
+                total={Math.max(giftUsage.giftDataLimit, 1)}
+                value={giftUsage.giftDataUsageRemainAmount}
+              />
             </div>
           );
         })}
