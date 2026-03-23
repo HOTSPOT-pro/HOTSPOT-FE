@@ -1,13 +1,12 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useCallback, useState, type ComponentProps } from 'react';
 import {
   CartesianGrid,
   ComposedChart,
   Legend,
   Line,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
@@ -36,25 +35,21 @@ interface LineTooltipPayload {
 }
 
 interface LineChartTooltipContentProps {
-  active?: boolean;
   dateUnit: string;
   hasPersonalData: boolean;
-  payload?: Array<{ payload: LineTooltipPayload }>;
+  payload?: LineTooltipPayload | null;
   unit: string;
 }
 
 const LineChartTooltipContent = ({
-  active,
   payload,
   unit,
   dateUnit,
   hasPersonalData,
 }: LineChartTooltipContentProps) => {
-  if (!(active && payload?.length)) return null;
-  const firstPayload = payload[0]?.payload;
-  if (!firstPayload) return null;
+  if (!payload) return null;
 
-  const { date, total, personal } = firstPayload;
+  const { date, total, personal } = payload;
 
   return (
     <ChartTooltip
@@ -84,11 +79,50 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
   const hasPersonalData = personalName !== null;
 
   const max = getRoundedMax(data.map((item) => item.total));
+  const [tooltipState, setTooltipState] = useState<{
+    payload: LineTooltipPayload | null;
+    x: number;
+    y: number;
+  } | null>(null);
+
+  type ComposedChartMouseMoveHandler = NonNullable<ComponentProps<typeof ComposedChart>['onMouseMove']>;
+  type ComposedChartMouseLeaveHandler = NonNullable<
+    ComponentProps<typeof ComposedChart>['onMouseLeave']
+  >;
+
+  const handleMouseMove = useCallback<ComposedChartMouseMoveHandler>((state) => {
+    if (!(state?.isTooltipActive && state.activeCoordinate)) {
+      setTooltipState(null);
+      return;
+    }
+
+    const nextIndex = Number(state.activeTooltipIndex);
+    const nextPayload = Number.isInteger(nextIndex) ? data[nextIndex] : undefined;
+    if (!nextPayload) {
+      setTooltipState(null);
+      return;
+    }
+
+    setTooltipState({
+      payload: nextPayload,
+      x: state.activeCoordinate.x,
+      y: state.activeCoordinate.y,
+    });
+  }, [data]);
+
+  const handleMouseLeave = useCallback<ComposedChartMouseLeaveHandler>(() => {
+    setTooltipState(null);
+  }, []);
 
   return (
-    <div className="w-full h-full @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
+    <div className="w-full h-full relative @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
       <ResponsiveContainer height="100%" width="100%">
-        <ComposedChart data={data} margin={{ bottom: 10, left: 0, right: 10, top: 10 }}>
+        <ComposedChart
+          data={data}
+          margin={{ bottom: 10, left: 0, right: 10, top: 10 }}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+        >
           <CartesianGrid stroke={COLORS.CARTESIAN} strokeDasharray="3 3" vertical={false} />
 
           <XAxis
@@ -107,18 +141,6 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
             tickFormatter={(value) => `${value}${unit}`}
             tickLine={false}
             width={50}
-          />
-
-          <Tooltip
-            content={
-              <LineChartTooltipContent
-                dateUnit={dateUnit}
-                hasPersonalData={hasPersonalData}
-                unit={unit}
-              />
-            }
-            cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
-            wrapperStyle={{ zIndex: 'var(--z-dropdown)' }}
           />
 
           <Legend content={<LineChartLegend />} verticalAlign="bottom" />
@@ -147,6 +169,23 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
           )}
         </ComposedChart>
       </ResponsiveContainer>
+
+      <div
+        className="pointer-events-none absolute left-0 top-0 z-dropdown transition-opacity duration-150 ease-out"
+        style={{
+          opacity: tooltipState?.payload ? 1 : 0,
+          transform: tooltipState
+            ? `translate(${tooltipState.x + 12}px, ${tooltipState.y - 12}px) translateY(-100%)`
+            : 'translate(0, 0)',
+        }}
+      >
+        <LineChartTooltipContent
+          dateUnit={dateUnit}
+          hasPersonalData={hasPersonalData}
+          payload={tooltipState?.payload}
+          unit={unit}
+        />
+      </div>
     </div>
   );
 });

@@ -1,7 +1,7 @@
 'use client';
 
-import { memo, useCallback, useMemo, useState } from 'react';
-import { Pie, PieChart, type PieProps, ResponsiveContainer, Sector, Tooltip } from 'recharts';
+import { memo, useCallback, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
+import { Pie, PieChart, type PieProps, ResponsiveContainer, Sector } from 'recharts';
 import { COLORS } from '../../../lib/interpolateColor';
 import { ChartTooltip } from '../tooltip/ChartTooltip';
 
@@ -41,22 +41,19 @@ interface DonutTooltipPayload {
 }
 
 interface DonutChartTooltipContentProps {
-  active?: boolean;
-  payload?: Array<{ payload: DonutTooltipPayload }>;
+  payload?: DonutTooltipPayload | null;
   total: number;
 }
 
-const DonutChartTooltipContent = ({ active, payload, total }: DonutChartTooltipContentProps) => {
-  if (!(active && payload?.length)) return null;
-  const firstPayload = payload[0]?.payload;
-  if (!firstPayload) return null;
+const DonutChartTooltipContent = ({ payload, total }: DonutChartTooltipContentProps) => {
+  if (!payload) return null;
 
-  const percent = total > 0 ? Number(((firstPayload.value / total) * 100).toFixed(1)) : 0;
+  const percent = total > 0 ? Number(((payload.value / total) * 100).toFixed(1)) : 0;
 
   return (
     <ChartTooltip
-      header={firstPayload.name}
-      sections={[{ percent, unit: 'GB', value: firstPayload.value.toFixed(1) }]}
+      header={payload.name}
+      sections={[{ percent, unit: 'GB', value: payload.value.toFixed(1) }]}
     />
   );
 };
@@ -77,15 +74,40 @@ export const DonutChart = memo(
     },
   }: DonutChartProps) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     type PieMouseEnterHandler = NonNullable<PieProps['onMouseEnter']>;
+    type PieMouseMoveHandler = NonNullable<PieProps['onMouseMove']>;
 
-    const onMouseEnter = useCallback<PieMouseEnterHandler>((_, index) => {
+    const updateTooltipPosition = useCallback(
+      (event: ReactMouseEvent<SVGElement | Element> | undefined) => {
+      if (!(event && containerRef.current)) return;
+
+      const bounds = containerRef.current.getBoundingClientRect();
+      const nextX = event.clientX - bounds.left;
+      const nextY = event.clientY - bounds.top;
+
+      setTooltipPosition({ x: nextX, y: nextY });
+      },
+      [],
+    );
+
+    const onMouseEnter = useCallback<PieMouseEnterHandler>((entry, index, event) => {
       setActiveIndex(typeof index === 'number' ? index : null);
-    }, []);
+      updateTooltipPosition(event);
+    }, [updateTooltipPosition]);
+
+    const onMouseMove = useCallback<PieMouseMoveHandler>((entry, index, event) => {
+      if (typeof index === 'number') {
+        setActiveIndex(index);
+      }
+      updateTooltipPosition(event);
+    }, [updateTooltipPosition]);
 
     const onMouseLeave = useCallback(() => {
       setActiveIndex(null);
+      setTooltipPosition(null);
     }, []);
 
     const displayContent = useMemo(() => {
@@ -98,6 +120,7 @@ export const DonutChart = memo(
     }, [percentFormatter, total, totalUsed, totalUsedLabel, valueFormatter]);
 
     const highlightedIndex = activeIndex;
+    const tooltipPayload = highlightedIndex !== null ? data[highlightedIndex] ?? null : null;
 
     const renderCustomSector = useCallback(
       (props: SectorProps) => {
@@ -119,7 +142,10 @@ export const DonutChart = memo(
     );
 
     return (
-      <div className="w-full h-full aspect-square relative @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
+      <div
+        className="w-full h-full aspect-square relative @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none"
+        ref={containerRef}
+      >
         <ResponsiveContainer className="w-full h-full">
           <PieChart>
             <Pie
@@ -144,18 +170,27 @@ export const DonutChart = memo(
               isAnimationActive={true}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
+              onMouseMove={onMouseMove}
               outerRadius="100%"
               shape={renderCustomSector}
               startAngle={-270}
               stroke="none"
             />
-            <Tooltip
-              content={<DonutChartTooltipContent total={total} />}
-              cursor={false}
-              wrapperStyle={{ outline: 'none', zIndex: 'var(--z-dropdown)' }}
-            />
           </PieChart>
         </ResponsiveContainer>
+
+        <div
+          className="pointer-events-none absolute left-0 top-0 z-dropdown transition-opacity duration-150 ease-out"
+          style={{
+            opacity: tooltipPayload && tooltipPosition ? 1 : 0,
+            transform:
+              tooltipPosition
+                ? `translate(${tooltipPosition.x + 12}px, ${tooltipPosition.y - 12}px) translateY(-100%)`
+                : 'translate(0, 0)',
+          }}
+        >
+          <DonutChartTooltipContent payload={tooltipPayload} total={total} />
+        </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
           <span className="text-gray-400 font-medium leading-none text-[6cqi]">
