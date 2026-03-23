@@ -5,7 +5,7 @@ interface RoleChipProps {
   role: FAMILY_ROLE;
 }
 
-const OWNDER_STYLE = "border-sky-300 text-sky-600";
+const OWNER_STYLE = "border-sky-300 text-sky-600";
 const PARENT_STYLE = "border-purple-300 text-purple-600";
 const CHILD_STYLE = "border-lime-300 text-lime-600";
 
@@ -27,7 +27,7 @@ export const RoleChip = ({ role }: RoleChipProps) => {
     <span
       className={cn(
         "font-body-body6 p-3 border-2 rounded-4",
-        role === "OWNER" && OWNDER_STYLE,
+        role === "OWNER" && OWNER_STYLE,
         role === "PARENT" && PARENT_STYLE,
         role === "CHILD" && CHILD_STYLE,
       )}
