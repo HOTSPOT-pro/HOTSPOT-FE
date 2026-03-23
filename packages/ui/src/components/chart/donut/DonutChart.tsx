@@ -168,7 +168,7 @@ export const DonutChart = memo(
             </div>
           ) : (
             <>
-              <div className="flex items-baseline my-[1%] text-[13cqi]">
+              <div className="flex items-baseline my-[1%] text-[13cqi] font-bold">
                 {displayContent.percent}
               </div>
               <span className="font-medium text-gray-400 leading-none text-[6cqi] transition-colors text-gray-400">
