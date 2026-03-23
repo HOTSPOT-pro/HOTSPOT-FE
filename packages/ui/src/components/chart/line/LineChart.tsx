@@ -1,13 +1,12 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef, useState, type ComponentProps } from 'react';
 import {
   CartesianGrid,
   ComposedChart,
   Legend,
   Line,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
@@ -35,26 +34,59 @@ interface LineTooltipPayload {
   total: number;
 }
 
+interface TooltipPosition {
+  x: number;
+  y: number;
+}
+
+const TOOLTIP_OFFSET = 12;
+const TOOLTIP_PADDING = 8;
+
+const getTooltipPosition = ({
+  containerHeight,
+  containerWidth,
+  coordinates,
+  tooltipHeight,
+  tooltipWidth,
+}: {
+  containerHeight: number;
+  containerWidth: number;
+  coordinates: TooltipPosition;
+  tooltipHeight: number;
+  tooltipWidth: number;
+}) => {
+  let x = coordinates.x + TOOLTIP_OFFSET;
+  if (x + tooltipWidth + TOOLTIP_PADDING > containerWidth) {
+    x = coordinates.x - tooltipWidth - TOOLTIP_OFFSET;
+  }
+
+  let y = coordinates.y - tooltipHeight - TOOLTIP_OFFSET;
+  if (y < TOOLTIP_PADDING) {
+    y = coordinates.y + TOOLTIP_OFFSET;
+  }
+
+  return {
+    x: Math.min(Math.max(TOOLTIP_PADDING, x), Math.max(TOOLTIP_PADDING, containerWidth - tooltipWidth - TOOLTIP_PADDING)),
+    y: Math.min(Math.max(TOOLTIP_PADDING, y), Math.max(TOOLTIP_PADDING, containerHeight - tooltipHeight - TOOLTIP_PADDING)),
+  };
+};
+
 interface LineChartTooltipContentProps {
-  active?: boolean;
   dateUnit: string;
   hasPersonalData: boolean;
-  payload?: Array<{ payload: LineTooltipPayload }>;
+  payload?: LineTooltipPayload | null;
   unit: string;
 }
 
 const LineChartTooltipContent = ({
-  active,
   payload,
   unit,
   dateUnit,
   hasPersonalData,
 }: LineChartTooltipContentProps) => {
-  if (!(active && payload?.length)) return null;
-  const firstPayload = payload[0]?.payload;
-  if (!firstPayload) return null;
+  if (!payload) return null;
 
-  const { date, total, personal } = firstPayload;
+  const { date, total, personal } = payload;
 
   return (
     <ChartTooltip
@@ -84,11 +116,83 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
   const hasPersonalData = personalName !== null;
 
   const max = getRoundedMax(data.map((item) => item.total));
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipState, setTooltipState] = useState<{
+    activeIndex: number | null;
+    x: number;
+    y: number;
+  } | null>(null);
+  const [tooltipSize, setTooltipSize] = useState({ height: 0, width: 0 });
+
+  type ComposedChartMouseMoveHandler = NonNullable<ComponentProps<typeof ComposedChart>['onMouseMove']>;
+  type ComposedChartMouseLeaveHandler = NonNullable<
+    ComponentProps<typeof ComposedChart>['onMouseLeave']
+  >;
+
+  const handleMouseMove = useCallback<ComposedChartMouseMoveHandler>((state) => {
+    if (!(state?.isTooltipActive && state.activeCoordinate)) {
+      setTooltipState(null);
+      return;
+    }
+
+    const nextIndex = Number(state.activeTooltipIndex);
+    if (!(Number.isInteger(nextIndex) && data[nextIndex])) {
+      setTooltipState(null);
+      return;
+    }
+
+    setTooltipState({
+      activeIndex: nextIndex,
+      x: state.activeCoordinate.x,
+      y: state.activeCoordinate.y,
+    });
+  }, [data]);
+
+  const handleMouseLeave = useCallback<ComposedChartMouseLeaveHandler>(() => {
+    setTooltipState(null);
+  }, []);
+
+  const tooltipPayload =
+    tooltipState && tooltipState.activeIndex !== null ? data[tooltipState.activeIndex] ?? null : null;
+
+  useLayoutEffect(() => {
+    if (!(tooltipPayload && tooltipRef.current)) return;
+
+    const { height, width } = tooltipRef.current.getBoundingClientRect();
+    setTooltipSize((prev) => {
+      if (prev.height === height && prev.width === width) {
+        return prev;
+      }
+
+      return { height, width };
+    });
+  }, [tooltipPayload, dateUnit, hasPersonalData, unit]);
+
+  const tooltipPosition = useMemo(() => {
+    if (!(tooltipState && tooltipPayload && containerRef.current)) return null;
+
+    return getTooltipPosition({
+      containerHeight: containerRef.current.clientHeight,
+      containerWidth: containerRef.current.clientWidth,
+      coordinates: { x: tooltipState.x, y: tooltipState.y },
+      tooltipHeight: tooltipSize.height,
+      tooltipWidth: tooltipSize.width,
+    });
+  }, [tooltipPayload, tooltipSize.height, tooltipSize.width, tooltipState]);
 
   return (
-    <div className="w-full h-full @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
+    <div
+      className="w-full h-full relative @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none"
+      ref={containerRef}
+    >
       <ResponsiveContainer height="100%" width="100%">
-        <ComposedChart data={data} margin={{ bottom: 10, left: 0, right: 10, top: 10 }}>
+        <ComposedChart
+          data={data}
+          margin={{ bottom: 10, left: 0, right: 10, top: 10 }}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+        >
           <CartesianGrid stroke={COLORS.CARTESIAN} strokeDasharray="3 3" vertical={false} />
 
           <XAxis
@@ -107,18 +211,6 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
             tickFormatter={(value) => `${value}${unit}`}
             tickLine={false}
             width={50}
-          />
-
-          <Tooltip
-            content={
-              <LineChartTooltipContent
-                dateUnit={dateUnit}
-                hasPersonalData={hasPersonalData}
-                unit={unit}
-              />
-            }
-            cursor={{ stroke: COLORS.STROKE, strokeWidth: 2 }}
-            wrapperStyle={{ zIndex: 'var(--z-dropdown)' }}
           />
 
           <Legend content={<LineChartLegend />} verticalAlign="bottom" />
@@ -147,6 +239,24 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
           )}
         </ComposedChart>
       </ResponsiveContainer>
+
+      <div
+        className="pointer-events-none absolute left-0 top-0 z-dropdown transition-opacity duration-150 ease-out"
+        style={{
+          opacity: tooltipPayload && tooltipPosition ? 1 : 0,
+          transform: tooltipPosition
+            ? `translate(${tooltipPosition.x}px, ${tooltipPosition.y}px)`
+            : 'translate(0, 0)',
+        }}
+        ref={tooltipRef}
+      >
+        <LineChartTooltipContent
+          dateUnit={dateUnit}
+          hasPersonalData={hasPersonalData}
+          payload={tooltipPayload}
+          unit={unit}
+        />
+      </div>
     </div>
   );
 });

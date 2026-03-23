@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Skeleton } from '@hotspot/ui';
+import { Skeleton } from "@hotspot/ui";
 
 export const FamilyRealtimeStatusSkeleton = () => {
   return (
@@ -16,7 +16,7 @@ export const FamilyRealtimeStatusSkeleton = () => {
 
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div className="space-y-8" key={i}>
+            <div className="space-y-16" key={i}>
               <div className="flex justify-between">
                 <Skeleton height="14px" width="60px" />
                 <Skeleton height="14px" width="100px" />
@@ -39,8 +39,16 @@ export const FamilyRealtimeStatusSkeleton = () => {
               <div className="flex items-center justify-between">
                 <div className="flex gap-8">
                   <Skeleton height="20px" width="50px" />
-                  <Skeleton className="rounded-full" height="20px" width="40px" />
-                  <Skeleton className="rounded-full" height="20px" width="60px" />
+                  <Skeleton
+                    className="rounded-full"
+                    height="20px"
+                    width="40px"
+                  />
+                  <Skeleton
+                    className="rounded-full"
+                    height="20px"
+                    width="60px"
+                  />
                 </div>
                 <Skeleton height="14px" width="80px" />
               </div>
@@ -48,12 +56,16 @@ export const FamilyRealtimeStatusSkeleton = () => {
               {/* 카드 본문: 3개의 프로그레스 바 영역 */}
               <div className="space-y-16">
                 {[1, 2, 3].map((j) => (
-                  <div className="space-y-8" key={j}>
+                  <div className="space-y-16" key={j}>
                     <div className="flex justify-between">
                       <Skeleton height="12px" width="70px" />
                       <Skeleton height="12px" width="90px" />
                     </div>
-                    <Skeleton className="rounded-full" height="10px" width="100%" />
+                    <Skeleton
+                      className="rounded-full"
+                      height="10px"
+                      width="100%"
+                    />
                   </div>
                 ))}
               </div>

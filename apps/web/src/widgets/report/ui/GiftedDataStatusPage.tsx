@@ -229,42 +229,37 @@ export const GiftedDataStatusPage = () => {
         </div>
       </div>
 
-      <div className="space-y-16">
-        {data.giftUsages.map((giftUsage, index) => {
+      <div className="OWNER_STYLE">
+        {data.giftUsages.map((giftUsage) => {
           const isExhausted = giftUsage.dataUsagePercent <= ZERO_PERCENT;
           const barColor = isExhausted ? EXHAUSTED_COLOR : REMAINING_COLOR;
 
           return (
-            <div className="flex items-center gap-16" key={giftUsage.giftId}>
-              <div className="w-24 h-24 flex-none flex items-center justify-center rounded-full bg-gray-100 text-gray-900 font-body-body4">
-                {index + 1}
+            <div key={giftUsage.giftId}>
+              <div className="mb-2 flex items-center justify-between">
+                <p className="font-title-title5-semibold text-gray-900">
+                  {giftUsage.giftUserName}
+                </p>
+                <p className="font-body-body4 text-gray-900">
+                  {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB{" "}
+                  <span className="text-gray-500">
+                    / {giftUsage.giftDataLimit.toFixed(1)}GB
+                  </span>
+                  <span
+                    className={isExhausted ? "text-red-500" : "text-gray-600"}
+                  >
+                    {" "}
+                    ({giftUsage.dataUsagePercent}%)
+                  </span>
+                </p>
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="mb-2 flex items-center justify-between gap-8">
-                  <p className="font-title-title5-semibold text-gray-900">
-                    {giftUsage.giftUserName}
-                  </p>
-                  <p className="font-body-body4 text-gray-900 text-right">
-                    {giftUsage.giftDataUsageRemainAmount.toFixed(1)}GB{" "}
-                    <span className="text-gray-500">
-                      / {giftUsage.giftDataLimit.toFixed(1)}GB
-                    </span>
-                    <span
-                      className={isExhausted ? "text-red-500" : "text-gray-600"}
-                    >
-                      {" "}
-                      ({giftUsage.dataUsagePercent}%)
-                    </span>
-                  </p>
-                </div>
 
-                <ProgressBar
-                  color={barColor}
-                  label={`gift-usage-${giftUsage.giftId}`}
-                  total={Math.max(giftUsage.giftDataLimit, 1)}
-                  value={giftUsage.giftDataUsageRemainAmount}
-                />
-              </div>
+              <ProgressBar
+                color={barColor}
+                label={`gift-usage-${giftUsage.giftId}`}
+                total={Math.max(giftUsage.giftDataLimit, 1)}
+                value={giftUsage.giftDataUsageRemainAmount}
+              />
             </div>
           );
         })}

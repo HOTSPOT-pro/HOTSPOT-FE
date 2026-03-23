@@ -5,7 +5,7 @@ export const FamilyDetailControlSkeleton = () => {
     <div className="flex flex-col gap-20">
       <section className="bg-white rounded-xl p-20 border border-gray-100 shadow-sm flex flex-col gap-20">
         <div className="flex justify-between items-center">
-          <div className="space-y-8">
+          <div className="space-y-16">
             <Skeleton height="20px" width="140px" />
             <Skeleton height="12px" width="240px" />
           </div>
@@ -37,7 +37,7 @@ export const FamilyDetailControlSkeleton = () => {
                 <Skeleton className="rounded-lg" height="48px" width="100%" />
                 <Skeleton className="rounded-lg" height="48px" width="100%" />
               </div>
-              <div className="space-y-8">
+              <div className="space-y-16">
                 <Skeleton height="40px" width="100%" />
               </div>
             </div>

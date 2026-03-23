@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReportUser } from '@domains/report';
-import { LineChart } from '@hotspot/ui/components';
+import { LineChart, Skeleton } from '@hotspot/ui/components';
 import { useMemo, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useFamilyChartData } from '@/domains/report/model/useFamilyChartData';
@@ -32,8 +32,9 @@ export const PeriodReport = ({ user, unit }: PeriodReportProps) => {
   const renderChartContent = useMemo(() => {
     if (isLoading) {
       return (
-        <div className="flex h-full items-center justify-center text-gray-400">
-          데이터를 불러오는 중...
+        <div className="flex h-full flex-col justify-center gap-6">
+          <Skeleton height={18} width="35%" />
+          <Skeleton height="100%" width="100%" />
         </div>
       );
     }

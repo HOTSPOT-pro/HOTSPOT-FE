@@ -25,7 +25,7 @@ export const AnalyzePayPage = () => {
   };
 
   return (
-    <div className="px-24 w-full h-full flex flex-col justify-center items-center">
+    <div className="px-24 mt-auto w-full h-full flex flex-col justify-center items-center">
       <div className="p-20 animate-diagonal rounded-3xl mb-24 shadow-md">
         <CrownIcon className="w-40 h-40 text-white" />
       </div>

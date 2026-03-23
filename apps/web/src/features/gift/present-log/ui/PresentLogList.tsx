@@ -18,16 +18,18 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
   if (!data) return <div>데이터가 없습니다.</div>;
 
   return (
-    <div className="flex flex-col gap-4">
-      <p className="font-title-title3-semibold">{isSend ? '보낸 선물 내역' : '받은 선물 내역'}</p>
-      <p className="text-[11px] text-gray-500">
-        총 {data.items.length}건의 선물을 {isSend ? '보냈습니다.' : '받았습니다.'}
+    <div className="flex flex-col gap-16">
+      <p className="flex flex-col">
+        <span className="font-title-title3-semibold">
+          {isSend ? '보낸 선물 내역' : '받은 선물 내역'}
+        </span>
+        <span className="text-[11px] text-gray-500">
+          총 {data.items.length}건의 선물을 {isSend ? '보냈습니다.' : '받았습니다.'}
+        </span>
       </p>
+
       <div
-        className={cn(
-          'flex flex-row justify-between p-16 rounded-2xl items-center mt-12',
-          themeBgColor,
-        )}
+        className={cn('flex flex-row justify-between p-16 rounded-2xl items-center', themeBgColor)}
       >
         <span className="text-gray-500 text-[12px]">
           {isSend ? '총 선물한 데이터' : '총 받은 데이터'}
@@ -36,8 +38,8 @@ export const PresentLogList = ({ type }: PresentSendLogListProps) => {
           {data.total.toFixed(1)}GB
         </span>
       </div>
-      <div className="flex flex-col gap-2 py-3">
-        {data.items.map((i) => (
+      <div className="flex flex-col gap-8">
+        {data.items.map((i, index) => (
           <PresentLogItem key={`${i.subId}-${i.date}-${i.amount}`} type={type} user={i} />
         ))}
       </div>
@@ -55,7 +57,7 @@ const PresentLogItem = ({ user, type }: PresentLogItemProps) => {
   const amountColor = isSend ? 'text-purple-500' : 'text-green-800';
 
   return (
-    <div className="bg-gray-100 px-16 py-12 flex flex-row justify-between items-center rounded-2xl">
+    <div className="bg-gray-100 p-16 flex flex-row justify-between items-center rounded-2xl">
       <div>
         <div>
           <span className="text-[14px] font-bold">{user.name}</span>

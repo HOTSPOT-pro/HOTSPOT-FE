@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useModal } from '@hotspot/ui';
-import MoreVerticalIcon from '@hotspot/ui/assets/icons/more-vertical.svg';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import type { UserRole } from '@/domains/user/model/types';
-import { UserProfileIcon } from '@/domains/user/ui/UserProfileIcon';
-import { UserRoleLabel } from '@/domains/user/ui/UserRoleLabel';
-import { useHeader } from '@/widgets/app-header/model/useHeader';
+import { useModal } from "@hotspot/ui";
+import MoreVerticalIcon from "@hotspot/ui/assets/icons/more-vertical.svg";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import type { UserRole } from "@/domains/user/model/types";
+import { UserProfileIcon } from "@/domains/user/ui/UserProfileIcon";
+import { UserRoleLabel } from "@/domains/user/ui/UserRoleLabel";
+import { useHeader } from "@/widgets/app-header/model/useHeader";
 
-type FamilyRole = 'OWNER' | 'PARENT' | 'CHILD' | 'NONE';
+type FamilyRole = "OWNER" | "PARENT" | "CHILD" | "NONE";
 
 export interface FamilyMemberInfo {
   familyId: number;
@@ -28,16 +28,21 @@ export interface FamilyInfoResponse {
 }
 
 interface FamilySection {
-  iconType: 'child' | 'parent';
-  id: 'PARENT' | 'CHILD';
+  iconType: "child" | "parent";
+  id: "PARENT" | "CHILD";
   members: FamilyMemberInfo[];
   title: string;
 }
 
-const SectionIcon = ({ type }: { type: 'child' | 'parent' }) => {
-  if (type === 'child') {
+const SectionIcon = ({ type }: { type: "child" | "parent" }) => {
+  if (type === "child") {
     return (
-      <svg aria-hidden="true" className="h-20 w-20 text-green-400" fill="none" viewBox="0 0 20 20">
+      <svg
+        aria-hidden="true"
+        className="h-20 w-20 text-green-400"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
         <circle cx="10" cy="10" fill="currentColor" fillOpacity="0.16" r="9" />
         <circle cx="7.7" cy="8.4" fill="currentColor" r="1.2" />
         <circle cx="12.3" cy="8.4" fill="currentColor" r="1.2" />
@@ -52,13 +57,22 @@ const SectionIcon = ({ type }: { type: 'child' | 'parent' }) => {
   }
 
   return (
-    <svg aria-hidden="true" className="h-20 w-20 text-purple-500" fill="none" viewBox="0 0 20 20">
+    <svg
+      aria-hidden="true"
+      className="h-20 w-20 text-purple-500"
+      fill="none"
+      viewBox="0 0 20 20"
+    >
       <path
         d="M10 1.667 3.333 4.444v4.323c0 4.026 2.844 7.793 6.667 9.233 3.823-1.44 6.667-5.207 6.667-9.233V4.444L10 1.667Z"
         stroke="currentColor"
         strokeWidth="1.8"
       />
-      <path d="m7.5 10 1.667 1.667L12.5 8.333" stroke="currentColor" strokeWidth="1.8" />
+      <path
+        d="m7.5 10 1.667 1.667L12.5 8.333"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
     </svg>
   );
 };
@@ -93,55 +107,65 @@ const TrashIcon = () => (
   </svg>
 );
 
-const buildSections = (familyInfo: FamilyInfoResponse | null): FamilySection[] => {
+const buildSections = (
+  familyInfo: FamilyInfoResponse | null,
+): FamilySection[] => {
   const members = familyInfo?.memberInfoList ?? [];
   const parentMembers = members.filter(
-    (member) => member.familyRole === 'OWNER' || member.familyRole === 'PARENT',
+    (member) => member.familyRole === "OWNER" || member.familyRole === "PARENT",
   );
-  const childMembers = members.filter((member) => member.familyRole === 'CHILD');
+  const childMembers = members.filter(
+    (member) => member.familyRole === "CHILD",
+  );
 
   return [
     {
-      iconType: 'parent',
-      id: 'PARENT',
+      iconType: "parent",
+      id: "PARENT",
       members: parentMembers,
-      title: '부모',
+      title: "부모",
     },
     {
-      iconType: 'child',
-      id: 'CHILD',
+      iconType: "child",
+      id: "CHILD",
       members: childMembers,
-      title: '자녀',
+      title: "자녀",
     },
   ];
 };
 
 const toUserProfileRole = (role: FamilyRole): UserRole => {
-  if (role === 'OWNER' || role === 'PARENT' || role === 'CHILD') {
+  if (role === "OWNER" || role === "PARENT" || role === "CHILD") {
     return role;
   }
 
-  return 'CHILD';
+  return "CHILD";
 };
 
-export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse | null }) => {
+export const OwnerFamilyPage = ({
+  familyInfo,
+}: {
+  familyInfo: FamilyInfoResponse | null;
+}) => {
   const sections = useMemo(() => buildSections(familyInfo), [familyInfo]);
   const { open } = useModal();
   const router = useRouter();
-  const [activeMenuMemberId, setActiveMenuMemberId] = useState<number | null>(null);
+  const [activeMenuMemberId, setActiveMenuMemberId] = useState<number | null>(
+    null,
+  );
 
   useHeader({
-    leftAction: { type: 'back' },
-    rightAction: { type: 'none' },
-    title: '우리 가족',
-    variant: 'sub',
+    leftAction: { type: "back" },
+    rightAction: { type: "none" },
+    title: "우리 가족",
+    variant: "sub",
   });
 
   return (
     <div className="flex h-full flex-col bg-white px-16 pb-32 pt-16 gap-16">
       <button
         className="flex w-full items-center gap-16 rounded-12 border border-dashed border-gray-300 p-8 text-left"
-        onClick={() => open('addFamilyMemberModal')}
+        onClick={() => open("addFamilyMemberModal")}
         type="button"
       >
         <span className="flex h-[2.75rem] w-[2.75rem] items-center justify-center rounded-[8px] bg-purple-100 text-xl leading-none text-purple-500">
@@ -151,7 +175,9 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
           <span className="text-[0.8125rem] font-semibold leading-tight text-gray-900">
             가족 구성원 추가
           </span>
-          <span className="pt-1 text-[0.6875rem] leading-tight text-gray-500">추가 신청하기</span>
+          <span className="pt-1 text-[0.6875rem] leading-tight text-gray-500">
+            추가 신청하기
+          </span>
         </span>
       </button>
 
@@ -160,7 +186,9 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
           <div key={section.id}>
             <header className="flex items-center gap-8">
               <SectionIcon type={section.iconType} />
-              <h2 className="font-title-title3-semibold text-gray-900">{section.title}</h2>
+              <h2 className="font-title-title3-semibold text-gray-900">
+                {section.title}
+              </h2>
               <span className="font-body-body3 leading-none text-gray-500">
                 {section.members.length}명
               </span>
@@ -168,23 +196,29 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
 
             <ul>
               {section.members.map((member) => {
-                const canOpenMenu = member.familyRole === 'PARENT' || member.familyRole === 'CHILD';
+                const canOpenMenu =
+                  member.familyRole === "PARENT" ||
+                  member.familyRole === "CHILD";
                 const isMenuOpen = activeMenuMemberId === member.id;
                 const changeRoleLabel =
-                  member.familyRole === 'PARENT' ? '자녀로 변경' : '부모로 변경';
+                  member.familyRole === "PARENT"
+                    ? "자녀로 변경"
+                    : "부모로 변경";
                 return (
                   <li
                     className="relative flex items-center gap-16 border-t border-gray-200 py-16 first:border-t-0"
                     key={member.id}
                   >
-                    <UserProfileIcon type={toUserProfileRole(member.familyRole)} />
+                    <UserProfileIcon
+                      type={toUserProfileRole(member.familyRole)}
+                    />
 
                     <div className="min-w-0 flex flex-1 gap-8 flex-col">
                       <div className="flex items-center gap-8">
                         <strong className="text-[0.8125rem] font-semibold leading-none text-gray-900">
                           {member.name}
                         </strong>
-                        {member.familyRole === 'NONE' ? (
+                        {member.familyRole === "NONE" ? (
                           <PendingRoleBadge />
                         ) : (
                           <UserRoleLabel role={member.familyRole} />
@@ -202,7 +236,9 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
                         aria-label={`${member.name} 메뉴 열기`}
                         className="relative flex items-center justify-center text-gray-500"
                         onClick={() =>
-                          setActiveMenuMemberId((prev) => (prev === member.id ? null : member.id))
+                          setActiveMenuMemberId((prev) =>
+                            prev === member.id ? null : member.id,
+                          )
                         }
                         type="button"
                       >
@@ -215,7 +251,7 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
                         <button
                           className="flex w-full items-center gap-3 p-8 text-left text-[0.875rem] text-gray-900"
                           onClick={() =>
-                            open('changeFamilyRoleModal', {
+                            open("changeFamilyRoleModal", {
                               props: {
                                 currentRole: member.familyRole,
                                 name: member.name,
@@ -236,7 +272,7 @@ export const OwnerFamilyPage = ({ familyInfo }: { familyInfo: FamilyInfoResponse
                         <button
                           className="flex w-full items-center gap-3 p-8 text-left text-[0.875rem] text-red-500"
                           onClick={() =>
-                            open('deleteFamilyMemberModal', {
+                            open("deleteFamilyMemberModal", {
                               props: {
                                 name: member.name,
                                 onSuccess: () => {
