@@ -31,7 +31,7 @@ export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
         <span className="font-heading-heading2 text-gray-900">
           {formatReportTitle(weekStartDate, weekEndDate)}
         </span>
-        <span className="text-[13px] text-gray-500">{name}</span>
+        <span className="text-[13px] text-gray-500 whitespace-nowrap">{name}</span>
       </div>
 
       {/* Content */}
