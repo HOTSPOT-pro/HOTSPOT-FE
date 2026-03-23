@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { DonutChart, ProgressBar } from '@hotspot/ui';
-import { useQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
-import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
-import { api } from '@/shared/api/client';
-import type { ApiResponse } from '@/shared/api/types';
+import { DonutChart, ProgressBar } from "@hotspot/ui";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { RefreshButton } from "@/features/refresh/ui/RefreshButton";
+import { api } from "@/shared/api/client";
+import type { ApiResponse } from "@/shared/api/types";
 
 interface SubUsage {
   subId: number;
@@ -25,9 +25,9 @@ interface FamilyUsage {
   subUsages: SubUsage[];
 }
 
-const TOTAL_COLOR = '#4F46E5';
-const START_COLOR = '#16A34A';
-const END_COLOR = '#BBF7D0';
+const TOTAL_COLOR = "#4F46E5";
+const START_COLOR = "#16A34A";
+const END_COLOR = "#BBF7D0";
 
 const interpolateColor = (factor: number) => {
   const clamped = Math.min(1, Math.max(0, factor));
@@ -49,7 +49,9 @@ const interpolateColor = (factor: number) => {
 };
 
 const getFamilyUsage = async () => {
-  const { data } = await api.get<ApiResponse<FamilyUsage>>('/api/v1/familyUsage');
+  const { data } = await api.get<ApiResponse<FamilyUsage>>(
+    "/api/v1/familyUsage",
+  );
   return data.data;
 };
 
@@ -57,21 +59,21 @@ const formatCurrentTime = (currentTime: string) => {
   const parsedDate = new Date(currentTime);
 
   if (Number.isNaN(parsedDate.getTime())) {
-    return '-';
+    return "-";
   }
 
-  return new Intl.DateTimeFormat('ko-KR', {
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    month: '2-digit',
+  return new Intl.DateTimeFormat("ko-KR", {
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "2-digit",
   }).format(parsedDate);
 };
 
 export const FamilyDataStatusPage = () => {
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getFamilyUsage,
-    queryKey: ['familyUsage'],
+    queryKey: ["familyUsage"],
   });
 
   const sortedSubUsages = useMemo(
@@ -86,7 +88,9 @@ export const FamilyDataStatusPage = () => {
     () =>
       sortedSubUsages.map((subUsage, index, list) => ({
         ...subUsage,
-        color: interpolateColor(list.length > 1 ? index / (list.length - 1) : 0),
+        color: interpolateColor(
+          list.length > 1 ? index / (list.length - 1) : 0,
+        ),
       })),
     [sortedSubUsages],
   );
@@ -95,7 +99,7 @@ export const FamilyDataStatusPage = () => {
     () => [
       {
         fill: TOTAL_COLOR,
-        name: '잔여 데이터',
+        name: "잔여 데이터",
         value: data?.familyDataRemainAmount ?? 0,
       },
     ],
@@ -105,8 +109,10 @@ export const FamilyDataStatusPage = () => {
   if (isPending) {
     return (
       <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
-        <p className="text-sm text-gray-500">가족 데이터 정보를 불러오는 중입니다.</p>
+        <h2 className="font-title-title3-semibold">가족 공유 데이터 현황</h2>
+        <p className="text-sm text-gray-500">
+          가족 데이터 정보를 불러오는 중입니다.
+        </p>
       </div>
     );
   }
@@ -114,8 +120,10 @@ export const FamilyDataStatusPage = () => {
   if (isError || !data) {
     return (
       <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
-        <p className="text-sm text-red-500">가족 데이터 정보를 불러오지 못했습니다.</p>
+        <h2 className="font-title-title3-semibold">가족 공유 데이터 현황</h2>
+        <p className="text-sm text-red-500">
+          가족 데이터 정보를 불러오지 못했습니다.
+        </p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
           onClick={async () => {
@@ -131,7 +139,7 @@ export const FamilyDataStatusPage = () => {
 
   return (
     <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-      <h2 className="font-title-title3-semibold">가족 데이터 현황</h2>
+      <h2 className="font-title-title3-semibold">가족 공유 데이터 현황</h2>
       <div className="flex w-full justify-center items-center">
         <div className="flex w-full max-w-70">
           <DonutChart
@@ -156,8 +164,8 @@ export const FamilyDataStatusPage = () => {
                 <span className="text-text-normal">{subUsage.subName}</span>
               </div>
               <span className="text-gray-600">
-                {subUsage.dataRemainAmount.toFixed(1)}GB / {subUsage.dataLimit.toFixed(1)}GB (
-                {subUsage.remainDataPercent}
+                {subUsage.dataRemainAmount.toFixed(1)}GB /{" "}
+                {subUsage.dataLimit.toFixed(1)}GB ({subUsage.remainDataPercent}
                 %)
               </span>
             </div>
