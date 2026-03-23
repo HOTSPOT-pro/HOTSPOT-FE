@@ -28,8 +28,8 @@ export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
     <div className="mx-auto min-h-screen flex flex-col">
       {/* title */}
       <div className="flex items-center justify-between px-20 py-10 bg-white">
-        <div className="flex flex-column">
-          <span className="font-heading-heading2 text-gray-900">{title}</span>
+        <div className="flex flex-col">
+          <span className="font-heading-heading2 text-gray-900 break-keep">{title}</span>
           <span className="text-[13px] text-gray-500 whitespace-nowrap">
             {weekStartDate}~{weekEndDate}
           </span>

@@ -36,13 +36,13 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
         </div>
         <span
           className={cn(
-            'px-12 py-6 rounded-full font-body-body2-bold break-keep bg-gray-100 text-gray-600',
+            'px-12 py-6 rounded-full font-body-body2-bold break-keep bg-gray-100 text-gray-600 text-right',
             isUp && 'bg-violet-100 text-violet-700',
             isDown && 'bg-red-100 text-red-600',
           )}
         >
-          {isUp && `지난 주 대비 ${Math.abs(scoreData.scoreDiff)}점 상승`}
-          {isDown && `지난 주 대비 ${Math.abs(scoreData.scoreDiff)}점 하락`}
+          {isUp && `지난 주 대비\n${Math.abs(scoreData.scoreDiff)}점 상승`}
+          {isDown && `지난 주 대비\n${Math.abs(scoreData.scoreDiff)}점 하락`}
           {isNeutral && '점수 유지'}
         </span>
       </div>
