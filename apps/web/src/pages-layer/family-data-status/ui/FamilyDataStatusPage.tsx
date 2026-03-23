@@ -84,7 +84,7 @@ const FamilyDataStatusSkeleton = () => {
 
       <div className="space-y-12">
         {Array.from({ length: 4 }).map((_, index) => (
-          <div className="space-y-2" key={`family-member-${index}`}>
+          <div className="space-y-4" key={`family-member-${index}`}>
             <div className="flex items-center justify-between text-sm">
               <div className="flex flex-row items-center gap-8">
                 <Skeleton className="rounded-full" height={10} width={10} />

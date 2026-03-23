@@ -1,4 +1,4 @@
-import { Card, Skeleton } from '@hotspot/ui';
+import { Card, Skeleton } from "@hotspot/ui";
 
 export default function Loading() {
   return (
@@ -9,7 +9,12 @@ export default function Loading() {
 
       <div className="flex gap-8 overflow-hidden">
         {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton className="rounded-full shrink-0" height={36} key={index} width={72} />
+          <Skeleton
+            className="rounded-full shrink-0"
+            height={36}
+            key={index}
+            width={72}
+          />
         ))}
       </div>
 
@@ -29,8 +34,12 @@ export default function Loading() {
           </div>
           {Array.from({ length: 4 }).map((_, index) => (
             <div className="flex items-center gap-16" key={index}>
-              <Skeleton className="rounded-full shrink-0" height={24} width={24} />
-              <div className="flex-1 space-y-2">
+              <Skeleton
+                className="rounded-full shrink-0"
+                height={24}
+                width={24}
+              />
+              <div className="flex-1 space-y-4">
                 <div className="flex items-center justify-between">
                   <Skeleton height={16} width={96} />
                   <Skeleton height={16} width={48} />

@@ -1,19 +1,27 @@
-import { Skeleton } from '@hotspot/ui';
+import { Skeleton } from "@hotspot/ui";
 
-const FamilyCardSkeleton = ({ type }: { type: 'donut' | 'policy' | 'timeline' }) => {
+const FamilyCardSkeleton = ({
+  type,
+}: {
+  type: "donut" | "policy" | "timeline";
+}) => {
   return (
     <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-      <Skeleton height={24} width={type === 'donut' ? '10rem' : '9rem'} />
+      <Skeleton height={24} width={type === "donut" ? "10rem" : "9rem"} />
 
-      {type === 'donut' ? (
+      {type === "donut" ? (
         <>
           <div className="flex w-full justify-center">
-            <Skeleton className="rounded-full" height="17.5rem" width="17.5rem" />
+            <Skeleton
+              className="rounded-full"
+              height="17.5rem"
+              width="17.5rem"
+            />
           </div>
           <div className="h-px bg-gray-200" />
           <div className="space-y-12">
             {Array.from({ length: 4 }).map((_, index) => (
-              <div className="space-y-2" key={index}>
+              <div className="space-y-4" key={index}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-8">
                     <Skeleton className="rounded-full" height={10} width={10} />
@@ -28,13 +36,16 @@ const FamilyCardSkeleton = ({ type }: { type: 'donut' | 'policy' | 'timeline' })
         </>
       ) : null}
 
-      {type === 'policy' ? (
+      {type === "policy" ? (
         <>
           <div className="h-px bg-gray-200" />
-          <div className="space-y-2">
+          <div className="space-y-4">
             <Skeleton height={16} width={64} />
             {Array.from({ length: 2 }).map((_, index) => (
-              <div className="rounded-lg border border-gray-200 p-8 space-y-2" key={index}>
+              <div
+                className="rounded-lg border border-gray-200 p-8 space-y-4"
+                key={index}
+              >
                 <Skeleton height={16} width="45%" />
                 <Skeleton height={14} width="70%" />
               </div>
@@ -44,14 +55,19 @@ const FamilyCardSkeleton = ({ type }: { type: 'donut' | 'policy' | 'timeline' })
             <Skeleton height={16} width={56} />
             <div className="flex flex-wrap gap-4">
               {Array.from({ length: 4 }).map((_, index) => (
-                <Skeleton className="rounded-full" height={28} key={index} width={72} />
+                <Skeleton
+                  className="rounded-full"
+                  height={28}
+                  key={index}
+                  width={72}
+                />
               ))}
             </div>
           </div>
         </>
       ) : null}
 
-      {type === 'timeline' ? (
+      {type === "timeline" ? (
         <div className="space-y-12">
           <div className="flex items-center gap-12">
             <Skeleton height={12} width={28} />

@@ -31,7 +31,7 @@ const UsageCardSkeleton = ({
       </div>
 
       {withList ? (
-        <div className="space-y-8">
+        <div className="space-y-16">
           {Array.from({ length: 3 }).map((_, index) => (
             <div key={index}>
               <div className="mb-2 flex items-center justify-between">

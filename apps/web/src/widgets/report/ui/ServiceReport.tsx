@@ -42,7 +42,7 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
               height={24}
               width={24}
             />
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-4">
               <div className="flex items-center justify-between">
                 <Skeleton height={16} width={96} />
                 <Skeleton height={16} width={48} />
