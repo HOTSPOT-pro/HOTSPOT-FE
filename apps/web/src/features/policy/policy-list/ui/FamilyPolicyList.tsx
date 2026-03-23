@@ -1,5 +1,6 @@
 import { Button, Card, useModal } from '@hotspot/ui';
 import { useCallback } from 'react';
+import { useUserStore } from '@/domains/user';
 import type { GetFamilyCustomPolicy } from '../model/types';
 import { useFamilyCustomPolicy } from '../model/useFamilyCustomPolicy';
 import { useUpdatePolicyActive } from '../model/useUpdatePolicyActive';
@@ -8,6 +9,7 @@ import { FamilyPolicyItem } from './FamilyPolicyItem';
 export const FamilyPolicyList = () => {
   const { data } = useFamilyCustomPolicy();
   const { open } = useModal();
+  const userRole = useUserStore().familyRole;
 
   const handleOpenModal = useCallback(() => {
     open('addFamilyPolicyModal');
@@ -48,9 +50,11 @@ export const FamilyPolicyList = () => {
           <p className="text-base font-bold">우리 가족 정책</p>
           <p className="text-sm font-normal text-gray-600">{activeCount}개 정책 적용 중</p>
         </div>
-        <Button className="w-fit px-8 py-4" onClick={handleOpenModal} variant="outline">
-          정책 만들기
-        </Button>
+        {userRole === 'OWNER' && (
+          <Button className="w-fit px-8 py-4" onClick={handleOpenModal} variant="outline">
+            정책 만들기
+          </Button>
+        )}
       </div>
       {data.length === 0 && (
         <div className="text-sm text-gray-500 text-center">적용된 데이터가 없습니다.</div>

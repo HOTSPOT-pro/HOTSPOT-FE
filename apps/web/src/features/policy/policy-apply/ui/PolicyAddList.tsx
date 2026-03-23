@@ -35,6 +35,7 @@ export const PolicyAddList = ({ data, draft, onUpdate }: PolicyAddListProps) => 
         return (
           <PolicyAddItem
             description={policyDescriptionFormatter(policy)}
+            disable={!policy.isActive}
             id={policy.id}
             isApply={isApply}
             key={policy.id}

@@ -1,16 +1,27 @@
-"use client";
-import { Button, Card, useModal } from "@hotspot/ui";
-import CrownIcon from "@hotspot/ui/assets/icons/crown.svg";
-import { ANALYZE_ADVANTAGES } from "../constants/advantages";
+'use client';
+import { Button, Card, useModal } from '@hotspot/ui';
+import CrownIcon from '@hotspot/ui/assets/icons/crown.svg';
+import { useUserStore } from '@/domains/user';
+import { ANALYZE_ADVANTAGES } from '../constants/advantages';
 
 export const AnalyzePayPage = () => {
   const { open } = useModal();
+  const userRole = useUserStore().familyRole;
   const handleApply = () => {
-    open("daySelectorModal", {
-      props: {
-        type: "NEW",
-      },
-    });
+    if (userRole === 'OWNER') {
+      open('daySelectorModal', {
+        props: {
+          type: 'NEW',
+        },
+      });
+    } else {
+      open('errorModal', {
+        props: {
+          content: '대표 계정만 신청이 가능합니다.',
+          title: '신청이 불가능한 계정입니다.',
+        },
+      });
+    }
   };
 
   return (
@@ -24,10 +35,7 @@ export const AnalyzePayPage = () => {
       </p>
       <div className="text-left py-32 gap-12 flex flex-col">
         {ANALYZE_ADVANTAGES.map((ad, idx) => (
-          <Card
-            className="p-16 font-body-body3 flex flex-row items-center gap-12"
-            key={idx}
-          >
+          <Card className="p-16 font-body-body3 flex flex-row items-center gap-12" key={idx}>
             <div className="w-fit h-fit p-10 bg-lime-100 rounded-xl text-lime-600">
               <ad.Icon className="w-16 h-16 " />
             </div>
@@ -36,9 +44,7 @@ export const AnalyzePayPage = () => {
         ))}
       </div>
       <Button onClick={handleApply}>무료로 시작하기</Button>
-      <span className="font-body-body6 mt-12 text-gray-600">
-        언제든지 취소가 가능합니다.
-      </span>
+      <span className="font-body-body6 mt-12 text-gray-600">언제든지 취소가 가능합니다.</span>
     </div>
   );
 };

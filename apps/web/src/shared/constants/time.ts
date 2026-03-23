@@ -11,4 +11,5 @@ export const GC_TIME = {
   LONG: 1000 * 60 * 120,
   NORMAL: 1000 * 60 * 60,
   SHORT: 1000 * 60 * 10,
+  STATIC: Infinity,
 };

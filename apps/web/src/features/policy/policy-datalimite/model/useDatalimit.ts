@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { POLICY_KEYS } from '@/shared/constants/queryKey';
 import { getDatalimitClientApi } from '../api/getDatalimitClientApi';
 import { patchDatalimitClientApi } from '../api/patchDatalimitClientApi';
 import type { GetDatalimitResponse } from '../api/types';
@@ -14,7 +15,7 @@ export const useDatalimit = ({ subId, familyId }: useDatalimitParams) => {
   const { data, isPending } = useQuery<GetDatalimitResponse, Error, Datalimit>({
     enabled: Boolean(subId),
     queryFn: () => getDatalimitClientApi(subId),
-    queryKey: ['datalimit', subId],
+    queryKey: POLICY_KEYS.datalimit(subId),
     select: (serverData): Datalimit => ({
       dataLimit: serverData.dataLimit,
       familyDataAmount: serverData.familyDataAmount,
@@ -36,14 +37,14 @@ export const useDatalimit = ({ subId, familyId }: useDatalimitParams) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['datalimit', subId],
+        queryKey: POLICY_KEYS.datalimit(subId),
       });
       queryClient.invalidateQueries({
-        queryKey: ['policyPerFamily'],
+        queryKey: POLICY_KEYS.perFamily,
         refetchType: 'active',
       });
       queryClient.invalidateQueries({
-        queryKey: ['currentBlockedPoliciesStatus'],
+        queryKey: POLICY_KEYS.currentBlock,
         refetchType: 'all',
       });
     },

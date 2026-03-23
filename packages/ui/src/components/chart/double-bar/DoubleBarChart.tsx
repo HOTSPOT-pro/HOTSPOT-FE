@@ -99,7 +99,7 @@ export const DoubleBarChart = memo(({ data, unit = 'GB' }: UsageBarChartProps) =
   const max = getResponsiveRoundedMax(allValues);
 
   return (
-    <div className="w-full h-full @container">
+    <div className="w-full h-full @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
       <ResponsiveContainer height="100%" width="100%">
         <BarChart
           barGap={CHART_LAYOUT.BAR_GAP}

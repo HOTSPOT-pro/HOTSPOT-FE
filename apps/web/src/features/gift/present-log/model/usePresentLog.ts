@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { GIFT_KEYS } from '@/shared/constants/queryKey';
+import { STALE_TIME } from '@/shared/constants/time';
 import { getReceiveDataClient } from '../api/getReceivePresentLog';
 import { getSendDataClient } from '../api/getSendPresentLog';
 import type {
@@ -9,12 +11,10 @@ import type {
 } from '../api/types';
 import type { ReceiveItem, ReceivePresent, SendItem, SendPresent } from './types';
 
-const STALE_TIME = 600000; //10분
-
 export const usePresentLog = () => {
   const sendLog = useQuery({
     queryFn: getSendDataClient,
-    queryKey: ['presentSendLog'],
+    queryKey: GIFT_KEYS.sendLog,
     select: (data: PresentSendResponse): SendPresent => {
       return {
         items: data.items.map(
@@ -28,11 +28,11 @@ export const usePresentLog = () => {
         total: data.totalReceivedGb,
       };
     },
-    staleTime: STALE_TIME,
+    staleTime: STALE_TIME.NORMAL,
   });
   const receiveLog = useQuery({
     queryFn: getReceiveDataClient,
-    queryKey: ['presentReceiveLog'],
+    queryKey: GIFT_KEYS.receiveLog,
     select: (data: PresentReceiveResponse): ReceivePresent => {
       return {
         items: data.items.map(
@@ -46,7 +46,7 @@ export const usePresentLog = () => {
         total: data.totalReceivedGb,
       };
     },
-    staleTime: STALE_TIME,
+    staleTime: STALE_TIME.NORMAL,
   });
 
   return { receiveLog: receiveLog.data, sendLog: sendLog.data };
