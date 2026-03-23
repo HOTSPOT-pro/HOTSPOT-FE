@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { NOTIFICATION_KEYS } from '@/shared/constants/queryKey';
 import { getNotificationAllow } from '../api/getNotificationAllow';
 import { patchNotificationAllow } from '../api/patchNotificationAllow';
 import type { NotificationAllowResponse } from '../api/type';
@@ -13,7 +14,7 @@ export const useNotificationSettings = () => {
 
   const notiSettingList = useQuery({
     queryFn: getNotificationAllow,
-    queryKey: ['notificationsSettings'],
+    queryKey: NOTIFICATION_KEYS.setting,
     select: (data: NotificationAllowResponse) => {
       const serverData = data.notificationAllows;
       return NOTIFICATION_SETTINGS.map((setting) => {
@@ -34,20 +35,20 @@ export const useNotificationSettings = () => {
   >({
     mutationFn: ({ category, isAllowed }) => patchNotificationAllow(category, isAllowed),
 
-    onError: (err, newSetting, context) => {
+    onError: (_err, _newSetting, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(['notificationsSettings'], context.previousData);
+        queryClient.setQueryData(NOTIFICATION_KEYS.setting, context.previousData);
       }
     },
 
     onMutate: async (newSetting): Promise<MutationContext> => {
-      await queryClient.cancelQueries({ queryKey: ['notificationsSettings'] });
+      await queryClient.cancelQueries({ queryKey: NOTIFICATION_KEYS.setting });
 
       const previousData = queryClient.getQueryData<NotificationAllowResponse>([
-        'notificationsSettings',
+        NOTIFICATION_KEYS.setting,
       ]);
 
-      queryClient.setQueryData<NotificationAllowResponse>(['notificationsSettings'], (old) => {
+      queryClient.setQueryData<NotificationAllowResponse>(NOTIFICATION_KEYS.setting, (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -63,7 +64,7 @@ export const useNotificationSettings = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['notificationsSettings'] });
+      queryClient.invalidateQueries({ queryKey: NOTIFICATION_KEYS.setting });
     },
   });
 

@@ -3,13 +3,7 @@
 import RecieveGiftAnimatedImage from '@/shared/assets/images/gift/recieve-gift-animated.svg';
 import { ROUTES } from '@/shared/constants/routes';
 import { usePopUp } from '@/widgets/app-popup/model/PopUpContext';
-import {
-  PopUp,
-  PopUpContent,
-  PopUpFooter,
-  PopUpHeader,
-  PopUpTitle,
-} from '../../../shared/ui/pop-up/PopUp';
+import { PopUp, PopUpContent, PopUpHeader, PopUpTitle } from '../../../shared/ui/pop-up/PopUp';
 
 interface PresentDataPopUpProps {
   title: string;

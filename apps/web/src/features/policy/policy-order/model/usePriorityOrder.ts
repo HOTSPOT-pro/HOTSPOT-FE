@@ -2,6 +2,7 @@ import type { FamilyPriority, MemberPriority } from '@domains/policy';
 import type { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { POLICY_KEYS } from '@/shared/constants/queryKey';
 import { patchPriorityPriorityClientApi } from '../api/patchFamilyPriorityClientApi';
 import { getSortedMembers } from '../lib/memberSorting';
 
@@ -54,7 +55,7 @@ export const usePriorityOrder = (initial: FamilyPriority) => {
         })),
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['policyPerFamily'] });
+      queryClient.invalidateQueries({ queryKey: POLICY_KEYS.perFamily });
     },
   });
 

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { POLICY_KEYS } from '@/shared/constants/queryKey';
 import { patchPriorityFifoClientApi } from '../api/patchFamilyPriorityClientApi';
 
 export const useFifoOrder = () => {
@@ -7,7 +8,7 @@ export const useFifoOrder = () => {
   const updateFifo = useMutation({
     mutationFn: (familyId: number) => patchPriorityFifoClientApi(familyId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['policyPerFamily'] });
+      queryClient.invalidateQueries({ queryKey: POLICY_KEYS.perFamily });
     },
   });
 

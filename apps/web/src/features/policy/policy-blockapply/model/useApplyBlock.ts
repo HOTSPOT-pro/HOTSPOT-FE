@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { POLICY_KEYS } from '@/shared/constants/queryKey';
 import { patchBlockApplyClientApi } from '../api/putBlockApplyClientApi';
 import type { BlockApply } from './types';
 
@@ -22,11 +23,11 @@ export const useApplyBlock = ({ subId, familyId }: useApplyPolicyParams) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['policyPerFamily'],
+        queryKey: POLICY_KEYS.perFamily,
         refetchType: 'all',
       });
       queryClient.invalidateQueries({
-        queryKey: ['currentBlockedPoliciesStatus'],
+        queryKey: POLICY_KEYS.currentBlock,
         refetchType: 'all',
       });
     },

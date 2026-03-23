@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { POLICY_KEYS } from '@/shared/constants/queryKey';
+import { STALE_TIME } from '@/shared/constants/time';
 import { getAppliedPolicyClientApi } from '../api/getAppliedPolicyClientApi';
 import type { GetAppliedPolicyResponse } from '../api/types';
 import type { FamilyPriority, PolicyOrderType, PolicyPerFamily } from './types';
@@ -13,7 +15,7 @@ export const useFamilyAppliedPolicy = () => {
     }
   >({
     queryFn: () => getAppliedPolicyClientApi(true),
-    queryKey: ['policyPerFamily'],
+    queryKey: POLICY_KEYS.perFamily,
     select: (serverData) => {
       const policyPerFamily: PolicyPerFamily = {
         familyDataAmount: serverData.familyDataAmount,
@@ -51,6 +53,7 @@ export const useFamilyAppliedPolicy = () => {
         priorityPerFamily,
       };
     },
+    staleTime: STALE_TIME.NORMAL,
   });
 
   return {
