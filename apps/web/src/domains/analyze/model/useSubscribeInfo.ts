@@ -8,7 +8,7 @@ export const useSubscribeInfo = () => {
     gcTime: GC_TIME.STATIC,
     queryFn: getSubscribeInfo,
     queryKey: SUBSCRIBE_KEYS.info,
-    staleTime: STALE_TIME.NORMAL,
+    staleTime: STALE_TIME.INSTANT,
   });
 
   return {
