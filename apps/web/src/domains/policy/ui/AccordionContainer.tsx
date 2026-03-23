@@ -11,8 +11,6 @@ interface AccordionContainerProps {
 }
 
 export const AccordionContainer = ({ policyList, blockServices }: AccordionContainerProps) => {
-  console.log(policyList);
-
   return (
     <div className="flex gap-1.5 flex-col pb-8">
       <Accordion
