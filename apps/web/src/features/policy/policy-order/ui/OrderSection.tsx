@@ -1,6 +1,7 @@
 import type { FamilyPriority } from '@domains/policy';
 import { Button, Card } from '@hotspot/ui';
 import { useCallback, useEffect, useState } from 'react';
+import { useUserStore } from '@/domains/user';
 import { useFifoOrder } from '../model/useFifoOrder';
 import { usePriorityOrder } from '../model/usePriorityOrder';
 import { PolicyOrderSelector } from './PolicyOrderSelector';
@@ -13,6 +14,7 @@ interface OrderSectionProps {
 export const OrderSection = ({ data }: OrderSectionProps) => {
   const [policy, setPolicy] = useState<'FIFO' | 'PRIORITY'>(data.priorityType);
   const [isEditing, setIsEditing] = useState(false);
+  const userRole = useUserStore().familyRole;
 
   useEffect(() => {
     if (!isEditing) {
@@ -55,20 +57,25 @@ export const OrderSection = ({ data }: OrderSectionProps) => {
           </div>
 
           <div className="flex gap-8">
-            {!isEditing ? (
-              <Button className="w-fit h-fit px-8 py-4" onClick={handleEditClick} variant="outline">
-                편집
-              </Button>
-            ) : (
-              <>
-                <Button className="w-fit h-fit px-8 py-4" onClick={handleCancel} variant="ghost">
-                  취소
+            {userRole === 'OWNER' &&
+              (!isEditing ? (
+                <Button
+                  className="w-fit h-fit px-8 py-4"
+                  onClick={handleEditClick}
+                  variant="outline"
+                >
+                  편집
                 </Button>
-                <Button className="w-fit h-fit px-8 py-4" onClick={handleSave} variant="solid">
-                  저장
-                </Button>
-              </>
-            )}
+              ) : (
+                <>
+                  <Button className="w-fit h-fit px-8 py-4" onClick={handleCancel} variant="ghost">
+                    취소
+                  </Button>
+                  <Button className="w-fit h-fit px-8 py-4" onClick={handleSave} variant="solid">
+                    저장
+                  </Button>
+                </>
+              ))}
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import { cn, useModal } from '@hotspot/ui';
 import MoreIcon from '@hotspot/ui/assets/icons/more-vertical.svg';
 import { useEffect, useRef, useState } from 'react';
+import { useUserStore } from '@/domains/user';
 import type { GetFamilyCustomPolicy } from '../model/types';
 
 interface FamilyPolicyItemProps {
@@ -22,6 +23,7 @@ const DAY_LABEL_MAP: Record<string, string> = {
 
 export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemProps) => {
   const { open } = useModal();
+  const userRole = useUserStore().familyRole;
 
   const sortedDays = data.policySnapshot.days
     ? [...data.policySnapshot.days].sort((a, b) => DAY_ORDER.indexOf(a) - DAY_ORDER.indexOf(b))
@@ -81,12 +83,14 @@ export const FamilyPolicyItem = ({ data, onEdit, onActiving }: FamilyPolicyItemP
         </div>
       </div>
 
-      <PolicyActionMenu
-        isActive={data.isActive}
-        onActiving={onActiving}
-        onDelete={handleOpenDeleteModal}
-        onEdit={onEdit}
-      />
+      {userRole === 'OWNER' && (
+        <PolicyActionMenu
+          isActive={data.isActive}
+          onActiving={onActiving}
+          onDelete={handleOpenDeleteModal}
+          onEdit={onEdit}
+        />
+      )}
     </div>
   );
 };
