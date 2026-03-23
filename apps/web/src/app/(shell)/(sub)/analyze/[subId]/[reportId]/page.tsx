@@ -4,7 +4,7 @@ import { useModal } from '@hotspot/ui';
 import ViewRightAnimatedIcon from '@hotspot/ui/assets/images/character/view-right-animated.svg';
 import type { AxiosError } from 'axios';
 import { useParams, useRouter } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary'; // 라이브러리 사용 권장
 import { useAnalyzeData } from '@/domains/analyze/model/useAnalyzeData';
 import { AnalyzeReportPage } from '@/pages-layer/analyze';

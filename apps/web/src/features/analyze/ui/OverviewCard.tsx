@@ -36,7 +36,7 @@ export const OverviewCard = ({ overview }: OverviewCardProps) => {
         </div>
         <span
           className={cn(
-            'px-12 py-6 rounded-full font-body-body2-bold whitespace-nowrap bg-gray-100 text-gray-600',
+            'px-12 py-6 rounded-full font-body-body2-bold break-keep bg-gray-100 text-gray-600',
             isUp && 'bg-violet-100 text-violet-700',
             isDown && 'bg-red-100 text-red-600',
           )}
