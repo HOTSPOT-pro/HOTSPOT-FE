@@ -1,6 +1,6 @@
 "use client";
 
-import { DonutChart, ProgressBar } from "@hotspot/ui";
+import { DonutChart, ProgressBar, Skeleton } from "@hotspot/ui";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { RefreshButton } from "@/features/refresh/ui/RefreshButton";
@@ -28,6 +28,7 @@ interface FamilyUsage {
 const TOTAL_COLOR = "#4F46E5";
 const START_COLOR = "#16A34A";
 const END_COLOR = "#BBF7D0";
+const HIDDEN_SEGMENT_COLOR = "transparent";
 
 const interpolateColor = (factor: number) => {
   const clamped = Math.min(1, Math.max(0, factor));
@@ -70,6 +71,40 @@ const formatCurrentTime = (currentTime: string) => {
   }).format(parsedDate);
 };
 
+const FamilyDataStatusSkeleton = () => {
+  return (
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
+      <Skeleton height={24} width="10rem" />
+
+      <div className="flex w-full justify-center">
+        <Skeleton className="rounded-full" height="17.5rem" width="17.5rem" />
+      </div>
+
+      <div className="h-px bg-gray-200" />
+
+      <div className="space-y-12">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div className="space-y-2" key={`family-member-${index}`}>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex flex-row items-center gap-8">
+                <Skeleton className="rounded-full" height={10} width={10} />
+                <Skeleton height={16} width={72} />
+              </div>
+              <Skeleton height={16} width={120} />
+            </div>
+            <Skeleton height={10} width="100%" />
+          </div>
+        ))}
+      </div>
+
+      <div className="ml-auto flex items-center gap-2">
+        <Skeleton height={14} width={100} />
+        <Skeleton className="rounded-full" height={20} width={20} />
+      </div>
+    </section>
+  );
+};
+
 export const FamilyDataStatusPage = () => {
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getFamilyUsage,
@@ -102,19 +137,17 @@ export const FamilyDataStatusPage = () => {
         name: "잔여 데이터",
         value: data?.familyDataRemainAmount ?? 0,
       },
+      {
+        fill: HIDDEN_SEGMENT_COLOR,
+        name: "사용 데이터",
+        value: data?.familyDataUsageAmount ?? 0,
+      },
     ],
-    [data?.familyDataRemainAmount],
+    [data?.familyDataRemainAmount, data?.familyDataUsageAmount],
   );
 
   if (isPending) {
-    return (
-      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">가족 공유 데이터 현황</h2>
-        <p className="text-sm text-gray-500">
-          가족 데이터 정보를 불러오는 중입니다.
-        </p>
-      </div>
-    );
+    return <FamilyDataStatusSkeleton />;
   }
 
   if (isError || !data) {

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { ProgressBar } from '@hotspot/ui/components';
-import { COLORS, cn } from '@hotspot/ui/lib';
-import { useState } from 'react';
-import { type ReportUser, useAppUsageData } from '@/domains/report'; // 경로에 맞춰 수정
-import { DayNavigation } from '@/shared/ui';
+import { ProgressBar, Skeleton } from "@hotspot/ui/components";
+import { COLORS, cn } from "@hotspot/ui/lib";
+import { useState } from "react";
+import { type ReportUser, useAppUsageData } from "@/domains/report"; // 경로에 맞춰 수정
+import { DayNavigation } from "@/shared/ui";
 
 interface ServiceReportProps {
-  unit: 'MONTH' | 'DAY';
+  unit: "MONTH" | "DAY";
   user: ReportUser;
 }
 
@@ -25,7 +25,34 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
     userName: user.name ?? undefined,
   });
 
-  if (isLoading) return <div className="mt-8 p-10 text-center text-gray-400">Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="space-y-6 py-8">
+        <div className="flex items-center justify-between">
+          <Skeleton height={24} width={120} />
+          <Skeleton height={16} width={48} />
+        </div>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div
+            className="flex items-center gap-16"
+            key={`service-skeleton-${index}`}
+          >
+            <Skeleton
+              className="rounded-full shrink-0"
+              height={24}
+              width={24}
+            />
+            <div className="flex-1 space-y-2">
+              <div className="flex items-center justify-between">
+                <Skeleton height={16} width={96} />
+                <Skeleton height={16} width={48} />
+              </div>
+              <Skeleton height={10} width="100%" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   if (isError) {
     return (
       <div className="mt-8 p-10 bg-gray-50 rounded-2xl text-center text-gray-400">
@@ -38,47 +65,54 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
   const sortedData = [...usageList].sort((a, b) => b.usage - a.usage);
 
   return (
-    <div className="mt-8 p-5 bg-white rounded-3xl flex flex-col gap-1">
+    <>
       <div className="flex justify-between items-center mb-2">
-        <p className="font-title-title3-semibold leading-relaxed text-gray-900">앱별 상세 사용량</p>
+        <h2 className="font-title-title3-semibold">앱별 상세 사용량</h2>
+
         <div>
           <p className="text-sm text-gray-500 font-medium text-right">
-            {unit === 'MONTH' && `${selectedDate.getMonth() + 1}월`}
+            {unit === "MONTH" && `${selectedDate.getMonth() + 1}월`}
           </p>
-          <p className="text-sm text-gray-500 font-medium">{`${data?.name ?? user.name} 님`}</p>
         </div>
       </div>
 
       {/* 날짜 네비게이션 */}
-      <section className="py-8">
-        {unit === 'MONTH' ? null : <DayNavigation date={selectedDate} onChange={setSelectedDate} />}
-      </section>
+
+      {unit === "MONTH" ? null : (
+        <section className="py-8">
+          <DayNavigation date={selectedDate} onChange={setSelectedDate} />
+        </section>
+      )}
 
       {sortedData.length === 0 ? (
         <div className="mt-8 p-10 bg-gray-50 rounded-2xl text-center text-gray-400">
           앱 사용 기록이 없습니다.
         </div>
       ) : (
-        <div className="flex flex-col gap-4 h-fit mt-2">
+        <div className="flex flex-col gap-16 h-fit">
           {sortedData.map((item, index) => (
             <div
               className="w-full flex flex-row gap-16 items-center"
               key={`${item.appName}-${index}`}
             >
-              <div className="w-40 h-40 flex-none flex items-center justify-center rounded-full text-base font-bold bg-gray-100 text-gray-500">
+              <div className="w-24 h-24 flex-none flex items-center justify-center rounded-full bg-gray-100 text-gray-900 font-body-body4">
                 {index + 1}
               </div>
 
-              <div className="flex-1 flex flex-col gap-6 min-w-0">
-                <div className="flex flex-row justify-between items-center">
-                  <p className="font-bold text-gray-900 truncate">{item.appName}</p>
-                  <div className="text-right">
-                    <span className="font-bold text-gray-900">{item.usage} GB</span>
-                  </div>
-                </div>
+              <div className="flex-1 flex flex-col gap-4 min-w-0">
+                <p className="flex flex-row justify-between items-center">
+                  <span className="font-title-title5-semibold text-gray-900">
+                    {item.appName}
+                  </span>
+                  <span className="font-body-body4 text-gray-900 text-right">
+                    {item.usage} GB
+                  </span>
+                </p>
 
                 <ProgressBar
-                  color={index === 0 ? COLORS.TEXT_SECONDARY : COLORS.TEXT_SECONDARY}
+                  color={
+                    index === 0 ? COLORS.TEXT_SECONDARY : COLORS.TEXT_SECONDARY
+                  }
                   label={`ServiceUsage-${item.appName}`}
                   total={data?.total ?? 1}
                   value={item.usage}
@@ -88,6 +122,6 @@ export const ServiceReport = ({ unit, user }: ServiceReportProps) => {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };

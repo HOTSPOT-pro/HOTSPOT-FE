@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/shared/api/client';
 import type { ApiResponse } from '@/shared/api/types';
@@ -67,6 +68,34 @@ const formatSchedule = (snapshot: AppliedPolicy['policySnapshot']) => {
   return `${days} ${snapshot.startTime}~${snapshot.endTime}`;
 };
 
+const AppliedRestrictionsSkeleton = () => {
+  return (
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
+      <Skeleton height={24} width="11rem" />
+      <div className="h-px bg-gray-200" />
+
+      <div className="space-y-2">
+        <Skeleton height={16} width={64} />
+        {Array.from({ length: 2 }).map((_, index) => (
+          <div className="rounded-lg border border-gray-200 p-8 space-y-2" key={`policy-${index}`}>
+            <Skeleton height={16} width="45%" />
+            <Skeleton height={14} width="70%" />
+          </div>
+        ))}
+      </div>
+
+      <div className="space-y-4">
+        <Skeleton height={16} width={56} />
+        <div className="flex flex-wrap gap-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton className="rounded-full" height={28} key={`chip-${index}`} width={72} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export const AppliedRestrictionsPage = () => {
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getAppliedRestrictions,
@@ -74,12 +103,7 @@ export const AppliedRestrictionsPage = () => {
   });
 
   if (isPending) {
-    return (
-      <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">나에게 적용된 제한 정책</h2>
-        <p className="text-sm text-gray-500">적용된 정책을 불러오는 중입니다.</p>
-      </section>
-    );
+    return <AppliedRestrictionsSkeleton />;
   }
 
   if (isError || !data) {

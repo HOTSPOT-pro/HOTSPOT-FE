@@ -1,10 +1,18 @@
-'use client';
+"use client";
 
-import { useQuery } from '@tanstack/react-query';
-import { api } from '@/shared/api/client';
-import type { ApiResponse } from '@/shared/api/types';
+import { Skeleton } from "@hotspot/ui";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/shared/api/client";
+import type { ApiResponse } from "@/shared/api/types";
 
-type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
+type DayOfWeek =
+  | "MONDAY"
+  | "TUESDAY"
+  | "WEDNESDAY"
+  | "THURSDAY"
+  | "FRIDAY"
+  | "SATURDAY"
+  | "SUNDAY";
 
 interface BlockedTimeRange {
   endTime: string;
@@ -21,35 +29,38 @@ interface BlockedTimeResponse {
   subId: number;
 }
 
-const TIMELINE_HOURS = ['0', '6', '12', '18', '24'];
-const DAY_LABEL_WIDTH_CLASS = 'w-28';
+const TIMELINE_HOURS = ["0", "6", "12", "18", "24"];
+const DAY_LABEL_WIDTH_CLASS = "w-28";
 
 const DAY_ORDER: DayOfWeek[] = [
-  'MONDAY',
-  'TUESDAY',
-  'WEDNESDAY',
-  'THURSDAY',
-  'FRIDAY',
-  'SATURDAY',
-  'SUNDAY',
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
+  "SUNDAY",
 ];
 
 const DAY_LABEL: Record<DayOfWeek, string> = {
-  FRIDAY: '금',
-  MONDAY: '월',
-  SATURDAY: '토',
-  SUNDAY: '일',
-  THURSDAY: '목',
-  TUESDAY: '화',
-  WEDNESDAY: '수',
+  FRIDAY: "금",
+  MONDAY: "월",
+  SATURDAY: "토",
+  SUNDAY: "일",
+  THURSDAY: "목",
+  TUESDAY: "화",
+  WEDNESDAY: "수",
 };
 
 const getBlockedTime = async () => {
-  const { data } = await api.get<ApiResponse<BlockedTimeResponse>>('/api/v1/policies/blockedTime', {
-    params: {
-      isFamily: false,
+  const { data } = await api.get<ApiResponse<BlockedTimeResponse>>(
+    "/api/v1/policies/blockedTime",
+    {
+      params: {
+        isFamily: false,
+      },
     },
-  });
+  );
 
   return data.data;
 };
@@ -57,32 +68,53 @@ const getBlockedTime = async () => {
 const formatTime = (time: string) => time.slice(0, 5);
 
 const timeToMinutes = (time: string) => {
-  const [hourText = '0', minuteText = '0'] = time.split(':');
+  const [hourText = "0", minuteText = "0"] = time.split(":");
   const hour = Number(hourText);
   const minute = Number(minuteText);
   return hour * 60 + minute;
 };
 
+const BlockedTimeSkeleton = () => {
+  return (
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
+      <Skeleton height={24} width="10rem" />
+
+      <div className="space-y-12">
+        <div className="flex items-center gap-12">
+          <Skeleton height={12} width={28} />
+          <Skeleton height={12} width="100%" />
+        </div>
+        {Array.from({ length: 7 }).map((_, index) => (
+          <div
+            className="flex items-center gap-8"
+            key={`blocked-time-${index}`}
+          >
+            <Skeleton className="rounded-full" height={24} width={24} />
+            <Skeleton height={20} width="100%" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 export const BlockedTimePage = () => {
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getBlockedTime,
-    queryKey: ['blockedTime', 'self'],
+    queryKey: ["blockedTime", "self"],
   });
 
   if (isPending) {
-    return (
-      <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">데이터 사용 불가 시간대</h2>
-        <p className="text-sm text-gray-500">차단 시간대를 불러오는 중입니다.</p>
-      </section>
-    );
+    return <BlockedTimeSkeleton />;
   }
 
   if (isError || !data) {
     return (
       <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
         <h2 className="font-title-title3-semibold">데이터 사용 불가 시간대</h2>
-        <p className="text-sm text-red-500">차단 시간대를 불러오지 못했습니다.</p>
+        <p className="text-sm text-red-500">
+          차단 시간대를 불러오지 못했습니다.
+        </p>
         <button
           className="w-fit rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700"
           onClick={async () => {
@@ -96,8 +128,12 @@ export const BlockedTimePage = () => {
     );
   }
 
-  const blockedTimesByDay = new Map(data.dayBlockedTimes.map((item) => [item.day, item.ranges]));
-  const hasBlockedTime = data.dayBlockedTimes.some((item) => item.ranges.length > 0);
+  const blockedTimesByDay = new Map(
+    data.dayBlockedTimes.map((item) => [item.day, item.ranges]),
+  );
+  const hasBlockedTime = data.dayBlockedTimes.some(
+    (item) => item.ranges.length > 0,
+  );
 
   return (
     <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
@@ -135,7 +171,7 @@ export const BlockedTimePage = () => {
                     <div
                       className={`flex shrink-0 items-center justify-center ${DAY_LABEL_WIDTH_CLASS}`}
                     >
-                      <div className="flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-xs font-semibold">
+                      <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-body-body4">
                         {DAY_LABEL[day]}
                       </div>
                     </div>
@@ -154,7 +190,8 @@ export const BlockedTimePage = () => {
                           const startMinutes = timeToMinutes(range.startTime);
                           const endMinutes = timeToMinutes(range.endTime);
                           const left = (startMinutes / 1440) * 100;
-                          const width = ((endMinutes - startMinutes) / 1440) * 100;
+                          const width =
+                            ((endMinutes - startMinutes) / 1440) * 100;
 
                           return (
                             <div
@@ -167,7 +204,8 @@ export const BlockedTimePage = () => {
                               title={`${formatTime(range.startTime)} - ${formatTime(range.endTime)}`}
                             >
                               <span className="truncate">
-                                {formatTime(range.startTime)} - {formatTime(range.endTime)}
+                                {formatTime(range.startTime)} -{" "}
+                                {formatTime(range.endTime)}
                               </span>
                             </div>
                           );

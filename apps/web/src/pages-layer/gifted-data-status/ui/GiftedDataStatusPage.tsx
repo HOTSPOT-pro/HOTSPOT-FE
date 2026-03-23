@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ProgressBar } from "@hotspot/ui";
+import { Button, ProgressBar, Skeleton } from "@hotspot/ui";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import type {
@@ -93,6 +93,56 @@ const formatCurrentTime = (currentTime: string) => {
     .replace(",", "");
 };
 
+const GiftedDataStatusSkeleton = () => {
+  return (
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
+      <Skeleton height={24} width="8rem" />
+
+      <div className="flex items-center gap-16">
+        <Skeleton
+          className="shrink-0 rounded-full"
+          height="6rem"
+          width="6rem"
+        />
+
+        <div className="w-full space-y-3">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div
+              className="flex items-center justify-between"
+              key={`gifted-summary-${index}`}
+            >
+              <div className="flex items-center gap-8">
+                <Skeleton className="rounded-full" height={10} width={10} />
+                <Skeleton height={18} width={80} />
+              </div>
+              <Skeleton height={18} width={84} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-8">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={`gifted-member-${index}`}>
+            <div className="mb-2 flex items-center justify-between">
+              <Skeleton height={18} width={72} />
+              <Skeleton height={18} width={120} />
+            </div>
+            <Skeleton height={10} width="100%" />
+          </div>
+        ))}
+      </div>
+
+      <div className="ml-auto flex items-center gap-2">
+        <Skeleton height={14} width={120} />
+        <Skeleton className="rounded-full" height={20} width={20} />
+      </div>
+
+      <Skeleton height={40} width="100%" />
+    </section>
+  );
+};
+
 export const GiftedDataStatusPage = () => {
   const router = useRouter();
 
@@ -102,14 +152,7 @@ export const GiftedDataStatusPage = () => {
   });
 
   if (isPending) {
-    return (
-      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="text-[1rem] font-semibold">선물받은 데이터</h2>
-        <p className="text-sm text-gray-500">
-          선물 데이터 정보를 불러오는 중입니다.
-        </p>
-      </div>
-    );
+    return <GiftedDataStatusSkeleton />;
   }
 
   if (isError || !data) {
@@ -186,7 +229,7 @@ export const GiftedDataStatusPage = () => {
         </div>
       </div>
 
-      <div className="space-y-5 pt-2">
+      <div className="space-y-8">
         {data.giftUsages.map((giftUsage) => {
           const isExhausted = giftUsage.dataUsagePercent <= ZERO_PERCENT;
           const barColor = isExhausted ? EXHAUSTED_COLOR : REMAINING_COLOR;
