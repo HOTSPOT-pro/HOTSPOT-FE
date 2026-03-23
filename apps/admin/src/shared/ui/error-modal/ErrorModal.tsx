@@ -1,4 +1,4 @@
-import { Button, Modal, useModal } from '@hotspot/ui';
+import { Button, Modal, useModal } from "@hotspot/ui";
 
 interface ErrorModalProps {
   title: string;
@@ -21,11 +21,9 @@ export const ErrorModal = () => {
   return (
     <Modal>
       <Modal.Header>
-        <p className="text-center font-bold text-base text-black">{props?.title}</p>
+        <Modal.Title>{props?.title}</Modal.Title>
+        <Modal.Description>{props?.content}</Modal.Description>
       </Modal.Header>
-      <Modal.Content>
-        <span className="text-center text-xs text-gray-600">{props?.content}</span>
-      </Modal.Content>
       <Modal.Footer>
         <Button onClick={handleConfirm}>확인</Button>
       </Modal.Footer>

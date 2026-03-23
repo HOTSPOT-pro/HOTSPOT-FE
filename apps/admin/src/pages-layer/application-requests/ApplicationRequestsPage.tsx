@@ -1,23 +1,26 @@
 /** biome-ignore-all lint/correctness/noProcessGlobal: <explanation> */
-'use client';
+"use client";
 
-import { Button, Card, CardContent, useModal } from '@hotspot/ui';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Button, Card, CardContent, useModal } from "@hotspot/ui";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   useApplicationsQuery,
   useApproveApplicationMutation,
   useRejectApplicationMutation,
-} from '@/features/apply';
-import type { ApplicationStatus, ApplicationType } from '@/features/apply/api/types';
-import { CategorySelect, type Column, Pagination, Table } from '@/shared';
-import { getApiErrorMessage } from '@/shared/api/types';
-import { formatDatesTime } from '@/shared/lib/format';
-import { StatusTab } from '@/widgets';
+} from "@/features/apply";
+import type {
+  ApplicationStatus,
+  ApplicationType,
+} from "@/features/apply/api/types";
+import { CategorySelect, type Column, Pagination, Table } from "@/shared";
+import { getApiErrorMessage } from "@/shared/api/types";
+import { formatDatesTime } from "@/shared/lib/format";
+import { StatusTab } from "@/widgets";
 
 const PAGE_SIZE_OPTIONS = [
-  { label: '20개', value: '20' },
-  { label: '50개', value: '50' },
-  { label: '100개', value: '100' },
+  { label: "20개", value: "20" },
+  { label: "50개", value: "50" },
+  { label: "100개", value: "100" },
 ] as const;
 
 interface ApplicationRequestsPageProps {
@@ -37,17 +40,20 @@ interface RequestRow {
 }
 
 const buildDocumentUrl = (relationDocumentUrl: string): string => {
-  if (relationDocumentUrl.startsWith('http://') || relationDocumentUrl.startsWith('https://')) {
+  if (
+    relationDocumentUrl.startsWith("http://") ||
+    relationDocumentUrl.startsWith("https://")
+  ) {
     return relationDocumentUrl;
   }
 
-  const normalizedPath = relationDocumentUrl.startsWith('/')
+  const normalizedPath = relationDocumentUrl.startsWith("/")
     ? relationDocumentUrl
     : `/${relationDocumentUrl}`;
 
   const documentBaseUrl =
     process.env.NEXT_PUBLIC_S3_BUCKET_URL ??
-    (typeof window !== 'undefined' ? window.location.origin : undefined);
+    (typeof window !== "undefined" ? window.location.origin : undefined);
 
   if (!documentBaseUrl) {
     return normalizedPath;
@@ -63,14 +69,14 @@ const buildDocumentUrl = (relationDocumentUrl: string): string => {
 const createBaseColumns = (
   handleOpenDocument: (relationDocumentUrl: string) => void,
 ): Column<RequestRow>[] => [
-  { accessor: 'requestDisplayId', header: '요청번호' },
-  { accessor: 'requesterName', header: '신청자' },
-  { accessor: 'requesterPhoneNumber', header: '신청자 연락처' },
+  { accessor: "requestDisplayId", header: "요청번호" },
+  { accessor: "requesterName", header: "신청자" },
+  { accessor: "requesterPhoneNumber", header: "신청자 연락처" },
   {
-    accessor: 'targets',
-    header: '대상자',
+    accessor: "targets",
+    header: "대상자",
     render: (_, row) => (
-      <ul className="space-y-2">
+      <ul className="space-y-4">
         {row.targets.map((target) => (
           <li className="flex flex-col gap-4" key={target.id}>
             <p className="font-body-body2 text-gray-900">{target.name}</p>
@@ -80,10 +86,10 @@ const createBaseColumns = (
       </ul>
     ),
   },
-  { accessor: 'requestedAt', header: '요청 시각' },
+  { accessor: "requestedAt", header: "요청 시각" },
   {
-    accessor: 'relationDocumentUrl',
-    header: '가족관계증명서',
+    accessor: "relationDocumentUrl",
+    header: "가족관계증명서",
     render: (value) => {
       const relationDocumentUrl = value as string | null;
 
@@ -94,7 +100,9 @@ const createBaseColumns = (
       return (
         <button
           className="font-body-body2 text-blue-600 hover:underline"
-          onClick={() => handleOpenDocument(buildDocumentUrl(relationDocumentUrl))}
+          onClick={() =>
+            handleOpenDocument(buildDocumentUrl(relationDocumentUrl))
+          }
           type="button"
         >
           보기
@@ -103,21 +111,33 @@ const createBaseColumns = (
     },
   },
   {
-    accessor: 'actions',
-    header: '승인',
+    accessor: "actions",
+    header: "승인",
     render: (_, row) =>
-      row.status !== 'PENDING' ? <span className="text-xs text-gray-400">-</span> : null,
+      row.status !== "PENDING" ? (
+        <span className="text-xs text-gray-400">-</span>
+      ) : null,
   },
 ];
 
-export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPageProps) => {
+export const ApplicationRequestsPage = ({
+  applyType,
+}: ApplicationRequestsPageProps) => {
   const { open } = useModal();
-  const [activeStatus, setActiveStatus] = useState<ApplicationStatus>('PENDING');
+  const [activeStatus, setActiveStatus] =
+    useState<ApplicationStatus>("PENDING");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState<(typeof PAGE_SIZE_OPTIONS)[number]['value']>('20');
-  const [actionErrorMessage, setActionErrorMessage] = useState<string | null>(null);
-  const [processingRequestId, setProcessingRequestId] = useState<number | null>(null);
-  const [processingAction, setProcessingAction] = useState<'approve' | 'reject' | null>(null);
+  const [pageSize, setPageSize] =
+    useState<(typeof PAGE_SIZE_OPTIONS)[number]["value"]>("20");
+  const [actionErrorMessage, setActionErrorMessage] = useState<string | null>(
+    null,
+  );
+  const [processingRequestId, setProcessingRequestId] = useState<number | null>(
+    null,
+  );
+  const [processingAction, setProcessingAction] = useState<
+    "approve" | "reject" | null
+  >(null);
 
   const actionLockRef = useRef(false);
 
@@ -144,14 +164,16 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
     setActionErrorMessage(null);
   };
 
-  const handlePageSizeChange = (nextPageSize: (typeof PAGE_SIZE_OPTIONS)[number]['value']) => {
+  const handlePageSizeChange = (
+    nextPageSize: (typeof PAGE_SIZE_OPTIONS)[number]["value"],
+  ) => {
     setPageSize(nextPageSize);
     setCurrentPage(1);
   };
 
   const handleOpenDocument = useCallback(
     (documentUrl: string) => {
-      open('relationDocumentModal', {
+      open("relationDocumentModal", {
         props: {
           documentUrl,
         },
@@ -185,12 +207,15 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
       try {
         setActionErrorMessage(null);
         setProcessingRequestId(requestId);
-        setProcessingAction('approve');
+        setProcessingAction("approve");
         await approveMutation.mutateAsync({ applyType, requestId });
         await refetch();
       } catch (mutationError) {
         setActionErrorMessage(
-          getApiErrorMessage(mutationError, '요청 승인 처리 중 오류가 발생했습니다.'),
+          getApiErrorMessage(
+            mutationError,
+            "요청 승인 처리 중 오류가 발생했습니다.",
+          ),
         );
       } finally {
         actionLockRef.current = false;
@@ -208,12 +233,15 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
       try {
         setActionErrorMessage(null);
         setProcessingRequestId(requestId);
-        setProcessingAction('reject');
+        setProcessingAction("reject");
         await rejectMutation.mutateAsync({ applyType, requestId });
         await refetch();
       } catch (mutationError) {
         setActionErrorMessage(
-          getApiErrorMessage(mutationError, '요청 거절 처리 중 오류가 발생했습니다.'),
+          getApiErrorMessage(
+            mutationError,
+            "요청 거절 처리 중 오류가 발생했습니다.",
+          ),
         );
       } finally {
         actionLockRef.current = false;
@@ -227,14 +255,14 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
   const columns = useMemo<Column<RequestRow>[]>(
     () =>
       createBaseColumns(handleOpenDocument).map((column) => {
-        if (column.accessor !== 'actions') {
+        if (column.accessor !== "actions") {
           return column;
         }
 
         return {
           ...column,
           render: (_, row) => {
-            if (row.status !== 'PENDING') {
+            if (row.status !== "PENDING") {
               return <span className="text-xs text-gray-400">-</span>;
             }
 
@@ -243,7 +271,8 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
                 <Button
                   className="h-32 w-auto rounded-md px-12 text-xs"
                   isLoading={
-                    processingRequestId === row.requestId && processingAction === 'approve'
+                    processingRequestId === row.requestId &&
+                    processingAction === "approve"
                   }
                   onClick={() => {
                     if (processingRequestId !== null) return;
@@ -255,7 +284,10 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
                 </Button>
                 <Button
                   className="h-32 w-auto rounded-md px-12 text-xs"
-                  isLoading={processingRequestId === row.requestId && processingAction === 'reject'}
+                  isLoading={
+                    processingRequestId === row.requestId &&
+                    processingAction === "reject"
+                  }
                   onClick={() => {
                     if (processingRequestId !== null) return;
                     void handleReject(row.requestId);
@@ -269,7 +301,13 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
           },
         };
       }),
-    [handleApprove, handleOpenDocument, handleReject, processingAction, processingRequestId],
+    [
+      handleApprove,
+      handleOpenDocument,
+      handleReject,
+      processingAction,
+      processingRequestId,
+    ],
   );
 
   const errorMessage = useMemo(() => {
@@ -279,7 +317,7 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
 
     return getApiErrorMessage(
       error.response?.data ?? error,
-      '요청 목록 조회 중 오류가 발생했습니다.',
+      "요청 목록 조회 중 오류가 발생했습니다.",
     );
   }, [error]);
 
@@ -298,8 +336,16 @@ export const ApplicationRequestsPage = ({ applyType }: ApplicationRequestsPagePr
               />
             </div>
             <div className="flex h-full flex-col justify-between">
-              <Table columns={columns} data={rows} isLoading={isLoading || isFetching} />
-              <Pagination current={currentPage} onMove={setCurrentPage} total={totalPages} />
+              <Table
+                columns={columns}
+                data={rows}
+                isLoading={isLoading || isFetching}
+              />
+              <Pagination
+                current={currentPage}
+                onMove={setCurrentPage}
+                total={totalPages}
+              />
             </div>
 
             {errorMessage && (

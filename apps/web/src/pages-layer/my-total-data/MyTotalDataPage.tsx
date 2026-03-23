@@ -1,6 +1,6 @@
 'use client';
 
-import { DonutChart } from '@hotspot/ui';
+import { DonutChart, Skeleton } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
 import type { TotalUsage } from '@/domains/usage';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
@@ -69,6 +69,37 @@ const SEGMENTS = [
   label: string;
 }>;
 
+const MyTotalDataSkeleton = () => {
+  return (
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
+      <Skeleton height={24} width="6rem" />
+
+      <div className="flex w-full justify-center">
+        <Skeleton className="rounded-full" height="18rem" width="18rem" />
+      </div>
+
+      <div className="h-px bg-gray-200" />
+
+      <div className="space-y-3">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div className="flex items-center justify-between" key={`my-total-segment-${index}`}>
+            <div className="flex items-center gap-8">
+              <Skeleton className="rounded-full" height={10} width={10} />
+              <Skeleton height={18} width={96} />
+            </div>
+            <Skeleton height={18} width={88} />
+          </div>
+        ))}
+      </div>
+
+      <div className="ml-auto flex items-center gap-2 pt-1">
+        <Skeleton height={14} width={120} />
+        <Skeleton className="rounded-full" height={20} width={20} />
+      </div>
+    </section>
+  );
+};
+
 export const MyTotalDataPage = () => {
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getTotalUsage,
@@ -76,12 +107,7 @@ export const MyTotalDataPage = () => {
   });
 
   if (isPending) {
-    return (
-      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">전체 데이터</h2>
-        <p className="text-sm text-gray-500">전체 데이터 정보를 불러오는 중입니다.</p>
-      </div>
-    );
+    return <MyTotalDataSkeleton />;
   }
 
   if (isError || !data) {

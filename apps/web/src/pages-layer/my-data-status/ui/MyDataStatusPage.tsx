@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
 import { RefreshButton } from '@/features/refresh/ui/RefreshButton';
 import { api } from '@/shared/api/client';
@@ -15,6 +16,7 @@ interface SubscriptionUsage {
 }
 const PERCENT_MAX = 100;
 const UNLIMITED_DATA_AMOUNT = -1;
+const clampPercent = (value: number) => Math.max(0, Math.min(PERCENT_MAX, value));
 
 const getSubscriptionUsage = async () => {
   const { data } = await api.get<ApiResponse<SubscriptionUsage>>('/api/v1/subscriptionUsage');
@@ -42,6 +44,38 @@ const formatCurrentTime = (currentTime: string) => {
     .replace(',', '');
 };
 
+const MyDataStatusSkeleton = () => {
+  return (
+    <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
+      <div className="space-y-6">
+        <Skeleton height={24} width="7rem" />
+        <Skeleton height={16} width="10rem" />
+      </div>
+
+      <div className="flex items-center gap-16">
+        <Skeleton className="shrink-0 rounded-full" height="6rem" width="6rem" />
+
+        <div className="w-full space-y-3">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div className="flex items-center justify-between" key={`my-data-status-${index}`}>
+              <div className="flex items-center gap-8">
+                <Skeleton className="rounded-full" height={10} width={10} />
+                <Skeleton height={18} width={72} />
+              </div>
+              <Skeleton height={18} width={84} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="ml-auto flex items-center gap-2">
+        <Skeleton height={14} width={120} />
+        <Skeleton className="rounded-full" height={20} width={20} />
+      </div>
+    </section>
+  );
+};
+
 export const MyDataStatusPage = () => {
   const { data, isError, isPending, refetch } = useQuery({
     queryFn: getSubscriptionUsage,
@@ -49,12 +83,7 @@ export const MyDataStatusPage = () => {
   });
 
   if (isPending) {
-    return (
-      <div className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
-        <h2 className="font-title-title3-semibold">내 요금제 데이터</h2>
-        <p className="text-sm text-gray-500">내 요금제 데이터를 불러오는 중입니다.</p>
-      </div>
-    );
+    return <MyDataStatusSkeleton />;
   }
 
   if (isError || !data) {
@@ -76,7 +105,9 @@ export const MyDataStatusPage = () => {
   }
 
   const isUnlimitedPlan = data.subDataAmount === UNLIMITED_DATA_AMOUNT;
-  const remainPercent = isUnlimitedPlan ? PERCENT_MAX : data.dataRemainPercent;
+  const remainPercent = isUnlimitedPlan
+    ? PERCENT_MAX
+    : clampPercent((data.subDataRemainAmount / Math.max(data.subDataAmount, 1)) * PERCENT_MAX);
   const remainAmountLabel = isUnlimitedPlan ? '무제한' : formatData(data.subDataRemainAmount);
   const totalAmountLabel = isUnlimitedPlan ? '무제한' : formatData(data.subDataAmount);
 
@@ -91,11 +122,11 @@ export const MyDataStatusPage = () => {
         <div
           className="relative w-[6rem] h-[6rem] shrink-0 rounded-full"
           style={{
-            background: `conic-gradient(#7C4DFF ${Math.max(0, Math.min(PERCENT_MAX, remainPercent))}%, #E5E7EB 0)`,
+            background: `conic-gradient(#7C4DFF ${remainPercent}%, #E5E7EB 0)`,
           }}
         >
           <div className="absolute inset-[10px] flex items-center justify-center rounded-full bg-white">
-            <span className="text-[1.5rem] font-bold text-gray-900">{remainPercent}%</span>
+            <span className="text-[1.5rem] font-bold text-gray-900">{Math.round(remainPercent)}%</span>
           </div>
         </div>
 

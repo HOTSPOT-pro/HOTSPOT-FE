@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useModal } from '@hotspot/ui';
-import ViewRightAnimatedIcon from '@hotspot/ui/assets/images/character/view-right-animated.svg';
-import type { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { useSubscribeInfo } from '@/domains/analyze';
-import { AnalyzePayPage, AnalyzeSelectPage } from '@/pages-layer/analyze';
-import type { ApiErrorResponse } from '@/shared/api/types';
+import { useModal } from "@hotspot/ui";
+import ViewRightAnimatedIcon from "@hotspot/ui/assets/images/character/view-right-animated.svg";
+import type { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { useSubscribeInfo } from "@/domains/analyze";
+import { AnalyzePayPage, AnalyzeSelectPage } from "@/pages-layer/analyze";
+import type { ApiErrorResponse } from "@/shared/api/types";
 
 const SubscribeSwitch = () => {
   const { subscribeData } = useSubscribeInfo();
   const isSubscribed = subscribeData?.subscribed ?? false;
 
-  return <section>{isSubscribed ? <AnalyzeSelectPage /> : <AnalyzePayPage />}</section>;
+  return <>{isSubscribed ? <AnalyzeSelectPage /> : <AnalyzePayPage />}</>;
 };
 
 const LoadingFallback = () => (
@@ -36,16 +36,18 @@ const AnalyzeSection = () => {
   return (
     <ErrorBoundary
       fallback={
-        <div className="p-10 text-center text-red-400">결제 정보를 불러올 수 없습니다.</div>
+        <div className="p-10 text-center text-red-400">
+          결제 정보를 불러올 수 없습니다.
+        </div>
       }
       onError={(error) => {
         const axiosError = error as AxiosError<ApiErrorResponse>;
         const serverMessage = axiosError.response?.data?.message;
-        open('errorModal', {
+        open("errorModal", {
           props: {
-            content: serverMessage || '결제 정보를 가져오지 못했습니다.',
+            content: serverMessage || "결제 정보를 가져오지 못했습니다.",
             onConfirm: () => router.back(),
-            title: '오류',
+            title: "오류",
           },
         });
       }}
