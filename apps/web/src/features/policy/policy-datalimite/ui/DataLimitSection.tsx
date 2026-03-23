@@ -26,7 +26,10 @@ export const DataLimitSection = ({ datalimit, minNum, draft, onUpdate }: DataLim
         <Toggle checked={displayLocked} id={'block'} onChange={handleBlockToggle} />
       </div>
       <div>
-        <p className="font-heading-heading3">데이터 한도</p>
+        <div className="flex flex-row justify-between">
+          <p className="font-heading-heading3">데이터 한도</p>
+          <p className="font-heading-heading3 text-purple-500">{displayLimit}</p>
+        </div>
         <Slider
           initialValue={displayLimit}
           maxNum={datalimit?.familyDataAmount ?? 0}
