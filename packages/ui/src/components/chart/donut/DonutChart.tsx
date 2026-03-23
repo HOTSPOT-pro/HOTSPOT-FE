@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useCallback, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import { Pie, PieChart, type PieProps, ResponsiveContainer, Sector } from 'recharts';
 import { COLORS } from '../../../lib/interpolateColor';
 import { ChartTooltip } from '../tooltip/ChartTooltip';
@@ -40,6 +40,43 @@ interface DonutTooltipPayload {
   value: number;
 }
 
+interface TooltipPosition {
+  x: number;
+  y: number;
+}
+
+const TOOLTIP_OFFSET = 12;
+const TOOLTIP_PADDING = 8;
+
+const getTooltipPosition = ({
+  containerHeight,
+  containerWidth,
+  coordinates,
+  tooltipHeight,
+  tooltipWidth,
+}: {
+  containerHeight: number;
+  containerWidth: number;
+  coordinates: TooltipPosition;
+  tooltipHeight: number;
+  tooltipWidth: number;
+}) => {
+  let x = coordinates.x + TOOLTIP_OFFSET;
+  if (x + tooltipWidth + TOOLTIP_PADDING > containerWidth) {
+    x = coordinates.x - tooltipWidth - TOOLTIP_OFFSET;
+  }
+
+  let y = coordinates.y - tooltipHeight - TOOLTIP_OFFSET;
+  if (y < TOOLTIP_PADDING) {
+    y = coordinates.y + TOOLTIP_OFFSET;
+  }
+
+  return {
+    x: Math.min(Math.max(TOOLTIP_PADDING, x), Math.max(TOOLTIP_PADDING, containerWidth - tooltipWidth - TOOLTIP_PADDING)),
+    y: Math.min(Math.max(TOOLTIP_PADDING, y), Math.max(TOOLTIP_PADDING, containerHeight - tooltipHeight - TOOLTIP_PADDING)),
+  };
+};
+
 interface DonutChartTooltipContentProps {
   payload?: DonutTooltipPayload | null;
   total: number;
@@ -76,6 +113,8 @@ export const DonutChart = memo(
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const tooltipRef = useRef<HTMLDivElement>(null);
+    const [tooltipSize, setTooltipSize] = useState({ height: 0, width: 0 });
 
     type PieMouseEnterHandler = NonNullable<PieProps['onMouseEnter']>;
     type PieMouseMoveHandler = NonNullable<PieProps['onMouseMove']>;
@@ -121,6 +160,31 @@ export const DonutChart = memo(
 
     const highlightedIndex = activeIndex;
     const tooltipPayload = highlightedIndex !== null ? data[highlightedIndex] ?? null : null;
+
+    useLayoutEffect(() => {
+      if (!(tooltipPayload && tooltipRef.current)) return;
+
+      const { height, width } = tooltipRef.current.getBoundingClientRect();
+      setTooltipSize((prev) => {
+        if (prev.height === height && prev.width === width) {
+          return prev;
+        }
+
+        return { height, width };
+      });
+    }, [tooltipPayload, total]);
+
+    const adjustedTooltipPosition = useMemo(() => {
+      if (!(tooltipPayload && tooltipPosition && containerRef.current)) return null;
+
+      return getTooltipPosition({
+        containerHeight: containerRef.current.clientHeight,
+        containerWidth: containerRef.current.clientWidth,
+        coordinates: tooltipPosition,
+        tooltipHeight: tooltipSize.height,
+        tooltipWidth: tooltipSize.width,
+      });
+    }, [tooltipPayload, tooltipPosition, tooltipSize.height, tooltipSize.width]);
 
     const renderCustomSector = useCallback(
       (props: SectorProps) => {
@@ -182,12 +246,12 @@ export const DonutChart = memo(
         <div
           className="pointer-events-none absolute left-0 top-0 z-dropdown transition-opacity duration-150 ease-out"
           style={{
-            opacity: tooltipPayload && tooltipPosition ? 1 : 0,
-            transform:
-              tooltipPosition
-                ? `translate(${tooltipPosition.x + 12}px, ${tooltipPosition.y - 12}px) translateY(-100%)`
-                : 'translate(0, 0)',
+            opacity: tooltipPayload && adjustedTooltipPosition ? 1 : 0,
+            transform: adjustedTooltipPosition
+              ? `translate(${adjustedTooltipPosition.x}px, ${adjustedTooltipPosition.y}px)`
+              : 'translate(0, 0)',
           }}
+          ref={tooltipRef}
         >
           <DonutChartTooltipContent payload={tooltipPayload} total={total} />
         </div>

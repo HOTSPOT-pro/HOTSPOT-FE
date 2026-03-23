@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { COLORS, interpolateColor } from '../../../lib/interpolateColor';
-import { LegendItem } from '../legend/LegendItem';
-import { DonutChart, type DonutChartDataProps, type DonutPercentFormatter } from './DonutChart';
+import { useMemo } from "react";
+import { COLORS, interpolateColor } from "../../../lib/interpolateColor";
+import { LegendItem } from "../legend/LegendItem";
+import {
+  DonutChart,
+  type DonutChartDataProps,
+  type DonutPercentFormatter,
+} from "./DonutChart";
 
 interface DonutChartContainerProps {
   data: DonutChartDataProps[];
@@ -19,7 +23,7 @@ export const DonutChartContainer = ({
   percentFormatter,
   totalUsedLabel,
   total,
-  totalLabel = '전체',
+  totalLabel = "전체",
   valueFormatter = (value) => value.toFixed(1),
 }: DonutChartContainerProps) => {
   const { chartData, totalUsed } = useMemo(() => {
@@ -27,7 +31,7 @@ export const DonutChartContainer = ({
     const remain = Math.max(0, total - used);
 
     const coloredData = [
-      { fill: COLORS.REMAINING, name: '잔여량', value: remain },
+      { fill: COLORS.REMAINING, name: "잔여량", value: remain },
       ...data.map((item, index) => ({
         ...item,
         fill: interpolateColor(data.length > 1 ? index / (data.length - 1) : 0),
@@ -50,11 +54,11 @@ export const DonutChartContainer = ({
         />
       </div>
 
-      <div className="w-full space-y-2 lg:max-w-full">
+      <div className="w-full space-y-4 lg:max-w-full">
         <div className="flex flex-col justify-center gap-3 lg:flex-row lg:flex-wrap">
           {[
-            ...chartData.filter((item) => item.name !== '잔여량'),
-            ...chartData.filter((item) => item.name === '잔여량'),
+            ...chartData.filter((item) => item.name !== "잔여량"),
+            ...chartData.filter((item) => item.name === "잔여량"),
           ].map((item) => (
             <LegendItem
               color={item.fill}

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useCallback, useState, type ComponentProps } from 'react';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef, useState, type ComponentProps } from 'react';
 import {
   CartesianGrid,
   ComposedChart,
@@ -33,6 +33,43 @@ interface LineTooltipPayload {
   personal?: number;
   total: number;
 }
+
+interface TooltipPosition {
+  x: number;
+  y: number;
+}
+
+const TOOLTIP_OFFSET = 12;
+const TOOLTIP_PADDING = 8;
+
+const getTooltipPosition = ({
+  containerHeight,
+  containerWidth,
+  coordinates,
+  tooltipHeight,
+  tooltipWidth,
+}: {
+  containerHeight: number;
+  containerWidth: number;
+  coordinates: TooltipPosition;
+  tooltipHeight: number;
+  tooltipWidth: number;
+}) => {
+  let x = coordinates.x + TOOLTIP_OFFSET;
+  if (x + tooltipWidth + TOOLTIP_PADDING > containerWidth) {
+    x = coordinates.x - tooltipWidth - TOOLTIP_OFFSET;
+  }
+
+  let y = coordinates.y - tooltipHeight - TOOLTIP_OFFSET;
+  if (y < TOOLTIP_PADDING) {
+    y = coordinates.y + TOOLTIP_OFFSET;
+  }
+
+  return {
+    x: Math.min(Math.max(TOOLTIP_PADDING, x), Math.max(TOOLTIP_PADDING, containerWidth - tooltipWidth - TOOLTIP_PADDING)),
+    y: Math.min(Math.max(TOOLTIP_PADDING, y), Math.max(TOOLTIP_PADDING, containerHeight - tooltipHeight - TOOLTIP_PADDING)),
+  };
+};
 
 interface LineChartTooltipContentProps {
   dateUnit: string;
@@ -79,11 +116,14 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
   const hasPersonalData = personalName !== null;
 
   const max = getRoundedMax(data.map((item) => item.total));
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
   const [tooltipState, setTooltipState] = useState<{
-    payload: LineTooltipPayload | null;
+    activeIndex: number | null;
     x: number;
     y: number;
   } | null>(null);
+  const [tooltipSize, setTooltipSize] = useState({ height: 0, width: 0 });
 
   type ComposedChartMouseMoveHandler = NonNullable<ComponentProps<typeof ComposedChart>['onMouseMove']>;
   type ComposedChartMouseLeaveHandler = NonNullable<
@@ -97,14 +137,13 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
     }
 
     const nextIndex = Number(state.activeTooltipIndex);
-    const nextPayload = Number.isInteger(nextIndex) ? data[nextIndex] : undefined;
-    if (!nextPayload) {
+    if (!(Number.isInteger(nextIndex) && data[nextIndex])) {
       setTooltipState(null);
       return;
     }
 
     setTooltipState({
-      payload: nextPayload,
+      activeIndex: nextIndex,
       x: state.activeCoordinate.x,
       y: state.activeCoordinate.y,
     });
@@ -114,8 +153,39 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
     setTooltipState(null);
   }, []);
 
+  const tooltipPayload =
+    tooltipState && tooltipState.activeIndex !== null ? data[tooltipState.activeIndex] ?? null : null;
+
+  useLayoutEffect(() => {
+    if (!(tooltipPayload && tooltipRef.current)) return;
+
+    const { height, width } = tooltipRef.current.getBoundingClientRect();
+    setTooltipSize((prev) => {
+      if (prev.height === height && prev.width === width) {
+        return prev;
+      }
+
+      return { height, width };
+    });
+  }, [tooltipPayload, dateUnit, hasPersonalData, unit]);
+
+  const tooltipPosition = useMemo(() => {
+    if (!(tooltipState && tooltipPayload && containerRef.current)) return null;
+
+    return getTooltipPosition({
+      containerHeight: containerRef.current.clientHeight,
+      containerWidth: containerRef.current.clientWidth,
+      coordinates: { x: tooltipState.x, y: tooltipState.y },
+      tooltipHeight: tooltipSize.height,
+      tooltipWidth: tooltipSize.width,
+    });
+  }, [tooltipPayload, tooltipSize.height, tooltipSize.width, tooltipState]);
+
   return (
-    <div className="w-full h-full relative @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none">
+    <div
+      className="w-full h-full relative @container [&_*:focus-visible]:outline-none [&_*:focus]:outline-none"
+      ref={containerRef}
+    >
       <ResponsiveContainer height="100%" width="100%">
         <ComposedChart
           data={data}
@@ -173,16 +243,17 @@ export const LineChart = memo(({ data, personalName, unit = 'GB', type }: UsageL
       <div
         className="pointer-events-none absolute left-0 top-0 z-dropdown transition-opacity duration-150 ease-out"
         style={{
-          opacity: tooltipState?.payload ? 1 : 0,
-          transform: tooltipState
-            ? `translate(${tooltipState.x + 12}px, ${tooltipState.y - 12}px) translateY(-100%)`
+          opacity: tooltipPayload && tooltipPosition ? 1 : 0,
+          transform: tooltipPosition
+            ? `translate(${tooltipPosition.x}px, ${tooltipPosition.y}px)`
             : 'translate(0, 0)',
         }}
+        ref={tooltipRef}
       >
         <LineChartTooltipContent
           dateUnit={dateUnit}
           hasPersonalData={hasPersonalData}
-          payload={tooltipState?.payload}
+          payload={tooltipPayload}
           unit={unit}
         />
       </div>
