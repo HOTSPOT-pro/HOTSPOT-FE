@@ -8,8 +8,9 @@ import { AppPopUp } from '@/widgets/app-popup/ui/AppPopUp';
 import { QueryProvider } from './_providers/query/QueryProvider';
 
 export const metadata: Metadata = {
-  description: 'HOTSPOT',
-  title: '디지털 페어런팅의 시작, HOTSPOT',
+  description:
+    'HOTSPOT에서 가족의 데이터 사용을 한눈에 확인하고, 실시간으로 관리해보세요. 가족 간 데이터를 더욱 심플하게 활용할 수 있습니다.',
+  title: 'HOTSPOT',
 };
 
 export default function RootLayout({
