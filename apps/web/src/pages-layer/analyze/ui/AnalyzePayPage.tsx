@@ -1,16 +1,27 @@
 'use client';
 import { Button, Card, useModal } from '@hotspot/ui';
 import CrownIcon from '@hotspot/ui/assets/icons/crown.svg';
+import { useUserStore } from '@/domains/user';
 import { ANALYZE_ADVANTAGES } from '../constants/advantages';
 
 export const AnalyzePayPage = () => {
   const { open } = useModal();
+  const userRole = useUserStore().familyRole;
   const handleApply = () => {
-    open('daySelectorModal', {
-      props: {
-        type: 'NEW',
-      },
-    });
+    if (userRole === 'OWNER') {
+      open('daySelectorModal', {
+        props: {
+          type: 'NEW',
+        },
+      });
+    } else {
+      open('errorModal', {
+        props: {
+          content: '대표 계정만 신청이 가능합니다.',
+          title: '신청이 불가능한 계정입니다.',
+        },
+      });
+    }
   };
 
   return (
