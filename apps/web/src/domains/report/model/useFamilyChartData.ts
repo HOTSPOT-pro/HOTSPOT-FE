@@ -1,5 +1,7 @@
 import type { LineChartDataProps } from '@hotspot/ui';
 import { useQuery } from '@tanstack/react-query';
+import { REPORT_KEYS } from '@/shared/constants/queryKey';
+import { STALE_TIME } from '@/shared/constants/time';
 import { formatYearMonth } from '@/shared/lib';
 import { getFamilyDailyUsage } from '../api/getFamilyDailyUsage';
 import { getFamilyMonthlyUsage } from '../api/getFamilyMonthlyUsage';
@@ -28,6 +30,7 @@ export const useFamilyChartData = ({ userId, range }: UseUsageReportProps) => {
       });
       return transformDailyData(res.subUsages, targetId);
     },
-    queryKey: ['familyUsage', range.unit, range.date, userId],
+    queryKey: REPORT_KEYS.usage(range.unit, range.date, userId),
+    staleTime: STALE_TIME.STATIC,
   });
 };

@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import type { ApiErrorResponse } from '@/shared/api/types';
 import { ERROR_DEFAULT_MESSAGE, ERROR_TITLE } from '@/shared/constants/errorCode';
+import { GIFT_KEYS } from '@/shared/constants/queryKey';
 import { getPresentDataClient } from '../api/getPresentDataClient';
 import { postPresentDataClient } from '../api/postPresentDataClient';
 import type { PresentFamilyData } from './types';
@@ -31,7 +32,7 @@ export const useGift = () => {
         })),
       } as PresentFamilyData;
     },
-    queryKey: ['presentFamilyData'],
+    queryKey: GIFT_KEYS.user,
     staleTime: STALE_TIME,
   });
 
@@ -46,7 +47,7 @@ export const useGift = () => {
     mutationFn: ({ targetSubId, dataAmount }) => postPresentDataClient({ dataAmount, targetSubId }),
     onError: (error, _variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(['presentFamilyData'], context.previousData);
+        queryClient.setQueryData(GIFT_KEYS.user, context.previousData);
       }
       const errorData = error.response?.data;
       const errorMessage = errorData?.message || ERROR_DEFAULT_MESSAGE;
@@ -59,9 +60,9 @@ export const useGift = () => {
       });
     },
     onMutate: async (variables) => {
-      await queryClient.cancelQueries({ queryKey: ['presentFamilyData'] });
-      const previousData = queryClient.getQueryData<PresentFamilyData>(['presentFamilyData']);
-      queryClient.setQueryData(['presentFamilyData'], (old: PresentFamilyData) => {
+      await queryClient.cancelQueries({ queryKey: GIFT_KEYS.user });
+      const previousData = queryClient.getQueryData<PresentFamilyData>(GIFT_KEYS.user);
+      queryClient.setQueryData(GIFT_KEYS.user, (old: PresentFamilyData) => {
         if (!old || old.dataRemainAmount === -1) return old;
         return {
           ...old,

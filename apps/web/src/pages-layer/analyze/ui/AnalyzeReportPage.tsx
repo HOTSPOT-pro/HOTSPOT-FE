@@ -6,7 +6,6 @@ import {
   OverviewCard,
 } from '@features/analyze';
 import type { AIReportData } from '@/domains/analyze';
-import { formatReportTitle } from '@/features/analyze';
 
 interface ReportPageProps {
   data: AIReportData;
@@ -14,6 +13,7 @@ interface ReportPageProps {
 
 export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
   const {
+    title,
     name,
     weekStartDate,
     weekEndDate,
@@ -28,10 +28,14 @@ export const AnalyzeReportPage = ({ data }: ReportPageProps) => {
     <div className="mx-auto min-h-screen flex flex-col">
       {/* title */}
       <div className="flex items-center justify-between px-20 py-10 bg-white">
-        <span className="font-heading-heading2 text-gray-900">
-          {formatReportTitle(weekStartDate, weekEndDate)}
-        </span>
-        <span className="text-[13px] text-gray-500">{name}</span>
+        <div className="flex flex-col">
+          <span className="font-heading-heading2 text-gray-900 break-keep">{title}</span>
+          <span className="text-[13px] text-gray-500 whitespace-nowrap">
+            {weekStartDate}~{weekEndDate}
+          </span>
+        </div>
+
+        <span className="text-[13px] text-gray-500 whitespace-nowrap">{name}</span>
       </div>
 
       {/* Content */}

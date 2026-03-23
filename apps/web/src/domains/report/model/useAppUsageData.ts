@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { REPORT_KEYS } from '@/shared/constants/queryKey';
+import { STALE_TIME } from '@/shared/constants/time';
 import { formatDate } from '@/shared/lib';
 import { getServiceDailyUsage } from '../api/getServiceDailyUsage';
 import { getServiceMonthlyUsage } from '../api/getServiceMonthlyUsage';
@@ -33,6 +35,7 @@ export const useAppUsageData = ({
         })),
       };
     },
-    queryKey: ['serviceUsage', range.unit, range.date, userId],
+    queryKey: REPORT_KEYS.service(range.unit, range.date, userId),
+    staleTime: STALE_TIME.STATIC,
   });
 };

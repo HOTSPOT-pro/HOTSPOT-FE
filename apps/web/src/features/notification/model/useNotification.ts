@@ -9,6 +9,7 @@ import type { Notification } from '@/domains/notification';
 import { getNotificationClientApi } from '@/domains/notification/api/getNotificationClientApi';
 import { getUnreadCountClientApi } from '@/domains/notification/api/getUnreadCountClientApi';
 import type { GetNotificationResponse } from '@/domains/notification/api/types';
+import { NOTIFICATION_KEYS } from '@/shared/constants/queryKey';
 import {
   readAllNotificationClientApi,
   readNotificationClientApi,
@@ -29,7 +30,7 @@ export const useNotification = () => {
         page: pageParam as number,
         size: 10,
       }),
-    queryKey: ['notifications'],
+    queryKey: NOTIFICATION_KEYS.list,
     select: (data) => ({
       pageParams: data.pageParams,
       pages: data.pages.map((page) => ({
@@ -52,7 +53,7 @@ export const useNotification = () => {
 
   const unReadCount = useQuery({
     queryFn: getUnreadCountClientApi,
-    queryKey: ['unreadCount'],
+    queryKey: NOTIFICATION_KEYS.readCount,
     select: (data) => data?.unreadCount ?? 0,
     staleTime: STALE_TIME,
   });
@@ -62,40 +63,45 @@ export const useNotification = () => {
     mutationFn: (id: number) => readNotificationClientApi(id),
     onError: (err, _id, context) => {
       if (context) {
-        queryClient.setQueryData(['notifications'], context.prevList);
-        queryClient.setQueryData(['unreadCount'], context.prevCount);
+        queryClient.setQueryData(NOTIFICATION_KEYS.list, context.prevList);
+        queryClient.setQueryData(NOTIFICATION_KEYS.readCount, context.prevCount);
       }
     },
     onMutate: async (id: number) => {
-      await queryClient.cancelQueries({ queryKey: ['notifications'] });
-      await queryClient.cancelQueries({ queryKey: ['unreadCount'] });
+      await queryClient.cancelQueries({ queryKey: NOTIFICATION_KEYS.list });
+      await queryClient.cancelQueries({ queryKey: NOTIFICATION_KEYS.readCount });
 
       const prevList = queryClient.getQueryData<InfiniteData<GetNotificationResponse>>([
-        'notifications',
+        NOTIFICATION_KEYS.list,
       ]);
-      const prevCount = queryClient.getQueryData<number>(['unreadCount']);
+      const prevCount = queryClient.getQueryData<number>(NOTIFICATION_KEYS.readCount);
 
       // InfiniteData 구조에 맞춰 모든 페이지를 순회하며 해당 ID를 찾음
-      queryClient.setQueryData<InfiniteData<GetNotificationResponse>>(['notifications'], (old) => {
-        if (!old) return old;
-        return {
-          ...old,
-          pages: old.pages.map((page) => ({
-            ...page,
-            notifications: page.notifications.map((item) =>
-              item.id === id ? { ...item, isRead: true } : item,
-            ),
-          })),
-        };
-      });
+      queryClient.setQueryData<InfiniteData<GetNotificationResponse>>(
+        NOTIFICATION_KEYS.list,
+        (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              notifications: page.notifications.map((item) =>
+                item.id === id ? { ...item, isRead: true } : item,
+              ),
+            })),
+          };
+        },
+      );
 
-      queryClient.setQueryData<number>(['unreadCount'], (old = 0) => Math.max(0, old - 1));
+      queryClient.setQueryData<number>(NOTIFICATION_KEYS.readCount, (old = 0) =>
+        Math.max(0, old - 1),
+      );
 
       return { prevCount, prevList };
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      queryClient.invalidateQueries({ queryKey: ['unreadCount'] });
+      queryClient.invalidateQueries({ queryKey: NOTIFICATION_KEYS.list });
+      queryClient.invalidateQueries({ queryKey: NOTIFICATION_KEYS.readCount });
     },
   });
 
@@ -104,37 +110,40 @@ export const useNotification = () => {
     mutationFn: readAllNotificationClientApi,
     onError: (_err, _variables, context) => {
       if (context) {
-        queryClient.setQueryData(['notifications'], context.prevList);
-        queryClient.setQueryData(['unreadCount'], context.prevCount);
+        queryClient.setQueryData(NOTIFICATION_KEYS.list, context.prevList);
+        queryClient.setQueryData(NOTIFICATION_KEYS.readCount, context.prevCount);
       }
     },
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['notifications'] });
-      await queryClient.cancelQueries({ queryKey: ['unreadCount'] });
+      await queryClient.cancelQueries({ queryKey: NOTIFICATION_KEYS.list });
+      await queryClient.cancelQueries({ queryKey: NOTIFICATION_KEYS.readCount });
 
       const prevList = queryClient.getQueryData<InfiniteData<GetNotificationResponse>>([
-        'notifications',
+        NOTIFICATION_KEYS.list,
       ]);
-      const prevCount = queryClient.getQueryData<number>(['unreadCount']);
+      const prevCount = queryClient.getQueryData<number>(NOTIFICATION_KEYS.readCount);
 
-      queryClient.setQueryData<InfiniteData<GetNotificationResponse>>(['notifications'], (old) => {
-        if (!old) return old;
-        return {
-          ...old,
-          pages: old.pages.map((page) => ({
-            ...page,
-            notifications: page.notifications.map((n) => ({ ...n, isRead: true })),
-          })),
-        };
-      });
+      queryClient.setQueryData<InfiniteData<GetNotificationResponse>>(
+        NOTIFICATION_KEYS.list,
+        (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              notifications: page.notifications.map((n) => ({ ...n, isRead: true })),
+            })),
+          };
+        },
+      );
 
-      queryClient.setQueryData<number>(['unreadCount'], 0);
+      queryClient.setQueryData<number>(NOTIFICATION_KEYS.readCount, 0);
 
       return { prevCount, prevList };
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      queryClient.invalidateQueries({ queryKey: ['unreadCount'] });
+      queryClient.invalidateQueries({ queryKey: NOTIFICATION_KEYS.list });
+      queryClient.invalidateQueries({ queryKey: NOTIFICATION_KEYS.readCount });
     },
   });
 

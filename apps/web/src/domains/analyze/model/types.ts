@@ -124,6 +124,7 @@ export interface FinalFeedback {
 }
 
 export interface AIReportData {
+  title: string;
   subId: number;
   name: string;
   weekStartDate: string;

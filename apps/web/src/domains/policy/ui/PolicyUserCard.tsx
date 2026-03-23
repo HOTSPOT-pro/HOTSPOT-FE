@@ -17,6 +17,7 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
   const [isAccordianOpen, setIsAccordianOpen] = useState(false);
   const { open } = useModal();
   const isMe = data.subId === useUserStore().subId;
+  const myRole = useUserStore().familyRole;
 
   const handleOpenModal = useCallback(() => {
     open('policyDetailModal', {
@@ -66,13 +67,15 @@ export const PolicyUserCard = ({ familyId, data }: PolicyUserCardProps) => {
           </div>
         </button>
 
-        <button
-          className="p-16 text-gray-400 hover:text-purple-600 transition-colors"
-          onClick={handleOpenModal}
-          type="button"
-        >
-          <RightArrow className="w-24 h-24" />
-        </button>
+        {myRole === 'OWNER' && (
+          <button
+            className="p-16 text-gray-400 hover:text-purple-600 transition-colors"
+            onClick={handleOpenModal}
+            type="button"
+          >
+            <RightArrow className="w-24 h-24" />
+          </button>
+        )}
       </div>
 
       {/* 아코디언 */}
