@@ -1,0 +1,27 @@
+<svg viewBox="0 0 47 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="23.2132" cy="27.558" r="23.2132" transform="rotate(-0.52407 23.2132 27.558)" fill="#C8C8C8"/>
+<ellipse cx="10.0875" cy="27.15" rx="1.36548" ry="2.04822" transform="rotate(22.6044 10.0875 27.15)" fill="white"/>
+<ellipse cx="18.2813" cy="30.5615" rx="1.36548" ry="2.04822" transform="rotate(22.6044 18.2813 30.5615)" fill="white"/>
+<ellipse cx="3.51478" cy="6.02547" rx="3.51478" ry="6.02547" transform="matrix(0.12527 -0.992123 0.944327 0.329009 13.4892 5.51657)" fill="#C8C8C8"/>
+<ellipse cx="3.33935" cy="8.00067" rx="3.33935" ry="8.00067" transform="matrix(0.145515 -0.989356 0.999455 0.0330141 8.05441 9.96036)" fill="#C8C8C8"/>
+<path d="M10.7707 36.8855C10.8594 37.0634 11.0654 37.1492 11.2542 37.0868L14.2577 36.0941C14.6093 35.9779 14.6278 35.4874 14.2859 35.345L9.87088 33.5068C9.52897 33.3645 9.1939 33.7232 9.35916 34.0546L10.7707 36.8855Z" fill="white"/>
+<mask id="mask0_4165_3056" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="4" width="47" height="47">
+<circle cx="23.2132" cy="27.558" r="23.2132" transform="rotate(-0.52407 23.2132 27.558)" fill="#2DCE67"/>
+</mask>
+<g mask="url(#mask0_4165_3056)">
+<g opacity="0.4" filter="url(#filter0_g_4165_3056)">
+<path d="M39.8085 35.6555C36.0111 46.7902 26.2909 51.2928 17.5776 51.8663L32.5626 59.8319C33.0621 60.0974 50.2914 46.5667 58.8437 39.7681L46.3806 14.4014L34.8494 7.47092C41.3854 14.9471 43.392 25.148 39.8085 35.6555Z" fill="#949494" style="mix-blend-mode:multiply"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_g_4165_3056" x="13.5776" y="3.47092" width="49.266" height="60.3648" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="2766" />
+<feDisplacementMap in="shape" scale="8" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_4165_3056">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+</defs>
+</svg>

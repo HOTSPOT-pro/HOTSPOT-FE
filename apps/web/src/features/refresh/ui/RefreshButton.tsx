@@ -14,7 +14,7 @@ export const RefreshButton = ({ onRefresh }: RefreshButtonProps) => {
       onClick={onRefresh}
       type="button"
     >
-      <RefreshIcon className="w-24 h-24" />
+      <RefreshIcon className="w-20 h-20" />
     </button>
   );
 };
