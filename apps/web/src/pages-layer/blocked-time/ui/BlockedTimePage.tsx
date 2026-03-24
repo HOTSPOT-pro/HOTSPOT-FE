@@ -144,7 +144,7 @@ export const BlockedTimePage = () => {
 
       {!hasBlockedTime ? (
         <div className="flex flex-col items-center justify-center gap-8 py-12 text-center">
-          <SportyMonotoneLeftSmile className="w-30 h-30" />
+          <SportyMonotoneLeftSmile className="w-24 h-24" />
           <p className="text-sm text-gray-500">설정된 차단 시간대가 없습니다.</p>
         </div>
       ) : (
