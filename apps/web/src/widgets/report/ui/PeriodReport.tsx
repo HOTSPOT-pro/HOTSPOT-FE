@@ -58,7 +58,7 @@ export const PeriodReport = ({ user, unit }: PeriodReportProps) => {
 
   return (
     <div className="p-5 bg-white rounded-3xl flex flex-col gap-1">
-      <p className="text-base font-bold leading-relaxed text-gray-900">사용량 추이</p>
+      <p className="text-base font-bold leading-relaxed text-gray-900">데이터 사용량 추이</p>
 
       <div className="py-2">
         {unit === 'DAY' && <MonthNavigation date={selectedDate} onChange={handleDateChange} />}

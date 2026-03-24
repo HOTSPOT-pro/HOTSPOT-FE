@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@hotspot/ui";
+import SportyMonotoneLeftSmile from "@hotspot/ui/assets/images/character/sporty-monotone-left-smile.svg";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
 import type { ApiResponse } from "@/shared/api/types";
@@ -150,7 +151,10 @@ export const AppliedRestrictionsPage = () => {
       <div className="space-y-4">
         <h3 className="text-sm font-semibold text-gray-900">차단 정책</h3>
         {data.blockPolicyResponseList.length === 0 ? (
-          <p className="text-sm text-gray-500">적용된 차단 정책이 없습니다.</p>
+          <div className="flex flex-col items-center justify-center gap-8 py-12 text-center">
+            <SportyMonotoneLeftSmile className="w-30 h-30" />
+            <p className="text-sm text-gray-500">적용된 차단 정책이 없습니다.</p>
+          </div>
         ) : (
           <ul className="space-y-4">
             {data.blockPolicyResponseList.map((policy) => (
@@ -173,7 +177,10 @@ export const AppliedRestrictionsPage = () => {
       <div className="space-y-4">
         <h3 className="text-sm font-semibold text-gray-900">차단 앱</h3>
         {data.appBlockedServiceResponseList.length === 0 ? (
-          <p className="text-sm text-gray-500">차단된 앱이 없습니다.</p>
+          <div className="flex flex-col items-center justify-center gap-8 py-12 text-center">
+            <SportyMonotoneLeftSmile className="w-30 h-30" />
+            <p className="text-sm text-gray-500">차단된 앱이 없습니다.</p>
+          </div>
         ) : (
           <ul className="flex flex-wrap gap-4">
             {data.appBlockedServiceResponseList.map((service) => (

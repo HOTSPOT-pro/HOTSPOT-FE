@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@hotspot/ui";
+import SportyMonotoneLeftSmile from "@hotspot/ui/assets/images/character/sporty-monotone-left-smile.svg";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/shared/api/client";
 import type { ApiResponse } from "@/shared/api/types";
@@ -138,11 +139,14 @@ export const BlockedTimePage = () => {
   return (
     <section className="elevation-1 flex flex-col w-full h-fit rounded-12 p-16 gap-16">
       <div className="space-y-4">
-        <h2 className="font-title-title3-semibold">데이터 사용 불가 시간대</h2>
+        <h2 className="font-title-title3-semibold">데이터 차단 시간대</h2>
       </div>
 
       {!hasBlockedTime ? (
-        <p className="text-sm text-gray-500">설정된 차단 시간대가 없습니다.</p>
+        <div className="flex flex-col items-center justify-center gap-8 py-12 text-center">
+          <SportyMonotoneLeftSmile className="w-30 h-30" />
+          <p className="text-sm text-gray-500">설정된 차단 시간대가 없습니다.</p>
+        </div>
       ) : (
         <div className="overflow-x-auto">
           <div className="min-w-[30rem] space-y-12">
