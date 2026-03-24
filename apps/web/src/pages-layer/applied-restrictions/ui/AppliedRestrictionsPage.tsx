@@ -152,7 +152,7 @@ export const AppliedRestrictionsPage = () => {
         <h3 className="text-sm font-semibold text-gray-900">차단 정책</h3>
         {data.blockPolicyResponseList.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-8 py-12 text-center">
-            <SportyMonotoneLeftSmile className="w-30 h-30" />
+            <SportyMonotoneLeftSmile className="w-24 h-24" />
             <p className="text-sm text-gray-500">적용된 차단 정책이 없습니다.</p>
           </div>
         ) : (
@@ -178,7 +178,7 @@ export const AppliedRestrictionsPage = () => {
         <h3 className="text-sm font-semibold text-gray-900">차단 앱</h3>
         {data.appBlockedServiceResponseList.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-8 py-12 text-center">
-            <SportyMonotoneLeftSmile className="w-30 h-30" />
+            <SportyMonotoneLeftSmile className="w-24 h-24" />
             <p className="text-sm text-gray-500">차단된 앱이 없습니다.</p>
           </div>
         ) : (
